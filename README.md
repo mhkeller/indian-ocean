@@ -35,6 +35,8 @@ var csv = io.readDataSync('path/to/data.csv');
 
 ## Reading data
 
+Reads a variety of data file formats in as json.
+
 ### .readData(filepath, [delimiter], callback)
 
 Reads in a data file given a path ending in the file format. Callback structure is `function(err, data)`.
@@ -85,6 +87,8 @@ Read in a pipe-separated value file. Callback structure is `function(err, data)`
 Read psv syncronously.
 
 ## Writing data
+
+Writes json objects to the specified format.
 
 ### .writeData(filepath, data, callback)
 
