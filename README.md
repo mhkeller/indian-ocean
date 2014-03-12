@@ -1,7 +1,7 @@
 Indian Ocean
 ============
 
-A library for reading in and writing out data in Node.js.
+A library for reading in and writing out data in Node.js, part of [The TK Toolkit](https://github.com/mhkeller/tktk).
 
 # Installation
 
