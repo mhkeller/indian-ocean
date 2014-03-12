@@ -3,6 +3,12 @@ Indian Ocean
 
 A library for reading in and writing out data in Node.js.
 
+# Installation
+
+````
+npm install indian-ocean
+````
+
 # Usage
 
 ````
