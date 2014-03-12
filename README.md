@@ -14,7 +14,24 @@ npm install indian-ocean
 ````
 var io = require('indian-ocean');
 
-var csv = io.readDataSync('path/to/data.csv');
+var json_data = io.readDataSync('path/to/data.csv');
+
+console.log(json_data);
+
+/*
+[
+  {
+    "name": "Gerald",
+    "occupation": "Teacher",
+    "city": "Philadelphia"
+  },
+  {
+    "name": "Marcy",
+    "occupation": "Venture Capitalist",
+    "city": "New York"
+  }
+]
+/*
 ````
 
 # Methods
