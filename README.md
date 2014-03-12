@@ -1,6 +1,37 @@
 Indian Ocean
 ============
 
+A library for reading in and writing out data in Node.js.
+
+# Usage
+
+````
+var io = require('indian-ocean');
+
+var csv = io.readDataSync('path/to/data.csv');
+````
+
+# Methods
+
+* [Reading data](#reading-data)
+    * [.readData(filepath, [delimiter], callback)](#readdatafilepath-delimiter-callback)
+    * [.readDataSync(filepath, [delimiter])](#readdatasyncfilepath-delimiter)
+    * [.readJson(filepath, callback)](#readjsonfilepath-callback)
+    * [.readJsonSync(filepath)](#readjsonsyncfilepath)
+    * [.readCsv(filepath, callback)](#readcsvfilepath-callback)
+    * [.readCsvSync(filepath)](#readcsvsyncfilepath)
+    * [.readTsv(filepath, callback)](#readtsvfilepath-callback)
+    * [.readTsvSync(filepath)](#readtsvsyncfilepath)
+    * [.readPsv(filepath, callback)](#readpsvfilepath-callback)
+    * [.readPsvSync(filepath)](#readpsvsyncfilepath)
+* [Writing data](#writing-data)
+    * [.writeData(filepath, data, callback)](#writedatafilepath-data-callback)
+    * [.writeDataSync(filepath, data)](#writedatasyncfilepath-data)
+* [Helpers](#helpers)
+    * [.discernFormat(filepath)](#discernformatfilepath)
+    * [.discernParser(filepath, [delimiter]](#discernparserfilepath-delimiter)
+    * [.discernFileFormatter(filepath)](#discernfileformatterfilepath)
+
 
 ## Reading data
 
