@@ -1,0 +1,29 @@
+{
+  "name": "indian-ocean",
+  "version": "0.0.1",
+  "description": "Reading in and writing out data in Node.js.",
+  "main": "src/io.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mhkeller/indian-ocean"
+  },
+  "keywords": [
+    "io",
+    "data",
+    "read",
+    "write"
+  ],
+  "author": "Michael Keller",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mhkeller/indian-ocean/issues"
+  },
+  "homepage": "https://github.com/mhkeller/indian-ocean",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "dsv": "0.0.3"
+  }
+}
