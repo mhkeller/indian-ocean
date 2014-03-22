@@ -1,7 +1,7 @@
 Indian Ocean
 ============
 
-A library for reading in and writing out data in Node.js.
+A library for reading in and writing out data in Node.js, part of [The TK Toolkit](https://github.com/mhkeller/tktk).
 
 # Installation
 
@@ -14,7 +14,26 @@ npm install indian-ocean
 ````
 var io = require('indian-ocean');
 
-var csv = io.readDataSync('path/to/data.csv');
+var json_data = io.readDataSync('path/to/data.csv');
+
+console.log(json_data);
+
+/*
+[
+  {
+    "name": "Gerald",
+    "occupation": "Teacher",
+    "city": "Philadelphia"
+  },
+  {
+    "name": "Marcy",
+    "occupation": "Venture Capitalist",
+    "city": "New York"
+  }
+]
+/*
+
+io.writeDataSync('path/to/save/output.json', json_data)
 ````
 
 # Methods
@@ -98,7 +117,7 @@ Writes json objects to the specified format.
 
 ### .writeData(filepath, data, callback)
 
-Write out the data object, inferring the file format from the file ending specified in `filepath`. Callback structure is `function(err, data)`.
+Write out the data object, inferring the file format from the file ending specified in `filepath`. Callback structure is `function(err)`.
 
 Supported formats:
 
@@ -109,7 +128,7 @@ Supported formats:
 
 ### .writeDataSync(filepath, data)
 
-Syncronous version of `.writeData`. Callback structure is `function(err)`.
+Syncronous version of `.writeData`.
 
 ## Helpers
 
