@@ -54,49 +54,49 @@ helpers.discernFileFormatter = function(file_name){
 var readers = {}
 
 // Figure out what the format is based on its file name
-readers.readData: function(path, delimiter, cb_){
+readers.readData = function(path, delimiter, cb_){
   var cb = callMeMaybe(arguments[arguments.length - 1]);
   fs.readFile(path, 'utf8', function(err, data){
     cb(err, discernParser(path, delimiter).parse(data));    
   })
 }
-readers.readDataSync: function(path, delimiter){
+readers.readDataSync = function(path, delimiter){
   return discernParser(path, delimiter).parse(fs.readFileSync(path, 'utf8'));
 }
 
-readers.readCsv: function(path, cb){
+readers.readCsv = function(path, cb){
   fs.readFile(path, 'utf8', function(err, data){
     cb(err, parsers.csv.parse(data));    
   })
 }
-readers.readCsvSync: function(path){
+readers.readCsvSync = function(path){
   return parsers.csv.parse(fs.readFileSync(path, 'utf8'));
 }
 
-readers.readJson: function(path, cb){
+readers.readJson = function(path, cb){
   fs.readFile(path, function(err, data){
     cb(err, JSON.parse(data));
   })
 }
-readers.readJsonSync: function(path){
+readers.readJsonSync = function(path){
   return parsers.JSON.parse(fs.readFileSync(path));
 }
 
-readers.readTsv: function(path, cb){
+readers.readTsv = function(path, cb){
   fs.readFile(path, 'utf8', function(err, data){
     cb(err, parsers.tsv.parse(data));    
   })
 }
-readers.readTsvSync: function(path){
+readers.readTsvSync = function(path){
   return parsers.tsv.parse(fs.readFileSync(path, 'utf8'));
 }
 
-readers.readPsv: function(path, cb){
+readers.readPsv = function(path, cb){
   fs.readFile(path, 'utf8', function(err, data){
     cb(err, parsers.psv.parse(data));    
   })
 }
-readers.readPsvSync: function(path){
+readers.readPsvSync = function(path){
   return parsers.psv.parse(fs.readFileSync(path, 'utf8'));
 }
 
