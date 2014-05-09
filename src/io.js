@@ -16,7 +16,7 @@ var formatters = {
     return dsv.tsv.format(file)
   },
   psv: function(file){
-    return dsv.dsv('|').format(file)
+    return dsv('|').format(file)
   }
 }
 
@@ -24,7 +24,7 @@ var parsers = {
   json: JSON,
   csv: dsv.csv,
   tsv: dsv.tsv,
-  psv: dsv.dsv('|')
+  psv: dsv('|')
   // Dbf_Parser: require('node-dbf')
 }
 
@@ -41,13 +41,13 @@ helpers.discernFormat = function(file_name) {
 // Given a file name, optionally a delimiter, return a parser that will turn that file into json
 helpers.discernParser = function(file_name, delimiter){
   if (delimiter) return dsv(delimiter)
-  var format = discernFormat(file_name);
+  var format = helpers.discernFormat(file_name);
   return parsers[format]
 }
 
 // Given a file name, return a parser that will convert that json object to its extension
 helpers.discernFileFormatter = function(file_name){
-  var format   = discernFormat(file_name);
+  var format   = helpers.discernFormat(file_name);
   return formatters[format]
 }
 
@@ -57,11 +57,11 @@ var readers = {}
 readers.readData = function(path, delimiter, cb_){
   var cb = callMeMaybe(arguments[arguments.length - 1]);
   fs.readFile(path, 'utf8', function(err, data){
-    cb(err, discernParser(path, delimiter).parse(data));    
+    cb(err, helpers.discernParser(path, delimiter).parse(data));    
   })
 }
 readers.readDataSync = function(path, delimiter){
-  return discernParser(path, delimiter).parse(fs.readFileSync(path, 'utf8'));
+  return helpers.discernParser(path, delimiter).parse(fs.readFileSync(path, 'utf8'));
 }
 
 readers.readCsv = function(path, cb){
