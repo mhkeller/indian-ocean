@@ -1,4 +1,5 @@
 var fs  = require('fs'),
+    util = require('util'),
 		dsv = require('dsv');
 
 function callMeMaybe(cb) {
