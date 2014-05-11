@@ -33,6 +33,8 @@ var helpers = {};
 // Given a file name, determine its extension
 // Used by: discernParser, discernFileFormatter
 helpers.discernFormat = function(file_name) {
+  // If it doesn't contain a dot, return false
+  if ( !/\./.exec(file_name) ) return false;
   var name_arr = file_name.split('\.')
   format_name  = name_arr[name_arr.length - 1];
   return format_name
