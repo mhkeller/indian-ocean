@@ -1,6 +1,6 @@
 {
   "name": "indian-ocean",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A library for reading in and writing out data in Node.js.",
   "main": "src/io.js",
   "scripts": {
