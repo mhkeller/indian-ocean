@@ -1,9 +1,12 @@
 var fs  = require('fs'),
-    util = require('util'),
 		dsv = require('dsv');
 
+function isFunction(arg) {
+   return typeof arg === 'function';
+};
+
 function callMeMaybe(cb) {
-  return util.isFunction(cb) ? cb : rethrow();
+  return isFunction(cb) ? cb : rethrow();
 }
 
 var formatters = {
