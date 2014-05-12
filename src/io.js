@@ -60,8 +60,9 @@ helpers.discernFileFormatter = function(file_name){
 var readers = {}
 
 // Figure out what the format is based on its file name
-readers.readData = function(path, delimiter, cb_){
+readers.readData = function(path, delimiter_, cb_){
   var cb = callMeMaybe(arguments[arguments.length - 1]);
+  var delimiter = arguments.length === 3 ? delimiter_ : false;
   fs.readFile(path, 'utf8', function(err, data){
     cb(err, helpers.discernParser(path, delimiter).parse(data));    
   })
