@@ -126,13 +126,13 @@ var writers = {};
 // Given a file path and json data, convert it to that format and write it
 writers.writeData = function(path, data, cb){
   var fileFormatter = helpers.discernFileFormatter(path);
-  fs.WriteFile(path, fileFormatter(data), function(err){
+  fs.writeFile(path, fileFormatter(data), function(err){
     cb(err)
   })
 }
 writers.writeDataSync = function(path, data){
   var fileFormatter = helpers.discernFileFormatter(path);
-  fs.WriteFileSync(path, fileFormatter(data))
+  fs.writeFileSync(path, fileFormatter(data))
 }
 
 module.exports = {
