@@ -125,14 +125,14 @@ var writers = {};
 
 // Given a file path and json data, convert it to that format and write it
 writers.writeData = function(path, data, cb){
-  var fileFormatter = discernFileFormatter(file_path);
-  fs.WriteFile(file_path, fileFormatter(data), function(err){
+  var fileFormatter = discernFileFormatter(path);
+  fs.WriteFile(path, fileFormatter(data), function(err){
     cb(err)
   })
 }
 writers.writeDataSync = function(path, data){
-  var fileFormatter = discernFileFormatter(file_path);
-  fs.WriteFileSync(file_path, fileFormatter(data))
+  var fileFormatter = discernFileFormatter(path);
+  fs.WriteFileSync(path, fileFormatter(data))
 }
 
 module.exports = {
