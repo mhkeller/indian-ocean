@@ -41,23 +41,25 @@ helpers.discernFormat = function(file_name) {
   if ( !/\./.exec(file_name) ) return false;
   var name_arr = file_name.split('\.')
   format_name  = name_arr[name_arr.length - 1];
-  return format_name
+  // If it ends in json such as `topojson` or `geojson`, call it json.
+  if (format_name.substr(format_name.length - 4, format_name.length) == 'json') format_name = 'json';
+  return format_name;
 }
 
 // Given a file name, optionally a delimiter, return a parser that will turn that file into json
 helpers.discernParser = function(file_name, delimiter){
-  if (delimiter) return dsv(delimiter)
+  if (delimiter) return dsv(delimiter);
   var format = helpers.discernFormat(file_name);
-  return parsers[format]
+  return parsers[format];
 }
 
 // Given a file name, return a parser that will convert that json object to its extension
 helpers.discernFileFormatter = function(file_name){
   var format   = helpers.discernFormat(file_name);
-  return formatters[format]
+  return formatters[format];
 }
 
-var readers = {}
+var readers = {};
 
 // Figure out what the format is based on its file name
 readers.readData = function(path, delimiter_, cb_){
@@ -86,7 +88,7 @@ readers.readJson = function(path, cb){
   })
 }
 readers.readJsonSync = function(path){
-  return parsers.JSON.parse(fs.readFileSync(path));
+  return parsers.json.parse(fs.readFileSync(path));
 }
 
 readers.readTsv = function(path, cb){
