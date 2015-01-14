@@ -144,7 +144,7 @@ Given a `filepath`, optionally a delimiter, return a parser that can read that f
 
 E.g. 
 
-````
+````js
 var csvParser = tk.discernParser('path/to/data.csv');
 
 var json = parser('path/to/data.csv');
@@ -156,12 +156,7 @@ Returns a formatter that will format json data to file type specified by the ext
 
 E.g.
 
-````
+````js
 var formatter = tk.discernFileFormatter('path/to/data.tsv');
 var csv = formatter(json);
 ````
-
-# TODO
-
-* Read/write dbf
-* tests
