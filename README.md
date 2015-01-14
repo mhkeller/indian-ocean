@@ -31,7 +31,7 @@ console.log(json_data);
     "city": "New York"
   }
 ]
-/*
+*/
 
 io.writeDataSync('path/to/save/output.json', json_data)
 ````
