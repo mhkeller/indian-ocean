@@ -11,7 +11,7 @@ npm install indian-ocean
 
 # Usage
 
-````
+````js
 var io = require('indian-ocean');
 
 var json_data = io.readDataSync('path/to/data.csv');
