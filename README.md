@@ -164,7 +164,7 @@ var csv = formatter(json);
 
 ### fs
 
-Exposes the native `fs` module for convenience.
+Exposes the native [File System](http://nodejs.org/api/fs.html) module for convenience.
 
 # License
 
