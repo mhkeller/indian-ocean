@@ -155,4 +155,6 @@ module.exports = {
   discernFormat:        helpers.discernFormat,
   discernParser:        helpers.discernParser,
   discernFileFormatter: helpers.discernFileFormatter,
+
+  fs:                   fs
 }
