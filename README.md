@@ -56,6 +56,7 @@ io.writeDataSync('path/to/save/output.json', json_data)
     * [.discernFormat(filepath)](#discernformatfilepath)
     * [.discernParser(filepath, [delimiter]](#discernparserfilepath-delimiter)
     * [.discernFileFormatter(filepath)](#discernfileformatterfilepath)
+    * [fs](#fs)
 
 
 ## Reading data
@@ -160,3 +161,11 @@ E.g.
 var formatter = tk.discernFileFormatter('path/to/data.tsv');
 var csv = formatter(json);
 ````
+
+### fs
+
+Exposes the native `fs` module for convenience.
+
+# License
+
+MIT 
