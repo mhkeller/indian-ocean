@@ -24,6 +24,8 @@
   "homepage": "https://github.com/mhkeller/indian-ocean",
   "readmeFilename": "README.md",
   "dependencies": {
-    "dsv": "0.0.3"
+    "dsv": "0.0.3",
+    "queue-async": "^1.0.7",
+    "shapefile": "^0.3.0"
   }
 }
