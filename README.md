@@ -71,14 +71,14 @@ Reads in a data file given a path ending in the file format. Callback structure 
 
 Supported formats:
 
-* `.json`
+* `.json` Array of objects
 * `.csv` Comma-separated
 * `.tsv` Tab-separated
 * `.psv` Pipe-separated
 
 Pass in a delimiter as the second argument to read in another format.
 
-*Does not currently support .dbf files.*
+*Note: Does not currently support .dbf files.*
 
 ### .readDataSync(filepath, [delimiter])
 
@@ -130,10 +130,12 @@ Write out the data object, inferring the file format from the file ending specif
 
 Supported formats:
 
-* `.json`
+* `.json` Array of objects
 * `.csv` Comma-separated
 * `.tsv` Tab-separated
 * `.psv` Pipe-separated
+
+*Note: Does not currently support .dbf files.*
 
 ### .writeDataSync(filepath, data)
 
