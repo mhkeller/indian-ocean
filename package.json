@@ -26,6 +26,7 @@
   "dependencies": {
     "dsv": "0.0.3",
     "queue-async": "^1.0.7",
-    "shapefile": "^0.3.0"
+    "shapefile": "^0.3.0",
+    "underscore": "^1.8.2"
   }
 }

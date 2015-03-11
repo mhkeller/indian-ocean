@@ -49,9 +49,11 @@ io.writeDataSync('path/to/save/output.json', json_data)
     * [.readTsvSync(filepath)](#readtsvsyncfilepath)
     * [.readPsv(filepath, callback)](#readpsvfilepath-callback)
     * [.readPsvSync(filepath)](#readpsvsyncfilepath)
+    * [.readDbf(filepath, callback)](#readdbffilepath-callback)
 * [Writing data](#writing-data)
     * [.writeData(filepath, data, callback)](#writedatafilepath-data-callback)
     * [.writeDataSync(filepath, data)](#writedatasyncfilepath-data)
+    * [.writeDbfToData(filepath, data)](#writedbfinFilepath-outFilepath-data-callback)
 * [Helpers](#helpers)
     * [.discernFormat(filepath)](#discernformatfilepath)
     * [.discernParser(filepath, [delimiter]](#discernparserfilepath-delimiter)
@@ -61,7 +63,7 @@ io.writeDataSync('path/to/save/output.json', json_data)
 
 ## Reading data
 
-Reads a variety of data file formats in as json.
+These functions read in a data file as json (a list of objects).
 
 ### .readData(filepath, [delimiter], callback)
 
@@ -76,9 +78,11 @@ Supported formats:
 
 Pass in a delimiter as the second argument to read in another format.
 
+*Does not currently support .dbf files.*
+
 ### .readDataSync(filepath, [delimiter])
 
-Syncronous version of `.readData()`
+Syncronous version of `.readData()`.
 
 ### .readJson(filepath, callback)
 
@@ -112,6 +116,10 @@ Read in a pipe-separated value file. Callback structure is `function(err, data)`
 
 Read psv syncronously.
 
+### .readDbf(filepath, callback)
+
+Read in a .dbf file. Callback structure is `function(err, data)`.
+
 ## Writing data
 
 Writes json objects to the specified format.
@@ -130,6 +138,10 @@ Supported formats:
 ### .writeDataSync(filepath, data)
 
 Syncronous version of `.writeData`.
+
+### .writeDbfToData(inFilepath, outFilepath, callback)
+
+Reads in a dbf file with `.readDbf` and write to file using `.writeData`. Callback structure is `function(err)`.
 
 ## Helpers
 

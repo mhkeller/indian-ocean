@@ -1,7 +1,8 @@
-var fs  = require('fs');
-var dsv = require('dsv');
-var dbf = require('shapefile');
+var fs  	= require('fs');
+var dsv 	= require('dsv');
+var dbf 	= require('shapefile/dbf');
 var queue = require('queue-async');
+var _ 		= require('underscore');
 
 function isFunction(arg) {
 	 return typeof arg === 'function';
@@ -110,14 +111,65 @@ readers.readPsvSync = function(path){
 	return parsers.psv.parse(fs.readFileSync(path, 'utf8'));
 }
 
-// readers.readdbf = function(path, cb){
-// 	var reader = dbf.reader(path)
-// 	queue(1)
-// 		.defer(readHeader)
-// 		.defer(readAllRecords)
-// 		.defer(close)
-// 		.await(function(error) { if (error) throw error; });
-// }
+readers.readDbf = function(path, cb){
+	var reader = dbf.reader(path);
+
+	var rows = [],
+			headers;
+
+	// Run these in order
+	queue(1)
+		.defer(readHeader)
+		.defer(readAllRecords)
+		.defer(close)
+		.await(function(error, readHeaderData, readAllRecordsData, jsonData) { 
+			// We're using queue to work through this flow
+			// As a result, `readHeaderData`, `readAllRecordsData` are going to be undefined
+			// Because they aren't meant to return anything, just process data
+			// `rowData`, however contains all our concatenated data, so let's return that
+			cb(error, jsonData);
+		});
+
+
+	function readHeader(callback) {
+		reader.readHeader(function(error, header) {
+			if (error) {
+				return callback(error);
+			}
+			headers = header.fields.map(function(d) { 
+				return d.name; 
+			});
+			callback(null);
+		});
+	}
+
+	function readAllRecords(callback) {
+		(function readRecord() {
+			reader.readRecord(function(error, record) {
+				if (error) {
+					return callback(error);
+				}
+				if (record === dbf.end) {
+					return callback(null);
+				}
+				var json_record = _.object(headers, record);
+				rows.push(json_record);
+				process.nextTick(readRecord);
+			});
+		})();
+	}
+
+	function close(callback) {
+		reader.close(function(error) {
+			if (error) {
+				return callback(error);
+			}
+			callback(null, rows);
+		});
+	}
+
+}
+
 
 var writers = {};
 
@@ -132,6 +184,11 @@ writers.writeDataSync = function(path, data){
 	var fileFormatter = helpers.discernFileFormatter(path);
 	fs.writeFileSync(path, fileFormatter(data))
 }
+writers.writeDbfToData = function(inPath, outPath, cb){
+	readers.readDbf(inPath, function(error, jsonData){
+		writers.writeData(outPath, jsonData, cb);
+	});
+}
 
 module.exports = {
 	readData:             readers.readData,
@@ -144,9 +201,12 @@ module.exports = {
 	readTsvSync:          readers.readTsvSync,
 	readPsv:              readers.readPsv,
 	readPsvSync:          readers.readPsvSync,
+	readDbf: 							readers.readDbf,
 
 	writeData:            writers.writeData,
 	writeDataSync:        writers.writeDataSync,
+	writeDbfToData:       writers.writeDbfToData,
+
 
 	discernFormat:        helpers.discernFormat,
 	discernParser:        helpers.discernParser,
