@@ -170,6 +170,19 @@ readers.readDbf = function(path, cb){
 
 }
 
+// readers.readdirInclude = function(){
+	
+// }
+// readers.readdirIncludeSync = function(){
+
+// }
+
+// readers.readdirExclude = function(){
+
+// }
+// readers.readdirExcludeSync = function(){
+
+// }
 
 var writers = {};
 
