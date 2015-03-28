@@ -54,6 +54,11 @@ io.writeDataSync('path/to/save/output.json', json_data)
     * [.writeData(filepath, data, callback)](#writedatafilepath-data-callback)
     * [.writeDataSync(filepath, data)](#writedatasyncfilepath-data)
     * [.writeDbfToData(inFilepath, outFilepath, data)](#writedbftodatainfilepath-outfilepath-callback)
+* [Reading directories](#reading-directories)
+    * [.readdirInclude(directorypath, filetypes, callback)](#readdirincludedirectorypath-filetypes-callback)
+    * [.readdirIncludeSync(filepath, filetypes)](#readdirincludesyncdirectorypath-filetypes-callback)
+    * [.readdirExclude(filepath, filetypes, callback)](#readdirexcludedirectorypath-filetypes-callback)
+    * [.readdirExcludeSync(filepath, filetypes)](#readdirexcludesyncdirectorypath-filetypes-callback)
 * [Helpers](#helpers)
     * [.discernFormat(filepath)](#discernformatfilepath)
     * [.discernParser(filepath, [delimiter]](#discernparserfilepath-delimiter)
@@ -144,6 +149,24 @@ Syncronous version of `.writeData`.
 ### .writeDbfToData(inFilepath, outFilepath, callback)
 
 Reads in a dbf file with `.readDbf` and write to file using `.writeData`. Callback structure is `function(err)`.
+
+## Reading directories
+
+### .readdirInclude(path, includes, callback)
+
+Makes a list of the files in a directory when they match the string set as *includes*. *includes* can also be an array of strings.  Callback structure is `function(err, files)`.
+
+### .readdirIncludeSync(path, includes)
+
+Returns a list of the files in a directory when they match the string set as *includes*. *includes* can also be an array of strings. Synchronous version of `readdirInclude`.
+
+### .readdirExclude(path, excludes, callback)
+
+Makes a list of the files in a directory when they don't match the string set as *excludes*. *excludes* can also be an array of strings.  Callback structure is `function(err, files)`.
+
+### .readdirExcludeSync(path, excludes)
+
+Returns a list of the files in a directory when they match the string set as *excludes*. *excludes* can also be an array of strings. Synchronous version of `readdirExclude`.
 
 ## Helpers
 
