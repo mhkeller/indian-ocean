@@ -162,11 +162,11 @@ Returns a list of the files in a directory when they match the string set as *in
 
 ### .readdirExclude(path, excludes, callback)
 
-Makes a list of the files in a directory when they don't match the string set as *excludes*. *excludes* can also be an array of strings.  Callback structure is `function(err, files)`.
+Makes a list of the files in a directory when they **do not match** the string set as *excludes*. *excludes* can also be an array of strings.  Callback structure is `function(err, files)`.
 
 ### .readdirExcludeSync(path, excludes)
 
-Returns a list of the files in a directory when they match the string set as *excludes*. *excludes* can also be an array of strings. Synchronous version of `readdirExclude`.
+Returns a list of the files in a directory when they **do not match** match the string set as *excludes*. *excludes* can also be an array of strings. Synchronous version of `readdirExclude`.
 
 ## Helpers
 
