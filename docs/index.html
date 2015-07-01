@@ -1,0 +1,1351 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>indian-ocean 0.3.1</title>
+  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
+  <link href='assets/style.css' type='text/css' rel='stylesheet' />
+  <link href='assets/github.css' type='text/css' rel='stylesheet' />
+</head>
+<body class='documentation'>
+  <div class='px2'>
+    <div class='clearfix flex flex-stretch mxn2'>
+      <div class='documentation-sidebar relative top-0 bottom-0 right-0 px2 py2 col-3 sm-show'>
+        <div class='font-smaller fixed col-3 top-0 bottom-0 left-0 overflow-auto black bg-cloudy'>
+          <a href="/" class="h5 button block button-transparent">indian-ocean 0.3.1</a>
+          <div class='px2'>
+              <a
+                href='#helpers'
+                class='regular block'>
+                <code>helpers</code>
+              </a>
+                <a
+                  href='#helpers/discernfileformatter'
+                  class='px1 regular block'>
+                  <code>.discernFileFormatter</code>
+                </a>
+                <a
+                  href='#helpers/discernformat'
+                  class='px1 regular block'>
+                  <code>.discernFormat</code>
+                </a>
+                <a
+                  href='#helpers/discernparser'
+                  class='px1 regular block'>
+                  <code>.discernParser</code>
+                </a>
+              <a
+                href='#readers'
+                class='regular block'>
+                <code>readers</code>
+              </a>
+                <a
+                  href='#readers/readcsv'
+                  class='px1 regular block'>
+                  <code>.readCsv</code>
+                </a>
+                <a
+                  href='#readers/readcsvsync'
+                  class='px1 regular block'>
+                  <code>.readCsvSync</code>
+                </a>
+                <a
+                  href='#readers/readdata'
+                  class='px1 regular block'>
+                  <code>.readData</code>
+                </a>
+                <a
+                  href='#readers/readdatasync'
+                  class='px1 regular block'>
+                  <code>.readDataSync</code>
+                </a>
+                <a
+                  href='#readers/readdbf'
+                  class='px1 regular block'>
+                  <code>.readDbf</code>
+                </a>
+                <a
+                  href='#readers/readjson'
+                  class='px1 regular block'>
+                  <code>.readJson</code>
+                </a>
+                <a
+                  href='#readers/readjsonsync'
+                  class='px1 regular block'>
+                  <code>.readJsonSync</code>
+                </a>
+                <a
+                  href='#readers/readpsv'
+                  class='px1 regular block'>
+                  <code>.readPsv</code>
+                </a>
+                <a
+                  href='#readers/readpsvsync'
+                  class='px1 regular block'>
+                  <code>.readPsvSync</code>
+                </a>
+                <a
+                  href='#readers/readtsv'
+                  class='px1 regular block'>
+                  <code>.readTsv</code>
+                </a>
+                <a
+                  href='#readers/readtsvsync'
+                  class='px1 regular block'>
+                  <code>.readTsvSync</code>
+                </a>
+                <a
+                  href='#readers/readdirexclude'
+                  class='px1 regular block'>
+                  <code>.readdirExclude</code>
+                </a>
+                <a
+                  href='#readers/readdirexcludesync'
+                  class='px1 regular block'>
+                  <code>.readdirExcludeSync</code>
+                </a>
+                <a
+                  href='#readers/readdirinclude'
+                  class='px1 regular block'>
+                  <code>.readdirInclude</code>
+                </a>
+                <a
+                  href='#readers/readdirincludesync'
+                  class='px1 regular block'>
+                  <code>.readdirIncludeSync</code>
+                </a>
+              <a
+                href='#writers'
+                class='regular block'>
+                <code>writers</code>
+              </a>
+                <a
+                  href='#writers/writedata'
+                  class='px1 regular block'>
+                  <code>.writeData</code>
+                </a>
+                <a
+                  href='#writers/writedatasync'
+                  class='px1 regular block'>
+                  <code>.writeDataSync</code>
+                </a>
+                <a
+                  href='#writers/writedbftodata'
+                  class='px1 regular block'>
+                  <code>.writeDbfToData</code>
+                </a>
+          </div>
+        </div>
+      </div>
+      <div class='sm-col  col-9  flex flex-column'>
+        <div class='flex-auto full-width'>
+          <div class='px1'>
+<section id='helpers'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L31-L41'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#helpers'>
+      <code>
+        helpers<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  
+
+
+
+
+
+
+      <div class='section-indent'>
+<section id='helpers/discernfileformatter'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L76-L82'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#helpers/discernfileformatter'>
+      <code>
+        discernFileFormatter<span class='gray'>(fileName)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Returns a formatter that will format json data to file type specified by the extension in <code>fileName</code>. Used internally by <code>.writeData</code> and <code>.writeDataSync</code>.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>a formatter that can write the file</p>
+
+      </span>
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-keyword">var</span> formatter = tk.discernFileFormatter(<span class="hljs-string">'path/to/data.tsv'</span>);
+<span class="hljs-keyword">var</span> csv = formatter(json);</pre>
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='helpers/discernformat'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L41-L61'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#helpers/discernformat'>
+      <code>
+        discernFormat<span class='gray'>(fileName)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Given a <code>fileName</code> return its file extension. Used internally by <code>.discernPaser</code> and <code>.discernFileFormatter</code>.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>the file's extension</p>
+
+      </span>
+
+
+    <h4>Examples</h4>
+<pre>tk.discernFormat(<span class="hljs-string">'path/to/data.csv'</span>) -&gt; <span class="hljs-string">'csv'</span></pre>
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='helpers/discernparser'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L61-L76'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#helpers/discernparser'>
+      <code>
+        discernParser<span class='gray'>(fileName, delimiter)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Given a <code>fileName</code>, optionally a delimiter, return a parser that can read that file as json. Used internally by <code>.readData</code> and <code>.readDataSync</code>.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>delimiter</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>optional delimiter</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>a parser that can read the file</p>
+
+      </span>
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-keyword">var</span> parser = tk.discernParser(<span class="hljs-string">'path/to/data.csv'</span>);
+<span class="hljs-keyword">var</span> json = parser(<span class="hljs-string">'path/to/data.csv'</span>);</pre>
+
+
+
+
+</section>
+      </div>
+
+
+
+</section>
+<section id='readers'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L82-L100'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers'>
+      <code>
+        readers<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  
+
+
+
+
+
+
+      <div class='section-indent'>
+<section id='readers/readcsv'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L125-L137'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readcsv'>
+      <code>
+        readCsv<span class='gray'>(fileName, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Asynchronously read a comma-separated value file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>callback used when read data is read, takes error (if any) and the data read</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readcsvsync'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L137-L147'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readcsvsync'>
+      <code>
+        readCsvSync<span class='gray'>(fileName)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Synchronously read a comma-separated value file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>the contents of the file as JSON</p>
+
+      </span>
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readdata'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L100-L115'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readdata'>
+      <code>
+        readData<span class='gray'>(fileName, delimiter, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Asynchronously read data given a path ending in the file format.</p>
+<p>Supported formats:</p>
+<ul>
+<li><code>.json</code> Array of objects</li>
+<li><code>.csv</code> Comma-separated</li>
+<li><code>.tsv</code> Tab-separated</li>
+<li><code>.psv</code> Pipe-separated</li>
+</ul>
+<p><em>Note: Does not currently support .dbf files.</em></p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>delimiter</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>optional delimiter to use when reading the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>callback used when read data is read, takes error (if any) and the data read</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readdatasync'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L115-L125'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readdatasync'>
+      <code>
+        readDataSync<span class='gray'>(fileName, delimiter)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Syncronous version of <a href="readers-readdata"><code>readers#readData</code></a></p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>delimiter</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>optional delimiter to use when reading the file</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>the contents of the file as JSON</p>
+
+      </span>
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readdbf'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L213-L270'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readdbf'>
+      <code>
+        readDbf<span class='gray'>(fileName, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Asynchronously read a dbf file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>callback used when read data is read, takes error (if any) and the data read</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readjson'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L147-L159'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readjson'>
+      <code>
+        readJson<span class='gray'>(fileName, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Asynchronously read a JSON file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>callback used when read data is read, takes error (if any) and the data read</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readjsonsync'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L159-L169'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readjsonsync'>
+      <code>
+        readJsonSync<span class='gray'>(fileName)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Synchronously read a JSON file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>the contents of the file as JSON</p>
+
+      </span>
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readpsv'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L191-L203'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readpsv'>
+      <code>
+        readPsv<span class='gray'>(fileName, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Asynchronously read a pipe-separated value file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>callback used when read data is read, takes error (if any) and the data read</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readpsvsync'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L203-L213'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readpsvsync'>
+      <code>
+        readPsvSync<span class='gray'>(fileName)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Synchronously read a pipe-separated value file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>the contents of the file as JSON</p>
+
+      </span>
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readtsv'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L169-L181'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readtsv'>
+      <code>
+        readTsv<span class='gray'>(fileName, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Asynchronously read a tab-separated value file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>callback used when read data is read, takes error (if any) and the data read</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readtsvsync'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L181-L191'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readtsvsync'>
+      <code>
+        readTsvSync<span class='gray'>(fileName)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Synchronously read a tab-separated value file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>the contents of the file as JSON</p>
+
+      </span>
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readdirexclude'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L317-L336'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readdirexclude'>
+      <code>
+        readdirExclude<span class='gray'>(path, includes, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Get a list of the files in a directory that do not have the selected extentions.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>path</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the directory to read from</p>
+</td>
+          </tr>
+          <tr>
+            <td>includes</td>
+            <td>
+              Array<<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the file extention(s) to include</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>the callback that will accept the filtered files, takes an optional error and an array of file names</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readdirexcludesync'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L336-L346'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readdirexcludesync'>
+      <code>
+        readdirExcludeSync<span class='gray'>(path, includes)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Synchronously get a list of the files in a directory that do not have the selected extentions.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>path</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the directory to read from</p>
+</td>
+          </tr>
+          <tr>
+            <td>includes</td>
+            <td>
+              Array<<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the file extention(s) to include</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code>Array<<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>></code>
+      :
+      <span class='force-inline'>
+        <p>the matching files' paths</p>
+
+      </span>
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readdirinclude'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L282-L301'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readdirinclude'>
+      <code>
+        readdirInclude<span class='gray'>(path, includes, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Get a list of the files in a directory with selected extentions.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>path</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the directory to read from</p>
+</td>
+          </tr>
+          <tr>
+            <td>includes</td>
+            <td>
+              Array<<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the file extention(s) to include</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>the callback that will accept the filtered files, takes an optional error and an array of file names</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='readers/readdirincludesync'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L301-L317'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readdirincludesync'>
+      <code>
+        readdirIncludeSync<span class='gray'>(path, includes)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Synchronously get a list of the files in a directory with selected extentions.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>path</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the directory to read from</p>
+</td>
+          </tr>
+          <tr>
+            <td>includes</td>
+            <td>
+              Array<<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the file extention(s) to include</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code>Array<<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>></code>
+      :
+      <span class='force-inline'>
+        <p>the matching files' paths</p>
+
+      </span>
+
+
+
+
+
+
+</section>
+      </div>
+
+
+
+</section>
+<section id='writers'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L346-L364'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#writers'>
+      <code>
+        writers<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  
+
+
+
+
+
+
+      <div class='section-indent'>
+<section id='writers/writedata'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L364-L377'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#writers/writedata'>
+      <code>
+        writeData<span class='gray'>(fileName, data, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Write the data object, inferring the file format from the file ending specified in <code>fileName</code>.</p>
+<p>Supported formats:</p>
+<ul>
+<li><code>.json</code> Array of objects</li>
+<li><code>.csv</code> Comma-separated</li>
+<li><code>.tsv</code> Tab-separated</li>
+<li><code>.psv</code> Pipe-separated</li>
+</ul>
+<p><em>Note: Does not currently support .dbf files.</em></p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>data</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+            </td>
+            <td><p>the data to write</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>callback that takes an error, if any</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='writers/writedatasync'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L377-L389'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#writers/writedatasync'>
+      <code>
+        writeDataSync<span class='gray'>(fileName, data)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Syncronous version of <a href="writers-writedata"><code>writers#writeData</code></a></p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>data</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+            </td>
+            <td><p>the data to write</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='writers/writedbftodata'class='mt2 mb2 py1 px2 keyline-top'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/ebrelsford/indian-ocean/blob/6df5f62a2a3b6d80bbc0a3f5be54200e71808ba6/lib/index.js#L389-L399'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#writers/writedbftodata'>
+      <code>
+        writeDbfToData<span class='gray'>(inFileName, outFileName, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Reads in a dbf file with <code>.readDbf</code> and write to file using <code>.writeData</code>.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>inFileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the input file name</p>
+</td>
+          </tr>
+          <tr>
+            <td>outFileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the output file name</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>callback that takes error (if any)</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+
+
+
+
+</section>
+      </div>
+
+
+
+</section>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
