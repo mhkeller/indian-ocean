@@ -156,7 +156,7 @@ describe('readdirIncludeSync()', function () {
   describe('actual extension', function () {
     it('should not be empty', function () {
       var dir = path.join(__dirname, 'data', 'csv')
-      assert.lengthOf(io.readdirIncludeSync(dir, 'csv'), 2)
+      assert.isAbove(io.readdirIncludeSync(dir, 'csv').length, 0)
     })
   })
 
