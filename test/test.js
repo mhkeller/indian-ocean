@@ -105,3 +105,45 @@ describe('readTsvSync()', function () {
     })
   })
 })
+
+describe('readdirInclude()', function () {
+  describe('empty', function () {
+    it('should be empty', function (done) {
+      io.readdirInclude(__dirname, 'csv', function (err, files) {
+        assert.lengthOf(files, 0)
+        if (err) {
+          console.error(err)
+        }
+        done()
+      })
+    })
+  })
+
+  describe('actual extension', function () {
+    it('should not be empty', function (done) {
+      var dir = path.join(__dirname, 'data', 'csv')
+      io.readdirInclude(dir, 'csv', function (err, files) {
+        assert.isAbove(files.length, 0)
+        if (err) {
+          console.error(err)
+        }
+        done()
+      })
+    })
+  })
+})
+
+describe('readdirIncludeSync()', function () {
+  describe('empty', function () {
+    it('should be empty', function () {
+      assert.lengthOf(io.readdirIncludeSync(__dirname, 'csv'), 0)
+    })
+  })
+
+  describe('actual extension', function () {
+    it('should not be empty', function () {
+      var dir = path.join(__dirname, 'data', 'csv')
+      assert.lengthOf(io.readdirIncludeSync(dir, 'csv'), 2)
+    })
+  })
+})
