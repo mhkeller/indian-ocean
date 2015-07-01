@@ -167,3 +167,67 @@ describe('readdirIncludeSync()', function () {
     })
   })
 })
+
+describe('readdirExclude()', function () {
+  describe('all files match', function () {
+    it('should be empty', function (done) {
+      var dir = path.join(__dirname, 'data', 'csv')
+      io.readdirExclude(dir, 'csv', function (err, files) {
+        assert.lengthOf(files, 0)
+        if (err) {
+          console.error(err)
+        }
+        done()
+      })
+    })
+  })
+
+  describe('no matching files', function () {
+    it('should not be empty', function (done) {
+      var dir = path.join(__dirname, 'data', 'csv')
+      io.readdirExclude(dir, 'tsv', function (err, files) {
+        assert.isAbove(files.length, 0)
+        if (err) {
+          console.error(err)
+        }
+        done()
+      })
+    })
+  })
+
+  describe('extension in filename', function () {
+    it('should not be empty', function (done) {
+      var dir = path.join(__dirname, 'data', 'other')
+      io.readdirExclude(dir, 'csv', function (err, files) {
+        assert.isAbove(files.length, 0)
+        if (err) {
+          console.error(err)
+        }
+        done()
+      })
+    })
+  })
+})
+
+describe('readdirExcludeSync()', function () {
+  describe('all files match', function () {
+    it('should be empty', function () {
+      var dir = path.join(__dirname, 'data', 'csv')
+      assert.lengthOf(io.readdirExcludeSync(dir, 'csv'), 0)
+    })
+  })
+
+  describe('no matching files', function () {
+    it('should not be empty', function () {
+      var dir = path.join(__dirname, 'data', 'csv')
+      assert.isAbove(io.readdirExcludeSync(dir, 'tsv').length, 0)
+    })
+  })
+
+  describe('extension in filename', function () {
+    it('should not be empty', function () {
+      var dir = path.join(__dirname, 'data', 'other')
+      assert.isAbove(io.readdirExcludeSync(dir, 'csv').length, 0)
+    })
+  })
+})
