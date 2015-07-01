@@ -231,3 +231,29 @@ describe('readdirExcludeSync()', function () {
     })
   })
 })
+
+describe('discernFormat()', function () {
+  describe('no extension', function () {
+    it('should be false', function () {
+      assert.equal(io.discernFormat('/fake/path/what_is_this_file'), false)
+    })
+  })
+
+  describe('csv', function () {
+    it('should be a csv', function () {
+      assert.equal(io.discernFormat('/fake/path/real.csv'), 'csv')
+    })
+  })
+
+  describe('json', function () {
+    it('should be a json', function () {
+      assert.equal(io.discernFormat('/fake/path/real.json'), 'json')
+    })
+  })
+
+  describe('geojson', function () {
+    it('should be a json', function () {
+      assert.equal(io.discernFormat('/fake/path/real.geojson'), 'json')
+    })
+  })
+})
