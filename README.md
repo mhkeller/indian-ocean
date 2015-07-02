@@ -3,13 +3,15 @@ Indian Ocean
 
 A library for reading in and writing out data in Node.js, part of [The TK Toolkit](https://github.com/mhkeller/tktk).
 
-# Installation
+Installation
+------------
 
 ````
 npm install indian-ocean
 ````
 
-# Usage
+Usage
+-----
 
 ````js
 var io = require('indian-ocean');
@@ -39,6 +41,7 @@ io.writeDataSync('path/to/save/output.json', json_data)
 There are more details in the [API
 documentation](http://mhkeller.github.io/indian-ocean/docs/).
 
-# License
+License
+-------
 
 MIT 
