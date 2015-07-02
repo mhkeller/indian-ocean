@@ -31,6 +31,39 @@ describe('readCsvSync()', function () {
   })
 })
 
+describe('readCsv()', function () {
+  describe('empty', function () {
+    it('should be empty', function (done) {
+      io.readCsv(testDataPath('csv/empty.csv'), function (err, data) {
+        if (err) console.error(err)
+        assert.lengthOf(data, 0)
+        done()
+      })
+    })
+  })
+
+  describe('basic', function () {
+    it('should match expected json', function (done) {
+      io.readCsv(testDataPath('csv/basic.csv'), function (err, data) {
+        if (err) console.error(err)
+        assertBasicValid(data)
+        done()
+      })
+    })
+  })
+
+  describe('geocsv', function () {
+    it('should be a geojson object', function (done) {
+      io.readCsv(testDataPath('geocsv/latlngs.csv'), function (err, data) {
+        if (err) console.error(err)
+        assert.equal(data.type, 'FeatureCollection')
+        assert.isAbove(data.features.length, 0)
+        done()
+      })
+    })
+  })
+})
+
 describe('readDataSync()', function () {
   describe('csv', function () {
     it('should match expected json', function () {
