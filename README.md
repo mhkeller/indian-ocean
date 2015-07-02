@@ -1,6 +1,8 @@
 Indian Ocean
 ============
 
+[![Build Status](https://secure.travis-ci.org/mhkeller/indian-ocean.png?branch=master)](http://travis-ci.org/mhkeller/indian-ocean) [![Dependency Status](https://gemnasium.com/mhkeller/indian-ocean.png)](https://gemnasium.com/mhkeller/indian-ocean) [![NPM version](https://badge.fury.io/js/indian-ocean.png)](http://badge.fury.io/js/indian-ocean)
+
 A library for reading in and writing out data in Node.js, part of [The TK Toolkit](https://github.com/mhkeller/tktk).
 
 Installation
