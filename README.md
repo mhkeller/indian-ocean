@@ -21,11 +21,11 @@ Usage
 -----
 
 ````js
-var io = require('indian-ocean');
+var io = require('indian-ocean')
 
-var json_data = io.readDataSync('path/to/data.csv');
+var json_data = io.readDataSync('path/to/data.csv')
 
-console.log(json_data);
+console.log(json_data)
 
 /*
 [
