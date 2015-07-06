@@ -12,6 +12,11 @@ Installation
 npm install indian-ocean
 ````
 
+Documentation
+-------------
+
+See the full [API docs](http://mhkeller.github.io/indian-ocean/docs/).
+
 Usage
 -----
 
@@ -39,9 +44,6 @@ console.log(json_data);
 
 io.writeDataSync('path/to/save/output.json', json_data)
 ````
-
-There are more details in the [API
-documentation](http://mhkeller.github.io/indian-ocean/docs/).
 
 License
 -------
