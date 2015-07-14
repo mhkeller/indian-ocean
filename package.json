@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "coverage": "istanbul cover ./node_modules/.bin/_mocha -- -R spec",
-    "docs": "documentation -g -f html -o docs -t docs/theme",
+    "docs": "documentation -g -f html -o docs -t ./docs/theme/",
     "test": "standard && mocha"
   },
   "repository": {
