@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "coverage": "istanbul cover ./node_modules/.bin/_mocha -- -R spec",
-    "docs": "documentation -g -f html -o docs",
+    "docs": "documentation -g -f html -o docs -t docs/theme",
     "test": "standard && mocha"
   },
   "repository": {
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "chai": "^3.0.0",
-    "documentation": "^2.0.0",
+    "documentation": "^2.1.0",
     "istanbul": "^0.3.17",
     "mocha": "^2.2.5",
     "standard": "^4.5.1"
