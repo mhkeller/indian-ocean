@@ -4,7 +4,7 @@
 
 # Only run if on master, not a pull request, and for one node version (so we
 # don't end up running this once for each version).
-if [ "$TRAVIS_REPO_SLUG" == "mhkeller/indian-ocean" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_NODE_VERSION" == "0.12"]; then
+if [ "$TRAVIS_REPO_SLUG" == "mhkeller/indian-ocean" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_NODE_VERSION" == "0.12" ]; then
 
   echo "Publishing docs...\n"
 
