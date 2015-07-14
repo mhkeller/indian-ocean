@@ -1,10 +1,10 @@
 language: node_js
 node_js:
-  - "0.12"
-  - "0.10"
-  - "iojs"
+- '0.12'
+- '0.10'
+- iojs
 after_success:
-  - ./build/travis-docs.sh
+- "./build/travis-docs.sh"
 env:
   global:
-    - secure: XQ3psu5eCkMM/Rctuw0xpY+ECFAj0sQoGcqKyHjey7NKBJzU1+Ae4SAJzsyjgm6MlsVgFLQdaeNJLQS7CT/TBc4Tn34BrzrbX9TrFmVyYjlJM7H07AKPWOQhcs2MV+gHnAFiQ1+jOgVGJ3/0a0jqRP9K4Hl1kR2fD1p/cQdpT/+t3yZmFu3K6SnnjNG8TXb7larOvTOziQBOX9nXVgEEJAWLo37LYWNcCBLDxN0PoNYhFEBa525Naj8z3szlXZedI63x8LVRQfPhXflanLxk+HqI+UfpSTkLc27KdGVuNpouDlAT8TOJtCzAX43m72e8nqNWe3CfDQHtZ9WJZKs3bPITicAgox1Cfyp5U61YRrF5jIC3YvkWYUhhy8eMwRdKIEgr6SVIE/mVoCqnYlCurVZziYIg2EUyCX71U/BC1E4e82yAxP3Y5kUf51lP0GRuLWI/FArw5RCS7V68GMCg0/+z3Evlv/fkAONY9Cnlejmoa0SiPsxVNl0W9RJkhpBhvmiRBi9NT00msu7vGakuNR1JqTlv/VPzG8vsvShcURQ/RhEPucqHV2YBvGiFIxmZy0IANnaMYjX8D9flt0tjMpCiTt75W2cyTxhP+d5DAiv8jaC5qH1mEkB1ZmGqrtp2ztiH3r9TW2FrArfeW38uCFPc+h30dRdSkA+Ct19lQ1A=
+    - secure: OyXAp5JOfXppCiA7st5fY5e/BRYwZ6D/hjzX9pbiX6z4En9jty4KvUqCuZl32cymRS8ss5EmgTvlCyk3U63pEOCU/0TTIcuu17wH64dLIbW0t1lm1Rop//k7ZbsgtrsWZDSlRwlLqmkmObe4ejLknmNA+Gst9CoGnMpI4Ls0dUhOm80BFCPV40QxuijtaKdIxEtSeqGANwCTBMsDgVWiv/Ba4y2uWHzmrwiw9J3klu9hCdMc20/rLwRci7oPl8y2JCTbISbajyS+OhnruGohWaYz5YSQsIXekcOFC/tMVOcg6Rzv15lVAfS1VAvL6UIrzV693JQBCq9m43OiuZyQUrREDo0hTxsvPy3NsNHgfREYTya9NdF5Bbjl1OEVPLlTjy4DkAPmgkBLBeV5e/vvitfmwF18KssfGgnqLM4oLSroO5pYfRqzcXg0aIKhsZi6RABTDy3aT5exA5M9ShXjF/jtaE5fMB3sNlcWk+LKSIY0F0IJaeIKwTkQoKHcAXBoFqPCWvlcSOHLz9aLzhW/ewHt0R8pixtKZiWVVlWtA+CV0BWjFEsOuy7vk8MDmatIIY0D5jaLq9OuXyoTZ9Ly6uG/xfsk1Wsy4IqZtphTEc76DN+u/Vqo+eHlEEbOhfjlfOPAWcrc+kJoc3CnGBHNOQfmj5liKwc/CEDbi3jLzuc=
