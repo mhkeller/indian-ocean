@@ -11,6 +11,10 @@ if [ "$TRAVIS_REPO_SLUG" == "mhkeller/indian-ocean" ] && [ "$TRAVIS_PULL_REQUEST
   git config --global user.email "travis@travis-ci.org"
   git config --global user.name "travis-ci"
 
+  cd $HOME
+  git clone --quiet https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG build-docs > /dev/null
+  cd build-docs
+
   ./build/docs.sh
 
   echo "Published docs to gh-pages.\n"
