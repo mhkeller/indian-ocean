@@ -17,6 +17,9 @@ Documentation
 
 See the full [API docs](http://mhkeller.github.io/indian-ocean/docs/).
 
+[![js-standard-style](https://raw.githubusercontent.com/feross/standard/master/badge.png)](https://github.com/feross/standard)
+
+
 Usage
 -----
 
