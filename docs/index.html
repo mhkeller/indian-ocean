@@ -34,6 +34,16 @@
                   class='px1 regular block'>
                   <code>.discernParser</code>
                 </a>
+                <a
+                  href='#helpers/exists'
+                  class='px1 regular block'>
+                  <code>.exists</code>
+                </a>
+                <a
+                  href='#helpers/existssync'
+                  class='px1 regular block'>
+                  <code>.existsSync</code>
+                </a>
               <a
                 href='#readers'
                 class='regular block'>
@@ -152,7 +162,7 @@
           <div class='px1'>
 <section id='helpers'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L31-L41'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L31-L41'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers'>
@@ -171,7 +181,7 @@
       <div class='section-indent'>
 <section id='helpers/discernfileformatter'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L76-L82'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L76-L92'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/discernfileformatter'>
@@ -223,7 +233,7 @@
       <div class='section-indent'>
 <section id='helpers/discernformat'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L41-L61'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L41-L61'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/discernformat'>
@@ -274,7 +284,7 @@
       <div class='section-indent'>
 <section id='helpers/discernparser'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L61-L76'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L61-L76'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/discernparser'>
@@ -331,13 +341,119 @@
 
 </section>
       </div>
+      <div class='section-indent'>
+<section id='helpers/exists'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L92-L108'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#helpers/exists'>
+      <code>
+        exists<span class='gray'>(fileName, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Asynchronously test whether a file exists or not by using <code>fs.access</code> modified from https://github.com/nodejs/io.js/issues/1592#issuecomment-98392899.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>has the signature <code>(err, exists)</code></p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-keyword">var</span> exists = io.exists(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, exists</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(exists) <span class="hljs-comment">// `true` if the file exists, `false` if not.</span>
+})</pre>
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='helpers/existssync'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L108-L118'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#helpers/existssync'>
+      <code>
+        existsSync<span class='gray'>(fileName)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Syncronous version of <a href="helpers-exists"><code>helpers#exists</code></a></p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>whether the file exists or not</p>
+
+      </span>
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-keyword">var</span> exists = io.existsSync(<span class="hljs-string">'path/to/data.tsv'</span>)
+<span class="hljs-built_in">console</span>.log(exists) <span class="hljs-comment">// `true` if file exists, `false` if not.</span></pre>
+
+
+
+
+</section>
+      </div>
 
 
 
 </section>
 <section id='readers'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L82-L100'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L118-L136'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers'>
@@ -356,7 +472,7 @@
       <div class='section-indent'>
 <section id='readers/readcsv'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L125-L137'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L161-L173'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readcsv'>
@@ -406,7 +522,7 @@
       <div class='section-indent'>
 <section id='readers/readcsvsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L137-L147'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L173-L183'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readcsvsync'>
@@ -455,7 +571,7 @@
       <div class='section-indent'>
 <section id='readers/readdata'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L100-L115'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L136-L151'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdata'>
@@ -521,7 +637,7 @@
       <div class='section-indent'>
 <section id='readers/readdatasync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L115-L125'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L151-L161'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdatasync'>
@@ -578,7 +694,7 @@
       <div class='section-indent'>
 <section id='readers/readdbf'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L213-L270'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L249-L306'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdbf'>
@@ -628,7 +744,7 @@
       <div class='section-indent'>
 <section id='readers/readdirexclude'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L317-L336'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L353-L372'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdirexclude'>
@@ -686,7 +802,7 @@
       <div class='section-indent'>
 <section id='readers/readdirexcludesync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L336-L346'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L372-L382'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdirexcludesync'>
@@ -743,7 +859,7 @@
       <div class='section-indent'>
 <section id='readers/readdirinclude'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L282-L301'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L318-L337'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdirinclude'>
@@ -801,7 +917,7 @@
       <div class='section-indent'>
 <section id='readers/readdirincludesync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L301-L317'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L337-L353'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdirincludesync'>
@@ -858,7 +974,7 @@
       <div class='section-indent'>
 <section id='readers/readjson'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L147-L159'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L183-L195'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readjson'>
@@ -908,7 +1024,7 @@
       <div class='section-indent'>
 <section id='readers/readjsonsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L159-L169'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L195-L205'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readjsonsync'>
@@ -957,7 +1073,7 @@
       <div class='section-indent'>
 <section id='readers/readpsv'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L191-L203'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L227-L239'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readpsv'>
@@ -1007,7 +1123,7 @@
       <div class='section-indent'>
 <section id='readers/readpsvsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L203-L213'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L239-L249'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readpsvsync'>
@@ -1056,7 +1172,7 @@
       <div class='section-indent'>
 <section id='readers/readtsv'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L169-L181'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L205-L217'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readtsv'>
@@ -1106,7 +1222,7 @@
       <div class='section-indent'>
 <section id='readers/readtsvsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L181-L191'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L217-L227'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readtsvsync'>
@@ -1158,7 +1274,7 @@
 </section>
 <section id='writers'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L346-L364'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L382-L400'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers'>
@@ -1177,7 +1293,7 @@
       <div class='section-indent'>
 <section id='writers/appenddata'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L398-L423'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L434-L459'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/appenddata'>
@@ -1243,7 +1359,7 @@
       <div class='section-indent'>
 <section id='writers/appenddatasync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L423-L439'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L459-L475'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/appenddatasync'>
@@ -1293,7 +1409,7 @@
       <div class='section-indent'>
 <section id='writers/writedata'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L364-L377'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L400-L413'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/writedata'>
@@ -1359,7 +1475,7 @@
       <div class='section-indent'>
 <section id='writers/writedatasync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L377-L398'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L413-L434'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/writedatasync'>
@@ -1409,7 +1525,7 @@
       <div class='section-indent'>
 <section id='writers/writedbftodata'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/9d599334d5d642bd1347a110dfb44fdcb4b9198d/lib/index.js#L439-L449'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/10a4717fb69b8433d31431abca80a87b22f0e1e9/lib/index.js#L475-L485'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/writedbftodata'>
