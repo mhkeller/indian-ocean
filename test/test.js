@@ -112,7 +112,7 @@ describe('readdirInclude()', function () {
       io.readdirInclude(__dirname, 'csv', function (err, files) {
         assert.lengthOf(files, 0)
         if (err) {
-          console.error(err)
+          console.log(err)
         }
         done()
       })
@@ -120,12 +120,12 @@ describe('readdirInclude()', function () {
   })
 
   describe('actual extension', function () {
-    it('should not be empty', function (done) {
+    it('should find csv files', function (done) {
       var dir = path.join(__dirname, 'data', 'csv')
       io.readdirInclude(dir, 'csv', function (err, files) {
         assert.isAbove(files.length, 0)
         if (err) {
-          console.error(err)
+          console.log(err)
         }
         done()
       })
@@ -138,9 +138,21 @@ describe('readdirInclude()', function () {
       io.readdirInclude(dir, 'csv', function (err, files) {
         assert.lengthOf(files, 0)
         if (err) {
-          console.error(err)
+          console.log(err)
         }
         done()
+      })
+    })
+  })
+
+  describe('dirPath in filename', function () {
+    it('should match expected output', function (done) {
+      var dir = path.join(__dirname, 'data', 'csv')
+      io.readdirInclude(dir, 'csv', true, function (err, files) {
+        if (err) {
+          console.log(err)
+        }
+        done(assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0))
       })
     })
   })
@@ -164,6 +176,15 @@ describe('readdirIncludeSync()', function () {
     it('should be empty', function () {
       var dir = path.join(__dirname, 'data', 'other')
       assert.lengthOf(io.readdirIncludeSync(dir, 'csv'), 0)
+    })
+  })
+
+  describe('dirPath in filename', function () {
+    it('should match expected output', function () {
+      var dir = path.join(__dirname, 'data', 'csv')
+      var files = io.readdirIncludeSync(dir, 'csv', true)
+      assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
+
     })
   })
 })
