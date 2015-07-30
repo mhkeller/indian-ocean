@@ -134,7 +134,7 @@ describe('readdirInclude()', function () {
 
   describe('extension in filename', function () {
     it('should be empty', function (done) {
-      var dir = path.join(__dirname, 'data', 'other')
+      var dir = path.join(__dirname, 'data', 'json')
       io.readdirInclude(dir, 'csv', function (err, files) {
         assert.lengthOf(files, 0)
         if (err) {
@@ -174,7 +174,7 @@ describe('readdirIncludeSync()', function () {
 
   describe('extension in filename', function () {
     it('should be empty', function () {
-      var dir = path.join(__dirname, 'data', 'other')
+      var dir = path.join(__dirname, 'data', 'json')
       assert.lengthOf(io.readdirIncludeSync(dir, 'csv'), 0)
     })
   })
@@ -184,7 +184,6 @@ describe('readdirIncludeSync()', function () {
       var dir = path.join(__dirname, 'data', 'csv')
       var files = io.readdirIncludeSync(dir, 'csv', true)
       assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
-
     })
   })
 })
@@ -228,6 +227,18 @@ describe('readdirExclude()', function () {
       })
     })
   })
+
+  describe('dirPath in filename', function () {
+    it('should match expected output', function (done) {
+      var dir = path.join(__dirname, 'data', 'other')
+      io.readdirExclude(dir, 'txt', true, function (err, files) {
+        if (err) {
+          console.log(err)
+        }
+        done(assert.equal(files.indexOf(path.join(dir, 'this_is_not_a_txt.csv')), 0))
+      })
+    })
+  })
 })
 
 describe('readdirExcludeSync()', function () {
@@ -249,6 +260,14 @@ describe('readdirExcludeSync()', function () {
     it('should not be empty', function () {
       var dir = path.join(__dirname, 'data', 'other')
       assert.isAbove(io.readdirExcludeSync(dir, 'csv').length, 0)
+    })
+  })
+
+  describe('dirPath in filename', function () {
+    it('should match expected output', function () {
+      var dir = path.join(__dirname, 'data', 'other')
+      var files = io.readdirExcludeSync(dir, 'csv', true)
+      assert.equal(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), 0)
     })
   })
 })
