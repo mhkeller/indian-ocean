@@ -31,6 +31,7 @@
   "readmeFilename": "README.md",
   "dependencies": {
     "d3-dsv": "^0.1.5",
+    "parse-json": "^2.0.0",
     "queue-async": "^1.0.7",
     "shapefile": "^0.3.0",
     "underscore": "^1.8.2"
