@@ -20,3 +20,4 @@ Changelog
   * https://github.com/mhkeller/indian-ocean/commit/7e0c8a109a94894c73a78bf8069817c7e5cf2e62
 * Better error messaging when parsing malformed JSON
   * https://github.com/mhkeller/indian-ocean/commit/e905bd0f7be3f0eec47ef8d018204c32b8f16981
+* Created Changelog
