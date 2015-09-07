@@ -2,6 +2,11 @@ Changelog
 =========
 
 
+# 0.6.0
+
+* Add ability for `readdir` functions to take regexes
+* Refactor `readdir` functions to call a common function with options.
+
 # 0.5.0
 
 * Add `exists` and `existsSync` fs
