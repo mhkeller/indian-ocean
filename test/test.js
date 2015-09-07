@@ -230,7 +230,7 @@ describe('readdirExclude()', function () {
 
   describe('dirPath in filename', function () {
     it('should match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'other')
+      var dir = path.join(__dirname, 'data', 'mixed')
       io.readdirExclude(dir, 'txt', true, function (err, files) {
         if (err) {
           console.log(err)
@@ -258,14 +258,14 @@ describe('readdirExcludeSync()', function () {
 
   describe('extension in filename', function () {
     it('should not be empty', function () {
-      var dir = path.join(__dirname, 'data', 'other')
+      var dir = path.join(__dirname, 'data', 'mixed')
       assert.isAbove(io.readdirExcludeSync(dir, 'csv').length, 0)
     })
   })
 
   describe('dirPath in filename', function () {
     it('should match expected output', function () {
-      var dir = path.join(__dirname, 'data', 'other')
+      var dir = path.join(__dirname, 'data', 'mixed')
       var files = io.readdirExcludeSync(dir, 'csv', true)
       assert.equal(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), 0)
     })
