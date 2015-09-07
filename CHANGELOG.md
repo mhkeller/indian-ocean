@@ -5,7 +5,9 @@ Changelog
 # 0.6.0
 
 * Add ability for `readdir` functions to take regexes
+  * https://github.com/mhkeller/indian-ocean/commit/44bfb9e01c70f7ab856582b48bc93c581dd8c69b
 * Refactor `readdir` functions to call a common function with options.
+  * https://github.com/mhkeller/indian-ocean/commit/84e8edf68501b16e75ef59aeaae7fcb42ca46b9d
 
 # 0.5.0
 
