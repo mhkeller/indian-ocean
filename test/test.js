@@ -226,6 +226,14 @@ describe('readdirIncludeSync()', function () {
       assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
     })
   })
+
+  describe('use regex', function () {
+    it('should match expected output', function () {
+      var dir = path.join(__dirname, 'data', 'mixed')
+      var files = io.readdirIncludeSync(dir, /\.*/)
+      assert.notEqual(files.indexOf('.hidden-file'), -1)
+    })
+  })
 })
 
 describe('readdirExclude()', function () {
@@ -275,7 +283,7 @@ describe('readdirExclude()', function () {
         if (err) {
           console.log(err)
         }
-        done(assert.equal(files.indexOf(path.join(dir, 'this_is_not_a_txt.csv')), 0))
+        done(assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_txt.csv')), -1))
       })
     })
   })
@@ -307,7 +315,7 @@ describe('readdirExcludeSync()', function () {
     it('should match expected output', function () {
       var dir = path.join(__dirname, 'data', 'mixed')
       var files = io.readdirExcludeSync(dir, 'csv', true)
-      assert.equal(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), 0)
+      assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1)
     })
   })
 })
