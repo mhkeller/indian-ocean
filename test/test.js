@@ -132,6 +132,46 @@ describe('readdirInclude()', function () {
     })
   })
 
+  describe('actual extension', function () {
+    it('should find csv files', function (done) {
+      var dir = path.join(__dirname, 'data', 'csv')
+      io.readdirInclude(dir, 'csv', function (err, files) {
+        assert.isAbove(files.length, 0)
+        if (err) {
+          console.log(err)
+        }
+        done()
+      })
+    })
+  })
+
+  describe('actual extension', function () {
+    it('should find csv files given list of one', function (done) {
+      var dir = path.join(__dirname, 'data', 'csv')
+      io.readdirInclude(dir, ['csv'], function (err, files) {
+        assert.isAbove(files.length, 0)
+        if (err) {
+          console.log(err)
+        }
+        done()
+      })
+    })
+  })
+
+  // TODO, do this one
+  // describe('actual extension', function () {
+  //   it('should find txt and csv files', function (done) {
+  //     var dir = path.join(__dirname, 'data', 'mixed')
+  //     io.readdirInclude(dir, ['csv', 'tsv'], function (err, files) {
+  //       assert.isAbove(files.length, 0)
+  //       if (err) {
+  //         console.log(err)
+  //       }
+  //       done()
+  //     })
+  //   })
+  // })
+
   describe('extension in filename', function () {
     it('should be empty', function (done) {
       var dir = path.join(__dirname, 'data', 'json')
