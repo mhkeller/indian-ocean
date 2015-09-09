@@ -119,11 +119,11 @@ describe('readdirInclude()', function () {
     })
   })
 
-  describe('actual extension', function () {
-    it('should find csv files', function (done) {
+  describe('include by extension', function () {
+    it('should match expected output', function (done) {
       var dir = path.join(__dirname, 'data', 'csv')
       io.readdirInclude(dir, 'csv', function (err, files) {
-        assert.isAbove(files.length, 0)
+        assert(_.isEqual(files.length, 2))
         if (err) {
           console.log(err)
         }
@@ -132,24 +132,11 @@ describe('readdirInclude()', function () {
     })
   })
 
-  describe('actual extension', function () {
-    it('should find csv files', function (done) {
-      var dir = path.join(__dirname, 'data', 'csv')
-      io.readdirInclude(dir, 'csv', function (err, files) {
-        assert.isAbove(files.length, 0)
-        if (err) {
-          console.log(err)
-        }
-        done()
-      })
-    })
-  })
-
-  describe('actual extension', function () {
-    it('should find csv files given list of one', function (done) {
+  describe('include by single list', function () {
+    it('should match expected output', function (done) {
       var dir = path.join(__dirname, 'data', 'csv')
       io.readdirInclude(dir, ['csv'], function (err, files) {
-        assert.isAbove(files.length, 0)
+        assert(_.isEqual(files.length, 2))
         if (err) {
           console.log(err)
         }
@@ -158,25 +145,24 @@ describe('readdirInclude()', function () {
     })
   })
 
-  // TODO, do this one
-  // describe('actual extension', function () {
-  //   it('should find txt and csv files', function (done) {
-  //     var dir = path.join(__dirname, 'data', 'mixed')
-  //     io.readdirInclude(dir, ['csv', 'tsv'], function (err, files) {
-  //       assert.isAbove(files.length, 0)
-  //       if (err) {
-  //         console.log(err)
-  //       }
-  //       done()
-  //     })
-  //   })
-  // })
+  describe('include by extension list', function () {
+    it('should match expected output', function (done) {
+      var dir = path.join(__dirname, 'data', 'mixed')
+      io.readdirInclude(dir, ['csv', 'tsv'], function (err, files) {
+        assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.tsv","data-1.csv"]'))
+        if (err) {
+          console.log(err)
+        }
+        done()
+      })
+    })
+  })
 
-  describe('extension in filename', function () {
-    it('should be empty', function (done) {
-      var dir = path.join(__dirname, 'data', 'json')
-      io.readdirInclude(dir, 'csv', function (err, files) {
-        assert.lengthOf(files, 0)
+  describe('include by extension list and regex', function () {
+    it('should match expected output', function (done) {
+      var dir = path.join(__dirname, 'data', 'mixed')
+      io.readdirInclude(dir, ['csv', 'tsv', /hidden/], function (err, files) {
+        assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.csv","data-0.tsv","data-1.csv"]'))
         if (err) {
           console.log(err)
         }
@@ -250,11 +236,11 @@ describe('readdirExclude()', function () {
     })
   })
 
-  describe('no matching files', function () {
-    it('should not be empty', function (done) {
-      var dir = path.join(__dirname, 'data', 'csv')
+  describe('exclude by extension', function () {
+    it('should match expected out', function (done) {
+      var dir = path.join(__dirname, 'data', 'mixed')
       io.readdirExclude(dir, 'tsv', function (err, files) {
-        assert.isAbove(files.length, 0)
+        assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.csv","data-0.json","data-1.csv"]'))
         if (err) {
           console.error(err)
         }
@@ -263,11 +249,25 @@ describe('readdirExclude()', function () {
     })
   })
 
-  describe('extension in filename', function () {
-    it('should not be empty', function (done) {
-      var dir = path.join(__dirname, 'data', 'other')
-      io.readdirExclude(dir, 'csv', function (err, files) {
-        assert.isAbove(files.length, 0)
+  describe('exclude by extension list', function () {
+    it('match expected output', function (done) {
+      var dir = path.join(__dirname, 'data', 'mixed')
+      io.readdirExclude(dir, ['tsv', 'csv'], function (err, files) {
+        assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.json"]'))
+        if (err) {
+          console.error(err)
+        }
+        done()
+      })
+
+    })
+  })
+
+  describe('exclude by extension list and regex', function () {
+    it('match expected output', function (done) {
+      var dir = path.join(__dirname, 'data', 'mixed')
+      io.readdirExclude(dir, ['tsv', 'csv', /^\./], function (err, files) {
+        assert(_.isEqual(JSON.stringify(files), '["data-0.json"]'))
         if (err) {
           console.error(err)
         }
@@ -278,12 +278,12 @@ describe('readdirExclude()', function () {
 
   describe('dirPath in filename', function () {
     it('should match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      io.readdirExclude(dir, 'txt', true, function (err, files) {
+      var dir = path.join(__dirname, 'data', 'other')
+      io.readdirExclude(dir, 'csv', true, function (err, files) {
         if (err) {
           console.log(err)
         }
-        done(assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_txt.csv')), -1))
+        done(assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1))
       })
     })
   })
@@ -313,7 +313,7 @@ describe('readdirExcludeSync()', function () {
 
   describe('dirPath in filename', function () {
     it('should match expected output', function () {
-      var dir = path.join(__dirname, 'data', 'mixed')
+      var dir = path.join(__dirname, 'data', 'other')
       var files = io.readdirExcludeSync(dir, 'csv', true)
       assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1)
     })
