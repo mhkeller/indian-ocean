@@ -1,6 +1,15 @@
 Changelog
 =========
 
+# 0.7.0
+
+* Add support for reading `txt` files both explicitly and as a fallback for when we don't have a supported parser
+  * Closes 
+  * 
+* Refactor library by delegating all `read` functions to `readData` / `readDataSync`, which now take parameters to parse with a given parser, not just a given delimiter
+  * 
+* Documentation fixes
+  * 
 
 # 0.6.0
 
