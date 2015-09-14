@@ -10,6 +10,7 @@ Changelog
   * 
 * Documentation fixes
   * 
+* Yaml read/write support
 
 # 0.6.0
 
