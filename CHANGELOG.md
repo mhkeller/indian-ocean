@@ -1,6 +1,24 @@
 Changelog
 =========
 
+# 0.7.0
+
+* Add support for reading `txt` files both explicitly and as a fallback for when we don't have a supported parser
+  * Closes https://github.com/mhkeller/indian-ocean/issues/5
+  * https://github.com/mhkeller/indian-ocean/commit/89d6b5515ad13c8636ab3e8201258e850563c77f
+* Refactor library by delegating all `read` functions to `readData` / `readDataSync`, which now take parameters to parse with a given parser, not just a given delimiter
+  * https://github.com/mhkeller/indian-ocean/commit/33e8cb6e83aad294fe2d508e607570dd1353381b
+* Various documentation fixes
+* Yaml read/write support
+  * https://github.com/mhkeller/indian-ocean/commit/0ea2f9d2dc81ab7481987ab8feecc4c7efd8ead2
+
+# 0.6.0
+
+* Add ability for `readdir` functions to take regexes
+  * https://github.com/mhkeller/indian-ocean/commit/44bfb9e01c70f7ab856582b48bc93c581dd8c69b
+* Refactor `readdir` functions to call a common function with options.
+  * https://github.com/mhkeller/indian-ocean/commit/84e8edf68501b16e75ef59aeaae7fcb42ca46b9d
+* More stringent tests
 
 # 0.5.0
 
