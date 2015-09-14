@@ -70,7 +70,21 @@ describe('readDataSync()', function () {
   describe('unknown ext', function () {
     it('should match expected text', function () {
       var txt = io.readDataSync(testDataPath('other/fancy-text-extension.text'))
-      assert(_.isEqual('The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.', txt))
+      assert(_.isEqual(txt, 'The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+    })
+  })
+
+  describe('yaml', function () {
+    it('should match expected json', function () {
+      var json = io.readDataSync(testDataPath('yaml/basic.yaml'))
+      assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
+    })
+  })
+
+  describe('yml', function () {
+    it('should match expected json', function () {
+      var json = io.readDataSync(testDataPath('yml/basic.yml'))
+      assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
     })
   })
 })
@@ -131,6 +145,38 @@ describe('readTxtSync()', function () {
     it('should match expected json', function () {
       var txt = io.readTxtSync(testDataPath('txt/basic.txt'))
       assert(_.isEqual(txt, 'The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+    })
+  })
+})
+
+describe('readYamlSync()', function () {
+  describe('empty', function () {
+    it('should be empty', function () {
+      var json = io.readYamlSync(testDataPath('yaml/empty.yaml'))
+      assert(_.isUndefined(json))
+    })
+  })
+
+  describe('basic', function () {
+    it('should match expected json', function () {
+      var json = io.readYamlSync(testDataPath('yaml/basic.yaml'))
+      assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+    })
+  })
+})
+
+describe('readYamlSync()', function () {
+  describe('empty', function () {
+    it('should be empty', function () {
+      var json = io.readYamlSync(testDataPath('yml/empty.yml'))
+      assert(_.isUndefined(json))
+    })
+  })
+
+  describe('basic', function () {
+    it('should match expected json', function () {
+      var json = io.readYamlSync(testDataPath('yml/basic.yml'))
+      assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
     })
   })
 })
