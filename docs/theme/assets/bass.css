@@ -217,6 +217,7 @@ h6, .h6 { font-size: .75rem }
 
 .bold    { font-weight: bold }
 .regular { font-weight: normal }
+.thin    { font-weight: 200 }
 .italic  { font-style: italic }
 .caps    { text-transform: uppercase; letter-spacing: .2em; }
 
