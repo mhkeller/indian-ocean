@@ -41,6 +41,7 @@
     "chalk": "^1.0.0",
     "documentation": "2.1.0-alpha1",
     "istanbul": "^0.3.17",
+    "js-yaml": "^3.3.0",
     "mocha": "^2.2.5",
     "standard": "^4.5.1"
   }
