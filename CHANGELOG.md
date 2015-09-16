@@ -1,6 +1,11 @@
 Changelog
 =========
 
+# 0.7.1
+
+* Fix missing dependencies
+  * https://github.com/mhkeller/indian-ocean/pull/32
+
 # 0.7.0
 
 * Add support for reading `txt` files both explicitly and as a fallback for when we don't have a supported parser
