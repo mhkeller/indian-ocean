@@ -32,6 +32,7 @@
   "dependencies": {
     "chalk": "^1.1.1",
     "d3-dsv": "^0.1.5",
+    "js-yaml": "^3.3.0",
     "parse-json": "^2.0.0",
     "queue-async": "^1.0.7",
     "shapefile": "^0.3.0",
@@ -39,10 +40,8 @@
   },
   "devDependencies": {
     "chai": "^3.0.0",
-    "chalk": "^1.0.0",
     "documentation": "2.1.0-alpha1",
     "istanbul": "^0.3.17",
-    "js-yaml": "^3.3.0",
     "mocha": "^2.2.5",
     "standard": "^4.5.1"
   }
