@@ -1,6 +1,10 @@
 Changelog
 =========
 
+# 0.7.2
+
+* NPM had an error publishing to it. Bumped version and republished.
+
 # 0.7.1
 
 * Fix missing dependencies
