@@ -50,14 +50,14 @@
                   <code>.extensionMatches</code>
                 </a>
                 <a
-                  href='#helpers/matchregexp'
-                  class='px1 regular block'>
-                  <code>.matchRegExp</code>
-                </a>
-                <a
                   href='#helpers/matches'
                   class='px1 regular block'>
                   <code>.matches</code>
+                </a>
+                <a
+                  href='#helpers/matchregexp'
+                  class='px1 regular block'>
+                  <code>.matchRegExp</code>
                 </a>
               <a
                 href='#readers'
@@ -88,6 +88,11 @@
                   href='#readers/readdbf'
                   class='px1 regular block'>
                   <code>.readDbf</code>
+                </a>
+                <a
+                  href='#readers/readdirfilter'
+                  class='px1 regular block'>
+                  <code>.readdirFilter</code>
                 </a>
                 <a
                   href='#readers/readjson'
@@ -139,26 +144,6 @@
                   class='px1 regular block'>
                   <code>.readYamlSync</code>
                 </a>
-                <a
-                  href='#readers/readdirexclude'
-                  class='px1 regular block'>
-                  <code>.readdirExclude</code>
-                </a>
-                <a
-                  href='#readers/readdirexcludesync'
-                  class='px1 regular block'>
-                  <code>.readdirExcludeSync</code>
-                </a>
-                <a
-                  href='#readers/readdirinclude'
-                  class='px1 regular block'>
-                  <code>.readdirInclude</code>
-                </a>
-                <a
-                  href='#readers/readdirincludesync'
-                  class='px1 regular block'>
-                  <code>.readdirIncludeSync</code>
-                </a>
               <a
                 href='#writers'
                 class='regular block'>
@@ -189,6 +174,26 @@
                   class='px1 regular block'>
                   <code>.writeDbfToData</code>
                 </a>
+              <a
+                href='#writers'
+                class='regular block'>
+                <code>writers</code>
+              </a>
+              <a
+                href='#writers'
+                class='regular block'>
+                <code>writers</code>
+              </a>
+              <a
+                href='#writers'
+                class='regular block'>
+                <code>writers</code>
+              </a>
+              <a
+                href='#writers'
+                class='regular block'>
+                <code>writers</code>
+              </a>
           </div>
         </div>
       </div>
@@ -203,7 +208,7 @@
           <div class='px1'>
 <section id='helpers'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L79-L90'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L79-L90'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers'>
@@ -222,7 +227,7 @@
       <div class='section-indent'>
 <section id='helpers/discernfileformatter'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L135-L151'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L138-L154'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/discernfileformatter'>
@@ -274,7 +279,7 @@
       <div class='section-indent'>
 <section id='helpers/discernformat'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L90-L112'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L90-L115'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/discernformat'>
@@ -326,12 +331,12 @@
       <div class='section-indent'>
 <section id='helpers/discernparser'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L112-L135'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L115-L138'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/discernparser'>
       <code>
-        discernParser<span class='gray'>(fileName, delimiter)</span>
+        discernParser<span class='gray'>(fileName, options)</span>
       </code>
     </a>
   </h3>
@@ -354,11 +359,11 @@
 </td>
           </tr>
           <tr>
-            <td>delimiter</td>
+            <td>options</td>
             <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
             </td>
-            <td><p>optional delimiter</p>
+            <td><p>optionally can take a delimiter value</p>
 </td>
           </tr>
       </table>
@@ -376,7 +381,10 @@
 
     <h4>Examples</h4>
 <pre><span class="hljs-keyword">var</span> parser = io.discernParser(<span class="hljs-string">'path/to/data.csv'</span>);
-<span class="hljs-keyword">var</span> json = parser(<span class="hljs-string">'path/to/data.csv'</span>);</pre>
+<span class="hljs-keyword">var</span> json = parser(<span class="hljs-string">'path/to/data.csv'</span>);
+
+<span class="hljs-keyword">var</span> parser = io.discernParser(<span class="hljs-string">'path/to/data.usv'</span>, {delimiter: <span class="hljs-string">'_'</span>});
+<span class="hljs-keyword">var</span> json = parser(<span class="hljs-string">'path/to/data.usv'</span>);</pre>
 
 
 
@@ -386,7 +394,7 @@
       <div class='section-indent'>
 <section id='helpers/exists'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L151-L167'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L154-L170'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/exists'>
@@ -440,7 +448,7 @@
       <div class='section-indent'>
 <section id='helpers/existssync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L167-L186'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L170-L190'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/existssync'>
@@ -492,12 +500,12 @@
       <div class='section-indent'>
 <section id='helpers/extensionmatches'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L186-L201'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L190-L206'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/extensionmatches'>
       <code>
-        extensionMatches<span class='gray'>(fileName)</span>
+        extensionMatches<span class='gray'>(fileName, extension)</span>
       </code>
     </a>
   </h3>
@@ -519,15 +527,23 @@
             <td><p>the name of the file</p>
 </td>
           </tr>
+          <tr>
+            <td>extension</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the extension to test</p>
+</td>
+          </tr>
       </table>
     </p>
 
 
       <h4>Returns</h4>
-      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code></code>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
       :
       <span class='force-inline'>
-        <p>extension the extension to test</p>
+        <p>whether the extension matched or not</p>
 
       </span>
 
@@ -542,61 +558,9 @@
 </section>
       </div>
       <div class='section-indent'>
-<section id='helpers/matchregexp'class='mt4 mb4 px2'>
-    <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L201-L218'><code>lib/index.js</code></a>
-    </div>
-  <h3 class='regular'>
-    <a class='black' href='#helpers/matchregexp'>
-      <code>
-        matchRegExp<span class='gray'>(fileName)</span>
-      </code>
-    </a>
-  </h3>
-  <p>Test whether a string matches a given Regular Expression</p>
-
-
-    <p>
-      <table class='table-light overflow-hidden bg-cloudy-light'>
-        <thead>
-          <th class='col-3'>parameter</th>
-          <th class='col-3'>type</th>
-          <th class='col-6'>description</th>
-        </thead>
-          <tr>
-            <td>fileName</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-            </td>
-            <td><p>the name of the file</p>
-</td>
-          </tr>
-      </table>
-    </p>
-
-
-      <h4>Returns</h4>
-      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code></code>
-      :
-      <span class='force-inline'>
-        <p>regEx the regEx to match with</p>
-
-      </span>
-
-
-    <h4>Examples</h4>
-<pre><span class="hljs-keyword">var</span> matches = io.matchRegExp(<span class="hljs-string">'.gitignore'</span>, <span class="hljs-regexp">/\.gitignore/</span>)
-<span class="hljs-built_in">console</span>.log(matches) <span class="hljs-comment">// `true`</span></pre>
-
-
-
-
-</section>
-      </div>
-      <div class='section-indent'>
 <section id='helpers/matches'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L218-L230'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L223-L235'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/matches'>
@@ -648,13 +612,73 @@
 
 </section>
       </div>
+      <div class='section-indent'>
+<section id='helpers/matchregexp'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L206-L223'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#helpers/matchregexp'>
+      <code>
+        matchRegExp<span class='gray'>(fileName, RegEx)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Test whether a string matches a given Regular Expression</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>RegEx</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>
+            </td>
+            <td><p>the RegEx to match with</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>whether the string matches the RegEx</p>
+
+      </span>
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-keyword">var</span> matches = io.matchRegExp(<span class="hljs-string">'.gitignore'</span>, <span class="hljs-regexp">/\.gitignore/</span>)
+<span class="hljs-built_in">console</span>.log(matches) <span class="hljs-comment">// `true`</span></pre>
+
+
+
+
+</section>
+      </div>
 
 
 
 </section>
 <section id='readers'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L243-L271'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L248-L286'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers'>
@@ -673,7 +697,7 @@
       <div class='section-indent'>
 <section id='readers/readcsv'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L318-L333'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L333-L348'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readcsv'>
@@ -727,7 +751,7 @@
       <div class='section-indent'>
 <section id='readers/readcsvsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L333-L349'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L348-L364'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readcsvsync'>
@@ -779,12 +803,12 @@
       <div class='section-indent'>
 <section id='readers/readdata'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L271-L296'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L286-L311'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdata'>
       <code>
-        readData<span class='gray'>(fileName, delimiterOrParser, callback)</span>
+        readData<span class='gray'>(fileName, options, callback)</span>
       </code>
     </a>
   </h3>
@@ -819,11 +843,11 @@
 </td>
           </tr>
           <tr>
-            <td>delimiterOrParser</td>
+            <td>options</td>
             <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
             </td>
-            <td><p>optional delimiter to use when reading the file or a parsing object. Must have a <code>parse</code> method that returns the parsed data.</p>
+            <td><p>optional <code>parseWith</code> value to use when reading the file. This can be a string that is the file's delimiter or a parsing object similar to what <code>dsv.dsv</code> returns. Parsing objects have a <code>parse</code> method that returns the parsed data.</p>
 </td>
           </tr>
           <tr>
@@ -843,6 +867,16 @@
     <h4>Examples</h4>
 <pre>io.readData(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
   <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
+})
+
+io.readData(<span class="hljs-string">'path/to/data.usv'</span>, {parseWith: <span class="hljs-string">'_'</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
+})
+
+
+<span class="hljs-keyword">var</span> myParser = dsv.dsv(<span class="hljs-string">'_'</span>)
+io.readData(<span class="hljs-string">'path/to/data.usv'</span>, {parseWith: myParser}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
+  <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
 })</pre>
 
 
@@ -853,12 +887,12 @@
       <div class='section-indent'>
 <section id='readers/readdatasync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L296-L318'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L311-L333'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdatasync'>
       <code>
-        readDataSync<span class='gray'>(fileName, delimiterOrParser)</span>
+        readDataSync<span class='gray'>(fileName, options)</span>
       </code>
     </a>
   </h3>
@@ -881,11 +915,11 @@
 </td>
           </tr>
           <tr>
-            <td>delimiterOrParser</td>
+            <td>options</td>
             <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
             </td>
-            <td><p>optional delimiter to use when reading the file or a parsing object. Must have a <code>parse</code> method that returns the parsed data.</p>
+            <td><p>optional <code>parseWith</code> value to use when reading the file. This can be a string that is the file's delimiter or a parsing object similar to what <code>dsv.dsv</code> returns. Parsing objects have a <code>parse</code> method that returns the parsed data.</p>
 </td>
           </tr>
       </table>
@@ -913,7 +947,7 @@
       <div class='section-indent'>
 <section id='readers/readdbf'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L506-L564'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L521-L579'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdbf'>
@@ -965,9 +999,102 @@
 </section>
       </div>
       <div class='section-indent'>
+<section id='readers/readdirfilter'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L642-L735'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#readers/readdirfilter'>
+      <code>
+        readdirFilter<span class='gray'>(dirPath, options)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Get a list of a directory's files and folders if certain critera are met.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>dirPath</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the directory to read from</p>
+</td>
+          </tr>
+          <tr>
+            <td>options</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+            </td>
+            <td><p>filter options, see below</p>
+</td>
+          </tr>
+            <tr>
+              <td>options.include</td>
+              <td>
+                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>>
+              </td>
+              <td><p>if given a string, return files that have that string as their extension. If given a Regular Expression, return the file that matches the pattern. Can also take a list of both.List matching behavior is described in <code>includeAll</code>.</p>
+</td>
+            </tr>
+            <tr>
+              <td>options.exclude</td>
+              <td>
+                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>>
+              </td>
+              <td><p>if given a string, return files that do not have that string as their extension. If given a Regular Expression, return the file that matches the pattern. Can also take a list of both. List matching behavior is described in <code>excludeAll</code>.</p>
+</td>
+            </tr>
+            <tr>
+              <td>options.includeMode</td>
+              <td>
+                <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>]</code>
+                (default <code>&#x27;all&#x27;</code>)
+              </td>
+              <td><p>Can be <code>'all'</code> or <code>'any'</code>. The former will require all include conditions to be met for the target to be included. The latter will only require one.</p>
+</td>
+            </tr>
+            <tr>
+              <td>options.excludeMode</td>
+              <td>
+                <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>]</code>
+                (default <code>&#x27;any&#x27;</code>)
+              </td>
+              <td><p>Can be <code>'all'</code> or <code>'any'</code>. The former will require all exclude conditions to be met for the target to be excluded. The latter will only require one.</p>
+</td>
+            </tr>
+      </table>
+    </p>
+
+
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-comment">// dir contains `data-0.tsv`, `data-0.json`, `data-0.csv`, `data-1.csv`, `.hidden-file`</span>
+io.readdirInclude(<span class="hljs-string">'path/to/files'</span>, <span class="hljs-string">'csv'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, files</span>)</span>{
+  <span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['data-0.csv', 'data-1.csv']</span>
+})
+
+io.readdirInclude(<span class="hljs-string">'path/to/files'</span>, [<span class="hljs-string">'csv'</span>, <span class="hljs-string">'tsv'</span>], <span class="hljs-literal">true</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, files</span>)</span>{
+  <span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['path/to/files/data-0.csv', 'path/to/files/data-1.csv', 'path/to/files/data-0.tsv']</span>
+})</pre>
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
 <section id='readers/readjson'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L349-L364'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L364-L379'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readjson'>
@@ -1021,7 +1148,7 @@
       <div class='section-indent'>
 <section id='readers/readjsonsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L364-L380'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L379-L395'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readjsonsync'>
@@ -1073,7 +1200,7 @@
       <div class='section-indent'>
 <section id='readers/readpsv'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L411-L426'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L426-L441'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readpsv'>
@@ -1127,7 +1254,7 @@
       <div class='section-indent'>
 <section id='readers/readpsvsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L426-L442'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L441-L457'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readpsvsync'>
@@ -1179,7 +1306,7 @@
       <div class='section-indent'>
 <section id='readers/readtsv'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L380-L395'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L395-L410'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readtsv'>
@@ -1233,7 +1360,7 @@
       <div class='section-indent'>
 <section id='readers/readtsvsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L395-L411'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L410-L426'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readtsvsync'>
@@ -1285,7 +1412,7 @@
       <div class='section-indent'>
 <section id='readers/readtxt'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L442-L457'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L457-L472'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readtxt'>
@@ -1339,7 +1466,7 @@
       <div class='section-indent'>
 <section id='readers/readtxtsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L457-L474'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L472-L489'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readtxtsync'>
@@ -1391,7 +1518,7 @@
       <div class='section-indent'>
 <section id='readers/readyaml'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L474-L490'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L489-L505'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readyaml'>
@@ -1446,7 +1573,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, <span class="h
       <div class='section-indent'>
 <section id='readers/readyamlsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L490-L506'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L505-L521'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readyamlsync'>
@@ -1496,311 +1623,13 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, <span class="h
 
 </section>
       </div>
-      <div class='section-indent'>
-<section id='readers/readdirexclude'class='mt4 mb4 px2'>
-    <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L669-L690'><code>lib/index.js</code></a>
-    </div>
-  <h3 class='regular'>
-    <a class='black' href='#readers/readdirexclude'>
-      <code>
-        readdirExclude<span class='gray'>(dirPath, excludes, [includeFullPath], callback)</span>
-      </code>
-    </a>
-  </h3>
-  <p>Get a list of the files in a directory that do not have the selected extentions.</p>
-
-
-    <p>
-      <table class='table-light overflow-hidden bg-cloudy-light'>
-        <thead>
-          <th class='col-3'>parameter</th>
-          <th class='col-3'>type</th>
-          <th class='col-6'>description</th>
-        </thead>
-          <tr>
-            <td>dirPath</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-            </td>
-            <td><p>the directory to read from</p>
-</td>
-          </tr>
-          <tr>
-            <td>excludes</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>
-            </td>
-            <td><p>the file extention(s) to exclude or RegExp matching file name</p>
-</td>
-          </tr>
-          <tr>
-            <td>includeFullPath</td>
-            <td>
-              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>]</code>
-                (default <code>false</code>)
-            </td>
-            <td><p>return the <code>dirPath</code> in the result</p>
-</td>
-          </tr>
-          <tr>
-            <td>callback</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
-            </td>
-            <td><p>the callback that will accept the filtered files, takes an optional error and an array of file names</p>
-</td>
-          </tr>
-      </table>
-    </p>
-
-
-
-
-    <h4>Examples</h4>
-<pre><span class="hljs-comment">// dir contains `data-0.tsv`, `data-0.json`, `data-0.csv`, `data-1.csv`, `.hidden-file`</span>
-io.readdirExclude(<span class="hljs-string">'path/to/files'</span>, <span class="hljs-string">'csv'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, files</span>)</span>{
-  <span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['data-0.tsv', 'data-0.json', '.hidden-file']</span>
-})
-
-io.readdirExclude(<span class="hljs-string">'path/to/files'</span>, [<span class="hljs-string">'csv'</span>, <span class="hljs-string">'tsv'</span>, <span class="hljs-regexp">/^\./</span>], <span class="hljs-literal">true</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, files</span>)</span>{
-  <span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['path/to/files/data-0.json']</span>
-})</pre>
-
-
-
-
-</section>
-      </div>
-      <div class='section-indent'>
-<section id='readers/readdirexcludesync'class='mt4 mb4 px2'>
-    <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L690-L695'><code>lib/index.js</code></a>
-    </div>
-  <h3 class='regular'>
-    <a class='black' href='#readers/readdirexcludesync'>
-      <code>
-        readdirExcludeSync<span class='gray'>(dirPath, excludes, [includeFullPath])</span>
-      </code>
-    </a>
-  </h3>
-  <p>Synchronously get a list of the files in a directory that do not have the selected extentions.</p>
-
-
-    <p>
-      <table class='table-light overflow-hidden bg-cloudy-light'>
-        <thead>
-          <th class='col-3'>parameter</th>
-          <th class='col-3'>type</th>
-          <th class='col-6'>description</th>
-        </thead>
-          <tr>
-            <td>dirPath</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-            </td>
-            <td><p>the directory to read from</p>
-</td>
-          </tr>
-          <tr>
-            <td>excludes</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>
-            </td>
-            <td><p>the file extention(s) to exclude or RegExp matching file name</p>
-</td>
-          </tr>
-          <tr>
-            <td>includeFullPath</td>
-            <td>
-              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>]</code>
-                (default <code>false</code>)
-            </td>
-            <td><p>return the <code>dirPath</code> in the result</p>
-</td>
-          </tr>
-      </table>
-    </p>
-
-
-      <h4>Returns</h4>
-      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>></code>
-      :
-      <span class='force-inline'>
-        <p>the matching files' paths</p>
-
-      </span>
-
-
-    <h4>Examples</h4>
-<pre><span class="hljs-comment">// dir contains `data-0.tsv`, `data-0.json`, `data-0.csv`, `data-1.csv`, `.hidden-file`</span>
-<span class="hljs-keyword">var</span> files = io.readdirExcludeSync(<span class="hljs-string">'path/to/files'</span>, <span class="hljs-string">'csv'</span>)
-<span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['data-0.tsv', 'data-0.json', '.hidden-file']</span>
-
-<span class="hljs-keyword">var</span> files = io.readdirExcludeSync(<span class="hljs-string">'path/to/files'</span>, [<span class="hljs-string">'csv'</span>, <span class="hljs-string">'tsv'</span>, <span class="hljs-regexp">/^\./</span>], <span class="hljs-literal">true</span>)
-<span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['path/to/files/data-0.json']</span></pre>
-
-
-
-
-</section>
-      </div>
-      <div class='section-indent'>
-<section id='readers/readdirinclude'class='mt4 mb4 px2'>
-    <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L625-L646'><code>lib/index.js</code></a>
-    </div>
-  <h3 class='regular'>
-    <a class='black' href='#readers/readdirinclude'>
-      <code>
-        readdirInclude<span class='gray'>(dirPath, includes, [includeFullPath], callback)</span>
-      </code>
-    </a>
-  </h3>
-  <p>Get a list of the files in a directory with selected extentions.</p>
-
-
-    <p>
-      <table class='table-light overflow-hidden bg-cloudy-light'>
-        <thead>
-          <th class='col-3'>parameter</th>
-          <th class='col-3'>type</th>
-          <th class='col-6'>description</th>
-        </thead>
-          <tr>
-            <td>dirPath</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-            </td>
-            <td><p>the directory to read from</p>
-</td>
-          </tr>
-          <tr>
-            <td>includes</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>
-            </td>
-            <td><p>the file extention(s) to include or RegExp matching file name</p>
-</td>
-          </tr>
-          <tr>
-            <td>includeFullPath</td>
-            <td>
-              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>]</code>
-                (default <code>false</code>)
-            </td>
-            <td><p>return the <code>dirPath</code> in the result</p>
-</td>
-          </tr>
-          <tr>
-            <td>callback</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
-            </td>
-            <td><p>the callback that will accept the filtered files, takes an optional error and an array of file names</p>
-</td>
-          </tr>
-      </table>
-    </p>
-
-
-
-
-    <h4>Examples</h4>
-<pre><span class="hljs-comment">// dir contains `data-0.tsv`, `data-0.json`, `data-0.csv`, `data-1.csv`, `.hidden-file`</span>
-io.readdirInclude(<span class="hljs-string">'path/to/files'</span>, <span class="hljs-string">'csv'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, files</span>)</span>{
-  <span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['data-0.csv', 'data-1.csv']</span>
-})
-
-io.readdirInclude(<span class="hljs-string">'path/to/files'</span>, [<span class="hljs-string">'csv'</span>, <span class="hljs-string">'tsv'</span>], <span class="hljs-literal">true</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, files</span>)</span>{
-  <span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['path/to/files/data-0.csv', 'path/to/files/data-1.csv', 'path/to/files/data-0.tsv']</span>
-})</pre>
-
-
-
-
-</section>
-      </div>
-      <div class='section-indent'>
-<section id='readers/readdirincludesync'class='mt4 mb4 px2'>
-    <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L646-L669'><code>lib/index.js</code></a>
-    </div>
-  <h3 class='regular'>
-    <a class='black' href='#readers/readdirincludesync'>
-      <code>
-        readdirIncludeSync<span class='gray'>(dirPath, includes, [includeFullPath])</span>
-      </code>
-    </a>
-  </h3>
-  <p>Synchronously get a list of the files in a directory with selected extentions.</p>
-
-
-    <p>
-      <table class='table-light overflow-hidden bg-cloudy-light'>
-        <thead>
-          <th class='col-3'>parameter</th>
-          <th class='col-3'>type</th>
-          <th class='col-6'>description</th>
-        </thead>
-          <tr>
-            <td>dirPath</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-            </td>
-            <td><p>the directory to read from</p>
-</td>
-          </tr>
-          <tr>
-            <td>includes</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>
-            </td>
-            <td><p>the file extention(s) to include or RegExp matching file name</p>
-</td>
-          </tr>
-          <tr>
-            <td>includeFullPath</td>
-            <td>
-              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>]</code>
-                (default <code>false</code>)
-            </td>
-            <td><p>return the <code>dirPath</code> in the result</p>
-</td>
-          </tr>
-      </table>
-    </p>
-
-
-      <h4>Returns</h4>
-      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>></code>
-      :
-      <span class='force-inline'>
-        <p>the matching files' paths</p>
-
-      </span>
-
-
-    <h4>Examples</h4>
-<pre><span class="hljs-comment">// dir contains `data-0.tsv`, `data-0.json`, `data-0.csv`, `data-1.csv`, `.hidden-file`</span>
-<span class="hljs-keyword">var</span> files = io.readdirIncludeSync(<span class="hljs-string">'path/to/files'</span>, <span class="hljs-string">'csv'</span>)
-<span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['data-0.csv', 'data-1.csv']</span>
-
-<span class="hljs-keyword">var</span> files = io.readdirIncludeSync(<span class="hljs-string">'path/to/files'</span>, [<span class="hljs-string">'csv'</span>, <span class="hljs-string">'tsv'</span>, <span class="hljs-regexp">/hidden/</span>], <span class="hljs-literal">true</span>)
-<span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['path/to/files/.hidden-file','path/to/files/data-0.csv', 'path/to/files/data-1.csv', 'path/to/files/data-0.tsv']</span></pre>
-
-
-
-
-</section>
-      </div>
 
 
 
 </section>
 <section id='writers'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L695-L724'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L735-L764'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers'>
@@ -1819,7 +1648,7 @@ io.readdirInclude(<span class="hljs-string">'path/to/files'</span>, [<span class
       <div class='section-indent'>
 <section id='writers/appenddata'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L778-L808'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L818-L848'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/appenddata'>
@@ -1893,7 +1722,7 @@ io.writeAppendData(<span class="hljs-string">'path/to/data.csv'</span>, flatJson
       <div class='section-indent'>
 <section id='writers/appenddatasync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L808-L829'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L848-L869'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/appenddatasync'>
@@ -1947,7 +1776,7 @@ io.writeAppendDataSync(<span class="hljs-string">'path/to/data.csv'</span>, flat
       <div class='section-indent'>
 <section id='writers/writedata'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L724-L745'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L764-L785'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/writedata'>
@@ -2023,7 +1852,7 @@ io.writeData(<span class="hljs-string">'path/to/data.csv'</span>, flatJsonData, 
       <div class='section-indent'>
 <section id='writers/writedatasync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L745-L778'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L785-L818'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/writedatasync'>
@@ -2077,7 +1906,7 @@ io.writeDataSync(<span class="hljs-string">'path/to/data.csv'</span>, flatJsonDa
       <div class='section-indent'>
 <section id='writers/writedbftodata'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/c68e79757be66e8deb6662c1ab11888d8e5014ee/lib/index.js#L829-L839'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L869-L879'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/writedbftodata'>
@@ -2136,6 +1965,296 @@ io.writeDataSync(<span class="hljs-string">'path/to/data.csv'</span>, flatJsonDa
 
 </section>
       </div>
+
+
+
+</section>
+<section id='writers'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L735-L764'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#writers'>
+      <code>
+        writers<span class='gray'>(dirPath, excludes, [includeFullPath])</span>
+      </code>
+    </a>
+  </h3>
+  <p>Synchronously get a list of the files in a directory that do not have the selected extentions.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>dirPath</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the directory to read from</p>
+</td>
+          </tr>
+          <tr>
+            <td>excludes</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>
+            </td>
+            <td><p>the file extention(s) to exclude or RegExp matching file name</p>
+</td>
+          </tr>
+          <tr>
+            <td>includeFullPath</td>
+            <td>
+              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>]</code>
+                (default <code>false</code>)
+            </td>
+            <td><p>return the <code>dirPath</code> in the result</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>></code>
+      :
+      <span class='force-inline'>
+        <p>the matching files' paths</p>
+
+      </span>
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-comment">// dir contains `data-0.tsv`, `data-0.json`, `data-0.csv`, `data-1.csv`, `.hidden-file`</span>
+<span class="hljs-keyword">var</span> files = io.readdirExcludeSync(<span class="hljs-string">'path/to/files'</span>, <span class="hljs-string">'csv'</span>)
+<span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['data-0.tsv', 'data-0.json', '.hidden-file']</span>
+
+<span class="hljs-keyword">var</span> files = io.readdirExcludeSync(<span class="hljs-string">'path/to/files'</span>, [<span class="hljs-string">'csv'</span>, <span class="hljs-string">'tsv'</span>, <span class="hljs-regexp">/^\./</span>], <span class="hljs-literal">true</span>)
+<span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['path/to/files/data-0.json']</span></pre>
+
+
+
+
+</section>
+<section id='writers'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L735-L764'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#writers'>
+      <code>
+        writers<span class='gray'>(dirPath, includes, [includeFullPath])</span>
+      </code>
+    </a>
+  </h3>
+  <p>Synchronously get a list of the files in a directory with selected extentions.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>dirPath</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the directory to read from</p>
+</td>
+          </tr>
+          <tr>
+            <td>includes</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>
+            </td>
+            <td><p>the file extention(s) to include or RegExp matching file name</p>
+</td>
+          </tr>
+          <tr>
+            <td>includeFullPath</td>
+            <td>
+              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>]</code>
+                (default <code>false</code>)
+            </td>
+            <td><p>return the <code>dirPath</code> in the result</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>></code>
+      :
+      <span class='force-inline'>
+        <p>the matching files' paths</p>
+
+      </span>
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-comment">// dir contains `data-0.tsv`, `data-0.json`, `data-0.csv`, `data-1.csv`, `.hidden-file`</span>
+<span class="hljs-keyword">var</span> files = io.readdirIncludeSync(<span class="hljs-string">'path/to/files'</span>, <span class="hljs-string">'csv'</span>)
+<span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['data-0.csv', 'data-1.csv']</span>
+
+<span class="hljs-keyword">var</span> files = io.readdirIncludeSync(<span class="hljs-string">'path/to/files'</span>, [<span class="hljs-string">'csv'</span>, <span class="hljs-string">'tsv'</span>, <span class="hljs-regexp">/hidden/</span>], <span class="hljs-literal">true</span>)
+<span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['path/to/files/.hidden-file','path/to/files/data-0.csv', 'path/to/files/data-1.csv', 'path/to/files/data-0.tsv']</span></pre>
+
+
+
+
+</section>
+<section id='writers'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L735-L764'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#writers'>
+      <code>
+        writers<span class='gray'>(dirPath, includes, [includeFullPath], callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Get a list of the files in a directory with selected extentions.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>dirPath</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the directory to read from</p>
+</td>
+          </tr>
+          <tr>
+            <td>includes</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>
+            </td>
+            <td><p>the file extention(s) to include or RegExp matching file name</p>
+</td>
+          </tr>
+          <tr>
+            <td>includeFullPath</td>
+            <td>
+              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>]</code>
+                (default <code>false</code>)
+            </td>
+            <td><p>return the <code>dirPath</code> in the result</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>the callback that will accept the filtered files, takes an optional error and an array of file names</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-comment">// dir contains `data-0.tsv`, `data-0.json`, `data-0.csv`, `data-1.csv`, `.hidden-file`</span>
+io.readdirInclude(<span class="hljs-string">'path/to/files'</span>, <span class="hljs-string">'csv'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, files</span>)</span>{
+  <span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['data-0.csv', 'data-1.csv']</span>
+})
+
+io.readdirInclude(<span class="hljs-string">'path/to/files'</span>, [<span class="hljs-string">'csv'</span>, <span class="hljs-string">'tsv'</span>], <span class="hljs-literal">true</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, files</span>)</span>{
+  <span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['path/to/files/data-0.csv', 'path/to/files/data-1.csv', 'path/to/files/data-0.tsv']</span>
+})</pre>
+
+
+
+
+</section>
+<section id='writers'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/930381a0ae260779bf8a5a2cd023b08a75267012/lib/index.js#L735-L764'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#writers'>
+      <code>
+        writers<span class='gray'>(dirPath, excludes, [includeFullPath], callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Get a list of the files in a directory that do not have the selected extentions.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>dirPath</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the directory to read from</p>
+</td>
+          </tr>
+          <tr>
+            <td>excludes</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code><<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>
+            </td>
+            <td><p>the file extention(s) to exclude or RegExp matching file name</p>
+</td>
+          </tr>
+          <tr>
+            <td>includeFullPath</td>
+            <td>
+              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>]</code>
+                (default <code>false</code>)
+            </td>
+            <td><p>return the <code>dirPath</code> in the result</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>the callback that will accept the filtered files, takes an optional error and an array of file names</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-comment">// dir contains `data-0.tsv`, `data-0.json`, `data-0.csv`, `data-1.csv`, `.hidden-file`</span>
+io.readdirExclude(<span class="hljs-string">'path/to/files'</span>, <span class="hljs-string">'csv'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, files</span>)</span>{
+  <span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['data-0.tsv', 'data-0.json', '.hidden-file']</span>
+})
+
+io.readdirExclude(<span class="hljs-string">'path/to/files'</span>, [<span class="hljs-string">'csv'</span>, <span class="hljs-string">'tsv'</span>, <span class="hljs-regexp">/^\./</span>], <span class="hljs-literal">true</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, files</span>)</span>{
+  <span class="hljs-built_in">console</span>.log(files) <span class="hljs-comment">// ['path/to/files/data-0.json']</span>
+})</pre>
+
 
 
 
