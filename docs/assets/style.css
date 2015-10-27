@@ -52,3 +52,7 @@ section:target {
 .documentation-sidebar a:active {
   background: #fcfbf2;
 }
+
+#introduction{
+  width: 80%;
+}
