@@ -24,6 +24,7 @@ Changelog
 * Create intermediate directories via config flag when writing or appending data
   * Closes [#27](https://github.com/mhkeller/indian-ocean/issues/27)
   * [6a93e43e0e177b3a0c7cf5376e14b252bcc48383](https://github.com/mhkeller/indian-ocean/commit/6a93e43e0e177b3a0c7cf5376e14b252bcc48383)
+  * [1aa7c3979ff812bce4b455cca14abf139f526b14](https://github.com/mhkeller/indian-ocean/commit/1aa7c3979ff812bce4b455cca14abf139f526b14)
 
 
 # 0.7.2
