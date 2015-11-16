@@ -21,6 +21,10 @@ Changelog
 * Fall back to writing text if file format is unknown
   * Closes [#35](https://github.com/mhkeller/indian-ocean/issues/35)
   * [32469da3b21dfc5c3b855a9105bd3376a470b999](https://github.com/mhkeller/indian-ocean/commit/32469da3b21dfc5c3b855a9105bd3376a470b999)
+* Create intermediate directories via config flag when writing or appending data
+  * Closes [#27](https://github.com/mhkeller/indian-ocean/issues/27)
+  * [6a93e43e0e177b3a0c7cf5376e14b252bcc48383](https://github.com/mhkeller/indian-ocean/commit/6a93e43e0e177b3a0c7cf5376e14b252bcc48383)
+
 
 # 0.7.2
 
