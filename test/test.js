@@ -339,6 +339,20 @@ describe('readdirFilter()', function () {
     })
   })
 
+  describe('include and exclude by regex and extension list', function () {
+    it('match expected output', function (done) {
+      var dir = path.join(__dirname, 'data', 'mixed')
+      io.readdirFilter(dir, {exclude: ['tsv', 'csv'], include: /^data/}, function (err, files) {
+        assert(_.isEqual(JSON.stringify(files), '["data-0.json"]'))
+        if (err) {
+          console.error(err)
+        }
+        done()
+      })
+
+    })
+  })
+
   describe('exclude by extension list and regex', function () {
     it('match expected output', function (done) {
       var dir = path.join(__dirname, 'data', 'mixed')
