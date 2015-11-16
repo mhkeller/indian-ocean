@@ -18,6 +18,9 @@ Changelog
 * Add `skipFiles` and `skipDirectories` options to from `readdirFilter` functions
   * Closes [#37](https://github.com/mhkeller/indian-ocean/issues/37)
   * [86308952c744186e7be5b394f08adc27c27ecaec](https://github.com/mhkeller/indian-ocean/commit/86308952c744186e7be5b394f08adc27c27ecaec)
+* Fall back to writing text if file format is unknown
+  * Closes [#35](https://github.com/mhkeller/indian-ocean/issues/35)
+  * [32469da3b21dfc5c3b855a9105bd3376a470b999](https://github.com/mhkeller/indian-ocean/commit/32469da3b21dfc5c3b855a9105bd3376a470b999)
 
 # 0.7.2
 
