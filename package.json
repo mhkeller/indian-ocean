@@ -33,6 +33,7 @@
     "chalk": "^1.1.1",
     "d3-dsv": "^0.1.5",
     "js-yaml": "^3.4.2",
+    "mkdirp": "^0.5.1",
     "parse-json": "^2.0.0",
     "queue-async": "^1.0.7",
     "shapefile": "^0.3.0",
