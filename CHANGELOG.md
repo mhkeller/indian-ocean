@@ -1,6 +1,24 @@
 Changelog
 =========
 
+# 1.0.0
+
+* Make all options configurable via object parameters instead of arguments
+  * Closes [#34](https://github.com/mhkeller/indian-ocean/issues/34)
+  * [930381a0ae260779bf8a5a2cd023b08a75267012](https://github.com/mhkeller/indian-ocean/commit/930381a0ae260779bf8a5a2cd023b08a75267012)
+* Combine `readdirInclude` and `readdirExlude` functions into `readdirFilter` and `readdirFilterSync`
+  * Closes [#36](https://github.com/mhkeller/indian-ocean/issues/36) and [#38](https://github.com/mhkeller/indian-ocean/issues/38)
+  * [155a9e692e16ff7a7f8dcd55005af91ec3dabef3](https://github.com/mhkeller/indian-ocean/commit/155a9e692e16ff7a7f8dcd55005af91ec3dabef3)
+  * [5a6e59a491d63f9caf87529957de73eeb6ae75bb](https://github.com/mhkeller/indian-ocean/commit/5a6e59a491d63f9caf87529957de73eeb6ae75bb)
+  * [fea54208dbfd5fdd20c6197458bd5c09ca0c6bcb](https://github.com/mhkeller/indian-ocean/commit/fea54208dbfd5fdd20c6197458bd5c09ca0c6bcb)
+  * [32615fb0bbb5a771d4d36fb5aa0902e335d3e85e](https://github.com/mhkeller/indian-ocean/commit/32615fb0bbb5a771d4d36fb5aa0902e335d3e85e)
+  * [e9ce3f65618d0d8abb53d6bcb904851e46384b44](https://github.com/mhkeller/indian-ocean/commit/e9ce3f65618d0d8abb53d6bcb904851e46384b44)
+  * [750a149accfd68e17a803b18ecb20952a6d251f0](https://github.com/mhkeller/indian-ocean/commit/750a149accfd68e17a803b18ecb20952a6d251f0)
+  * [174aefd7b02b6c584619d8cd4a364da67b04718c](https://github.com/mhkeller/indian-ocean/commit/174aefd7b02b6c584619d8cd4a364da67b04718c)
+* Add `skipFiles` and `skipDirectories` options to from `readdirFilter` functions
+  * Closes [#37](https://github.com/mhkeller/indian-ocean/issues/37)
+  * [86308952c744186e7be5b394f08adc27c27ecaec](https://github.com/mhkeller/indian-ocean/commit/86308952c744186e7be5b394f08adc27c27ecaec)
+
 # 0.7.2
 
 * NPM had an error publishing to it. Bumped version and republished.
@@ -8,43 +26,43 @@ Changelog
 # 0.7.1
 
 * Fix missing dependencies
-  * https://github.com/mhkeller/indian-ocean/pull/32
+  * Via [#32](https://github.com/mhkeller/indian-ocean/pull/32)
 
 # 0.7.0
 
 * Add support for reading `txt` files both explicitly and as a fallback for when we don't have a supported parser
-  * Closes https://github.com/mhkeller/indian-ocean/issues/5
-  * https://github.com/mhkeller/indian-ocean/commit/89d6b5515ad13c8636ab3e8201258e850563c77f
+  * Closes [#5](https://github.com/mhkeller/indian-ocean/issues/5)
+  * [89d6b5515ad13c8636ab3e8201258e850563c77f](https://github.com/mhkeller/indian-ocean/commit/89d6b5515ad13c8636ab3e8201258e850563c77f)
 * Refactor library by delegating all `read` functions to `readData` / `readDataSync`, which now take parameters to parse with a given parser, not just a given delimiter
-  * https://github.com/mhkeller/indian-ocean/commit/33e8cb6e83aad294fe2d508e607570dd1353381b
+  * [33e8cb6e83aad294fe2d508e607570dd1353381b](https://github.com/mhkeller/indian-ocean/commit/33e8cb6e83aad294fe2d508e607570dd1353381b)
 * Various documentation fixes
 * Yaml read/write support
-  * https://github.com/mhkeller/indian-ocean/commit/0ea2f9d2dc81ab7481987ab8feecc4c7efd8ead2
+  * [0ea2f9d2dc81ab7481987ab8feecc4c7efd8ead2](https://github.com/mhkeller/indian-ocean/commit/0ea2f9d2dc81ab7481987ab8feecc4c7efd8ead2)
 
 # 0.6.0
 
 * Add ability for `readdir` functions to take regexes
-  * https://github.com/mhkeller/indian-ocean/commit/44bfb9e01c70f7ab856582b48bc93c581dd8c69b
+  * [44bfb9e01c70f7ab856582b48bc93c581dd8c69b](https://github.com/mhkeller/indian-ocean/commit/44bfb9e01c70f7ab856582b48bc93c581dd8c69b)
 * Refactor `readdir` functions to call a common function with options.
-  * https://github.com/mhkeller/indian-ocean/commit/84e8edf68501b16e75ef59aeaae7fcb42ca46b9d
+  * [84e8edf68501b16e75ef59aeaae7fcb42ca46b9d](https://github.com/mhkeller/indian-ocean/commit/84e8edf68501b16e75ef59aeaae7fcb42ca46b9d)
 * More stringent tests
 
 # 0.5.0
 
 * Add `exists` and `existsSync` fs
-  * https://github.com/mhkeller/indian-ocean/commit/fcbf2b7699287563179bc5919f297cdc85ecf194
-  * https://github.com/mhkeller/indian-ocean/commit/a2e3f415018f85e1c5abb3083fa3753d41b5b52b
-  * https://github.com/mhkeller/indian-ocean/commit/078a22ac995c12364c82c0d47331d250006a01f2
+  * [fcbf2b7699287563179bc5919f297cdc85ecf194](https://github.com/mhkeller/indian-ocean/commit/fcbf2b7699287563179bc5919f297cdc85ecf194)
+  * [a2e3f415018f85e1c5abb3083fa3753d41b5b52b](https://github.com/mhkeller/indian-ocean/commit/a2e3f415018f85e1c5abb3083fa3753d41b5b52b)
+  * [078a22ac995c12364c82c0d47331d250006a01f2](https://github.com/mhkeller/indian-ocean/commit/078a22ac995c12364c82c0d47331d250006a01f2)
 * Higher contrast doc theme
-  * https://github.com/mhkeller/indian-ocean/commit/be4e73d1f8ac393499ba022f688a3e294c2b6d9a
+  * [be4e73d1f8ac393499ba022f688a3e294c2b6d9a](https://github.com/mhkeller/indian-ocean/commit/be4e73d1f8ac393499ba022f688a3e294c2b6d9a)
 * Add Standard JS Style Image
-  * https://github.com/mhkeller/indian-ocean/commit/72d586e5ba1359ae797f34ef1dff79ea11a9c9f4
+  * [72d586e5ba1359ae797f34ef1dff79ea11a9c9f4](https://github.com/mhkeller/indian-ocean/commit/72d586e5ba1359ae797f34ef1dff79ea11a9c9f4)
 * Various travis integration improvements
 * Various documentation improvements
 * Every function now has an example in documentation
 * Tests for readdirInclude and Exclude
-  * https://github.com/mhkeller/indian-ocean/commit/65c13281ea6edc099d93c675789cec6f94fe7f6d
-  * https://github.com/mhkeller/indian-ocean/commit/7e0c8a109a94894c73a78bf8069817c7e5cf2e62
+  * [65c13281ea6edc099d93c675789cec6f94fe7f6d](https://github.com/mhkeller/indian-ocean/commit/65c13281ea6edc099d93c675789cec6f94fe7f6d)
+  * [7e0c8a109a94894c73a78bf8069817c7e5cf2e62](https://github.com/mhkeller/indian-ocean/commit/7e0c8a109a94894c73a78bf8069817c7e5cf2e62)
 * Better error messaging when parsing malformed JSON
-  * https://github.com/mhkeller/indian-ocean/commit/e905bd0f7be3f0eec47ef8d018204c32b8f16981
+  * [e905bd0f7be3f0eec47ef8d018204c32b8f16981](https://github.com/mhkeller/indian-ocean/commit/e905bd0f7be3f0eec47ef8d018204c32b8f16981)
 * Created Changelog
