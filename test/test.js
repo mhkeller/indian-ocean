@@ -352,12 +352,26 @@ describe('readdirFilter()', function () {
     })
   })
 
-  describe('include every', function () {
+  describe('includeMatchAll', function () {
     it('match expected output', function (done) {
       var dir = path.join(__dirname, 'data', 'mixed')
-      io.readdirFilter(dir, {include: [/^data-1/, 'json'], includeMode: 'every'}, function (err, files) {
-        console.log(JSON.stringify(files))
+      io.readdirFilter(dir, {include: [/^data-1/, 'json'], includeMatchAll: true}, function (err, files) {
         assert(_.isEqual(JSON.stringify(files), '["data-1.json"]'))
+        if (err) {
+          console.error(err)
+        }
+        done()
+      })
+
+    })
+  })
+
+  describe('excludeMatchAll', function () {
+    it('match expected output', function (done) {
+      var dir = path.join(__dirname, 'data', 'mixed')
+      io.readdirFilter(dir, {exclude: [/^data-1/, 'json'], excludeMatchAll: true}, function (err, files) {
+        console.log(JSON.stringify(files))
+        assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.csv","data-0.json","data-0.tsv","data-1.csv"]'))
         if (err) {
           console.error(err)
         }
