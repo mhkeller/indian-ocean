@@ -6,6 +6,18 @@ Indian Ocean
 
 A library for reading in and writing out data in Node.js, part of [The TK Toolkit](https://github.com/mhkeller/tktk).
 
+Currently supports:
+
+* csv
+* tsv
+* psv
+* text
+* json
+* yaml
+* dbf
+
+Plus a number of file system convenience functions.
+
 Installation
 ------------
 
