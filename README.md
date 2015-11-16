@@ -8,15 +8,16 @@ A library for reading in and writing out data in Node.js, part of [The TK Toolki
 
 Currently supports:
 
-* csv
-* tsv
-* psv
-* text
-* json
-* yaml
-* dbf
+* `csv`
+* `tsv`
+* `psv`
+* `text`
+* `json`
+* `yaml`
+* `dbf`
+* Custom delimeters
 
-Plus a number of file system convenience functions.
+**Plus** a number of file system convenience functions.
 
 Installation
 ------------
