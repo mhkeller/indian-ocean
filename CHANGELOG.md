@@ -25,6 +25,9 @@ Changelog
   * Closes [#27](https://github.com/mhkeller/indian-ocean/issues/27)
   * [6a93e43e0e177b3a0c7cf5376e14b252bcc48383](https://github.com/mhkeller/indian-ocean/commit/6a93e43e0e177b3a0c7cf5376e14b252bcc48383)
   * [1aa7c3979ff812bce4b455cca14abf139f526b14](https://github.com/mhkeller/indian-ocean/commit/1aa7c3979ff812bce4b455cca14abf139f526b14)
+* Support writing dbf files
+  * Closes [#1](https://github.com/mhkeller/indian-ocean/issues/1)
+  * [30d24244177e7c1cef03dd06ef853f6e85bf5b9a](https://github.com/mhkeller/indian-ocean/commit/30d24244177e7c1cef03dd06ef853f6e85bf5b9a)
 
 
 # 0.7.2
