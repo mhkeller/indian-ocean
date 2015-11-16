@@ -409,7 +409,7 @@ describe('readdirFilter()', function () {
     it('should match expected output', function (done) {
       var dir = path.join(__dirname, 'data', 'mixed-dirs')
       io.readdirFilter(dir, {skipFiles: true}, function (err, files) {
-        assert(_.isEqual(JSON.stringify(files), '["sub-dir-0","sub-dir-1","sub-dir-3"]'))
+        assert(_.isEqual(JSON.stringify(files), '["sub-dir-0","sub-dir-1","sub-dir-2"]'))
         if (err) {
           console.log(err)
         }
@@ -466,7 +466,7 @@ describe('readdirFilterSync()', function () {
     it('should match expected output', function () {
       var dir = path.join(__dirname, 'data', 'mixed-dirs')
       var files = io.readdirFilterSync(dir, {skipFiles: true})
-      assert(_.isEqual(JSON.stringify(files), '["sub-dir-0","sub-dir-1","sub-dir-3"]'))
+      assert(_.isEqual(JSON.stringify(files), '["sub-dir-0","sub-dir-1","sub-dir-2"]'))
     })
   })
 
