@@ -1,6 +1,16 @@
 Changelog
 =========
 
+# 1.0.2
+
+* use `===` instead of `==` for code style
+  * [da27bfc3bcd4100ca90ab958666efe2556da1216](https://github.com/mhkeller/indian-ocean/commit/da27bfc3bcd4100ca90ab958666efe2556da1216)
+
+# 1.0.1
+
+* Actually fill out the `exists` function
+  * [3861d351a2c741c2cdad7612cf382f995da3e3cd](https://github.com/mhkeller/indian-ocean/commit/3861d351a2c741c2cdad7612cf382f995da3e3cd)
+  
 # 1.0.0
 
 * Make all options configurable via object parameters instead of arguments
