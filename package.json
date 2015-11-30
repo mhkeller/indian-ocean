@@ -13,14 +13,17 @@
     "url": "https://github.com/mhkeller/indian-ocean"
   },
   "keywords": [
-    "io",
     "data",
     "read",
     "write",
     "csv",
+    "json",
     "psv",
     "tsv",
-    "dbf"
+    "dbf",
+    "fs",
+    "fs-plus",
+    "files"
   ],
   "author": "Michael Keller",
   "license": "MIT",
