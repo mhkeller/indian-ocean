@@ -1,6 +1,13 @@
 Changelog
 =========
 
+# 1.1.0
+
+> Not yet on npm
+
+* Return data when writing out or appending
+  * [c430b339c1aa1a6971d8dff25a4c1d3bab6288b3](https://github.com/mhkeller/indian-ocean/commit/c430b339c1aa1a6971d8dff25a4c1d3bab6288b3)
+
 # 1.0.3
 
 > 2015-12-04
