@@ -10,15 +10,21 @@ Changelog
 
 # 1.0.2
 
+> 2015-11-30
+
 * Use `===` instead of `==` for code style
   * [da27bfc3bcd4100ca90ab958666efe2556da1216](https://github.com/mhkeller/indian-ocean/commit/da27bfc3bcd4100ca90ab958666efe2556da1216)
 
 # 1.0.1
 
+> 2015-11-30
+
 * Actually fill out the `exists` function
   * [3861d351a2c741c2cdad7612cf382f995da3e3cd](https://github.com/mhkeller/indian-ocean/commit/3861d351a2c741c2cdad7612cf382f995da3e3cd)
 
 # 1.0.0
+
+> 2015-11-16
 
 * Make all options configurable via object parameters instead of arguments
   * Closes [#34](https://github.com/mhkeller/indian-ocean/issues/34)
@@ -46,17 +52,22 @@ Changelog
   * Closes [#1](https://github.com/mhkeller/indian-ocean/issues/1)
   * [30d24244177e7c1cef03dd06ef853f6e85bf5b9a](https://github.com/mhkeller/indian-ocean/commit/30d24244177e7c1cef03dd06ef853f6e85bf5b9a)
 
-
 # 0.7.2
+
+> 2015-09-16
 
 * NPM had an error publishing to it. Bumped version and republished.
 
 # 0.7.1
 
+> 2015-09-16
+
 * Fix missing dependencies
   * Via [#32](https://github.com/mhkeller/indian-ocean/pull/32)
 
 # 0.7.0
+
+> 2015-09-13
 
 * Add support for reading `txt` files both explicitly and as a fallback for when we don't have a supported parser
   * Closes [#5](https://github.com/mhkeller/indian-ocean/issues/5)
@@ -69,6 +80,8 @@ Changelog
 
 # 0.6.0
 
+> 2015-09-07
+
 * Add ability for `readdir` functions to take regexes
   * [44bfb9e01c70f7ab856582b48bc93c581dd8c69b](https://github.com/mhkeller/indian-ocean/commit/44bfb9e01c70f7ab856582b48bc93c581dd8c69b)
 * Refactor `readdir` functions to call a common function with options.
@@ -76,6 +89,8 @@ Changelog
 * More stringent tests
 
 # 0.5.0
+
+> 2015-09-01
 
 * Add `exists` and `existsSync` fs
   * [fcbf2b7699287563179bc5919f297cdc85ecf194](https://github.com/mhkeller/indian-ocean/commit/fcbf2b7699287563179bc5919f297cdc85ecf194)
