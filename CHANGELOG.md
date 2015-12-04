@@ -7,6 +7,8 @@ Changelog
 
 * Return data when writing out or appending
   * [c430b339c1aa1a6971d8dff25a4c1d3bab6288b3](https://github.com/mhkeller/indian-ocean/commit/c430b339c1aa1a6971d8dff25a4c1d3bab6288b3)
+* Better error messages and checks if user attemps writing an object to a dsv and not a list
+  * [71cd65b8b40e4846ff389dd5254deff965149877](https://github.com/mhkeller/indian-ocean/commit/71cd65b8b40e4846ff389dd5254deff965149877)
 
 # 1.0.3
 
