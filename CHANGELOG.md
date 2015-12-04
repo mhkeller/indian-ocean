@@ -6,7 +6,7 @@ Changelog
 > 2015-12-04
 
 * When attempting to read an empty file as json, set it to `'[]'` so it will be parsed as an empty list.
-  * [da27bfc3bcd4100ca90ab958666efe2556da1216](https://github.com/mhkeller/indian-ocean/commit/da27bfc3bcd4100ca90ab958666efe2556da1216)
+  * [c2d11999a1bf60c07707b7b9cc09a68151cfc63c](https://github.com/mhkeller/indian-ocean/commit/c2d11999a1bf60c07707b7b9cc09a68151cfc63c)
 
 # 1.0.2
 
