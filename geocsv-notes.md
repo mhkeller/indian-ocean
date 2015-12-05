@@ -27,4 +27,4 @@ WKT will be one column with the below supported formats:
 *PolyhedralSurface
 *TIN
 
-though I'm not sure if these additional objects are supported by geocsv.
+Though I'm not sure if these additional objects are supported by geocsv.
