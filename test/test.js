@@ -16,6 +16,12 @@ function assertBasicValid (json) {
   assert(_.isEqual(_.keys(json[0]), ['name', 'occupation', 'height']), 'headers match keys')
 }
 
+function assertNestedValid (json) {
+  assert.lengthOf(json, 2)
+  assert.typeOf(json[0], 'object')
+  assert(_.isEqual(_.keys(json[0]), ['name', 'occupation', 'height', 'address.street', 'address.city', 'address.state']), 'headers match keys')
+}
+
 describe('readCsvSync()', function () {
   describe('empty', function () {
     it('should be empty', function () {
@@ -100,6 +106,15 @@ describe('readJsonSync()', function () {
     it('should match expected json', function () {
       var json = io.readJsonSync(testDataPath('json/basic.json'))
       assertBasicValid(json)
+    })
+  })
+
+  describe('nested', function () {
+    it('should match expected json', function () {
+      var json = io.readJsonSync(testDataPath('json/nested.json'))
+      assertNestedValid(json)
+      console.log(json)
+      io.write
     })
   })
 })
