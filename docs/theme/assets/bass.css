@@ -216,6 +216,7 @@ h6, .h6 { font-size: .75rem }
 /* Basscss Utility Typography */
 
 .bold    { font-weight: bold }
+.sub-hed { font-weight: 300; color: #666;}
 .regular { font-weight: normal }
 .thin    { font-weight: 200 }
 .italic  { font-style: italic }
