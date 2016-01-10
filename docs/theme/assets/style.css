@@ -9,7 +9,7 @@
 }
 
 .font-smaller {
-  font-size:80%;
+  font-size:85%;
 }
 
 .fade {
@@ -26,6 +26,7 @@
 }
 .section-indent section{
   padding-top: 3px;
+  margin-top: 0;
 }
 .bg-cloudy {
   background: rgba(230, 235, 237, 1);
