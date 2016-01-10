@@ -519,3 +519,68 @@ describe('discernFormat()', function () {
     })
   })
 })
+
+describe('extend()', function () {
+  describe('shallow', function () {
+    it('should be equal', function () {
+      var mergedObj = io.extend({}, {name: 'indian-ocean'}, {alias: 'io'})
+      assert.equal(JSON.stringify(mergedObj), JSON.stringify({name: 'indian-ocean', alias: 'io'}))
+    })
+  })
+
+  describe('deep', function () {
+    it('should be equal', function () {
+      var object1 = {
+        apple: 0,
+        banana: { weight: 52, price: 100 },
+        cherry: 97
+      }
+      var object2 = {
+        banana: { price: 200 },
+        almond: 100
+      }
+      io.extend(true, object1, object2)
+
+      var desiredResult = {
+        apple: 0,
+        banana: {
+          weight: 52,
+          price: 200
+        },
+        cherry: 97,
+        almond: 100
+      }
+
+      assert.equal(JSON.stringify(object1), JSON.stringify(desiredResult))
+    })
+  })
+})
+
+describe('deepExtend()', function () {
+  describe('deep', function () {
+    it('should be equal', function () {
+      var object1 = {
+        apple: 0,
+        banana: { weight: 52, price: 100 },
+        cherry: 97
+      }
+      var object2 = {
+        banana: { price: 200 },
+        almond: 100
+      }
+      io.deepExtend(object1, object2)
+
+      var desiredResult = {
+        apple: 0,
+        banana: {
+          weight: 52,
+          price: 200
+        },
+        cherry: 97,
+        almond: 100
+      }
+
+      assert.equal(JSON.stringify(object1), JSON.stringify(desiredResult))
+    })
+  })
+})
