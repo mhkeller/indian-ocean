@@ -584,3 +584,45 @@ describe('deepExtend()', function () {
     })
   })
 })
+
+describe('existsSync()', function () {
+  var dir = path.join(__dirname, 'data', 'csv')
+  describe('exists', function () {
+    it('should be equal', function () {
+      var exists = io.existsSync(path.join(dir, 'basic.csv'))
+      assert.equal(exists, true)
+    })
+  })
+  describe('does not exist', function () {
+    it('should be equal', function () {
+      var exists = io.existsSync(path.join(dir, 'doesnt-exist.csv'))
+      assert.equal(exists, false)
+    })
+  })
+})
+
+describe('exists()', function () {
+  var dir = path.join(__dirname, 'data', 'csv')
+  describe('exists', function () {
+    it('should be equal', function (done) {
+      io.exists(path.join(dir, 'basic.csv'), function (err, exists) {
+        if (err) {
+          console.log(err)
+        }
+        assert.equal(exists, true)
+        done()
+      })
+    })
+  })
+  describe('does not exist', function () {
+    it('should be equal', function (done) {
+      io.exists(path.join(dir, 'doesnt-exist.csv'), function (err, exists) {
+        if (err) {
+          console.log(err)
+        }
+        assert.equal(exists, false)
+        done()
+      })
+    })
+  })
+})
