@@ -602,10 +602,9 @@ describe('existsSync()', function () {
 })
 
 describe('exists()', function () {
-  var dir = path.join(__dirname, 'data', 'csv')
   describe('exists', function () {
     it('should be equal', function (done) {
-      io.exists(path.join(dir, 'basic.csv'), function (err, exists) {
+      io.exists(testDataPath('csv/basic.csv'), function (err, exists) {
         if (err) {
           console.log(err)
         }
@@ -616,7 +615,7 @@ describe('exists()', function () {
   })
   describe('does not exist', function () {
     it('should be equal', function (done) {
-      io.exists(path.join(dir, 'doesnt-exist.csv'), function (err, exists) {
+      io.exists(testDataPath('csv/doesnt-exist.csv'), function (err, exists) {
         if (err) {
           console.log(err)
         }
