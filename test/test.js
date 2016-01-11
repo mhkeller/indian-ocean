@@ -200,7 +200,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(__dirname, {include: 'csv'}, function (err, files) {
         assert.lengthOf(files, 0)
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -213,7 +213,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {include: 'csv'}, function (err, files) {
         assert(_.isEqual(files.length, 2))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -226,7 +226,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {include: ['csv']}, function (err, files) {
         assert(_.isEqual(files.length, 2))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -239,7 +239,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {include: ['csv', 'tsv']}, function (err, files) {
         assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.tsv","data-1.csv"]'))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -252,7 +252,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {include: ['csv', 'tsv', /hidden/]}, function (err, files) {
         assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.csv","data-0.tsv","data-1.csv"]'))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -264,7 +264,7 @@ describe('readdirFilter()', function () {
       var dir = path.join(__dirname, 'data', 'csv')
       io.readdirFilter(dir, {include: 'csv', fullPath: true}, function (err, files) {
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done(assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0))
       })
@@ -411,7 +411,7 @@ describe('readdirFilter()', function () {
       var dir = path.join(__dirname, 'data', 'other')
       io.readdirFilter(dir, {exclude: 'csv', fullPath: true}, function (err, files) {
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done(assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1))
       })
@@ -424,7 +424,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {skipFiles: true}, function (err, files) {
         assert(_.isEqual(JSON.stringify(files), '["sub-dir-0","sub-dir-1","sub-dir-2"]'))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -437,7 +437,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {exclude: /^\./, skipDirectories: true}, function (err, files) {
         assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.json","data-0.tsv","data-1.csv","data-1.json"]'))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -604,7 +604,7 @@ describe('exists()', function () {
     it('should be equal', function (done) {
       io.exists(testDataPath('csv/basic.csv'), function (err, exists) {
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         assert.equal(exists, true)
         done()
@@ -615,7 +615,7 @@ describe('exists()', function () {
     it('should be equal', function (done) {
       io.exists(testDataPath('csv/doesnt-exist.csv'), function (err, exists) {
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         assert.equal(exists, false)
         done()
