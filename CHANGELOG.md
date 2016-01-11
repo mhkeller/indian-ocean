@@ -25,6 +25,8 @@ Changelog
   * [19b1d9a1ebad31f91a1e06190b9f84ccea1a5a47](https://github.com/mhkeller/indian-ocean/commit/19b1d9a1ebad31f91a1e06190b9f84ccea1a5a47)
 * Update documentation with yaml on supported list of doc writers
   * [09bf0d33cb95aae0be3b1bf4cc94cb68561c1009](https://github.com/mhkeller/indian-ocean/commit/09bf0d33cb95aae0be3b1bf4cc94cb68561c1009)
+* Rename `writeDbfToData` as `convertDbfToData`
+  * [98e1d51357e3ff4858a98c3cfda65ec37a859a24](https://github.com/mhkeller/indian-ocean/commit/98e1d51357e3ff4858a98c3cfda65ec37a859a24)
 
 
 # 1.0.3
