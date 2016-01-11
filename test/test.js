@@ -113,8 +113,6 @@ describe('readJsonSync()', function () {
     it('should match expected json', function () {
       var json = io.readJsonSync(testDataPath('json/nested.json'))
       assertNestedValid(json)
-      console.log(json)
-      io.write
     })
   })
 })
