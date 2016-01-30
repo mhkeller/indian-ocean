@@ -13,6 +13,9 @@ WKT will be one column with the below supported formats:
 *MultiPolygon
 *GeometryCollection
 *ARC
+*   Red
+*   Green
+*   Blue
 
 [WKT](https://en.wikipedia.org/wiki/Well-known_text) is a text markup language that also supports these geometic objects:
 *Geometry
