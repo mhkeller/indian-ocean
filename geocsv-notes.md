@@ -5,17 +5,14 @@ geocsv file format specifications - http://giswiki.hsr.ch/GeoCSV#GeoCSV_file_for
 Need to add support for both types: WKT and Point(X/Y)
 
 WKT will be one column with the below supported formats:
-*Point
-*MultiPoint
-*LineString
-*MultiLineString
-*Polygon
-*MultiPolygon
-*GeometryCollection
-*ARC
-*   Red
-*   Green
-*   Blue
+*   Point
+*   MultiPoint
+* LineString
+* MultiLineString
+* Polygon
+* MultiPolygon
+* GeometryCollection
+* ARC
 
 [WKT](https://en.wikipedia.org/wiki/Well-known_text) is a text markup language that also supports these geometic objects:
 *Geometry
