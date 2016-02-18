@@ -87,6 +87,13 @@ describe('readDataSync()', function () {
       assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
     })
   })
+
+  describe('aml', function () {
+    it('should match expected json', function () {
+      var json = io.readDataSync(testDataPath('aml/basic.aml'))
+      assert(_.isEqual('{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}', JSON.stringify(json)))
+    })
+  })
 })
 
 describe('readJsonSync()', function () {
@@ -162,6 +169,22 @@ describe('readYamlSync()', function () {
     it('should match expected json', function () {
       var json = io.readYamlSync(testDataPath('yaml/basic.yaml'))
       assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+    })
+  })
+})
+
+describe('readAmlSync()', function () {
+  describe('empty', function () {
+    it('should be empty', function () {
+      var json = io.readAmlSync(testDataPath('aml/empty.aml'))
+      assert(_.isEmpty(json))
+    })
+  })
+
+  describe('basic', function () {
+    it('should match expected json', function () {
+      var json = io.readAmlSync(testDataPath('aml/basic.aml'))
+      assert(_.isEqual(JSON.stringify(json), '{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}'))
     })
   })
 })
