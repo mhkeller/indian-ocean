@@ -3,7 +3,7 @@ Changelog
 
 # 1.1.0
 
-> Not yet on npm
+> 2016-02-17
 
 * In writeData functions, rename the option `parseWith` to `parser`, while keeping legacy support
   * [11c3bab4f8a0d82e360b1eaad1d2d949b75d1876](https://github.com/mhkeller/indian-ocean/commit/11c3bab4f8a0d82e360b1eaad1d2d949b75d1876)
@@ -27,6 +27,11 @@ Changelog
   * [09bf0d33cb95aae0be3b1bf4cc94cb68561c1009](https://github.com/mhkeller/indian-ocean/commit/09bf0d33cb95aae0be3b1bf4cc94cb68561c1009)
 * Rename `writeDbfToData` as `convertDbfToData`
   * [98e1d51357e3ff4858a98c3cfda65ec37a859a24](https://github.com/mhkeller/indian-ocean/commit/98e1d51357e3ff4858a98c3cfda65ec37a859a24)
+* Add [ArchieML support](http://archieml.org/)
+  * [38cabddc6b0804684b1acedb962fbd33882e6fde](https://github.com/mhkeller/indian-ocean/commit/38cabddc6b0804684b1acedb962fbd33882e6fde)
+  * [586ef9c943866983961e30cca3a030ec03145d6a](https://github.com/mhkeller/indian-ocean/commit/586ef9c943866983961e30cca3a030ec03145d6a)
+* Fix type checking bug when no options are passed to `readdir` functions
+  * [d3193a2172931e64423c5b97ce3fbdae74651da2](https://github.com/mhkeller/indian-ocean/commit/d3193a2172931e64423c5b97ce3fbdae74651da2)
 
 
 # 1.0.3
