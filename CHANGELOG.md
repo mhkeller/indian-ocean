@@ -21,8 +21,6 @@ Changelog
 * Fix docs css
   * [3da6b4bf412a0169b69cb23f0e1baf256f9152f8](https://github.com/mhkeller/indian-ocean/commit/3da6b4bf412a0169b69cb23f0e1baf256f9152f8)
   * [f7e90b2b932fb7abc964ec7909ebf8ab02a2cd8f](https://github.com/mhkeller/indian-ocean/commit/f7e90b2b932fb7abc964ec7909ebf8ab02a2cd8f)
-* Add file path to warning message when file is empty
-  * [19b1d9a1ebad31f91a1e06190b9f84ccea1a5a47](https://github.com/mhkeller/indian-ocean/commit/19b1d9a1ebad31f91a1e06190b9f84ccea1a5a47)
 * Update documentation with yaml on supported list of doc writers
   * [09bf0d33cb95aae0be3b1bf4cc94cb68561c1009](https://github.com/mhkeller/indian-ocean/commit/09bf0d33cb95aae0be3b1bf4cc94cb68561c1009)
 * Rename `writeDbfToData` as `convertDbfToData`
