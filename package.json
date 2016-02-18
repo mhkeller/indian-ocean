@@ -6,6 +6,7 @@
   "scripts": {
     "coverage": "istanbul cover ./node_modules/.bin/_mocha -- -R spec",
     "docs": "documentation -g -f html -o docs -t ./docs/theme/",
+    "preview-docs": "http-server -p 8080",
     "test": "standard && mocha"
   },
   "repository": {
@@ -33,10 +34,10 @@
   "homepage": "https://github.com/mhkeller/indian-ocean",
   "readmeFilename": "README.md",
   "dependencies": {
+    "archieml": "^0.3.1",
     "chalk": "^1.1.1",
-    "d3-dsv": "^0.1.5",
+    "d3-dsv": "0.1.8",
     "dbf": "^0.1.2",
-    "flat": "^1.6.0",
     "js-yaml": "^3.4.2",
     "mkdirp": "^0.5.1",
     "parse-json": "^2.0.0",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "chai": "^3.0.0",
     "documentation": "2.1.0-alpha1",
+    "http-server": "^0.8.5",
     "istanbul": "^0.3.17",
     "mocha": "^2.2.5",
     "standard": "^4.5.1"

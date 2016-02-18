@@ -15,10 +15,25 @@
           <a href='https://github.com/mhkeller/indian-ocean/' class='h5 button block button-transparent'>indian-ocean 1.0.3</a>
           <div class='px2'>
               <a
+                href='#converters'
+                class='regular block'>
+                <code>converters</code>
+              </a>
+                <a
+                  href='#converters/convertdbftodata'
+                  class='px1 regular block'>
+                  <code>.convertDbfToData</code>
+                </a>
+              <a
                 href='#helpers'
                 class='regular block'>
                 <code>helpers</code>
               </a>
+                <a
+                  href='#helpers/deepextend'
+                  class='px1 regular block'>
+                  <code>.deepExtend</code>
+                </a>
                 <a
                   href='#helpers/discernfileformatter'
                   class='px1 regular block'>
@@ -43,6 +58,11 @@
                   href='#helpers/existssync'
                   class='px1 regular block'>
                   <code>.existsSync</code>
+                </a>
+                <a
+                  href='#helpers/extend'
+                  class='px1 regular block'>
+                  <code>.extend</code>
                 </a>
                 <a
                   href='#helpers/extensionmatches'
@@ -75,16 +95,6 @@
                 <code>readers</code>
               </a>
                 <a
-                  href='#readers/readcsv'
-                  class='px1 regular block'>
-                  <code>.readCsv</code>
-                </a>
-                <a
-                  href='#readers/readcsvsync'
-                  class='px1 regular block'>
-                  <code>.readCsvSync</code>
-                </a>
-                <a
                   href='#readers/readdata'
                   class='px1 regular block'>
                   <code>.readData</code>
@@ -109,53 +119,78 @@
                   class='px1 regular block'>
                   <code>.readdirFilterSync</code>
                 </a>
+              <a
+                href='#shorthandreaders'
+                class='regular block'>
+                <code>shorthandReaders</code>
+              </a>
                 <a
-                  href='#readers/readjson'
+                  href='#shorthandreaders/readaml'
+                  class='px1 regular block'>
+                  <code>.readAml</code>
+                </a>
+                <a
+                  href='#shorthandreaders/readamlsync'
+                  class='px1 regular block'>
+                  <code>.readAmlSync</code>
+                </a>
+                <a
+                  href='#shorthandreaders/readcsv'
+                  class='px1 regular block'>
+                  <code>.readCsv</code>
+                </a>
+                <a
+                  href='#shorthandreaders/readcsvsync'
+                  class='px1 regular block'>
+                  <code>.readCsvSync</code>
+                </a>
+                <a
+                  href='#shorthandreaders/readjson'
                   class='px1 regular block'>
                   <code>.readJson</code>
                 </a>
                 <a
-                  href='#readers/readjsonsync'
+                  href='#shorthandreaders/readjsonsync'
                   class='px1 regular block'>
                   <code>.readJsonSync</code>
                 </a>
                 <a
-                  href='#readers/readpsv'
+                  href='#shorthandreaders/readpsv'
                   class='px1 regular block'>
                   <code>.readPsv</code>
                 </a>
                 <a
-                  href='#readers/readpsvsync'
+                  href='#shorthandreaders/readpsvsync'
                   class='px1 regular block'>
                   <code>.readPsvSync</code>
                 </a>
                 <a
-                  href='#readers/readtsv'
+                  href='#shorthandreaders/readtsv'
                   class='px1 regular block'>
                   <code>.readTsv</code>
                 </a>
                 <a
-                  href='#readers/readtsvsync'
+                  href='#shorthandreaders/readtsvsync'
                   class='px1 regular block'>
                   <code>.readTsvSync</code>
                 </a>
                 <a
-                  href='#readers/readtxt'
+                  href='#shorthandreaders/readtxt'
                   class='px1 regular block'>
                   <code>.readTxt</code>
                 </a>
                 <a
-                  href='#readers/readtxtsync'
+                  href='#shorthandreaders/readtxtsync'
                   class='px1 regular block'>
                   <code>.readTxtSync</code>
                 </a>
                 <a
-                  href='#readers/readyaml'
+                  href='#shorthandreaders/readyaml'
                   class='px1 regular block'>
                   <code>.readYaml</code>
                 </a>
                 <a
-                  href='#readers/readyamlsync'
+                  href='#shorthandreaders/readyamlsync'
                   class='px1 regular block'>
                   <code>.readYamlSync</code>
                 </a>
@@ -184,11 +219,6 @@
                   class='px1 regular block'>
                   <code>.writeDataSync</code>
                 </a>
-                <a
-                  href='#writers/writedbftodata'
-                  class='px1 regular block'>
-                  <code>.writeDbfToData</code>
-                </a>
           </div>
         </div>
       </div>
@@ -211,9 +241,115 @@
             </section>
           </div>
           <div class='px1'>
+<section id='converters'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L1273-L1293'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#converters'>
+      <code>
+        converters<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <p>Functions that both read and write.</p>
+
+
+
+
+
+
+
+      <div class='section-indent'>
+<section id='converters/convertdbftodata'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L1293-L1307'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#converters/convertdbftodata'>
+      <code>
+        convertDbfToData<span class='gray'>(inFileName, outFileName, [options], callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Reads in a dbf file with <code>.readDbf</code> and write to file using <code>.writeData</code>. A convenience function for converting DBFs to more useable formats. Formerly known as <code>writeDbfToData</code> and is aliased for legacy support.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>inFileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the input file name</p>
+</td>
+          </tr>
+          <tr>
+            <td>outFileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the output file name</p>
+</td>
+          </tr>
+          <tr>
+            <td>options</td>
+            <td>
+              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>]</code>
+            </td>
+            <td><p>Optional config object, see below</p>
+</td>
+          </tr>
+            <tr>
+              <td>options.makeDirectories</td>
+              <td>
+                <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>]</code>
+                (default <code>false</code>)
+              </td>
+              <td><p>If true, create intermediate directories to your data file.</p>
+</td>
+            </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>callback that takes error (if any)</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+    <h4>Examples</h4>
+<pre>io.convertDbfToData(<span class="hljs-string">'path/to/data.dbf'</span>, <span class="hljs-string">'path/to/data.csv'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>)</span>{
+  <span class="hljs-built_in">console</span>.log(err)
+})
+
+io.convertDbfToData(<span class="hljs-string">'path/to/data.dbf'</span>, <span class="hljs-string">'path/to/create/to/data.csv'</span>, {makeDirectories: <span class="hljs-literal">true</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>)</span>{
+  <span class="hljs-built_in">console</span>.log(err)
+})</pre>
+
+
+
+
+</section>
+      </div>
+
+
+
+</section>
 <section id='helpers'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L95-L106'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L101-L112'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers'>
@@ -222,7 +358,8 @@
       </code>
     </a>
   </h3>
-  
+  <p>Various utility functions.</p>
+
 
 
 
@@ -230,9 +367,95 @@
 
 
       <div class='section-indent'>
+<section id='helpers/deepextend'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L450-L457'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#helpers/deepextend'>
+      <code>
+        deepExtend<span class='gray'>(destination, source, [source2])</span>
+      </code>
+    </a>
+  </h3>
+  <p>A more semantic convenience function. Delegates to <a href="helpers-extend"><code>helpers#extend</code></a> and passes <code>true</code> as the first argument. Recursively merge the contents of two or more objects together into the first object.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>destination</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+            </td>
+            <td><p>The object to modify</p>
+</td>
+          </tr>
+          <tr>
+            <td>source</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+            </td>
+            <td><p>The object whose contents to take</p>
+</td>
+          </tr>
+          <tr>
+            <td>source2</td>
+            <td>
+              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>]</code>
+            </td>
+            <td><p>You can add any number of objects as arguments.</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>result The merged object. Note that the <code>destination</code> object will always be modified.</p>
+
+      </span>
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-keyword">var</span> object1 = {
+  apple: <span class="hljs-number">0</span>,
+  banana: { weight: <span class="hljs-number">52</span>, price: <span class="hljs-number">100</span> },
+  cherry: <span class="hljs-number">97</span>
+}
+<span class="hljs-keyword">var</span> object2 = {
+  banana: { price: <span class="hljs-number">200</span> },
+  almond: <span class="hljs-number">100</span>
+}
+io.deepExtend(object1, object2)
+<span class="hljs-built_in">console</span>.log(object1)
+<span class="hljs-comment">//  {</span>
+<span class="hljs-comment">//   apple: 0,</span>
+<span class="hljs-comment">//   banana: {</span>
+<span class="hljs-comment">//     weight: 52,</span>
+<span class="hljs-comment">//     price: 200</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   cherry: 97,</span>
+<span class="hljs-comment">//   almond: 100</span>
+<span class="hljs-comment">// }</span></pre>
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
 <section id='helpers/discernfileformatter'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L154-L176'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L159-L180'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/discernfileformatter'>
@@ -284,7 +507,7 @@
       <div class='section-indent'>
 <section id='helpers/discernformat'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L106-L131'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L112-L137'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/discernformat'>
@@ -336,7 +559,7 @@
       <div class='section-indent'>
 <section id='helpers/discernparser'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L131-L154'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L137-L159'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/discernparser'>
@@ -399,7 +622,7 @@
       <div class='section-indent'>
 <section id='helpers/exists'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L176-L199'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L180-L203'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/exists'>
@@ -453,7 +676,7 @@
       <div class='section-indent'>
 <section id='helpers/existssync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L199-L220'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L203-L224'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/existssync'>
@@ -503,9 +726,116 @@
 </section>
       </div>
       <div class='section-indent'>
+<section id='helpers/extend'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L345-L450'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#helpers/extend'>
+      <code>
+        extend<span class='gray'>([deepExtend], destination, source, [source2])</span>
+      </code>
+    </a>
+  </h3>
+  <p>A port of jQuery's extend. Merge the contents of two or more objects together into the first object. Supports deep extending with <code>true</code> as the first argument.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>deepExtend</td>
+            <td>
+              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>]</code>
+            </td>
+            <td><p>Set to <code>true</code> to merge recursively.</p>
+</td>
+          </tr>
+          <tr>
+            <td>destination</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+            </td>
+            <td><p>The object to modify</p>
+</td>
+          </tr>
+          <tr>
+            <td>source</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+            </td>
+            <td><p>The object whose contents to take</p>
+</td>
+          </tr>
+          <tr>
+            <td>source2</td>
+            <td>
+              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>]</code>
+            </td>
+            <td><p>You can add any number of objects as arguments.</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>result The merged object. Note that the <code>destination</code> object will always be modified.</p>
+
+      </span>
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-keyword">var</span> mergedObj = io.extend({}, {name: <span class="hljs-string">'indian-ocean'</span>}, {alias: <span class="hljs-string">'io'</span>})
+<span class="hljs-built_in">console</span>.log(mergedObj)
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   name: 'indian-ocean',</span>
+<span class="hljs-comment">//   alias: 'io'</span>
+<span class="hljs-comment">// }</span>
+
+<span class="hljs-keyword">var</span> name = {name: <span class="hljs-string">'indian-ocean'</span>}
+io.extend(name, {alias: <span class="hljs-string">'io'</span>})
+<span class="hljs-built_in">console</span>.log(name)
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   name: 'indian-ocean',</span>
+<span class="hljs-comment">//   alias: 'io'</span>
+<span class="hljs-comment">// }</span></pre><pre><span class="hljs-keyword">var</span> object1 = {
+  apple: <span class="hljs-number">0</span>,
+  banana: { weight: <span class="hljs-number">52</span>, price: <span class="hljs-number">100</span> },
+  cherry: <span class="hljs-number">97</span>
+}
+<span class="hljs-keyword">var</span> object2 = {
+  banana: { price: <span class="hljs-number">200</span> },
+  almond: <span class="hljs-number">100</span>
+}
+io.extend(<span class="hljs-literal">true</span>, object1, object2)
+<span class="hljs-built_in">console</span>.log(object1)
+<span class="hljs-comment">//  {</span>
+<span class="hljs-comment">//   apple: 0,</span>
+<span class="hljs-comment">//   banana: {</span>
+<span class="hljs-comment">//     weight: 52,</span>
+<span class="hljs-comment">//     price: 200</span>
+<span class="hljs-comment">//   },</span>
+<span class="hljs-comment">//   cherry: 97,</span>
+<span class="hljs-comment">//   almond: 100</span>
+<span class="hljs-comment">// }</span></pre>
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
 <section id='helpers/extensionmatches'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L250-L266'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L254-L270'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/extensionmatches'>
@@ -529,7 +859,7 @@
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
             </td>
-            <td><p>the name of the file</p>
+            <td><p>The name of the file</p>
 </td>
           </tr>
           <tr>
@@ -537,7 +867,7 @@
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
             </td>
-            <td><p>the extension to test</p>
+            <td><p>The extension to test</p>
 </td>
           </tr>
       </table>
@@ -548,7 +878,7 @@
       <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
       :
       <span class='force-inline'>
-        <p>whether the extension matched or not</p>
+        <p>whether The extension matched or not</p>
 
       </span>
 
@@ -565,7 +895,7 @@
       <div class='section-indent'>
 <section id='helpers/makedirectories'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L220-L235'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L224-L239'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/makedirectories'>
@@ -619,7 +949,7 @@
       <div class='section-indent'>
 <section id='helpers/makedirectoriessync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L235-L250'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L239-L254'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/makedirectoriessync'>
@@ -663,7 +993,7 @@
       <div class='section-indent'>
 <section id='helpers/matches'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L283-L295'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L287-L345'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/matches'>
@@ -687,7 +1017,7 @@
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
             </td>
-            <td><p>the name of the file</p>
+            <td><p>The name of the file</p>
 </td>
           </tr>
       </table>
@@ -698,7 +1028,7 @@
       <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code></code>
       :
       <span class='force-inline'>
-        <p>matcher the string to match with</p>
+        <p>matcher The string to match with</p>
 
       </span>
 
@@ -718,7 +1048,7 @@
       <div class='section-indent'>
 <section id='helpers/matchregexp'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L266-L283'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L270-L287'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#helpers/matchregexp'>
@@ -742,7 +1072,7 @@
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
             </td>
-            <td><p>the name of the file</p>
+            <td><p>The name of the file</p>
 </td>
           </tr>
           <tr>
@@ -750,7 +1080,7 @@
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></code>
             </td>
-            <td><p>the RegEx to match with</p>
+            <td><p>The RegEx to match with</p>
 </td>
           </tr>
       </table>
@@ -761,7 +1091,7 @@
       <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code></code>
       :
       <span class='force-inline'>
-        <p>whether the string matches the RegEx</p>
+        <p>whether The string matches the RegEx</p>
 
       </span>
 
@@ -781,7 +1111,7 @@
 </section>
 <section id='readers'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L308-L355'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L484-L529'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers'>
@@ -790,123 +1120,18 @@
       </code>
     </a>
   </h3>
-  
+  <p>Functions to read data files.</p>
 
 
 
 
 
 
-      <div class='section-indent'>
-<section id='readers/readcsv'class='mt4 mb4 px2'>
-    <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L429-L444'><code>lib/index.js</code></a>
-    </div>
-  <h3 class='regular'>
-    <a class='black' href='#readers/readcsv'>
-      <code>
-        readCsv<span class='gray'>(fileName, callback)</span>
-      </code>
-    </a>
-  </h3>
-  <p>Asynchronously read a comma-separated value file.</p>
 
-
-    <p>
-      <table class='table-light overflow-hidden bg-cloudy-light'>
-        <thead>
-          <th class='col-3'>parameter</th>
-          <th class='col-3'>type</th>
-          <th class='col-6'>description</th>
-        </thead>
-          <tr>
-            <td>fileName</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-            </td>
-            <td><p>the name of the file</p>
-</td>
-          </tr>
-          <tr>
-            <td>callback</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
-            </td>
-            <td><p>callback used when read data is read, takes error (if any) and the data read</p>
-</td>
-          </tr>
-      </table>
-    </p>
-
-
-
-
-    <h4>Examples</h4>
-<pre>io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, data</span>)</span>{
-  <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
-})</pre>
-
-
-
-
-</section>
-      </div>
-      <div class='section-indent'>
-<section id='readers/readcsvsync'class='mt4 mb4 px2'>
-    <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L444-L460'><code>lib/index.js</code></a>
-    </div>
-  <h3 class='regular'>
-    <a class='black' href='#readers/readcsvsync'>
-      <code>
-        readCsvSync<span class='gray'>(fileName)</span>
-      </code>
-    </a>
-  </h3>
-  <p>Synchronously read a comma-separated value file.</p>
-
-
-    <p>
-      <table class='table-light overflow-hidden bg-cloudy-light'>
-        <thead>
-          <th class='col-3'>parameter</th>
-          <th class='col-3'>type</th>
-          <th class='col-6'>description</th>
-        </thead>
-          <tr>
-            <td>fileName</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-            </td>
-            <td><p>the name of the file</p>
-</td>
-          </tr>
-      </table>
-    </p>
-
-
-      <h4>Returns</h4>
-      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
-      :
-      <span class='force-inline'>
-        <p>the contents of the file as JSON</p>
-
-      </span>
-
-
-    <h4>Examples</h4>
-<pre><span class="hljs-keyword">var</span> data = io.readCsvSync(<span class="hljs-string">'path/to/data.csv'</span>)
-<span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span></pre>
-
-
-
-
-</section>
-      </div>
       <div class='section-indent'>
 <section id='readers/readdata'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L355-L399'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L529-L584'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdata'>
@@ -922,8 +1147,8 @@
 <li><code>.csv</code> Comma-separated</li>
 <li><code>.tsv</code> Tab-separated</li>
 <li><code>.psv</code> Pipe-separated</li>
-<li><code>.yaml</code> Yaml file</li>
-<li><code>.yml</code> Yaml file</li>
+<li><code>.yaml</code> or <code>.yml</code> Yaml file</li>
+<li><code>.aml</code> ArchieML</li>
 <li><code>.txt</code> Text file (a string)</li>
 <li>other All others are read as a text file</li>
 </ul>
@@ -954,11 +1179,11 @@
 </td>
           </tr>
             <tr>
-              <td>options.parseWith</td>
+              <td>options.parser</td>
               <td>
-                <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>]</code>
+                <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>]</code>
               </td>
-              <td><p>optional This can be a string that is the file's delimiter or a parsing object similar to what <code>dsv.dsv</code> returns. See <code>parsers</code> in library source for examples. Parsing objects have a <code>parse</code> method that returns the parsed data.</p>
+              <td><p>optional This can be a string that is the file's delimiter or a function that returns the json. See <code>parsers</code> in library source for examples. For convenience, this can also take a dsv object such as <code>dsv.dsv('_')</code> or any object that has a <code>parse</code> method. Pre-version 1.1 this was called <code>parseWith</code> and to maintain support, that will still work.</p>
 </td>
             </tr>
           <tr>
@@ -980,21 +1205,19 @@
   <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
 })
 
-io.readData(<span class="hljs-string">'path/to/data.usv'</span>, {parseWith: <span class="hljs-string">'_'</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
+io.readData(<span class="hljs-string">'path/to/data.usv'</span>, {parser: <span class="hljs-string">'_'</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
   <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
 })
 
 <span class="hljs-keyword">var</span> myParser = dsv.dsv(<span class="hljs-string">'_'</span>)
-io.readData(<span class="hljs-string">'path/to/data.usv'</span>, {parseWith: myParser}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
+io.readData(<span class="hljs-string">'path/to/data.usv'</span>, {parser: myParser}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
   <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
 })
 
-<span class="hljs-keyword">var</span> naiveJsonLines = {
-  parse: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">dataAsString</span>) </span>{
-    <span class="hljs-keyword">return</span> dataAsString.split(<span class="hljs-string">'\n'</span>).map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">row</span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.parse(row) })
-  }
+<span class="hljs-keyword">var</span> naiveJsonLines = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">dataAsString</span>) </span>{
+  <span class="hljs-keyword">return</span> dataAsString.split(<span class="hljs-string">'\n'</span>).map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">row</span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.parse(row) })
 }
-io.readData(<span class="hljs-string">'path/to/data.jsonlines'</span>, {parseWith: naiveJsonLines}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
+io.readData(<span class="hljs-string">'path/to/data.jsonlines'</span>, {parser: naiveJsonLines}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
   <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
 })</pre>
 
@@ -1006,7 +1229,7 @@ io.readData(<span class="hljs-string">'path/to/data.jsonlines'</span>, {parseWit
       <div class='section-indent'>
 <section id='readers/readdatasync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L399-L429'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L584-L638'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdatasync'>
@@ -1038,7 +1261,8 @@ io.readData(<span class="hljs-string">'path/to/data.jsonlines'</span>, {parseWit
             <td>
               <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>]</code>
             </td>
-            <td><p>optional See options below</p>
+            <td><p>optional See options below
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 </td>
           </tr>
             <tr>
@@ -1049,6 +1273,14 @@ io.readData(<span class="hljs-string">'path/to/data.jsonlines'</span>, {parseWit
               <td><p>optional This can be a string that is the file's delimiter or a parsing object similar to what <code>dsv.dsv</code> returns. See <code>parsers</code> in library source for examples. Parsing objects have a <code>parse</code> method that returns the parsed data.</p>
 </td>
             </tr>
+            <tr>
+              <td>options.parser</td>
+              <td>
+                <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code> or <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>]</code>
+              </td>
+              <td><p>optional This can be a string that is the file's delimiter or a function that returns the json. See <code>parsers</code> in library source for examples. For convenience, this can also take a dsv object such as <code>dsv.dsv('_')</code> or any object that has a <code>parse</code> method. Pre-version 1.1 this was called <code>parseWith</code> and to maintain support, that will still work.</p>
+</td>
+            </tr>
       </table>
     </p>
 
@@ -1057,7 +1289,29 @@ io.readData(<span class="hljs-string">'path/to/data.jsonlines'</span>, {parseWit
       <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
       :
       <span class='force-inline'>
+        <h1>the contents of the file as JSON</h1>
+
+      </span>
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
         <p>the contents of the file as JSON</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>1.1</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 
       </span>
 
@@ -1066,19 +1320,17 @@ io.readData(<span class="hljs-string">'path/to/data.jsonlines'</span>, {parseWit
 <pre>io.readDataSync(<span class="hljs-string">'path/to/data.tsv'</span>)
 <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
 
-io.readDataSync(<span class="hljs-string">'path/to/data.usv'</span>, {parseWith: <span class="hljs-string">'_'</span>})
+io.readDataSync(<span class="hljs-string">'path/to/data.usv'</span>, {parser: <span class="hljs-string">'_'</span>})
 <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
 
 <span class="hljs-keyword">var</span> myParser = dsv.dsv(<span class="hljs-string">'_'</span>)
-io.readDataSync(<span class="hljs-string">'path/to/data.usv'</span>, {parseWith: myParser})
+io.readDataSync(<span class="hljs-string">'path/to/data.usv'</span>, {parser: myParser})
 <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
 
-<span class="hljs-keyword">var</span> naiveJsonLines = {
-  parse: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">dataAsString</span>) </span>{
-    <span class="hljs-keyword">return</span> dataAsString.split(<span class="hljs-string">'\n'</span>).map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">row</span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.parse(row) })
-  }
+<span class="hljs-keyword">var</span> naiveJsonLines = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dataAsString</span>)
+  <span class="hljs-title">return</span> <span class="hljs-title">dataAsString</span>.<span class="hljs-title">split</span>(<span class="hljs-params">'\n'</span>).<span class="hljs-title">map</span>(<span class="hljs-params">function (row</span>) </span>{ <span class="hljs-keyword">return</span> <span class="hljs-built_in">JSON</span>.parse(row) })
 }
-io.readDataSync(<span class="hljs-string">'path/to/data.jsonlines'</span>, {parseWith: naiveJsonLines})
+io.readDataSync(<span class="hljs-string">'path/to/data.jsonlines'</span>, {parser: naiveJsonLines})
 <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span></pre>
 
 
@@ -1089,7 +1341,7 @@ io.readDataSync(<span class="hljs-string">'path/to/data.jsonlines'</span>, {pars
       <div class='section-indent'>
 <section id='readers/readdbf'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L617-L675'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L914-L972'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdbf'>
@@ -1143,7 +1395,7 @@ io.readDataSync(<span class="hljs-string">'path/to/data.jsonlines'</span>, {pars
       <div class='section-indent'>
 <section id='readers/readdirfilter'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L825-L855'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L638-L673'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdirfilter'>
@@ -1271,7 +1523,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {include: [<s
       <div class='section-indent'>
 <section id='readers/readdirfiltersync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L855-L860'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L673-L681'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#readers/readdirfiltersync'>
@@ -1396,13 +1648,248 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {include: [<s
 
 </section>
       </div>
-      <div class='section-indent'>
-<section id='readers/readjson'class='mt4 mb4 px2'>
+
+
+
+</section>
+<section id='shorthandreaders'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L460-L475'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L681-L695'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
-    <a class='black' href='#readers/readjson'>
+    <a class='black' href='#shorthandreaders'>
+      <code>
+        shorthandReaders<span class='gray'></span>
+      </code>
+    </a>
+  </h3>
+  <p>Convenience functions to load in a file with a specific type. This is equivalent to using <code>readData</code> and specifying a parser.</p>
+
+
+
+
+
+
+
+      <div class='section-indent'>
+<section id='shorthandreaders/readaml'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L883-L898'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#shorthandreaders/readaml'>
+      <code>
+        readAml<span class='gray'>(fileName, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Asynchronously read an ArchieMl file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>callback used when read data is read, takes error (if any) and the data read</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+    <h4>Examples</h4>
+<pre>io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, data</span>)</span>{
+  <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// json data</span>
+})</pre>
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='shorthandreaders/readamlsync'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L898-L914'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#shorthandreaders/readamlsync'>
+      <code>
+        readAmlSync<span class='gray'>(fileName)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Synchronously read an ArchieML file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>the contents of the file as a string</p>
+
+      </span>
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-keyword">var</span> data = io.readAmlSync(<span class="hljs-string">'path/to/data.aml'</span>)
+<span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// json data</span></pre>
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='shorthandreaders/readcsv'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L695-L710'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#shorthandreaders/readcsv'>
+      <code>
+        readCsv<span class='gray'>(fileName, callback)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Asynchronously read a comma-separated value file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+          <tr>
+            <td>callback</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
+            </td>
+            <td><p>callback used when read data is read, takes error (if any) and the data read</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+
+
+    <h4>Examples</h4>
+<pre>io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, data</span>)</span>{
+  <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span>
+})</pre>
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='shorthandreaders/readcsvsync'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L710-L726'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#shorthandreaders/readcsvsync'>
+      <code>
+        readCsvSync<span class='gray'>(fileName)</span>
+      </code>
+    </a>
+  </h3>
+  <p>Synchronously read a comma-separated value file.</p>
+
+
+    <p>
+      <table class='table-light overflow-hidden bg-cloudy-light'>
+        <thead>
+          <th class='col-3'>parameter</th>
+          <th class='col-3'>type</th>
+          <th class='col-6'>description</th>
+        </thead>
+          <tr>
+            <td>fileName</td>
+            <td>
+              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+            </td>
+            <td><p>the name of the file</p>
+</td>
+          </tr>
+      </table>
+    </p>
+
+
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>the contents of the file as JSON</p>
+
+      </span>
+
+
+    <h4>Examples</h4>
+<pre><span class="hljs-keyword">var</span> data = io.readCsvSync(<span class="hljs-string">'path/to/data.csv'</span>)
+<span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// Json data</span></pre>
+
+
+
+
+</section>
+      </div>
+      <div class='section-indent'>
+<section id='shorthandreaders/readjson'class='mt4 mb4 px2'>
+    <div class='right py2'>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L726-L741'><code>lib/index.js</code></a>
+    </div>
+  <h3 class='regular'>
+    <a class='black' href='#shorthandreaders/readjson'>
       <code>
         readJson<span class='gray'>(fileName, callback)</span>
       </code>
@@ -1451,12 +1938,12 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {include: [<s
 </section>
       </div>
       <div class='section-indent'>
-<section id='readers/readjsonsync'class='mt4 mb4 px2'>
+<section id='shorthandreaders/readjsonsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L475-L491'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L741-L757'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
-    <a class='black' href='#readers/readjsonsync'>
+    <a class='black' href='#shorthandreaders/readjsonsync'>
       <code>
         readJsonSync<span class='gray'>(fileName)</span>
       </code>
@@ -1503,12 +1990,12 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {include: [<s
 </section>
       </div>
       <div class='section-indent'>
-<section id='readers/readpsv'class='mt4 mb4 px2'>
+<section id='shorthandreaders/readpsv'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L522-L537'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L788-L803'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
-    <a class='black' href='#readers/readpsv'>
+    <a class='black' href='#shorthandreaders/readpsv'>
       <code>
         readPsv<span class='gray'>(fileName, callback)</span>
       </code>
@@ -1557,12 +2044,12 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {include: [<s
 </section>
       </div>
       <div class='section-indent'>
-<section id='readers/readpsvsync'class='mt4 mb4 px2'>
+<section id='shorthandreaders/readpsvsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L537-L553'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L803-L819'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
-    <a class='black' href='#readers/readpsvsync'>
+    <a class='black' href='#shorthandreaders/readpsvsync'>
       <code>
         readPsvSync<span class='gray'>(fileName)</span>
       </code>
@@ -1609,12 +2096,12 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {include: [<s
 </section>
       </div>
       <div class='section-indent'>
-<section id='readers/readtsv'class='mt4 mb4 px2'>
+<section id='shorthandreaders/readtsv'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L491-L506'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L757-L772'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
-    <a class='black' href='#readers/readtsv'>
+    <a class='black' href='#shorthandreaders/readtsv'>
       <code>
         readTsv<span class='gray'>(fileName, callback)</span>
       </code>
@@ -1663,12 +2150,12 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {include: [<s
 </section>
       </div>
       <div class='section-indent'>
-<section id='readers/readtsvsync'class='mt4 mb4 px2'>
+<section id='shorthandreaders/readtsvsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L506-L522'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L772-L788'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
-    <a class='black' href='#readers/readtsvsync'>
+    <a class='black' href='#shorthandreaders/readtsvsync'>
       <code>
         readTsvSync<span class='gray'>(fileName)</span>
       </code>
@@ -1715,12 +2202,12 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {include: [<s
 </section>
       </div>
       <div class='section-indent'>
-<section id='readers/readtxt'class='mt4 mb4 px2'>
+<section id='shorthandreaders/readtxt'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L553-L568'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L819-L834'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
-    <a class='black' href='#readers/readtxt'>
+    <a class='black' href='#shorthandreaders/readtxt'>
       <code>
         readTxt<span class='gray'>(fileName, callback)</span>
       </code>
@@ -1769,12 +2256,12 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {include: [<s
 </section>
       </div>
       <div class='section-indent'>
-<section id='readers/readtxtsync'class='mt4 mb4 px2'>
+<section id='shorthandreaders/readtxtsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L568-L585'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L834-L851'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
-    <a class='black' href='#readers/readtxtsync'>
+    <a class='black' href='#shorthandreaders/readtxtsync'>
       <code>
         readTxtSync<span class='gray'>(fileName)</span>
       </code>
@@ -1821,12 +2308,12 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {include: [<s
 </section>
       </div>
       <div class='section-indent'>
-<section id='readers/readyaml'class='mt4 mb4 px2'>
+<section id='shorthandreaders/readyaml'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L585-L601'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L851-L867'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
-    <a class='black' href='#readers/readyaml'>
+    <a class='black' href='#shorthandreaders/readyaml'>
       <code>
         readYaml<span class='gray'>(fileName, callback)</span>
       </code>
@@ -1876,12 +2363,12 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, <span class="h
 </section>
       </div>
       <div class='section-indent'>
-<section id='readers/readyamlsync'class='mt4 mb4 px2'>
+<section id='shorthandreaders/readyamlsync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L601-L617'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L867-L883'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
-    <a class='black' href='#readers/readyamlsync'>
+    <a class='black' href='#shorthandreaders/readyamlsync'>
       <code>
         readYamlSync<span class='gray'>(fileName)</span>
       </code>
@@ -1934,7 +2421,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, <span class="h
 </section>
 <section id='writers'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L860-L892'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L1098-L1130'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers'>
@@ -1943,7 +2430,8 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, <span class="h
       </code>
     </a>
   </h3>
-  
+  <p>Functions to write data files.</p>
+
 
 
 
@@ -1953,7 +2441,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, <span class="h
       <div class='section-indent'>
 <section id='writers/appenddata'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L970-L1015'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L1211-L1257'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/appenddata'>
@@ -1969,6 +2457,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, <span class="h
 <li><code>.csv</code> Comma-separated</li>
 <li><code>.tsv</code> Tab-separated</li>
 <li><code>.psv</code> Pipe-separated</li>
+<li><code>.yaml</code> or <code>.yml</code> Yaml</li>
 </ul>
 <p><em>Note: Does not currently support .dbf files.</em></p>
 
@@ -2018,7 +2507,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, <span class="h
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
             </td>
-            <td><p>callback that takes an error, if any</p>
+            <td><p>callback of <code>(err, data)</code> where <code>err</code> is any error and <code>data</code> is the data that was written out</p>
 </td>
           </tr>
       </table>
@@ -2044,7 +2533,7 @@ io.writeAppendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>
       <div class='section-indent'>
 <section id='writers/appenddatasync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L1015-L1044'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L1257-L1273'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/appenddatasync'>
@@ -2053,7 +2542,7 @@ io.writeAppendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>
       </code>
     </a>
   </h3>
-  <p>Synchronous version of <a href="writers-appenddata"><code>writers#appendData</code></a></p>
+  <p>Synchronous version of <a href="writers-appenddata"><code>writers#appendData</code></a>. See that function for supported formats</p>
 
 
     <p>
@@ -2100,6 +2589,13 @@ io.writeAppendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>
     </p>
 
 
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>the data that was written</p>
+
+      </span>
 
 
     <h4>Examples</h4>
@@ -2115,7 +2611,7 @@ io.writeAppendDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</s
       <div class='section-indent'>
 <section id='writers/writedata'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L892-L932'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L1130-L1171'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/writedata'>
@@ -2183,7 +2679,7 @@ io.writeAppendDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</s
             <td>
               <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
             </td>
-            <td><p>callback that takes an error, if any</p>
+            <td><p>callback of <code>(err, data)</code> where <code>err</code> is any error and <code>data</code> is the data that was written out</p>
 </td>
           </tr>
       </table>
@@ -2209,7 +2705,7 @@ io.writeData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, flat
       <div class='section-indent'>
 <section id='writers/writedatasync'class='mt4 mb4 px2'>
     <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L932-L970'><code>lib/index.js</code></a>
+      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/2dbc21c49561c9a4378ff3fe3c268cfa203e826e/lib/index.js#L1171-L1211'><code>lib/index.js</code></a>
     </div>
   <h3 class='regular'>
     <a class='black' href='#writers/writedatasync'>
@@ -2265,95 +2761,19 @@ io.writeData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, flat
     </p>
 
 
+      <h4>Returns</h4>
+      <code><code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code></code>
+      :
+      <span class='force-inline'>
+        <p>the data that was written</p>
+
+      </span>
 
 
     <h4>Examples</h4>
 <pre>io.writeDataSync(<span class="hljs-string">'path/to/data.json'</span>, jsonData)
 
 io.writeDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</span>, flatJsonData, {makeDirectories: <span class="hljs-literal">true</span>})</pre>
-
-
-
-
-</section>
-      </div>
-      <div class='section-indent'>
-<section id='writers/writedbftodata'class='mt4 mb4 px2'>
-    <div class='right py2'>
-      <a class='fade font-smaller' href='https://github.com/mhkeller/indian-ocean/blob/29d26f0793739e1986dbf5078a2c9759031c3e96/lib/index.js#L1044-L1057'><code>lib/index.js</code></a>
-    </div>
-  <h3 class='regular'>
-    <a class='black' href='#writers/writedbftodata'>
-      <code>
-        writeDbfToData<span class='gray'>(inFileName, outFileName, [options], callback)</span>
-      </code>
-    </a>
-  </h3>
-  <p>Reads in a dbf file with <code>.readDbf</code> and write to file using <code>.writeData</code>. A convenience function for converting DBFs to more useable formats.</p>
-
-
-    <p>
-      <table class='table-light overflow-hidden bg-cloudy-light'>
-        <thead>
-          <th class='col-3'>parameter</th>
-          <th class='col-3'>type</th>
-          <th class='col-6'>description</th>
-        </thead>
-          <tr>
-            <td>inFileName</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-            </td>
-            <td><p>the input file name</p>
-</td>
-          </tr>
-          <tr>
-            <td>outFileName</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-            </td>
-            <td><p>the output file name</p>
-</td>
-          </tr>
-          <tr>
-            <td>options</td>
-            <td>
-              <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>]</code>
-            </td>
-            <td><p>Optional config object, see below</p>
-</td>
-          </tr>
-            <tr>
-              <td>options.makeDirectories</td>
-              <td>
-                <code>[<code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>]</code>
-                (default <code>false</code>)
-              </td>
-              <td><p>If true, create intermediate directories to your data file.</p>
-</td>
-            </tr>
-          <tr>
-            <td>callback</td>
-            <td>
-              <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
-            </td>
-            <td><p>callback that takes error (if any)</p>
-</td>
-          </tr>
-      </table>
-    </p>
-
-
-
-
-    <h4>Examples</h4>
-<pre>io.writeDbfToData(<span class="hljs-string">'path/to/data.dbf'</span>, <span class="hljs-string">'path/to/data.csv'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>)</span>{
-  <span class="hljs-built_in">console</span>.log(err)
-})
-
-io.writeDbfToData(<span class="hljs-string">'path/to/data.dbf'</span>, <span class="hljs-string">'path/to/create/to/data.csv'</span>, {makeDirectories: <span class="hljs-literal">true</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>)</span>{
-  <span class="hljs-built_in">console</span>.log(err)
-})</pre>
 
 
 

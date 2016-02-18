@@ -16,12 +16,6 @@ function assertBasicValid (json) {
   assert(_.isEqual(_.keys(json[0]), ['name', 'occupation', 'height']), 'headers match keys')
 }
 
-function assertNestedValid (json) {
-  assert.lengthOf(json, 2)
-  assert.typeOf(json[0], 'object')
-  assert(_.isEqual(_.keys(json[0]), ['name', 'occupation', 'height', 'address.street', 'address.city', 'address.state']), 'headers match keys')
-}
-
 describe('readCsvSync()', function () {
   describe('empty', function () {
     it('should be empty', function () {
@@ -93,6 +87,13 @@ describe('readDataSync()', function () {
       assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
     })
   })
+
+  describe('aml', function () {
+    it('should match expected json', function () {
+      var json = io.readDataSync(testDataPath('aml/basic.aml'))
+      assert(_.isEqual('{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}', JSON.stringify(json)))
+    })
+  })
 })
 
 describe('readJsonSync()', function () {
@@ -109,14 +110,6 @@ describe('readJsonSync()', function () {
     })
   })
 
-  describe('nested', function () {
-    it('should match expected json', function () {
-      var json = io.readJsonSync(testDataPath('json/nested.json'))
-      assertNestedValid(json)
-      console.log(json)
-      io.write
-    })
-  })
 })
 
 describe('readPsvSync()', function () {
@@ -180,6 +173,22 @@ describe('readYamlSync()', function () {
   })
 })
 
+describe('readAmlSync()', function () {
+  describe('empty', function () {
+    it('should be empty', function () {
+      var json = io.readAmlSync(testDataPath('aml/empty.aml'))
+      assert(_.isEmpty(json))
+    })
+  })
+
+  describe('basic', function () {
+    it('should match expected json', function () {
+      var json = io.readAmlSync(testDataPath('aml/basic.aml'))
+      assert(_.isEqual(JSON.stringify(json), '{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}'))
+    })
+  })
+})
+
 describe('readYamlSync()', function () {
   describe('empty', function () {
     it('should be empty', function () {
@@ -202,7 +211,20 @@ describe('readdirFilter()', function () {
       io.readdirFilter(__dirname, {include: 'csv'}, function (err, files) {
         assert.lengthOf(files, 0)
         if (err) {
-          console.log(err)
+          console.error(err)
+        }
+        done()
+      })
+    })
+  })
+
+  describe('no options passed', function () {
+    it('should match expected output', function (done) {
+      var dir = path.join(__dirname, 'data', 'csv')
+      io.readdirFilter(dir, function (err, files) {
+        assert(_.isEqual(files.length, 2))
+        if (err) {
+          console.error(err)
         }
         done()
       })
@@ -215,7 +237,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {include: 'csv'}, function (err, files) {
         assert(_.isEqual(files.length, 2))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -228,7 +250,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {include: ['csv']}, function (err, files) {
         assert(_.isEqual(files.length, 2))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -241,7 +263,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {include: ['csv', 'tsv']}, function (err, files) {
         assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.tsv","data-1.csv"]'))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -254,7 +276,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {include: ['csv', 'tsv', /hidden/]}, function (err, files) {
         assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.csv","data-0.tsv","data-1.csv"]'))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -266,7 +288,7 @@ describe('readdirFilter()', function () {
       var dir = path.join(__dirname, 'data', 'csv')
       io.readdirFilter(dir, {include: 'csv', fullPath: true}, function (err, files) {
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done(assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0))
       })
@@ -413,7 +435,7 @@ describe('readdirFilter()', function () {
       var dir = path.join(__dirname, 'data', 'other')
       io.readdirFilter(dir, {exclude: 'csv', fullPath: true}, function (err, files) {
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done(assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1))
       })
@@ -426,7 +448,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {skipFiles: true}, function (err, files) {
         assert(_.isEqual(JSON.stringify(files), '["sub-dir-0","sub-dir-1","sub-dir-2"]'))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -439,7 +461,7 @@ describe('readdirFilter()', function () {
       io.readdirFilter(dir, {exclude: /^\./, skipDirectories: true}, function (err, files) {
         assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.json","data-0.tsv","data-1.csv","data-1.json"]'))
         if (err) {
-          console.log(err)
+          console.error(err)
         }
         done()
       })
@@ -516,6 +538,112 @@ describe('discernFormat()', function () {
   describe('geojson', function () {
     it('should be a json', function () {
       assert.equal(io.discernFormat('/fake/path/real.geojson'), 'json')
+    })
+  })
+})
+
+describe('extend()', function () {
+  describe('shallow', function () {
+    it('should be equal', function () {
+      var mergedObj = io.extend({}, {name: 'indian-ocean'}, {alias: 'io'})
+      assert.equal(JSON.stringify(mergedObj), JSON.stringify({name: 'indian-ocean', alias: 'io'}))
+    })
+  })
+
+  describe('deep', function () {
+    it('should be equal', function () {
+      var object1 = {
+        apple: 0,
+        banana: { weight: 52, price: 100 },
+        cherry: 97
+      }
+      var object2 = {
+        banana: { price: 200 },
+        almond: 100
+      }
+      io.extend(true, object1, object2)
+
+      var desiredResult = {
+        apple: 0,
+        banana: {
+          weight: 52,
+          price: 200
+        },
+        cherry: 97,
+        almond: 100
+      }
+
+      assert.equal(JSON.stringify(object1), JSON.stringify(desiredResult))
+    })
+  })
+})
+
+describe('deepExtend()', function () {
+  describe('deep', function () {
+    it('should be equal', function () {
+      var object1 = {
+        apple: 0,
+        banana: { weight: 52, price: 100 },
+        cherry: 97
+      }
+      var object2 = {
+        banana: { price: 200 },
+        almond: 100
+      }
+      io.deepExtend(object1, object2)
+
+      var desiredResult = {
+        apple: 0,
+        banana: {
+          weight: 52,
+          price: 200
+        },
+        cherry: 97,
+        almond: 100
+      }
+
+      assert.equal(JSON.stringify(object1), JSON.stringify(desiredResult))
+    })
+  })
+})
+
+describe('existsSync()', function () {
+  var dir = path.join(__dirname, 'data', 'csv')
+  describe('exists', function () {
+    it('should be equal', function () {
+      var exists = io.existsSync(path.join(dir, 'basic.csv'))
+      assert.equal(exists, true)
+    })
+  })
+  describe('does not exist', function () {
+    it('should be equal', function () {
+      var exists = io.existsSync(path.join(dir, 'doesnt-exist.csv'))
+      assert.equal(exists, false)
+    })
+  })
+})
+
+describe('exists()', function () {
+  describe('exists', function () {
+    it('should be equal', function (done) {
+      io.exists(testDataPath('csv/basic.csv'), function (err, exists) {
+        if (err) {
+          console.error(err)
+        }
+        assert.equal(exists, true)
+        done()
+      })
+    })
+  })
+  describe('does not exist', function () {
+    it('should be equal', function (done) {
+      io.exists(testDataPath('csv/doesnt-exist.csv'), function (err, exists) {
+        if (err) {
+          console.error(err)
+        }
+        assert.equal(exists, false)
+        done()
+      })
     })
   })
 })

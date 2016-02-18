@@ -1,6 +1,39 @@
 Changelog
 =========
 
+# 1.1.0
+
+> 2016-02-17
+
+* In writeData functions, rename the option `parseWith` to `parser`, while keeping legacy support
+  * [11c3bab4f8a0d82e360b1eaad1d2d949b75d1876](https://github.com/mhkeller/indian-ocean/commit/11c3bab4f8a0d82e360b1eaad1d2d949b75d1876)
+* Return data when writing out or appending
+  * [c430b339c1aa1a6971d8dff25a4c1d3bab6288b3](https://github.com/mhkeller/indian-ocean/commit/c430b339c1aa1a6971d8dff25a4c1d3bab6288b3)
+* Better error messages and checks if user attemps writing an object to a dsv since those formats require a list
+  * [71cd65b8b40e4846ff389dd5254deff965149877](https://github.com/mhkeller/indian-ocean/commit/71cd65b8b40e4846ff389dd5254deff965149877)
+  * [34132d18e401b14c8a7e50d1574cea183547c067](https://github.com/mhkeller/indian-ocean/commit/34132d18e401b14c8a7e50d1574cea183547c067)
+* Tests for exists functions
+  * [a17643f9a833e109695026d04aa6fad359eff725](https://github.com/mhkeller/indian-ocean/commit/a17643f9a833e109695026d04aa6fad359eff725)
+* Add extend, deepExtend and tests for them
+  * [cb3fcd6cae66800b1508995729178066a9cc47c3](https://github.com/mhkeller/indian-ocean/commit/cb3fcd6cae66800b1508995729178066a9cc47c3)
+  * [c65b78af78508a0ba24bbcf42a1c6639f0bcd3fd](https://github.com/mhkeller/indian-ocean/commit/c65b78af78508a0ba24bbcf42a1c6639f0bcd3fd)
+  * [03b05bdb35d84868359c77b8734326352ea7f784](https://github.com/mhkeller/indian-ocean/commit/03b05bdb35d84868359c77b8734326352ea7f784)
+* Fix docs css
+  * [3da6b4bf412a0169b69cb23f0e1baf256f9152f8](https://github.com/mhkeller/indian-ocean/commit/3da6b4bf412a0169b69cb23f0e1baf256f9152f8)
+  * [f7e90b2b932fb7abc964ec7909ebf8ab02a2cd8f](https://github.com/mhkeller/indian-ocean/commit/f7e90b2b932fb7abc964ec7909ebf8ab02a2cd8f)
+* Add file path to warning message when file is empty
+  * [19b1d9a1ebad31f91a1e06190b9f84ccea1a5a47](https://github.com/mhkeller/indian-ocean/commit/19b1d9a1ebad31f91a1e06190b9f84ccea1a5a47)
+* Update documentation with yaml on supported list of doc writers
+  * [09bf0d33cb95aae0be3b1bf4cc94cb68561c1009](https://github.com/mhkeller/indian-ocean/commit/09bf0d33cb95aae0be3b1bf4cc94cb68561c1009)
+* Rename `writeDbfToData` as `convertDbfToData`
+  * [98e1d51357e3ff4858a98c3cfda65ec37a859a24](https://github.com/mhkeller/indian-ocean/commit/98e1d51357e3ff4858a98c3cfda65ec37a859a24)
+* Add [ArchieML support](http://archieml.org/)
+  * [38cabddc6b0804684b1acedb962fbd33882e6fde](https://github.com/mhkeller/indian-ocean/commit/38cabddc6b0804684b1acedb962fbd33882e6fde)
+  * [586ef9c943866983961e30cca3a030ec03145d6a](https://github.com/mhkeller/indian-ocean/commit/586ef9c943866983961e30cca3a030ec03145d6a)
+* Fix type checking bug when no options are passed to `readdir` functions
+  * [d3193a2172931e64423c5b97ce3fbdae74651da2](https://github.com/mhkeller/indian-ocean/commit/d3193a2172931e64423c5b97ce3fbdae74651da2)
+
+
 # 1.0.3
 
 > 2015-12-04

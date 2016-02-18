@@ -24,7 +24,10 @@
 .section-indent {
   border-left: 2px solid #eee;
 }
-
+.section-indent section{
+  padding-top: 3px;
+  margin-top: 0;
+}
 .bg-cloudy {
   background: rgba(230, 235, 237, 1);
 }

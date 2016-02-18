@@ -386,7 +386,7 @@ h6, .h6 { font-size: .75rem }
 }
 
 .col-3 {
-  width: 25%;
+  width: 20%;
 }
 
 .col-4 {
@@ -484,6 +484,10 @@ h6, .h6 { font-size: .75rem }
     width: 100%;
   }
 
+  .lg-col-9 {
+    width: 75%;
+  }
+
 }
 @media (min-width: 52em) {
 
@@ -546,6 +550,12 @@ h6, .h6 { font-size: .75rem }
   }
 
 }
+@media (max-width: 640px) {
+  .flex {
+    display: block !important;
+  }
+}
+
 @media (min-width: 64em) {
 
   .lg-col {
