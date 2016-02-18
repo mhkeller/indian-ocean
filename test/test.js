@@ -207,6 +207,19 @@ describe('readdirFilter()', function () {
     })
   })
 
+  describe('no options passed', function () {
+    it('should match expected output', function (done) {
+      var dir = path.join(__dirname, 'data', 'csv')
+      io.readdirFilter(dir, function (err, files) {
+        assert(_.isEqual(files.length, 2))
+        if (err) {
+          console.error(err)
+        }
+        done()
+      })
+    })
+  })
+
   describe('include by extension', function () {
     it('should match expected output', function (done) {
       var dir = path.join(__dirname, 'data', 'csv')

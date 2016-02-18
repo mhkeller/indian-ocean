@@ -34,6 +34,7 @@
   "homepage": "https://github.com/mhkeller/indian-ocean",
   "readmeFilename": "README.md",
   "dependencies": {
+    "archieml": "^0.3.1",
     "chalk": "^1.1.1",
     "d3-dsv": "^0.1.5",
     "dbf": "^0.1.2",
