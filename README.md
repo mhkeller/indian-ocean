@@ -15,6 +15,7 @@ Currently supports:
 * `json`
 * `yaml`
 * `dbf`
+* `aml` - [ArchieML](http://archieml.org/)
 * Custom delimeters
 
 **Plus** a number of file system convenience functions.
