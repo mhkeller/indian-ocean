@@ -63,9 +63,35 @@
               </p>
               <h3 class="sub-hed">A NodeJS library for reading and writing data and handy file system utilities. Supports csv, tsv, json, yaml, dbf as well as custom formats and delimeters.</h3>
               <pre>npm install indian-ocean</pre>
+              <p><strong>Example:</strong></p>
+              <pre>
+var io = require(<span class="hljs-string">'indian-ocean'</span>)
+
+var json_data = io.readDataSync('<span class="hljs-string">path/to/data.csv'</span>)
+
+<span class="hljs-built_in">console</span>.log(json_data)
+
+<span class="hljs-comment">/*</span>
+<span class="hljs-comment">[</span>
+<span class="hljs-comment">  {</span>
+<span class="hljs-comment">    "name": "Gerald",</span>
+<span class="hljs-comment">    "occupation": "Teacher",</span>
+<span class="hljs-comment">    "city": "Philadelphia"</span>
+<span class="hljs-comment">  },</span>
+<span class="hljs-comment">  {</span>
+<span class="hljs-comment">    "name": "Marcy",</span>
+<span class="hljs-comment">    "occupation": "Venture Capitalist",</span>
+<span class="hljs-comment">    "city": "New York"</span>
+<span class="hljs-comment">  }</span>
+<span class="hljs-comment">]</span>
+<span class="hljs-comment">*/</span>
+
+io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, json_data)
+              </pre>
             </section>
           </div>
           <div class='px1'>
+          <h2 class="px2">API Documentation</h2>
 {{#each docs ~}}{{> section}}{{/each}}
           </div>
         </div>
