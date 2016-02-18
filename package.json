@@ -36,9 +36,8 @@
   "dependencies": {
     "archieml": "^0.3.1",
     "chalk": "^1.1.1",
-    "d3-dsv": "^0.1.5",
+    "d3-dsv": "0.1.8",
     "dbf": "^0.1.2",
-    "flat": "^1.6.0",
     "js-yaml": "^3.4.2",
     "mkdirp": "^0.5.1",
     "parse-json": "^2.0.0",

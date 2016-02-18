@@ -16,11 +16,11 @@ function assertBasicValid (json) {
   assert(_.isEqual(_.keys(json[0]), ['name', 'occupation', 'height']), 'headers match keys')
 }
 
-function assertNestedValid (json) {
-  assert.lengthOf(json, 2)
-  assert.typeOf(json[0], 'object')
-  assert(_.isEqual(_.keys(json[0]), ['name', 'occupation', 'height', 'address.street', 'address.city', 'address.state']), 'headers match keys')
-}
+// function assertNestedValid (json) {
+//   assert.lengthOf(json, 2)
+//   assert.typeOf(json[0], 'object')
+//   assert(_.isEqual(_.keys(json[0]), ['name', 'occupation', 'height', 'address.street', 'address.city', 'address.state']), 'headers match keys')
+// }
 
 describe('readCsvSync()', function () {
   describe('empty', function () {
@@ -109,12 +109,12 @@ describe('readJsonSync()', function () {
     })
   })
 
-  describe('nested', function () {
-    it('should match expected json', function () {
-      var json = io.readJsonSync(testDataPath('json/nested.json'))
-      assertNestedValid(json)
-    })
-  })
+  // describe('nested', function () {
+  //   it('should match expected json', function () {
+  //     var json = io.readJsonSync(testDataPath('json/nested.json'))
+  //     assertNestedValid(json)
+  //   })
+  // })
 })
 
 describe('readPsvSync()', function () {
