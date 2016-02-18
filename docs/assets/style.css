@@ -59,3 +59,7 @@ section:target {
 #introduction{
   width: 80%;
 }
+
+.documentation-sidebar .fixed > .px2{
+  padding-bottom: 40px;
+}
