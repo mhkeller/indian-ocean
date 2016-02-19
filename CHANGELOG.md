@@ -1,6 +1,13 @@
 Changelog
 =========
 
+# 1.1.1
+
+> 2016-02-18
+
+* Fix typo when writing out a file we don't have a parser for
+  * [dc422b2f9c3013b0a58272104db536380e559472](https://github.com/mhkeller/indian-ocean/commit/dc422b2f9c3013b0a58272104db536380e559472)
+
 # 1.1.0
 
 > 2016-02-17
