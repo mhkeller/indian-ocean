@@ -216,6 +216,7 @@ h6, .h6 { font-size: .75rem }
 /* Basscss Utility Typography */
 
 .bold    { font-weight: bold }
+.sub-hed { font-weight: 300; color: #666;}
 .regular { font-weight: normal }
 .thin    { font-weight: 200 }
 .italic  { font-style: italic }
@@ -385,7 +386,7 @@ h6, .h6 { font-size: .75rem }
 }
 
 .col-3 {
-  width: 25%;
+  width: 20%;
 }
 
 .col-4 {
@@ -483,6 +484,10 @@ h6, .h6 { font-size: .75rem }
     width: 100%;
   }
 
+  .lg-col-9 {
+    width: 75%;
+  }
+
 }
 @media (min-width: 52em) {
 
@@ -545,6 +550,12 @@ h6, .h6 { font-size: .75rem }
   }
 
 }
+@media (max-width: 640px) {
+  .flex {
+    display: block !important;
+  }
+}
+
 @media (min-width: 64em) {
 
   .lg-col {

@@ -15,6 +15,7 @@ Currently supports:
 * `json`
 * `yaml`
 * `dbf`
+* `aml` - [ArchieML](http://archieml.org/)
 * Custom delimeters
 
 **Plus** a number of file system convenience functions.
@@ -34,7 +35,7 @@ See the full [API docs](http://mhkeller.github.io/indian-ocean/docs/).
 Usage
 -----
 
-````js
+```js
 var io = require('indian-ocean')
 
 var json_data = io.readDataSync('path/to/data.csv')
@@ -57,7 +58,47 @@ console.log(json_data)
 */
 
 io.writeDataSync('path/to/save/output.json', json_data)
-````
+```
+
+Or, combine methods to read in a directory of csvs as json:
+
+```js
+var io = require('indian-ocean')
+
+// Let's say this directory contains two csvs, each with two rows like the above example
+var csvs = io.readdirFilterSync('csvs-folder', {include: 'csv', fullPath: true}).map(io.readDataSync)
+
+console.log(csvs)
+
+/*
+[
+  [
+    {
+      "name": "Gerald",
+      "occupation": "Teacher",
+      "city": "Philadelphia"
+    },
+    {
+      "name": "Marcy",
+      "occupation": "Venture Capitalist",
+      "city": "New York"
+    }
+  ],
+  [
+    {
+      "name": "Liza",
+      "occupation": "Principle",
+      "city": "Philadelphia"
+    },
+    {
+      "name": "Eileen",
+      "occupation": "CEO",
+      "city": "New York"
+    }
+  ]
+]
+*/
+```
 
 License
 -------
