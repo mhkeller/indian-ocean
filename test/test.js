@@ -110,6 +110,22 @@ describe('readJsonSync()', function () {
     })
   })
 
+  describe('basic', function () {
+    it('should use readOptions', function () {
+      var json = io.readJsonSync(testDataPath('json/basic.json'), {
+        readOptions: {
+          reviver: function (k, v) {
+            if (typeof v === 'number') {
+              return v * 2
+            }
+            return v
+          }
+        }
+      })
+      assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+    })
+  })
+
 })
 
 describe('readPsvSync()', function () {
