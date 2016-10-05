@@ -125,7 +125,6 @@ describe('readJsonSync()', function () {
       assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
     })
   })
-
 })
 
 describe('readPsvSync()', function () {
@@ -387,7 +386,6 @@ describe('readdirFilter()', function () {
         }
         done()
       })
-
     })
   })
 
@@ -401,7 +399,6 @@ describe('readdirFilter()', function () {
         }
         done()
       })
-
     })
   })
 
@@ -415,7 +412,6 @@ describe('readdirFilter()', function () {
         }
         done()
       })
-
     })
   })
 
@@ -429,7 +425,6 @@ describe('readdirFilter()', function () {
         }
         done()
       })
-
     })
   })
 
