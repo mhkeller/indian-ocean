@@ -110,6 +110,14 @@ describe('readJsonSync()', function () {
     })
   })
 
+  describe('invalid', function () {
+    it('should raise an error', function () {
+      assert.throws(function () {
+        io.readJsonSync(testDataPath('json/invalid.json'))
+      }, Error)
+    })
+  })
+
 })
 
 describe('readPsvSync()', function () {
