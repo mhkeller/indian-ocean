@@ -29,11 +29,10 @@
     "files",
     "io"
   ],
-  "author": "Michael Keller",
+  "author": "Michael Keller (http://mhkeller.com)",
   "contributors": [
-    {
-      "name": "Eric Brelsford"
-    }
+    "Eric Brelsford (https://ebrelsford.github.io/portfolio/)",
+    "Julian Burgess (https://aubergene.com)"
   ],
   "license": "MIT",
   "bugs": {
