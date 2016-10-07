@@ -1,6 +1,15 @@
 Changelog
 =========
 
+# 1.2.0
+
+> Not yet on npm
+
+* Add tests
+  * [af12b04932cad2d99c2a6403845143c1e13c9643](https://github.com/mhkeller/indian-ocean/commit/af12b04932cad2d99c2a6403845143c1e13c9643)
+* Forthcoming: allow for parser options
+  * See the `parse-options` branch for now
+
 # 1.1.1
 
 > 2016-02-18
