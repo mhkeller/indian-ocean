@@ -1,0 +1,22 @@
+[ 
+  {
+    "name": "jim",
+    "occupation": "land surveyor",
+    "height": 70,
+    "address": {
+      "street": "100 5th St",
+      "city": "Springfield",
+      "state": "??"
+    }
+  },
+  {
+    "name": "francis",
+    "occupation": "conductor",
+    "height": 63,
+    "address": {
+      "street": "150 4th St",
+      "city": "Shelbyville",
+      "state": "??"
+    }
+  } 
+]

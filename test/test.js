@@ -10,11 +10,261 @@ function testDataPath (name) {
   return path.join(__dirname, 'data', name)
 }
 
-function assertBasicValid (json) {
+function assertBasicValid (json, strings) {
+  var values = strings ? ['70', '63'] : [70, 63]
+
   assert.lengthOf(json, 2)
   assert.typeOf(json[0], 'object')
   assert(_.isEqual(_.keys(json[0]), ['name', 'occupation', 'height']), 'headers match keys')
+  assert(_.isEqual(_.keys(json[1]), ['name', 'occupation', 'height']), 'headers match keys')
+  assert(_.isEqual(_.values(json[0]), ['jim', 'land surveyor', values[0]]), 'data values match values')
+  assert(_.isEqual(_.values(json[1]), ['francis', 'conductor', values[1]]), 'data values match values')
 }
+
+describe('discernFormat()', function () {
+  describe('no extension', function () {
+    it('should be false', function () {
+      assert.equal(io.discernFormat('/fake/path/what_is_this_file'), false)
+    })
+  })
+
+  describe('csv', function () {
+    it('should properly discern csv format', function () {
+      assert.equal(io.discernFormat(testDataPath('csv/empty.csv')), 'csv')
+    })
+  })
+
+  describe('tsv', function () {
+    it('should properly discern tsv format', function () {
+      assert.equal(io.discernFormat(testDataPath('tsv/empty.tsv')), 'tsv')
+    })
+  })
+
+  describe('psv', function () {
+    it('should properly discern psv format', function () {
+      assert.equal(io.discernFormat(testDataPath('psv/empty.psv')), 'psv')
+    })
+  })
+
+  describe('yaml', function () {
+    it('should properly discern yaml format', function () {
+      assert.equal(io.discernFormat(testDataPath('yaml/empty.yaml')), 'yaml')
+    })
+  })
+
+  describe('yml', function () {
+    it('should properly discern yml format', function () {
+      assert.equal(io.discernFormat(testDataPath('yml/empty.yml')), 'yml')
+    })
+  })
+
+  describe('txt', function () {
+    it('should properly discern txt format', function () {
+      assert.equal(io.discernFormat(testDataPath('txt/empty.txt')), 'txt')
+    })
+  })
+
+  describe('dbf', function () {
+    it('should properly discern dbf format', function () {
+      assert.equal(io.discernFormat(testDataPath('dbf/empty.dbf')), 'dbf')
+    })
+  })
+
+  describe('aml', function () {
+    it('should properly discern aml format', function () {
+      assert.equal(io.discernFormat(testDataPath('aml/empty.aml')), 'aml')
+    })
+  })
+
+  describe('json', function () {
+    it('should properly discern json format', function () {
+      assert.equal(io.discernFormat(testDataPath('json/empty.json')), 'json')
+    })
+  })
+
+  describe('geojson', function () {
+    it('should properly discern geojson format', function () {
+      assert.equal(io.discernFormat(testDataPath('geojson/empty.geojson')), 'geojson')
+    })
+  })
+
+  describe('topojson', function () {
+    it('should properly discern topojson format', function () {
+      assert.equal(io.discernFormat(testDataPath('topojson/empty.topojson')), 'topojson')
+    })
+  })
+})
+
+describe('discernParser()', function () {
+  describe('no extension', function () {
+    it('should be text parser', function () {
+      assert.equal(io.discernParser('/fake/path/what_is_this_file').toString(), io.parsers.txt.toString())
+    })
+  })
+
+  describe('csv', function () {
+    it('should be csv parser', function () {
+      assert.equal(io.discernParser(testDataPath('csv/empty.csv')).toString(), io.parsers.csv.toString())
+    })
+  })
+
+  describe('tsv', function () {
+    it('should be tsv parser', function () {
+      assert.equal(io.discernParser(testDataPath('tsv/empty.tsv')).toString(), io.parsers.tsv.toString())
+    })
+  })
+
+  describe('psv', function () {
+    it('should be psv parser', function () {
+      assert.equal(io.discernParser(testDataPath('psv/empty.psv')).toString(), io.parsers.psv.toString())
+    })
+  })
+
+  describe('yaml', function () {
+    it('should be yaml parser', function () {
+      assert.equal(io.discernParser(testDataPath('yaml/empty.yaml')).toString(), io.parsers.yaml.toString())
+    })
+  })
+
+  describe('yml', function () {
+    it('should be yml parser', function () {
+      assert.equal(io.discernParser(testDataPath('yml/empty.yml')).toString(), io.parsers.yml.toString())
+    })
+  })
+
+  describe('txt', function () {
+    it('should be txt parser', function () {
+      assert.equal(io.discernParser(testDataPath('txt/empty.txt')).toString(), io.parsers.txt.toString())
+    })
+  })
+
+  describe('aml', function () {
+    it('should be aml parser', function () {
+      assert.equal(io.discernParser(testDataPath('aml/empty.aml')).toString(), io.parsers.aml.toString())
+    })
+  })
+
+  describe('json', function () {
+    it('should be json parser', function () {
+      assert.equal(io.discernParser(testDataPath('json/empty.json')).toString(), io.parsers.json.toString())
+    })
+  })
+
+  describe('geojson', function () {
+    it('should be geojson parser', function () {
+      assert.equal(io.discernParser(testDataPath('geojson/empty.geojson')).toString(), io.parsers.geojson.toString())
+    })
+  })
+
+  describe('topojson', function () {
+    it('should be topojson parser', function () {
+      assert.equal(io.discernParser(testDataPath('topojson/empty.topojson')).toString(), io.parsers.topojson.toString())
+    })
+  })
+})
+
+describe('discernFileFormatter()', function () {
+  describe('no extension', function () {
+    it('should be text formatter', function () {
+      assert.equal(io.discernFileFormatter('/fake/path/what_is_this_file').toString(), io.formatters.txt.toString())
+    })
+  })
+
+  describe('csv', function () {
+    it('should be csv formatter', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('csv/empty.csv')).toString(), io.formatters.csv.toString())
+    })
+  })
+
+  describe('tsv', function () {
+    it('should be tsv formatter', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('tsv/empty.tsv')).toString(), io.formatters.tsv.toString())
+    })
+  })
+
+  describe('psv', function () {
+    it('should be psv formatter', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('psv/empty.psv')).toString(), io.formatters.psv.toString())
+    })
+  })
+
+  describe('yaml', function () {
+    it('should be yaml formatter', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('yaml/empty.yaml')).toString(), io.formatters.yaml.toString())
+    })
+  })
+
+  describe('yml', function () {
+    it('should be yml formatter', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('yml/empty.yml')).toString(), io.formatters.yml.toString())
+    })
+  })
+
+  describe('txt', function () {
+    it('should be txt formatter', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('txt/empty.txt')).toString(), io.formatters.txt.toString())
+    })
+  })
+
+  describe('json', function () {
+    it('should be json formatter', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('json/empty.json')).toString(), io.formatters.json.toString())
+    })
+  })
+
+  describe('geojson', function () {
+    it('should be geojson formatter', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('geojson/empty.geojson')).toString(), io.formatters.geojson.toString())
+    })
+  })
+
+  describe('topojson', function () {
+    it('should be topojson formatter', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('topojson/empty.topojson')).toString(), io.formatters.topojson.toString())
+    })
+  })
+})
+
+describe('existsSync()', function () {
+  var dir = path.join(__dirname, 'data', 'csv')
+  describe('exists', function () {
+    it('should be equal', function () {
+      var exists = io.existsSync(path.join(dir, 'basic.csv'))
+      assert.equal(exists, true)
+    })
+  })
+  describe('does not exist', function () {
+    it('should be equal', function () {
+      var exists = io.existsSync(path.join(dir, 'doesnt-exist.csv'))
+      assert.equal(exists, false)
+    })
+  })
+})
+
+describe('exists()', function () {
+  describe('exists', function () {
+    it('should be equal', function (done) {
+      io.exists(testDataPath('csv/basic.csv'), function (err, exists) {
+        if (err) {
+          console.error(err)
+        }
+        assert.equal(exists, true)
+        done()
+      })
+    })
+  })
+  describe('does not exist', function () {
+    it('should be equal', function (done) {
+      io.exists(testDataPath('csv/doesnt-exist.csv'), function (err, exists) {
+        if (err) {
+          console.error(err)
+        }
+        assert.equal(exists, false)
+        done()
+      })
+    })
+  })
+})
 
 describe('readCsvSync()', function () {
   describe('empty', function () {
@@ -26,7 +276,7 @@ describe('readCsvSync()', function () {
   describe('basic', function () {
     it('should match expected json', function () {
       var json = io.readCsvSync(testDataPath('csv/basic.csv'))
-      assertBasicValid(json)
+      assertBasicValid(json, true)
     })
   })
 })
@@ -35,7 +285,7 @@ describe('readDataSync()', function () {
   describe('csv', function () {
     it('should match expected json', function () {
       var json = io.readDataSync(testDataPath('csv/basic.csv'))
-      assertBasicValid(json)
+      assertBasicValid(json, true)
     })
   })
 
@@ -49,14 +299,14 @@ describe('readDataSync()', function () {
   describe('psv', function () {
     it('should match expected json', function () {
       var json = io.readDataSync(testDataPath('psv/basic.psv'))
-      assertBasicValid(json)
+      assertBasicValid(json, true)
     })
   })
 
   describe('tsv', function () {
     it('should match expected json', function () {
       var json = io.readDataSync(testDataPath('tsv/basic.tsv'))
-      assertBasicValid(json)
+      assertBasicValid(json, true)
     })
   })
 
@@ -137,7 +387,7 @@ describe('readPsvSync()', function () {
   describe('basic', function () {
     it('should match expected json', function () {
       var json = io.readPsvSync(testDataPath('psv/basic.psv'))
-      assertBasicValid(json)
+      assertBasicValid(json, true)
     })
   })
 })
@@ -152,7 +402,7 @@ describe('readTsvSync()', function () {
   describe('basic', function () {
     it('should match expected json', function () {
       var json = io.readTsvSync(testDataPath('tsv/basic.tsv'))
-      assertBasicValid(json)
+      assertBasicValid(json, true)
     })
   })
 })
@@ -173,16 +423,30 @@ describe('readTxtSync()', function () {
 })
 
 describe('readYamlSync()', function () {
-  describe('empty', function () {
+  describe('empty yaml', function () {
     it('should be empty', function () {
       var json = io.readYamlSync(testDataPath('yaml/empty.yaml'))
       assert(_.isUndefined(json))
     })
   })
 
-  describe('basic', function () {
+  describe('basic yaml', function () {
     it('should match expected json', function () {
       var json = io.readYamlSync(testDataPath('yaml/basic.yaml'))
+      assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+    })
+  })
+
+  describe('empty yml', function () {
+    it('should be empty', function () {
+      var json = io.readYamlSync(testDataPath('yml/empty.yml'))
+      assert(_.isUndefined(json))
+    })
+  })
+
+  describe('basic yml', function () {
+    it('should match expected json', function () {
+      var json = io.readYamlSync(testDataPath('yml/basic.yml'))
       assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
     })
   })
@@ -200,22 +464,6 @@ describe('readAmlSync()', function () {
     it('should match expected json', function () {
       var json = io.readAmlSync(testDataPath('aml/basic.aml'))
       assert(_.isEqual(JSON.stringify(json), '{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}'))
-    })
-  })
-})
-
-describe('readYamlSync()', function () {
-  describe('empty', function () {
-    it('should be empty', function () {
-      var json = io.readYamlSync(testDataPath('yml/empty.yml'))
-      assert(_.isUndefined(json))
-    })
-  })
-
-  describe('basic', function () {
-    it('should match expected json', function () {
-      var json = io.readYamlSync(testDataPath('yml/basic.yml'))
-      assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
     })
   })
 })
@@ -309,47 +557,7 @@ describe('readdirFilter()', function () {
       })
     })
   })
-})
 
-describe('readdirFilterSync()', function () {
-  describe('empty', function () {
-    it('should be empty', function () {
-      assert.lengthOf(io.readdirFilterSync(__dirname, {include: 'csv'}), 0)
-    })
-  })
-
-  describe('actual extension', function () {
-    it('should not be empty', function () {
-      var dir = path.join(__dirname, 'data', 'csv')
-      assert.isAbove(io.readdirFilterSync(dir, {include: 'csv'}).length, 0)
-    })
-  })
-
-  describe('extension in filename', function () {
-    it('should be empty', function () {
-      var dir = path.join(__dirname, 'data', 'json')
-      assert.lengthOf(io.readdirFilterSync(dir, {include: 'csv'}), 0)
-    })
-  })
-
-  describe('dirPath in filename', function () {
-    it('should match expected output', function () {
-      var dir = path.join(__dirname, 'data', 'csv')
-      var files = io.readdirFilterSync(dir, {include: 'csv', fullPath: true})
-      assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
-    })
-  })
-
-  describe('use regex', function () {
-    it('should match expected output', function () {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      var files = io.readdirFilterSync(dir, {include: /\.*/})
-      assert.notEqual(files.indexOf('.hidden-file'), -1)
-    })
-  })
-})
-
-describe('readdirFilter()', function () {
   describe('all files match', function () {
     it('should be empty', function (done) {
       var dir = path.join(__dirname, 'data', 'csv')
@@ -481,6 +689,44 @@ describe('readdirFilter()', function () {
 })
 
 describe('readdirFilterSync()', function () {
+  describe('empty', function () {
+    it('should be empty', function () {
+      assert.lengthOf(io.readdirFilterSync(__dirname, {include: 'csv'}), 0)
+    })
+  })
+
+  describe('actual extension', function () {
+    it('should not be empty', function () {
+      var dir = path.join(__dirname, 'data', 'csv')
+      assert.isAbove(io.readdirFilterSync(dir, {include: 'csv'}).length, 0)
+    })
+  })
+
+  describe('extension in filename', function () {
+    it('should be empty', function () {
+      var dir = path.join(__dirname, 'data', 'json')
+      assert.lengthOf(io.readdirFilterSync(dir, {include: 'csv'}), 0)
+    })
+  })
+
+  describe('dirPath in filename', function () {
+    it('should match expected output', function () {
+      var dir = path.join(__dirname, 'data', 'csv')
+      var files = io.readdirFilterSync(dir, {include: 'csv', fullPath: true})
+      assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
+    })
+  })
+
+  describe('use regex', function () {
+    it('should match expected output', function () {
+      var dir = path.join(__dirname, 'data', 'mixed')
+      var files = io.readdirFilterSync(dir, {include: /\.*/})
+      assert.notEqual(files.indexOf('.hidden-file'), -1)
+    })
+  })
+})
+
+describe('readdirFilterSync()', function () {
   describe('all files match', function () {
     it('should be empty', function () {
       var dir = path.join(__dirname, 'data', 'csv')
@@ -523,32 +769,6 @@ describe('readdirFilterSync()', function () {
       var dir = path.join(__dirname, 'data', 'mixed-dirs')
       var files = io.readdirFilterSync(dir, {exclude: /^\./, skipDirectories: true})
       assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.json","data-0.tsv","data-1.csv","data-1.json"]'))
-    })
-  })
-})
-
-describe('discernFormat()', function () {
-  describe('no extension', function () {
-    it('should be false', function () {
-      assert.equal(io.discernFormat('/fake/path/what_is_this_file'), false)
-    })
-  })
-
-  describe('csv', function () {
-    it('should be a csv', function () {
-      assert.equal(io.discernFormat('/fake/path/real.csv'), 'csv')
-    })
-  })
-
-  describe('json', function () {
-    it('should be a json', function () {
-      assert.equal(io.discernFormat('/fake/path/real.json'), 'json')
-    })
-  })
-
-  describe('geojson', function () {
-    it('should be a json', function () {
-      assert.equal(io.discernFormat('/fake/path/real.geojson'), 'json')
     })
   })
 })
@@ -614,47 +834,6 @@ describe('deepExtend()', function () {
       }
 
       assert.equal(JSON.stringify(object1), JSON.stringify(desiredResult))
-    })
-  })
-})
-
-describe('existsSync()', function () {
-  var dir = path.join(__dirname, 'data', 'csv')
-  describe('exists', function () {
-    it('should be equal', function () {
-      var exists = io.existsSync(path.join(dir, 'basic.csv'))
-      assert.equal(exists, true)
-    })
-  })
-  describe('does not exist', function () {
-    it('should be equal', function () {
-      var exists = io.existsSync(path.join(dir, 'doesnt-exist.csv'))
-      assert.equal(exists, false)
-    })
-  })
-})
-
-describe('exists()', function () {
-  describe('exists', function () {
-    it('should be equal', function (done) {
-      io.exists(testDataPath('csv/basic.csv'), function (err, exists) {
-        if (err) {
-          console.error(err)
-        }
-        assert.equal(exists, true)
-        done()
-      })
-    })
-  })
-  describe('does not exist', function () {
-    it('should be equal', function (done) {
-      io.exists(testDataPath('csv/doesnt-exist.csv'), function (err, exists) {
-        if (err) {
-          console.error(err)
-        }
-        assert.equal(exists, false)
-        done()
-      })
     })
   })
 })
