@@ -1,17 +1,12 @@
 language: node_js
 node_js:
   - "node"
-  - "iojs"
-  - "4.2"
-  - "3.1"
-  - "3.0"
-  - "2.4"
-  - "1.8"
-  - "1.0"
+  - "6"
+  - "5"
+  - "4"
+  - "4.5"
+  - "4.4"
+  - "3"
+  - "2"
   - "0.12"
   - "0.11"
-after_success:
-  - "./build/travis-docs.sh"
-env:
-  global:
-    - secure: ZH+E6qCaYj4gi1mLKc6oWSw8X68GZQ7oyUrj7jbwVm83r6158N0k3yYLJpmhqtpTfurRkUeD4Cl4UnrTqKmqaKCBhpIzpApwQfQ/kefasQ3P+D4q4PjNlEU3nEbqAe0GwWC7pSmSNEDtjIeOMAlx8+FY6Cew6bpTm//H12JtgqcsmcjUttfBZnb44VwUfbdGY9tSql86sZ8oRsTux/naYTeeDPXkWdlzamq1SZ+c1VWfsxSway5YfaiVpw2t6sGOgW/VpOgZ3eijwiMYaSxo3bE58rH+iE7dp7NPNG0EOgxPj0hB3BwrzXZlRdZ0+wmwN2Vn5b/8eB9cG2sMn/1+JfHcnMFd8nQJ4IKoCFhZ1gwRO/nkIgR6Bm+daiXFuvrXopH5jxKEkmXqT8eSHoK3D8QWOtP8tlO2RJxC+xUOYJNa3MwFwCyZB+f24ABYSEWrefhtdUKa2pH7k6K/QIPfM1I2AuLpjlXk6r2wWLwUCkA/ndu9mGHBwnHw4BSUHJlFt/ZNtzg0WmBIMUyLq3wBZDLwJ7FLUQIZ3ONFHKm8uzKMN9fD7HmSwAShW5dSnMmYaQc1FuDE4950VqEmd3WO5U/CJTbXSuT42bW2ejhfQkefDI9SUx+wYxMCxR5PwV2aRO/05DhtwDqU1F36E1Qcrn1Do5c7gFdxbGua4s0bm9U=
