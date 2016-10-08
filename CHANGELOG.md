@@ -7,6 +7,11 @@ Changelog
 
 * Add tests
   * [af12b04932cad2d99c2a6403845143c1e13c9643](https://github.com/mhkeller/indian-ocean/commit/af12b04932cad2d99c2a6403845143c1e13c9643)
+* Internal: Improve doc workflow, update travis versions
+  * [355f0c7fd1b837773185c98d3bc12266f8c85cff](https://github.com/mhkeller/indian-ocean/commit/355f0c7fd1b837773185c98d3bc12266f8c85cff)
+  * [cf1eb24492dfdcf1533436882e1fcbda81ed5ce6](https://github.com/mhkeller/indian-ocean/commit/cf1eb24492dfdcf1533436882e1fcbda81ed5ce6)
+  * [be5119509369aad3f1d3060ab176459be9edad06](https://github.com/mhkeller/indian-ocean/commit/be5119509369aad3f1d3060ab176459be9edad06)
+  * [be5119509369aad3f1d3060ab176459be9edad06](https://github.com/mhkeller/indian-ocean/commit/be5119509369aad3f1d3060ab176459be9edad06)
 * Forthcoming: allow for parser options
   * See the `parse-options` branch for now
 
