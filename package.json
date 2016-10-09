@@ -7,7 +7,7 @@
     "coverage": "istanbul cover mocha -- -R spec",
     "docs": "documentation -g -f html -o docs -t ./docs/theme/",
     "preview-docs": "http-server -p 8080",
-    "test": "standard && mocha",
+    "test": "mocha",
     "standard-fix": "standard --fix"
   },
   "repository": {

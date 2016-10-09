@@ -4,6 +4,7 @@ var path = require('path')
 var io = require('../lib/index')
 var chai = require('chai')
 var assert = chai.assert
+var dsv = require('d3-dsv')
 var _ = require('underscore')
 var rimraf = require('rimraf')
 
@@ -162,6 +163,12 @@ describe('discernParser()', function () {
       assert.equal(io.discernParser(testDataPath('topojson/empty.topojson')).toString(), io.parsers.topojson.toString())
     })
   })
+
+  describe('custom delimiter: `_`', function () {
+    it('should be customer parser', function () {
+      assert.equal(io.discernParser(null, '_').toString(), dsv.dsvFormat('_').parse.toString())
+    })
+  })
 })
 
 describe('discernFileFormatter()', function () {
@@ -296,22 +303,55 @@ describe('makeDirectoriesSync()', function () {
   })
 })
 
-describe('extensionMatches()', function () {
+describe('extMatchesStr()', function () {
   it('should match the given extension', function () {
-    assert.equal(io.extensionMatches(testDataPath('csv/basic.csv'), 'csv'), true)
+    assert.equal(io.extMatchesStr('csv/basic.csv', 'csv'), true)
   })
 
   it('should not match the given extension', function () {
-    assert.equal(io.extensionMatches(testDataPath('csv/basic.csv'), 'tsv'), false)
+    assert.equal(io.extMatchesStr('csv/basic.csv', 'tsv'), false)
   })
 
   it('should match no extension', function () {
-    assert.equal(io.extensionMatches(testDataPath('csv/basic'), ''), true)
+    assert.equal(io.extMatchesStr('csv/basic', ''), true)
+  })
+
+  it('should match dotfile', function () {
+    assert.equal(io.extMatchesStr('csv/basic/.gitignore', ''), true)
   })
 })
 
-// matchRegExp
-// matches
+describe('matchesRegExp()', function () {
+  it('should match the regex with a dotfile', function () {
+    assert.equal(io.matchesRegExp('.gitignore', /\.gitignore/), true)
+  })
+
+  it('should match the regex with a normal file', function () {
+    assert.equal(io.matchesRegExp('data.csv', /\.csv$/), true)
+  })
+
+  it('should not match the regex', function () {
+    assert.equal(io.matchesRegExp('.gitignore', /csv/), false)
+  })
+
+  it('should match the full path', function () {
+    assert.equal(io.matchesRegExp('path/to/file/basic.csv', /\/file\//), true)
+  })
+})
+
+describe('matches()', function () {
+  describe('string', function () {
+    it('should match string name', function () {
+      assert.equal(io.matches('path/to/data.csv', 'csv'), true)
+    })
+  })
+
+  describe('regex', function () {
+    it('should match regex name', function () {
+      assert.equal(io.matches('path/to/data.csv', /csv$/), true)
+    })
+  })
+})
 
 describe('extend()', function () {
   describe('shallow', function () {
@@ -378,529 +418,666 @@ describe('deepExtend()', function () {
   })
 })
 
-describe('readDataSync()', function () {
-  describe('csv', function () {
-    it('should match expected json', function () {
-      var json = io.readDataSync(testDataPath('csv/basic.csv'))
-      assertBasicValid(json, true)
+describe('readers', function () {
+  describe('readDataSync()', function () {
+    describe('csv', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('csv/basic.csv'))
+        assertBasicValid(json, true)
+      })
+    })
+
+    describe('json', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('json/basic.json'))
+        assertBasicValid(json)
+      })
+    })
+
+    describe('psv', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('psv/basic.psv'))
+        assertBasicValid(json, true)
+      })
+    })
+
+    describe('tsv', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('tsv/basic.tsv'))
+        assertBasicValid(json, true)
+      })
+    })
+
+    describe('txt', function () {
+      it('should match expected txt', function () {
+        var txt = io.readDataSync(testDataPath('other/this_is_not_a_csv.txt'))
+        assert(_.isEqual('But will it look like one?\nBut will it look like one?\n', txt))
+      })
+    })
+
+    describe('yaml', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('yaml/basic.yaml'))
+        assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
+      })
+    })
+
+    describe('yml', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('yml/basic.yml'))
+        assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
+      })
+    })
+
+    describe('aml', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('aml/basic.aml'))
+        assert(_.isEqual('{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}', JSON.stringify(json)))
+      })
+    })
+
+    describe('custom delimiter string: `_`', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('other/basic.usv'), {parser: '_'})
+        assertBasicValid(json, true)
+      })
+    })
+
+    describe('custom delimiter parse fn: dsv.dsvFormat(\'_\').parse', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('other/basic.usv'), {parser: dsv.dsvFormat('_').parse})
+        assertBasicValid(json, true)
+      })
+    })
+
+    describe('custom delimiter object: dsv.dsvFormat(\'_\')', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('other/basic.usv'), {parser: dsv.dsvFormat('_')})
+        assertBasicValid(json, true)
+      })
+    })
+
+    describe('custom delimiter fn', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('json/basic.json'), {parser: function (str) { return JSON.parse(str) }})
+        assertBasicValid(json)
+      })
+    })
+
+    describe('unknown ext', function () {
+      it('should match expected text', function () {
+        var txt = io.readDataSync(testDataPath('other/fancy-text-extension.text'))
+        assert(_.isEqual(txt, 'The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+      })
     })
   })
 
-  describe('json', function () {
-    it('should match expected json', function () {
-      var json = io.readDataSync(testDataPath('json/basic.json'))
-      assertBasicValid(json)
+  describe('readData()', function () {
+    describe('csv', function () {
+      it('should match expected json', function () {
+        io.readData(testDataPath('csv/basic.csv'), function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json, true)
+          done()
+        })
+      })
     })
+
+    describe('json', function () {
+      it('should match expected json', function () {
+        io.readData(testDataPath('json/basic.json'), function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
+    describe('psv', function () {
+      it('should match expected json', function () {
+        io.readData(testDataPath('psv/basic.psv'), function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json, true)
+          done()
+        })
+      })
+    })
+
+    describe('tsv', function () {
+      it('should match expected json', function () {
+        io.readData(testDataPath('tsv/basic.tsv'), function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json, true)
+          done()
+        })
+      })
+    })
+
+    describe('txt', function () {
+      it('should match expected txt', function () {
+        io.readData(testDataPath('other/this_is_not_a_csv.txt'), function (err, txt) {
+          assert(_.isEqual('But will it look like one?\nBut will it look like one?\n', txt))
+          done()
+        })
+      })
+    })
+
+    // describe('yaml', function () {
+    //   it('should match expected json', function () {
+    //     var json = io.readData(testDataPath('yaml/basic.yaml'))
+    //     assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
+    //   })
+    // })
+
+    // describe('yml', function () {
+    //   it('should match expected json', function () {
+    //     var json = io.readData(testDataPath('yml/basic.yml'))
+    //     assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
+    //   })
+    // })
+
+    // describe('aml', function () {
+    //   it('should match expected json', function () {
+    //     var json = io.readData(testDataPath('aml/basic.aml'))
+    //     assert(_.isEqual('{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}', JSON.stringify(json)))
+    //   })
+    // })
+
+    // describe('custom delimiter string: `_`', function () {
+    //   it('should match expected json', function () {
+    //     var json = io.readData(testDataPath('other/basic.usv'), {parser: '_'})
+    //     assertBasicValid(json, true)
+    //   })
+    // })
+
+    // describe('custom delimiter parse fn: dsv.dsvFormat(\'_\').parse', function () {
+    //   it('should match expected json', function () {
+    //     var json = io.readData(testDataPath('other/basic.usv'), {parser: dsv.dsvFormat('_').parse})
+    //     assertBasicValid(json, true)
+    //   })
+    // })
+
+    // describe('custom delimiter object: dsv.dsvFormat(\'_\')', function () {
+    //   it('should match expected json', function () {
+    //     var json = io.readData(testDataPath('other/basic.usv'), {parser: dsv.dsvFormat('_')})
+    //     assertBasicValid(json, true)
+    //   })
+    // })
+
+    // describe('custom delimiter fn', function () {
+    //   it('should match expected json', function () {
+    //     var json = io.readData(testDataPath('json/basic.json'), {parser: function (str) { return JSON.parse(str) }})
+    //     assertBasicValid(json)
+    //   })
+    // })
+
+    // describe('unknown ext', function () {
+    //   it('should match expected text', function () {
+    //     var txt = io.readData(testDataPath('other/fancy-text-extension.text'))
+    //     assert(_.isEqual(txt, 'The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+    //   })
+    // })
   })
 
-  describe('psv', function () {
-    it('should match expected json', function () {
-      var json = io.readDataSync(testDataPath('psv/basic.psv'))
-      assertBasicValid(json, true)
-    })
-  })
-
-  describe('tsv', function () {
-    it('should match expected json', function () {
-      var json = io.readDataSync(testDataPath('tsv/basic.tsv'))
-      assertBasicValid(json, true)
-    })
-  })
-
-  describe('txt', function () {
-    it('should match expected txt', function () {
-      var txt = io.readDataSync(testDataPath('other/this_is_not_a_csv.txt'))
-      assert(_.isEqual('But will it look like one?\nBut will it look like one?\n', txt))
-    })
-  })
-
-  describe('unknown ext', function () {
-    it('should match expected text', function () {
-      var txt = io.readDataSync(testDataPath('other/fancy-text-extension.text'))
-      assert(_.isEqual(txt, 'The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
-    })
-  })
-
-  describe('yaml', function () {
-    it('should match expected json', function () {
-      var json = io.readDataSync(testDataPath('yaml/basic.yaml'))
-      assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
-    })
-  })
-
-  describe('yml', function () {
-    it('should match expected json', function () {
-      var json = io.readDataSync(testDataPath('yml/basic.yml'))
-      assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
-    })
-  })
-
-  describe('aml', function () {
-    it('should match expected json', function () {
-      var json = io.readDataSync(testDataPath('aml/basic.aml'))
-      assert(_.isEqual('{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}', JSON.stringify(json)))
-    })
-  })
-})
-
-describe('readJsonSync()', function () {
-  describe('empty', function () {
-    it('should be empty', function () {
-      assert.lengthOf(io.readJsonSync(testDataPath('json/empty.json')), 0)
-    })
-  })
-
-  describe('basic', function () {
-    it('should match expected json', function () {
-      var json = io.readJsonSync(testDataPath('json/basic.json'))
-      assertBasicValid(json)
-    })
-  })
-
-  describe('basic', function () {
-    it('should use readOptions', function () {
-      var json = io.readJsonSync(testDataPath('json/basic.json'), {
-        readOptions: {
-          reviver: function (k, v) {
-            if (typeof v === 'number') {
-              return v * 2
-            }
-            return v
+  describe('readdirFilter()', function () {
+    describe('empty', function () {
+      it('should be empty', function (done) {
+        io.readdirFilter(__dirname, {include: 'csv'}, function (err, files) {
+          assert.lengthOf(files, 0)
+          if (err) {
+            console.error(err)
           }
-        }
-      })
-      assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
-    })
-  })
-
-  describe('invalid', function () {
-    it('should raise an error', function () {
-      assert.throws(function () {
-        io.readJsonSync(testDataPath('json/invalid.json'))
-      }, Error)
-    })
-  })
-})
-
-describe('readCsvSync()', function () {
-  describe('empty', function () {
-    it('should be empty', function () {
-      assert.lengthOf(io.readCsvSync(testDataPath('csv/empty.csv')), 0)
-    })
-  })
-
-  describe('basic', function () {
-    it('should match expected json', function () {
-      var json = io.readCsvSync(testDataPath('csv/basic.csv'))
-      assertBasicValid(json, true)
-    })
-  })
-
-  describe('basic casted', function () {
-    it('should match expected json', function () {
-      var json = io.readCsvSync(testDataPath('csv/basic.csv'), {
-        readOptions: function (row, i, columns) {
-          row.height = +row.height
-          return row
-        }
-      })
-      assertBasicValid(json)
-    })
-  })
-})
-
-describe('readPsvSync()', function () {
-  describe('empty', function () {
-    it('should be empty', function () {
-      assert.lengthOf(io.readPsvSync(testDataPath('psv/empty.psv')), 0)
-    })
-  })
-
-  describe('basic', function () {
-    it('should match expected json', function () {
-      var json = io.readPsvSync(testDataPath('psv/basic.psv'))
-      assertBasicValid(json, true)
-    })
-  })
-})
-
-describe('readTsvSync()', function () {
-  describe('empty', function () {
-    it('should be empty', function () {
-      assert.lengthOf(io.readTsvSync(testDataPath('tsv/empty.tsv')), 0)
-    })
-  })
-
-  describe('basic', function () {
-    it('should match expected json', function () {
-      var json = io.readTsvSync(testDataPath('tsv/basic.tsv'))
-      assertBasicValid(json, true)
-    })
-  })
-})
-
-describe('readTxtSync()', function () {
-  describe('empty', function () {
-    it('should be empty', function () {
-      assert.lengthOf(io.readTxtSync(testDataPath('txt/empty.txt')), 0)
-    })
-  })
-
-  describe('basic', function () {
-    it('should match expected json', function () {
-      var txt = io.readTxtSync(testDataPath('txt/basic.txt'))
-      assert(_.isEqual(txt, 'The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
-    })
-  })
-})
-
-describe('readYamlSync()', function () {
-  describe('empty yaml', function () {
-    it('should be empty', function () {
-      var json = io.readYamlSync(testDataPath('yaml/empty.yaml'))
-      assert(_.isUndefined(json))
-    })
-  })
-
-  describe('basic yaml', function () {
-    it('should match expected json', function () {
-      var json = io.readYamlSync(testDataPath('yaml/basic.yaml'))
-      assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
-    })
-  })
-
-  describe('empty yml', function () {
-    it('should be empty', function () {
-      var json = io.readYamlSync(testDataPath('yml/empty.yml'))
-      assert(_.isUndefined(json))
-    })
-  })
-
-  describe('basic yml', function () {
-    it('should match expected json', function () {
-      var json = io.readYamlSync(testDataPath('yml/basic.yml'))
-      assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
-    })
-  })
-})
-
-describe('readAmlSync()', function () {
-  describe('empty', function () {
-    it('should be empty', function () {
-      var json = io.readAmlSync(testDataPath('aml/empty.aml'))
-      assert(_.isEmpty(json))
-    })
-  })
-
-  describe('basic', function () {
-    it('should match expected json', function () {
-      var json = io.readAmlSync(testDataPath('aml/basic.aml'))
-      assert(_.isEqual(JSON.stringify(json), '{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}'))
-    })
-  })
-})
-
-describe('readdirFilter()', function () {
-  describe('empty', function () {
-    it('should be empty', function (done) {
-      io.readdirFilter(__dirname, {include: 'csv'}, function (err, files) {
-        assert.lengthOf(files, 0)
-        if (err) {
-          console.error(err)
-        }
-        done()
+          done()
+        })
       })
     })
-  })
 
-  describe('no options passed', function () {
-    it('should match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'csv')
-      io.readdirFilter(dir, function (err, files) {
-        assert(_.isEqual(files.length, 2))
-        if (err) {
-          console.error(err)
-        }
-        done()
+    describe('no options passed', function () {
+      it('should match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'csv')
+        io.readdirFilter(dir, function (err, files) {
+          assert(_.isEqual(files.length, 2))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
       })
     })
-  })
 
-  describe('include by extension', function () {
-    it('should match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'csv')
-      io.readdirFilter(dir, {include: 'csv'}, function (err, files) {
-        assert(_.isEqual(files.length, 2))
-        if (err) {
-          console.error(err)
-        }
-        done()
+    describe('include by extension', function () {
+      it('should match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'csv')
+        io.readdirFilter(dir, {include: 'csv'}, function (err, files) {
+          assert(_.isEqual(files.length, 2))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
       })
     })
-  })
 
-  describe('include by single list', function () {
-    it('should match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'csv')
-      io.readdirFilter(dir, {include: ['csv']}, function (err, files) {
-        assert(_.isEqual(files.length, 2))
-        if (err) {
-          console.error(err)
-        }
-        done()
+    describe('include by single list', function () {
+      it('should match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'csv')
+        io.readdirFilter(dir, {include: ['csv']}, function (err, files) {
+          assert(_.isEqual(files.length, 2))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
       })
     })
-  })
 
-  describe('include by extension list', function () {
-    it('should match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      io.readdirFilter(dir, {include: ['csv', 'tsv']}, function (err, files) {
-        assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.tsv","data-1.csv"]'))
-        if (err) {
-          console.error(err)
-        }
-        done()
+    describe('include by extension list', function () {
+      it('should match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'mixed')
+        io.readdirFilter(dir, {include: ['csv', 'tsv']}, function (err, files) {
+          assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.tsv","data-1.csv"]'))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
       })
     })
-  })
 
-  describe('include by extension list and regex', function () {
-    it('should match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      io.readdirFilter(dir, {include: ['csv', 'tsv', /hidden/]}, function (err, files) {
-        assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.csv","data-0.tsv","data-1.csv"]'))
-        if (err) {
-          console.error(err)
-        }
-        done()
+    describe('include by extension list and regex', function () {
+      it('should match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'mixed')
+        io.readdirFilter(dir, {include: ['csv', 'tsv', /hidden/]}, function (err, files) {
+          assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.csv","data-0.tsv","data-1.csv"]'))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
       })
     })
-  })
 
-  describe('dirPath in filename', function () {
-    it('should match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'csv')
-      io.readdirFilter(dir, {include: 'csv', fullPath: true}, function (err, files) {
-        if (err) {
-          console.error(err)
-        }
-        done(assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0))
+    describe('dirPath in filename', function () {
+      it('should match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'csv')
+        io.readdirFilter(dir, {include: 'csv', fullPath: true}, function (err, files) {
+          if (err) {
+            console.error(err)
+          }
+          done(assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0))
+        })
+      })
+    })
+
+    describe('all files match', function () {
+      it('should be empty', function (done) {
+        var dir = path.join(__dirname, 'data', 'csv')
+        io.readdirFilter(dir, {exclude: 'csv'}, function (err, files) {
+          assert.lengthOf(files, 0)
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
+      })
+    })
+
+    describe('exclude by extension', function () {
+      it('should match expected out', function (done) {
+        var dir = path.join(__dirname, 'data', 'mixed')
+        io.readdirFilter(dir, {exclude: 'tsv'}, function (err, files) {
+          assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.csv","data-0.json","data-1.csv","data-1.json"]'))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
+      })
+    })
+
+    describe('exclude by extension list', function () {
+      it('match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'mixed')
+        io.readdirFilter(dir, {exclude: ['tsv', 'csv']}, function (err, files) {
+          assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.json","data-1.json"]'))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
+      })
+    })
+
+    describe('include and exclude by regex and extension list', function () {
+      it('match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'mixed')
+        io.readdirFilter(dir, {exclude: ['tsv', 'csv'], include: /^data/}, function (err, files) {
+          assert(_.isEqual(JSON.stringify(files), '["data-0.json","data-1.json"]'))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
+      })
+    })
+
+    describe('includeMatchAll', function () {
+      it('match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'mixed')
+        io.readdirFilter(dir, {include: [/^data-1/, 'json'], includeMatchAll: true}, function (err, files) {
+          assert(_.isEqual(JSON.stringify(files), '["data-1.json"]'))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
+      })
+    })
+
+    describe('excludeMatchAll', function () {
+      it('match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'mixed')
+        io.readdirFilter(dir, {exclude: [/^data-1/, 'json'], excludeMatchAll: true}, function (err, files) {
+          assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.csv","data-0.json","data-0.tsv","data-1.csv"]'))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
+      })
+    })
+
+    describe('exclude by extension list and regex', function () {
+      it('match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'mixed')
+        io.readdirFilter(dir, {exclude: ['tsv', 'csv', /^\./]}, function (err, files) {
+          assert(_.isEqual(JSON.stringify(files), '["data-0.json","data-1.json"]'))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
+      })
+    })
+
+    describe('dirPath in filename', function () {
+      it('should match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'other')
+        io.readdirFilter(dir, {exclude: 'csv', fullPath: true}, function (err, files) {
+          if (err) {
+            console.error(err)
+          }
+          done(assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1))
+        })
+      })
+    })
+
+    describe('get dirs only', function () {
+      it('should match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'mixed-dirs')
+        io.readdirFilter(dir, {skipFiles: true}, function (err, files) {
+          assert(_.isEqual(JSON.stringify(files), '["sub-dir-0","sub-dir-1","sub-dir-2"]'))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
+      })
+    })
+
+    describe('get files only', function () {
+      it('should match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'mixed-dirs')
+        io.readdirFilter(dir, {exclude: /^\./, skipDirectories: true}, function (err, files) {
+          assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.json","data-0.tsv","data-1.csv","data-1.json"]'))
+          if (err) {
+            console.error(err)
+          }
+          done()
+        })
       })
     })
   })
 
-  describe('all files match', function () {
-    it('should be empty', function (done) {
-      var dir = path.join(__dirname, 'data', 'csv')
-      io.readdirFilter(dir, {exclude: 'csv'}, function (err, files) {
-        assert.lengthOf(files, 0)
-        if (err) {
-          console.error(err)
-        }
-        done()
+  describe('readdirFilterSync()', function () {
+    describe('empty', function () {
+      it('should be empty', function () {
+        assert.lengthOf(io.readdirFilterSync(__dirname, {include: 'csv'}), 0)
       })
     })
-  })
 
-  describe('exclude by extension', function () {
-    it('should match expected out', function (done) {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      io.readdirFilter(dir, {exclude: 'tsv'}, function (err, files) {
-        assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.csv","data-0.json","data-1.csv","data-1.json"]'))
-        if (err) {
-          console.error(err)
-        }
-        done()
+    describe('actual extension', function () {
+      it('should not be empty', function () {
+        var dir = path.join(__dirname, 'data', 'csv')
+        assert.isAbove(io.readdirFilterSync(dir, {include: 'csv'}).length, 0)
       })
     })
-  })
 
-  describe('exclude by extension list', function () {
-    it('match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      io.readdirFilter(dir, {exclude: ['tsv', 'csv']}, function (err, files) {
-        assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.json","data-1.json"]'))
-        if (err) {
-          console.error(err)
-        }
-        done()
+    describe('extension in filename', function () {
+      it('should be empty', function () {
+        var dir = path.join(__dirname, 'data', 'json')
+        assert.lengthOf(io.readdirFilterSync(dir, {include: 'csv'}), 0)
       })
     })
-  })
 
-  describe('include and exclude by regex and extension list', function () {
-    it('match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      io.readdirFilter(dir, {exclude: ['tsv', 'csv'], include: /^data/}, function (err, files) {
-        assert(_.isEqual(JSON.stringify(files), '["data-0.json","data-1.json"]'))
-        if (err) {
-          console.error(err)
-        }
-        done()
+    describe('dirPath in filename', function () {
+      it('should match expected output', function () {
+        var dir = path.join(__dirname, 'data', 'csv')
+        var files = io.readdirFilterSync(dir, {include: 'csv', fullPath: true})
+        assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
       })
     })
-  })
 
-  describe('includeMatchAll', function () {
-    it('match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      io.readdirFilter(dir, {include: [/^data-1/, 'json'], includeMatchAll: true}, function (err, files) {
-        assert(_.isEqual(JSON.stringify(files), '["data-1.json"]'))
-        if (err) {
-          console.error(err)
-        }
-        done()
+    describe('use regex', function () {
+      it('should match expected output', function () {
+        var dir = path.join(__dirname, 'data', 'mixed')
+        var files = io.readdirFilterSync(dir, {include: /\.*/})
+        assert.notEqual(files.indexOf('.hidden-file'), -1)
       })
     })
-  })
 
-  describe('excludeMatchAll', function () {
-    it('match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      io.readdirFilter(dir, {exclude: [/^data-1/, 'json'], excludeMatchAll: true}, function (err, files) {
-        assert(_.isEqual(JSON.stringify(files), '[".hidden-file","data-0.csv","data-0.json","data-0.tsv","data-1.csv"]'))
-        if (err) {
-          console.error(err)
-        }
-        done()
+    describe('all files match', function () {
+      it('should be empty', function () {
+        var dir = path.join(__dirname, 'data', 'csv')
+        assert.lengthOf(io.readdirFilterSync(dir, {exclude: 'csv'}), 0)
       })
     })
-  })
 
-  describe('exclude by extension list and regex', function () {
-    it('match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      io.readdirFilter(dir, {exclude: ['tsv', 'csv', /^\./]}, function (err, files) {
-        assert(_.isEqual(JSON.stringify(files), '["data-0.json","data-1.json"]'))
-        if (err) {
-          console.error(err)
-        }
-        done()
+    describe('no matching files', function () {
+      it('should not be empty', function () {
+        var dir = path.join(__dirname, 'data', 'csv')
+        assert.isAbove(io.readdirFilterSync(dir, {exclude: 'tsv'}).length, 0)
       })
     })
-  })
 
-  describe('dirPath in filename', function () {
-    it('should match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'other')
-      io.readdirFilter(dir, {exclude: 'csv', fullPath: true}, function (err, files) {
-        if (err) {
-          console.error(err)
-        }
-        done(assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1))
+    describe('extension in filename', function () {
+      it('should not be empty', function () {
+        var dir = path.join(__dirname, 'data', 'mixed')
+        assert.isAbove(io.readdirFilterSync(dir, {exclude: 'csv'}).length, 0)
       })
     })
-  })
 
-  describe('get dirs only', function () {
-    it('should match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'mixed-dirs')
-      io.readdirFilter(dir, {skipFiles: true}, function (err, files) {
+    describe('dirPath in filename', function () {
+      it('should match expected output', function () {
+        var dir = path.join(__dirname, 'data', 'other')
+        var files = io.readdirFilterSync(dir, {exclude: 'csv', fullPath: true})
+        assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1)
+      })
+    })
+
+    describe('get dirs only', function () {
+      it('should match expected output', function () {
+        var dir = path.join(__dirname, 'data', 'mixed-dirs')
+        var files = io.readdirFilterSync(dir, {skipFiles: true})
         assert(_.isEqual(JSON.stringify(files), '["sub-dir-0","sub-dir-1","sub-dir-2"]'))
-        if (err) {
-          console.error(err)
-        }
-        done()
       })
     })
-  })
 
-  describe('get files only', function () {
-    it('should match expected output', function (done) {
-      var dir = path.join(__dirname, 'data', 'mixed-dirs')
-      io.readdirFilter(dir, {exclude: /^\./, skipDirectories: true}, function (err, files) {
+    describe('get files only', function () {
+      it('should match expected output', function () {
+        var dir = path.join(__dirname, 'data', 'mixed-dirs')
+        var files = io.readdirFilterSync(dir, {exclude: /^\./, skipDirectories: true})
         assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.json","data-0.tsv","data-1.csv","data-1.json"]'))
-        if (err) {
-          console.error(err)
-        }
-        done()
       })
     })
   })
 })
 
-describe('readdirFilterSync()', function () {
-  describe('empty', function () {
-    it('should be empty', function () {
-      assert.lengthOf(io.readdirFilterSync(__dirname, {include: 'csv'}), 0)
+describe('shorthandReaders', function () {
+  describe('readJsonSync()', function () {
+    describe('empty', function () {
+      it('should be empty', function () {
+        assert.lengthOf(io.readJsonSync(testDataPath('json/empty.json')), 0)
+      })
+    })
+
+    describe('basic', function () {
+      it('should match expected json', function () {
+        var json = io.readJsonSync(testDataPath('json/basic.json'))
+        assertBasicValid(json)
+      })
+    })
+
+    describe('basic', function () {
+      it('should use readOptions', function () {
+        var json = io.readJsonSync(testDataPath('json/basic.json'), {
+          readOptions: {
+            reviver: function (k, v) {
+              if (typeof v === 'number') {
+                return v * 2
+              }
+              return v
+            }
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+      })
+    })
+
+    describe('invalid', function () {
+      it('should raise an error', function () {
+        assert.throws(function () {
+          io.readJsonSync(testDataPath('json/invalid.json'))
+        }, Error)
+      })
     })
   })
 
-  describe('actual extension', function () {
-    it('should not be empty', function () {
-      var dir = path.join(__dirname, 'data', 'csv')
-      assert.isAbove(io.readdirFilterSync(dir, {include: 'csv'}).length, 0)
+  describe('readCsvSync()', function () {
+    describe('empty', function () {
+      it('should be empty', function () {
+        assert.lengthOf(io.readCsvSync(testDataPath('csv/empty.csv')), 0)
+      })
+    })
+
+    describe('basic', function () {
+      it('should match expected json', function () {
+        var json = io.readCsvSync(testDataPath('csv/basic.csv'))
+        assertBasicValid(json, true)
+      })
+    })
+
+    describe('basic casted', function () {
+      it('should match expected json', function () {
+        var json = io.readCsvSync(testDataPath('csv/basic.csv'), {
+          readOptions: function (row, i, columns) {
+            row.height = +row.height
+            return row
+          }
+        })
+        assertBasicValid(json)
+      })
     })
   })
 
-  describe('extension in filename', function () {
-    it('should be empty', function () {
-      var dir = path.join(__dirname, 'data', 'json')
-      assert.lengthOf(io.readdirFilterSync(dir, {include: 'csv'}), 0)
+  describe('readPsvSync()', function () {
+    describe('empty', function () {
+      it('should be empty', function () {
+        assert.lengthOf(io.readPsvSync(testDataPath('psv/empty.psv')), 0)
+      })
+    })
+
+    describe('basic', function () {
+      it('should match expected json', function () {
+        var json = io.readPsvSync(testDataPath('psv/basic.psv'))
+        assertBasicValid(json, true)
+      })
     })
   })
 
-  describe('dirPath in filename', function () {
-    it('should match expected output', function () {
-      var dir = path.join(__dirname, 'data', 'csv')
-      var files = io.readdirFilterSync(dir, {include: 'csv', fullPath: true})
-      assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
+  describe('readTsvSync()', function () {
+    describe('empty', function () {
+      it('should be empty', function () {
+        assert.lengthOf(io.readTsvSync(testDataPath('tsv/empty.tsv')), 0)
+      })
+    })
+
+    describe('basic', function () {
+      it('should match expected json', function () {
+        var json = io.readTsvSync(testDataPath('tsv/basic.tsv'))
+        assertBasicValid(json, true)
+      })
     })
   })
 
-  describe('use regex', function () {
-    it('should match expected output', function () {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      var files = io.readdirFilterSync(dir, {include: /\.*/})
-      assert.notEqual(files.indexOf('.hidden-file'), -1)
+  describe('readTxtSync()', function () {
+    describe('empty', function () {
+      it('should be empty', function () {
+        assert.lengthOf(io.readTxtSync(testDataPath('txt/empty.txt')), 0)
+      })
     })
-  })
-})
 
-describe('readdirFilterSync()', function () {
-  describe('all files match', function () {
-    it('should be empty', function () {
-      var dir = path.join(__dirname, 'data', 'csv')
-      assert.lengthOf(io.readdirFilterSync(dir, {exclude: 'csv'}), 0)
-    })
-  })
-
-  describe('no matching files', function () {
-    it('should not be empty', function () {
-      var dir = path.join(__dirname, 'data', 'csv')
-      assert.isAbove(io.readdirFilterSync(dir, {exclude: 'tsv'}).length, 0)
+    describe('basic', function () {
+      it('should match expected json', function () {
+        var txt = io.readTxtSync(testDataPath('txt/basic.txt'))
+        assert(_.isEqual(txt, 'The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+      })
     })
   })
 
-  describe('extension in filename', function () {
-    it('should not be empty', function () {
-      var dir = path.join(__dirname, 'data', 'mixed')
-      assert.isAbove(io.readdirFilterSync(dir, {exclude: 'csv'}).length, 0)
+  describe('readYamlSync()', function () {
+    describe('empty yaml', function () {
+      it('should be empty', function () {
+        var json = io.readYamlSync(testDataPath('yaml/empty.yaml'))
+        assert(_.isUndefined(json))
+      })
+    })
+
+    describe('basic yaml', function () {
+      it('should match expected json', function () {
+        var json = io.readYamlSync(testDataPath('yaml/basic.yaml'))
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+      })
+    })
+
+    describe('empty yml', function () {
+      it('should be empty', function () {
+        var json = io.readYamlSync(testDataPath('yml/empty.yml'))
+        assert(_.isUndefined(json))
+      })
+    })
+
+    describe('basic yml', function () {
+      it('should match expected json', function () {
+        var json = io.readYamlSync(testDataPath('yml/basic.yml'))
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+      })
     })
   })
 
-  describe('dirPath in filename', function () {
-    it('should match expected output', function () {
-      var dir = path.join(__dirname, 'data', 'other')
-      var files = io.readdirFilterSync(dir, {exclude: 'csv', fullPath: true})
-      assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1)
+  describe('readAmlSync()', function () {
+    describe('empty', function () {
+      it('should be empty', function () {
+        var json = io.readAmlSync(testDataPath('aml/empty.aml'))
+        assert(_.isEmpty(json))
+      })
     })
-  })
 
-  describe('get dirs only', function () {
-    it('should match expected output', function () {
-      var dir = path.join(__dirname, 'data', 'mixed-dirs')
-      var files = io.readdirFilterSync(dir, {skipFiles: true})
-      assert(_.isEqual(JSON.stringify(files), '["sub-dir-0","sub-dir-1","sub-dir-2"]'))
-    })
-  })
-
-  describe('get files only', function () {
-    it('should match expected output', function () {
-      var dir = path.join(__dirname, 'data', 'mixed-dirs')
-      var files = io.readdirFilterSync(dir, {exclude: /^\./, skipDirectories: true})
-      assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.json","data-0.tsv","data-1.csv","data-1.json"]'))
+    describe('basic', function () {
+      it('should match expected json', function () {
+        var json = io.readAmlSync(testDataPath('aml/basic.aml'))
+        assert(_.isEqual(JSON.stringify(json), '{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}'))
+      })
     })
   })
 })

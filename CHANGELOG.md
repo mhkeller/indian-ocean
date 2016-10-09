@@ -1,7 +1,7 @@
 Changelog
 =========
 
-# 1.2.0
+# 2.0.0
 
 > Not yet on npm
 
@@ -14,6 +14,13 @@ Changelog
   * [be5119509369aad3f1d3060ab176459be9edad06](https://github.com/mhkeller/indian-ocean/commit/be5119509369aad3f1d3060ab176459be9edad06)
 * Forthcoming: allow for parser options
   * See the `parse-options` branch for now
+* Expose parsers and formatters
+* *Breaking changes*
+  * Custom delimiters passed to `helpers.discernParser` no longer need to be in an object.
+    * Old usage `io.discernParser(null, {delimiter: '_'})`
+    * New usage `io.discernParser(null, '_')`
+  * Renamed functions
+    * `extensionMatches` -> `extMatchesStr`
 
 # 1.1.1
 
