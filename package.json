@@ -6,8 +6,9 @@
   "scripts": {
     "coverage": "istanbul cover mocha -- -R spec",
     "docs": "documentation -g -f html -o docs -t ./docs/theme/",
-    "preview-docs": "http-server -p 8080",
-    "test": "mocha",
+    "server": "http-server docs -p 8080 -o",
+    "preview": "npm run docs && npm run server",
+    "test": "standard && mocha",
     "standard-fix": "standard --fix"
   },
   "repository": {

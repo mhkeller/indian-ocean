@@ -416,6 +416,39 @@ describe('deepExtend()', function () {
 
 describe('readers', function () {
   describe('readDataSync()', function () {
+    describe('json', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('json/basic.json'))
+        assertBasicValid(json)
+      })
+    })
+
+    describe('json with transform', function () {
+      it('should match expected json', function () {
+        var json = io.readJsonSync(testDataPath('json/basic.json'), {
+          transform: function (k, v) {
+            if (typeof v === 'number') {
+              return v * 2
+            }
+            return v
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+      })
+    })
+
+    describe('json with transform shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('json/basic.json'), function (k, v) {
+          if (typeof v === 'number') {
+            return v * 2
+          }
+          return v
+        })
+        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+      })
+    })
+
     describe('csv', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('csv/basic.csv'))
@@ -423,9 +456,24 @@ describe('readers', function () {
       })
     })
 
-    describe('json', function () {
+    describe('csv with transform', function () {
       it('should match expected json', function () {
-        var json = io.readDataSync(testDataPath('json/basic.json'))
+        var json = io.readDataSync(testDataPath('csv/basic.csv'), {
+          transform: function (row, i, columns) {
+            row.height = +row.height
+            return row
+          }
+        })
+        assertBasicValid(json)
+      })
+    })
+
+    describe('csv with transform shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('csv/basic.csv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
+        })
         assertBasicValid(json)
       })
     })
@@ -437,6 +485,28 @@ describe('readers', function () {
       })
     })
 
+    describe('psv with transform', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('psv/basic.psv'), {
+          transform: function (row, i, columns) {
+            row.height = +row.height
+            return row
+          }
+        })
+        assertBasicValid(json)
+      })
+    })
+
+    describe('psv with transform shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('psv/basic.psv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
+        })
+        assertBasicValid(json)
+      })
+    })
+
     describe('tsv', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('tsv/basic.tsv'))
@@ -444,10 +514,79 @@ describe('readers', function () {
       })
     })
 
+    describe('tsv with transform', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('tsv/basic.tsv'), {
+          transform: function (row, i, columns) {
+            row.height = +row.height
+            return row
+          }
+        })
+        assertBasicValid(json)
+      })
+    })
+
+    describe('tsv with transform shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('tsv/basic.tsv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
+        })
+        assertBasicValid(json)
+      })
+    })
+
     describe('txt', function () {
       it('should match expected txt', function () {
-        var txt = io.readDataSync(testDataPath('other/this_is_not_a_csv.txt'))
-        assert(_.isEqual('But will it look like one?\nBut will it look like one?\n', txt))
+        var txt = io.readDataSync(testDataPath('txt/basic.txt'))
+        assert(_.isEqual('The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.', txt))
+      })
+    })
+
+    describe('txt with transform', function () {
+      it('should match expected txt', function () {
+        var txt = io.readDataSync(testDataPath('txt/basic.txt'), {
+          transform: function (str) {
+            return str.replace(/carbon/g, 'diamonds')
+          }
+        })
+        assert(_.isEqual(txt, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+      })
+    })
+
+    describe('txt with transform shorthand', function () {
+      it('should match expected txt', function () {
+        var txt = io.readDataSync(testDataPath('txt/basic.txt'), function (str) {
+          return str.replace(/carbon/g, 'diamonds')
+        })
+        assert(_.isEqual(txt, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+      })
+    })
+
+    describe('text', function () {
+      it('should match expected text', function () {
+        var txt = io.readDataSync(testDataPath('text/basic.text'))
+        assert(_.isEqual('The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.', txt))
+      })
+    })
+
+    describe('text with transform', function () {
+      it('should match expected text', function () {
+        var txt = io.readDataSync(testDataPath('text/basic.text'), {
+          transform: function (str) {
+            return str.replace(/carbon/g, 'diamonds')
+          }
+        })
+        assert(_.isEqual(txt, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+      })
+    })
+
+    describe('text with transform shorthand', function () {
+      it('should match expected text', function () {
+        var txt = io.readDataSync(testDataPath('text/basic.text'), function (str) {
+          return str.replace(/carbon/g, 'diamonds')
+        })
+        assert(_.isEqual(txt, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
       })
     })
 
@@ -478,6 +617,19 @@ describe('readers', function () {
         assertBasicValid(json, true)
       })
     })
+
+    // describe('custom delimiter string: `_` with transform', function () {
+    //   it('should match expected json', function () {
+    //     var json = io.readDataSync(testDataPath('other/basic.usv'), {
+    //       parser: '_',
+    //       transform: function (row, i, columns) {
+    //         row.height = +row.height
+    //         return row
+    //       }
+    //     })
+    //     assertBasicValid(json)
+    //   })
+    // })
 
     describe('custom delimiter parse fn: dsv.dsvFormat(\'_\').parse', function () {
       it('should match expected json', function () {
@@ -926,16 +1078,26 @@ describe('shorthandReaders', function () {
     })
 
     describe('basic', function () {
-      it('should use readOptions', function () {
+      it('should use transform', function () {
         var json = io.readJsonSync(testDataPath('json/basic.json'), {
-          readOptions: {
-            reviver: function (k, v) {
-              if (typeof v === 'number') {
-                return v * 2
-              }
-              return v
+          transform: function (k, v) {
+            if (typeof v === 'number') {
+              return v * 2
             }
+            return v
           }
+        })
+        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+      })
+    })
+
+    describe('basic', function () {
+      it('should use transform shorthand', function () {
+        var json = io.readJsonSync(testDataPath('json/basic.json'), function (k, v) {
+          if (typeof v === 'number') {
+            return v * 2
+          }
+          return v
         })
         assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
       })
@@ -967,10 +1129,20 @@ describe('shorthandReaders', function () {
     describe('basic casted', function () {
       it('should match expected json', function () {
         var json = io.readCsvSync(testDataPath('csv/basic.csv'), {
-          readOptions: function (row, i, columns) {
+          transform: function (row, i, columns) {
             row.height = +row.height
             return row
           }
+        })
+        assertBasicValid(json)
+      })
+    })
+
+    describe('basic casted shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readCsvSync(testDataPath('csv/basic.csv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
         })
         assertBasicValid(json)
       })
@@ -994,10 +1166,20 @@ describe('shorthandReaders', function () {
     describe('basic casted', function () {
       it('should match expected json', function () {
         var json = io.readPsvSync(testDataPath('psv/basic.psv'), {
-          readOptions: function (row, i, columns) {
+          transform: function (row, i, columns) {
             row.height = +row.height
             return row
           }
+        })
+        assertBasicValid(json)
+      })
+    })
+
+    describe('basic casted shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readPsvSync(testDataPath('psv/basic.psv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
         })
         assertBasicValid(json)
       })
@@ -1021,10 +1203,20 @@ describe('shorthandReaders', function () {
     describe('basic casted', function () {
       it('should match expected json', function () {
         var json = io.readTsvSync(testDataPath('tsv/basic.tsv'), {
-          readOptions: function (row, i, columns) {
+          transform: function (row, i, columns) {
             row.height = +row.height
             return row
           }
+        })
+        assertBasicValid(json)
+      })
+    })
+
+    describe('basic casted shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readTsvSync(testDataPath('tsv/basic.tsv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
         })
         assertBasicValid(json)
       })
@@ -1048,9 +1240,18 @@ describe('shorthandReaders', function () {
     describe('basic replaced', function () {
       it('should match expected txt', function () {
         var txt = io.readTxtSync(testDataPath('txt/basic.txt'), {
-          readOptions: function (str) {
+          transform: function (str) {
             return str.replace(/carbon/g, 'diamonds')
           }
+        })
+        assert(_.isEqual(txt, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+      })
+    })
+
+    describe('basic replaced shorthand', function () {
+      it('should match expected txt', function () {
+        var txt = io.readTxtSync(testDataPath('txt/basic.txt'), function (str) {
+          return str.replace(/carbon/g, 'diamonds')
         })
         assert(_.isEqual(txt, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
       })
@@ -1118,16 +1319,27 @@ describe('shorthandReaders', function () {
     })
 
     describe('basic', function () {
-      it('should use readOptions', function (done) {
+      it('should use transform', function (done) {
         io.readJson(testDataPath('json/basic.json'), {
-          readOptions: {
-            reviver: function (k, v) {
-              if (typeof v === 'number') {
-                return v * 2
-              }
-              return v
+          transform: function (k, v) {
+            if (typeof v === 'number') {
+              return v * 2
             }
+            return v
           }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+          done()
+        })
+      })
+
+      it('should use transform shorthand', function (done) {
+        io.readJson(testDataPath('json/basic.json'), function (k, v) {
+          if (typeof v === 'number') {
+            return v * 2
+          }
+          return v
         }, function (err, json) {
           assert.equal(err, null)
           assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
@@ -1170,10 +1382,23 @@ describe('shorthandReaders', function () {
     describe('basic casted', function () {
       it('should match expected json', function (done) {
         io.readCsv(testDataPath('csv/basic.csv'), {
-          readOptions: function (row, i, columns) {
+          transform: function (row, i, columns) {
             row.height = +row.height
             return row
           }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
+    describe('basic casted shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readCsv(testDataPath('csv/basic.csv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
         }, function (err, json) {
           assert.equal(err, null)
           assertBasicValid(json)
@@ -1207,10 +1432,23 @@ describe('shorthandReaders', function () {
     describe('basic casted', function () {
       it('should match expected json', function (done) {
         io.readPsv(testDataPath('psv/basic.psv'), {
-          readOptions: function (row, i, columns) {
+          transform: function (row, i, columns) {
             row.height = +row.height
             return row
           }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
+    describe('basic casted shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readPsv(testDataPath('psv/basic.psv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
         }, function (err, json) {
           assert.equal(err, null)
           assertBasicValid(json)
@@ -1241,14 +1479,26 @@ describe('shorthandReaders', function () {
       })
     })
 
-
     describe('basic casted', function () {
       it('should match expected json', function (done) {
         io.readTsv(testDataPath('tsv/basic.tsv'), {
-          readOptions: function (row, i, columns) {
+          transform: function (row, i, columns) {
             row.height = +row.height
             return row
           }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
+    describe('basic casted shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readTsv(testDataPath('tsv/basic.tsv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
         }, function (err, json) {
           assert.equal(err, null)
           assertBasicValid(json)
@@ -1262,7 +1512,7 @@ describe('shorthandReaders', function () {
     describe('empty', function () {
       it('should be empty', function (done) {
         io.readTxt(testDataPath('txt/empty.txt'), function (err, json) {
-          assert.equal(err, null)          
+          assert.equal(err, null)
           assert.lengthOf(json, 0)
           done()
         })
@@ -1282,9 +1532,22 @@ describe('shorthandReaders', function () {
     describe('basic replaced', function () {
       it('should match expected txt', function (done) {
         io.readTxt(testDataPath('txt/basic.txt'), {
-          readOptions: function (str) {
+          transform: function (str) {
             return str.replace(/carbon/g, 'diamonds')
           }
+        },
+        function (err, txt) {
+          assert.equal(err, null)
+          assert(_.isEqual(txt, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+          done()
+        })
+      })
+    })
+
+    describe('basic replaced shorthand', function () {
+      it('should match expected txt', function (done) {
+        io.readTxt(testDataPath('txt/basic.txt'), function (str) {
+          return str.replace(/carbon/g, 'diamonds')
         },
         function (err, txt) {
           assert.equal(err, null)
