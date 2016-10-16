@@ -1733,9 +1733,10 @@ describe('shorthandReaders', function () {
 
   describe('readYamlSync()', function () {
     describe('empty yaml', function () {
-      it('should be empty', function () {
+      it('should be empty object', function () {
         var json = io.readYamlSync(testDataPath('yaml/empty.yaml'))
         assert(_.isEmpty(json))
+        assert(_.isObject(json))
       })
     })
 
@@ -1769,9 +1770,10 @@ describe('shorthandReaders', function () {
     })
 
     describe('empty yml', function () {
-      it('should be empty', function () {
+      it('should be empty object', function () {
         var json = io.readYamlSync(testDataPath('yml/empty.yml'))
         assert(_.isEmpty(json))
+        assert(_.isObject(json))
       })
     })
 
@@ -1807,9 +1809,10 @@ describe('shorthandReaders', function () {
 
   describe('readAmlSync()', function () {
     describe('empty', function () {
-      it('should be empty', function () {
+      it('should be empty object', function () {
         var json = io.readAmlSync(testDataPath('aml/empty.aml'))
         assert(_.isEmpty(json))
+        assert(_.isObject(json))
       })
     })
 
@@ -2104,10 +2107,11 @@ describe('shorthandReaders', function () {
 
   describe('readYaml()', function () {
     describe('empty yaml', function () {
-      it('should be empty', function (done) {
+      it('should be empty object', function (done) {
         io.readYaml(testDataPath('yaml/empty.yaml'), function (err, json) {
           assert.equal(err, null)
           assert(_.isEmpty(json))
+          assert(_.isObject(json))
           done()
         })
       })
@@ -2124,10 +2128,11 @@ describe('shorthandReaders', function () {
     })
 
     describe('empty yml', function () {
-      it('should be empty', function (done) {
+      it('should be empty object', function (done) {
         io.readYaml(testDataPath('yml/empty.yml'), function (err, json) {
           assert.equal(err, null)
           assert(_.isEmpty(json))
+          assert(_.isObject(json))
           done()
         })
       })
@@ -2172,10 +2177,11 @@ describe('shorthandReaders', function () {
     })
 
     describe('empty yml', function () {
-      it('should be empty', function (done) {
+      it('should be empty object', function (done) {
         io.readYaml(testDataPath('yml/empty.yml'), function (err, json) {
           assert.equal(err, null)
           assert(_.isEmpty(json))
+          assert(_.isObject(json))
           done()
         })
       })
@@ -2237,10 +2243,11 @@ describe('shorthandReaders', function () {
 
   describe('readAml()', function () {
     describe('empty', function () {
-      it('should be empty', function (done) {
+      it('should be empty object', function (done) {
         io.readAml(testDataPath('aml/empty.aml'), function (err, json) {
           assert.equal(err, null)
           assert(_.isEmpty(json))
+          assert(_.isObject(json))
           done()
         })
       })
@@ -2286,9 +2293,9 @@ describe('shorthandReaders', function () {
   })
 
   // describe('readDbf()', function () {
-  //   describe('basic', function () {
-  //     it('should match expected json', function (done) {
-        
+  //   describe('empty', function () {
+  //     it('should be empty array', function (done) {
+
   //     })
   //   })
   // })
