@@ -435,6 +435,30 @@ describe('readers', function () {
       })
     })
 
+    describe('json with map', function () {
+      it('should match expected geojson', function () {
+        var json = io.readDataSync(testDataPath('geojson/basic.geojson'), {
+          map: function (row, i) {
+            row.height = row.height * 2
+            return row
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+      })
+    })
+
+    describe('json with map', function () {
+      it('should match expected topojson', function () {
+        var json = io.readDataSync(testDataPath('topojson/basic.topojson'), {
+          map: function (row, i) {
+            row.height = row.height * 2
+            return row
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+      })
+    })
+
     describe('json object', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('json-object/basic.json'))
@@ -789,6 +813,26 @@ describe('readers', function () {
     describe('json', function () {
       it('should match expected json', function (done) {
         io.readData(testDataPath('json/basic.json'), function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
+    describe('json', function () {
+      it('should match expected geojson', function (done) {
+        io.readData(testDataPath('geojson/basic.geojson'), function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
+    describe('json', function () {
+      it('should match expected topojson', function (done) {
+        io.readData(testDataPath('topojson/basic.topojson'), function (err, json) {
           assert.equal(err, null)
           assertBasicValid(json)
           done()
@@ -1550,6 +1594,20 @@ describe('shorthandReaders', function () {
     describe('basic', function () {
       it('should match expected json', function () {
         var json = io.readJsonSync(testDataPath('json/basic.json'))
+        assertBasicValid(json)
+      })
+    })
+
+    describe('basic', function () {
+      it('should match expected geojson', function () {
+        var json = io.readJsonSync(testDataPath('geojson/basic.geojson'))
+        assertBasicValid(json)
+      })
+    })
+
+    describe('basic', function () {
+      it('should match expected topojson', function () {
+        var json = io.readJsonSync(testDataPath('topojson/basic.topojson'))
         assertBasicValid(json)
       })
     })
