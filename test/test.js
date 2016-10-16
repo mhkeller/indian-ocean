@@ -2292,11 +2292,52 @@ describe('shorthandReaders', function () {
     })
   })
 
-  // describe('readDbf()', function () {
-  //   describe('empty', function () {
-  //     it('should be empty array', function (done) {
+  describe('readDbf()', function () {
+    describe('empty', function () {
+      it('should be empty array', function (done) {
+        io.readDbf(testDataPath('dbf/empty.dbf'), function (err, json) {
+          assert.equal(err.message, 'unexpected EOF')
+          done()
+        })
+      })
+    })
 
-  //     })
-  //   })
-  // })
+    describe('basic', function () {
+      it('should match expected json', function (done) {
+        io.readDbf(testDataPath('dbf/basic.dbf'), function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'))
+          done()
+        })
+      })
+    })
+
+    describe('basic map', function () {
+      it('should match expected json', function (done) {
+        io.readDbf(testDataPath('dbf/basic.dbf'), {
+          map: function (row, i) {
+            row.bar = row.bar * 2
+            return row
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":2},{"foo":"green","bar":4}]'))
+          done()
+        })
+      })
+    })
+
+    describe('basic map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readDbf(testDataPath('dbf/basic.dbf'), function (row, i) {
+          row.bar = row.bar * 2
+          return row
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":2},{"foo":"green","bar":4}]'))
+          done()
+        })
+      })
+    })
+  })
 })
