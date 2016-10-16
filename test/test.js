@@ -423,29 +423,86 @@ describe('readers', function () {
       })
     })
 
-    describe('json with transform', function () {
+    describe('json with map', function () {
       it('should match expected json', function () {
-        var json = io.readJsonSync(testDataPath('json/basic.json'), {
-          transform: function (k, v) {
-            if (typeof v === 'number') {
-              return v * 2
-            }
-            return v
+        var json = io.readDataSync(testDataPath('json/basic.json'), {
+          map: function (row, i) {
+            row.height = row.height * 2
+            return row
           }
         })
         assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
       })
     })
 
-    describe('json with transform shorthand', function () {
+    describe('json object', function () {
       it('should match expected json', function () {
-        var json = io.readDataSync(testDataPath('json/basic.json'), function (k, v) {
-          if (typeof v === 'number') {
-            return v * 2
+        var json = io.readDataSync(testDataPath('json-object/basic.json'))
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+      })
+    })
+
+    describe('json object with map', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('json-object/basic.json'), {
+          map: function (value, key) {
+            if (typeof value === 'number') {
+              return value * 2
+            }
+            return value
           }
-          return v
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+      })
+    })
+
+    describe('json object with reviver', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('json-object/basic.json'), {
+          reviver: function (key, value) {
+            if (typeof value === 'number') {
+              return value * 2
+            }
+            return value
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+      })
+    })
+
+    describe('json with reviver', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('json/basic.json'), {
+          reviver: function (key, value) {
+            if (typeof value === 'number') {
+              return value * 2
+            }
+            return value
+          }
         })
         assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+      })
+    })
+
+    describe('json with map shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('json/basic.json'), function (row, i) {
+          row.height = row.height * 2
+          return row
+        })
+        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+      })
+    })
+
+    describe('json object with map shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('json-object/basic.json'), function (value, key) {
+          if (typeof value === 'number') {
+            return value * 2
+          }
+          return value
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
       })
     })
 
@@ -456,10 +513,10 @@ describe('readers', function () {
       })
     })
 
-    describe('csv with transform', function () {
+    describe('csv with map', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('csv/basic.csv'), {
-          transform: function (row, i, columns) {
+          map: function (row, i, columns) {
             row.height = +row.height
             return row
           }
@@ -468,7 +525,7 @@ describe('readers', function () {
       })
     })
 
-    describe('csv with transform shorthand', function () {
+    describe('csv with map shorthand', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('csv/basic.csv'), function (row, i, columns) {
           row.height = +row.height
@@ -485,10 +542,10 @@ describe('readers', function () {
       })
     })
 
-    describe('psv with transform', function () {
+    describe('psv with map', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('psv/basic.psv'), {
-          transform: function (row, i, columns) {
+          map: function (row, i, columns) {
             row.height = +row.height
             return row
           }
@@ -497,7 +554,7 @@ describe('readers', function () {
       })
     })
 
-    describe('psv with transform shorthand', function () {
+    describe('psv with map shorthand', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('psv/basic.psv'), function (row, i, columns) {
           row.height = +row.height
@@ -514,10 +571,10 @@ describe('readers', function () {
       })
     })
 
-    describe('tsv with transform', function () {
+    describe('tsv with map', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('tsv/basic.tsv'), {
-          transform: function (row, i, columns) {
+          map: function (row, i, columns) {
             row.height = +row.height
             return row
           }
@@ -526,7 +583,7 @@ describe('readers', function () {
       })
     })
 
-    describe('tsv with transform shorthand', function () {
+    describe('tsv with map shorthand', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('tsv/basic.tsv'), function (row, i, columns) {
           row.height = +row.height
@@ -543,10 +600,10 @@ describe('readers', function () {
       })
     })
 
-    describe('txt with transform', function () {
+    describe('txt with map', function () {
       it('should match expected txt', function () {
         var txt = io.readDataSync(testDataPath('txt/basic.txt'), {
-          transform: function (str) {
+          map: function (str) {
             return str.replace(/carbon/g, 'diamonds')
           }
         })
@@ -554,7 +611,7 @@ describe('readers', function () {
       })
     })
 
-    describe('txt with transform shorthand', function () {
+    describe('txt with map shorthand', function () {
       it('should match expected txt', function () {
         var txt = io.readDataSync(testDataPath('txt/basic.txt'), function (str) {
           return str.replace(/carbon/g, 'diamonds')
@@ -570,10 +627,10 @@ describe('readers', function () {
       })
     })
 
-    describe('text with transform', function () {
+    describe('text with map', function () {
       it('should match expected text', function () {
         var txt = io.readDataSync(testDataPath('text/basic.text'), {
-          transform: function (str) {
+          map: function (str) {
             return str.replace(/carbon/g, 'diamonds')
           }
         })
@@ -581,7 +638,7 @@ describe('readers', function () {
       })
     })
 
-    describe('text with transform shorthand', function () {
+    describe('text with map shorthand', function () {
       it('should match expected text', function () {
         var txt = io.readDataSync(testDataPath('text/basic.text'), function (str) {
           return str.replace(/carbon/g, 'diamonds')
@@ -593,21 +650,87 @@ describe('readers', function () {
     describe('yaml', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('yaml/basic.yaml'))
-        assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+      })
+    })
+
+    describe('yaml with map', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('yaml/basic.yaml'), {
+          map: function (yamlFile) {
+            yamlFile.height = yamlFile.height * 2
+            return yamlFile
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+      })
+    })
+
+    describe('yaml with map shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('yaml/basic.yaml'), function (yamlFile) {
+          yamlFile.height = yamlFile.height * 2
+          return yamlFile
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
       })
     })
 
     describe('yml', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('yml/basic.yml'))
-        assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+      })
+    })
+
+    describe('yml with map', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('yml/basic.yml'), {
+          map: function (yamlFile) {
+            yamlFile.height = yamlFile.height * 2
+            return yamlFile
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+      })
+    })
+
+    describe('yml with map shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('yml/basic.yml'), function (yamlFile) {
+          yamlFile.height = yamlFile.height * 2
+          return yamlFile
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
       })
     })
 
     describe('aml', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('aml/basic.aml'))
-        assert(_.isEqual('{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}', JSON.stringify(json)))
+        assert(_.isEqual(JSON.stringify(json), '{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}'))
+      })
+    })
+
+    describe('aml with map', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('aml/basic.aml'), {
+          map: function (yamlFile) {
+            yamlFile.text = 'hey'
+            return yamlFile
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"text":"hey"}'))
+      })
+    })
+
+    describe('aml with map shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('aml/basic.aml'), function (yamlFile) {
+          yamlFile.text = 'hey'
+          return yamlFile
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"text":"hey"}'))
       })
     })
 
@@ -618,18 +741,20 @@ describe('readers', function () {
       })
     })
 
-    // describe('custom delimiter string: `_` with transform', function () {
-    //   it('should match expected json', function () {
-    //     var json = io.readDataSync(testDataPath('other/basic.usv'), {
-    //       parser: '_',
-    //       transform: function (row, i, columns) {
-    //         row.height = +row.height
-    //         return row
-    //       }
-    //     })
-    //     assertBasicValid(json)
-    //   })
-    // })
+    describe('custom delimiter fn with map', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('other/basic.usv'), {
+          parser: function (str, parserOptions) {
+            return dsv.dsvFormat('_').parse(str, parserOptions.map)
+          },
+          map: function (row, i, columns) {
+            row.height = row.height * 2
+            return row
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+      })
+    })
 
     describe('custom delimiter parse fn: dsv.dsvFormat(\'_\').parse', function () {
       it('should match expected json', function () {
@@ -661,6 +786,120 @@ describe('readers', function () {
   })
 
   describe('readData()', function () {
+    describe('json', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('json/basic.json'), function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
+    describe('json with map', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('json/basic.json'), {
+          map: function (row, i) {
+            row.height = row.height * 2
+            return row
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+          done()
+        })
+      })
+    })
+
+    describe('json object', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('json-object/basic.json'), function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+          done()
+        })
+      })
+    })
+
+    describe('json object with map', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('json-object/basic.json'), {
+          map: function (value, key) {
+            if (typeof value === 'number') {
+              return value * 2
+            }
+            return value
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+          done()
+        })
+      })
+    })
+
+    describe('json object with reviver', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('json-object/basic.json'), {
+          reviver: function (key, value) {
+            if (typeof value === 'number') {
+              return value * 2
+            }
+            return value
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+          done()
+        })
+      })
+    })
+
+    describe('json with reviver', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('json/basic.json'), {
+          reviver: function (key, value) {
+            if (typeof value === 'number') {
+              return value * 2
+            }
+            return value
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+          done()
+        })
+      })
+    })
+
+    describe('json with map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('json/basic.json'), function (row, i) {
+          row.height = row.height * 2
+          return row
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+          done()
+        })
+      })
+    })
+
+    describe('json object with map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('json-object/basic.json'), function (value, key) {
+          if (typeof value === 'number') {
+            return value * 2
+          }
+          return value
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+          done()
+        })
+      })
+    })
+
     describe('csv', function () {
       it('should match expected json', function (done) {
         io.readData(testDataPath('csv/basic.csv'), function (err, json) {
@@ -671,9 +910,27 @@ describe('readers', function () {
       })
     })
 
-    describe('json', function () {
+    describe('csv with map', function () {
       it('should match expected json', function (done) {
-        io.readData(testDataPath('json/basic.json'), function (err, json) {
+        io.readData(testDataPath('csv/basic.csv'), {
+          map: function (row, i, columns) {
+            row.height = +row.height
+            return row
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
+    describe('csv with map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('csv/basic.csv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
+        }, function (err, json) {
           assert.equal(err, null)
           assertBasicValid(json)
           done()
@@ -691,6 +948,34 @@ describe('readers', function () {
       })
     })
 
+    describe('psv with map', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('psv/basic.psv'), {
+          map: function (row, i, columns) {
+            row.height = +row.height
+            return row
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
+    describe('psv with map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('psv/basic.psv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
+        }, function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
     describe('tsv', function () {
       it('should match expected json', function (done) {
         io.readData(testDataPath('tsv/basic.tsv'), function (err, json) {
@@ -701,11 +986,101 @@ describe('readers', function () {
       })
     })
 
+    describe('tsv with map', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('tsv/basic.tsv'), {
+          map: function (row, i, columns) {
+            row.height = +row.height
+            return row
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
+    describe('tsv with map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('tsv/basic.tsv'), function (row, i, columns) {
+          row.height = +row.height
+          return row
+        }, function (err, json) {
+          assert.equal(err, null)
+          assertBasicValid(json)
+          done()
+        })
+      })
+    })
+
     describe('txt', function () {
       it('should match expected txt', function (done) {
-        io.readData(testDataPath('other/this_is_not_a_csv.txt'), function (err, txt) {
+        io.readData(testDataPath('txt/basic.txt'), function (err, txt) {
           assert.equal(err, null)
-          assert(_.isEqual('But will it look like one?\nBut will it look like one?\n', txt))
+          assert(_.isEqual(txt, 'The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+          done()
+        })
+      })
+    })
+
+    describe('txt with map', function () {
+      it('should match expected txt', function (done) {
+        io.readData(testDataPath('txt/basic.txt'), {
+          map: function (str) {
+            return str.replace(/carbon/g, 'diamonds')
+          }
+        }, function (err, txt) {
+          assert.equal(err, null)
+          assert(_.isEqual(txt, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+          done()
+        })
+      })
+    })
+
+    describe('txt with map shorthand', function () {
+      it('should match expected txt', function (done) {
+        io.readData(testDataPath('txt/basic.txt'), function (str) {
+          return str.replace(/carbon/g, 'diamonds')
+        }, function (err, txt) {
+          assert.equal(err, null)
+          assert(_.isEqual(txt, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+          done()
+        })
+      })
+    })
+
+    describe('text', function () {
+      it('should match expected text', function (done) {
+        io.readData(testDataPath('text/basic.text'), function (err, txt) {
+          assert.equal(err, null)
+          assert(_.isEqual(txt, 'The carbon in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the carbon in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the carbon in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+          done()
+        })
+      })
+    })
+
+    describe('text with map', function () {
+      it('should match expected text', function (done) {
+        io.readData(testDataPath('text/basic.text'), {
+          map: function (str) {
+            return str.replace(/carbon/g, 'diamonds')
+          }
+        }, function (err, text) {
+          assert.equal(err, null)
+          assert(_.isEqual(text, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
+          done()
+        })
+      })
+    })
+
+    describe('text with map shorthand', function () {
+      it('should match expected text', function (done) {
+        io.readData(testDataPath('text/basic.text'), function (str) {
+          return str.replace(/carbon/g, 'diamonds')
+        }, function (err, text) {
+          assert.equal(err, null)
+          assert(_.isEqual(text, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
           done()
         })
       })
@@ -715,7 +1090,35 @@ describe('readers', function () {
       it('should match expected json', function (done) {
         io.readData(testDataPath('yaml/basic.yaml'), function (err, json) {
           assert.equal(err, null)
-          assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+          done()
+        })
+      })
+    })
+
+    describe('yaml with map', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('yaml/basic.yaml'), {
+          map: function (yamlFile) {
+            yamlFile.height = yamlFile.height * 2
+            return yamlFile
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+          done()
+        })
+      })
+    })
+
+    describe('yaml with map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('yaml/basic.yaml'), function (yamlFile) {
+          yamlFile.height = yamlFile.height * 2
+          return yamlFile
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
           done()
         })
       })
@@ -725,7 +1128,35 @@ describe('readers', function () {
       it('should match expected json', function (done) {
         io.readData(testDataPath('yml/basic.yml'), function (err, json) {
           assert.equal(err, null)
-          assert(_.isEqual('{"name":"jim","occupation":"land surveyor","height":70}', JSON.stringify(json)))
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+          done()
+        })
+      })
+    })
+
+    describe('yml with map', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('yml/basic.yml'), {
+          map: function (yamlFile) {
+            yamlFile.height = yamlFile.height * 2
+            return yamlFile
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+          done()
+        })
+      })
+    })
+
+    describe('yml with map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('yml/basic.yml'), function (yamlFile) {
+          yamlFile.height = yamlFile.height * 2
+          return yamlFile
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
           done()
         })
       })
@@ -735,7 +1166,35 @@ describe('readers', function () {
       it('should match expected json', function (done) {
         io.readData(testDataPath('aml/basic.aml'), function (err, json) {
           assert.equal(err, null)
-          assert(_.isEqual('{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}', JSON.stringify(json)))
+          assert(_.isEqual(JSON.stringify(json), '{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}'))
+          done()
+        })
+      })
+    })
+
+    describe('aml with map', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('aml/basic.aml'), {
+          map: function (yamlFile) {
+            yamlFile.text = 'hey'
+            return yamlFile
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"text":"hey"}'))
+          done()
+        })
+      })
+    })
+
+    describe('aml with map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('aml/basic.aml'), function (yamlFile) {
+          yamlFile.text = 'hey'
+          return yamlFile
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"text":"hey"}'))
           done()
         })
       })
@@ -746,6 +1205,24 @@ describe('readers', function () {
         io.readData(testDataPath('other/basic.usv'), {parser: '_'}, function (err, json) {
           assert.equal(err, null)
           assertBasicValid(json, true)
+          done()
+        })
+      })
+    })
+
+    describe('custom delimiter fn with map', function () {
+      it('should match expected json', function (done) {
+        io.readData(testDataPath('other/basic.usv'), {
+          parser: function (str, parserOptions) {
+            return dsv.dsvFormat('_').parse(str, parserOptions.map)
+          },
+          map: function (row, i) {
+            row.height = row.height * 2
+            return row
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
           done()
         })
       })
@@ -1077,27 +1554,23 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic', function () {
-      it('should use transform', function () {
+    describe('basic map', function () {
+      it('should use map', function () {
         var json = io.readJsonSync(testDataPath('json/basic.json'), {
-          transform: function (k, v) {
-            if (typeof v === 'number') {
-              return v * 2
-            }
-            return v
+          map: function (row, i) {
+            row.height = row.height * 2
+            return row
           }
         })
         assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
       })
     })
 
-    describe('basic', function () {
-      it('should use transform shorthand', function () {
-        var json = io.readJsonSync(testDataPath('json/basic.json'), function (k, v) {
-          if (typeof v === 'number') {
-            return v * 2
-          }
-          return v
+    describe('basic map shorthand', function () {
+      it('should use map shorthand', function () {
+        var json = io.readJsonSync(testDataPath('json/basic.json'), function (row, i) {
+          row.height = row.height * 2
+          return row
         })
         assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
       })
@@ -1126,10 +1599,10 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted', function () {
+    describe('basic map', function () {
       it('should match expected json', function () {
         var json = io.readCsvSync(testDataPath('csv/basic.csv'), {
-          transform: function (row, i, columns) {
+          map: function (row, i, columns) {
             row.height = +row.height
             return row
           }
@@ -1138,7 +1611,7 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted shorthand', function () {
+    describe('basic map shorthand', function () {
       it('should match expected json', function () {
         var json = io.readCsvSync(testDataPath('csv/basic.csv'), function (row, i, columns) {
           row.height = +row.height
@@ -1163,10 +1636,10 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted', function () {
+    describe('basic map', function () {
       it('should match expected json', function () {
         var json = io.readPsvSync(testDataPath('psv/basic.psv'), {
-          transform: function (row, i, columns) {
+          map: function (row, i, columns) {
             row.height = +row.height
             return row
           }
@@ -1175,7 +1648,7 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted shorthand', function () {
+    describe('basic map shorthand', function () {
       it('should match expected json', function () {
         var json = io.readPsvSync(testDataPath('psv/basic.psv'), function (row, i, columns) {
           row.height = +row.height
@@ -1200,10 +1673,10 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted', function () {
+    describe('basic map', function () {
       it('should match expected json', function () {
         var json = io.readTsvSync(testDataPath('tsv/basic.tsv'), {
-          transform: function (row, i, columns) {
+          map: function (row, i, columns) {
             row.height = +row.height
             return row
           }
@@ -1212,7 +1685,7 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted shorthand', function () {
+    describe('basic map shorthand', function () {
       it('should match expected json', function () {
         var json = io.readTsvSync(testDataPath('tsv/basic.tsv'), function (row, i, columns) {
           row.height = +row.height
@@ -1240,7 +1713,7 @@ describe('shorthandReaders', function () {
     describe('basic replaced', function () {
       it('should match expected txt', function () {
         var txt = io.readTxtSync(testDataPath('txt/basic.txt'), {
-          transform: function (str) {
+          map: function (str) {
             return str.replace(/carbon/g, 'diamonds')
           }
         })
@@ -1262,7 +1735,7 @@ describe('shorthandReaders', function () {
     describe('empty yaml', function () {
       it('should be empty', function () {
         var json = io.readYamlSync(testDataPath('yaml/empty.yaml'))
-        assert(_.isUndefined(json))
+        assert(_.isEmpty(json))
       })
     })
 
@@ -1273,10 +1746,61 @@ describe('shorthandReaders', function () {
       })
     })
 
+    describe('basic yaml map', function () {
+      it('should match expected json', function () {
+        var json = io.readYamlSync(testDataPath('yaml/basic.yaml'), {
+          map: function (yamlFile) {
+            yamlFile.height = yamlFile.height * 2
+            return yamlFile
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+      })
+    })
+
+    describe('basic yaml map shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readYamlSync(testDataPath('yaml/basic.yaml'), function (yamlFile) {
+          yamlFile.height = yamlFile.height * 2
+          return yamlFile
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+      })
+    })
+
     describe('empty yml', function () {
       it('should be empty', function () {
         var json = io.readYamlSync(testDataPath('yml/empty.yml'))
-        assert(_.isUndefined(json))
+        assert(_.isEmpty(json))
+      })
+    })
+
+    describe('basic yml', function () {
+      it('should match expected json', function () {
+        var json = io.readYamlSync(testDataPath('yml/basic.yml'))
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+      })
+    })
+
+    describe('basic yml map', function () {
+      it('should match expected json', function () {
+        var json = io.readYamlSync(testDataPath('yml/basic.yml'), {
+          map: function (yamlFile) {
+            yamlFile.height = yamlFile.height * 2
+            return yamlFile
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+      })
+    })
+
+    describe('basic yml map shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readYamlSync(testDataPath('yml/basic.yml'), function (yamlFile) {
+          yamlFile.height = yamlFile.height * 2
+          return yamlFile
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
       })
     })
   })
@@ -1293,6 +1817,28 @@ describe('shorthandReaders', function () {
       it('should match expected json', function () {
         var json = io.readAmlSync(testDataPath('aml/basic.aml'))
         assert(_.isEqual(JSON.stringify(json), '{"text":[{"type":"text","value":"I can type words here..."},{"type":"text","value":"And separate them into different paragraphs without tags."}]}'))
+      })
+    })
+
+    describe('basic map', function () {
+      it('should match expected json', function () {
+        var json = io.readAmlSync(testDataPath('aml/basic.aml'), {
+          map: function (amlFile) {
+            amlFile.text = 'hey'
+            return amlFile
+          }
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"text":"hey"}'))
+      })
+    })
+
+    describe('basic map shorthand', function () {
+      it('should match expected json', function () {
+        var json = io.readAmlSync(testDataPath('aml/basic.aml'), function (amlFile) {
+          amlFile.text = 'hey'
+          return amlFile
+        })
+        assert(_.isEqual(JSON.stringify(json), '{"text":"hey"}'))
       })
     })
   })
@@ -1318,14 +1864,12 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic', function () {
-      it('should use transform', function (done) {
+    describe('basic map', function () {
+      it('should match expected json', function (done) {
         io.readJson(testDataPath('json/basic.json'), {
-          transform: function (k, v) {
-            if (typeof v === 'number') {
-              return v * 2
-            }
-            return v
+          map: function (row, i) {
+            row.height = row.height * 2
+            return row
           }
         }, function (err, json) {
           assert.equal(err, null)
@@ -1333,13 +1877,13 @@ describe('shorthandReaders', function () {
           done()
         })
       })
+    })
 
-      it('should use transform shorthand', function (done) {
-        io.readJson(testDataPath('json/basic.json'), function (k, v) {
-          if (typeof v === 'number') {
-            return v * 2
-          }
-          return v
+    describe('basic map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readJson(testDataPath('json/basic.json'), function (row, i) {
+          row.height = row.height * 2
+          return row
         }, function (err, json) {
           assert.equal(err, null)
           assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
@@ -1379,10 +1923,10 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted', function () {
+    describe('basic map', function () {
       it('should match expected json', function (done) {
         io.readCsv(testDataPath('csv/basic.csv'), {
-          transform: function (row, i, columns) {
+          map: function (row, i, columns) {
             row.height = +row.height
             return row
           }
@@ -1394,7 +1938,7 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted shorthand', function () {
+    describe('basic map shorthand', function () {
       it('should match expected json', function (done) {
         io.readCsv(testDataPath('csv/basic.csv'), function (row, i, columns) {
           row.height = +row.height
@@ -1429,10 +1973,10 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted', function () {
+    describe('basic map', function () {
       it('should match expected json', function (done) {
         io.readPsv(testDataPath('psv/basic.psv'), {
-          transform: function (row, i, columns) {
+          map: function (row, i, columns) {
             row.height = +row.height
             return row
           }
@@ -1444,7 +1988,7 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted shorthand', function () {
+    describe('basic map shorthand', function () {
       it('should match expected json', function (done) {
         io.readPsv(testDataPath('psv/basic.psv'), function (row, i, columns) {
           row.height = +row.height
@@ -1479,10 +2023,10 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted', function () {
+    describe('basic map', function () {
       it('should match expected json', function (done) {
         io.readTsv(testDataPath('tsv/basic.tsv'), {
-          transform: function (row, i, columns) {
+          map: function (row, i, columns) {
             row.height = +row.height
             return row
           }
@@ -1494,7 +2038,7 @@ describe('shorthandReaders', function () {
       })
     })
 
-    describe('basic casted shorthand', function () {
+    describe('basic map shorthand', function () {
       it('should match expected json', function (done) {
         io.readTsv(testDataPath('tsv/basic.tsv'), function (row, i, columns) {
           row.height = +row.height
@@ -1532,7 +2076,7 @@ describe('shorthandReaders', function () {
     describe('basic replaced', function () {
       it('should match expected txt', function (done) {
         io.readTxt(testDataPath('txt/basic.txt'), {
-          transform: function (str) {
+          map: function (str) {
             return str.replace(/carbon/g, 'diamonds')
           }
         },
@@ -1563,7 +2107,7 @@ describe('shorthandReaders', function () {
       it('should be empty', function (done) {
         io.readYaml(testDataPath('yaml/empty.yaml'), function (err, json) {
           assert.equal(err, null)
-          assert(_.isUndefined(json))
+          assert(_.isEmpty(json))
           done()
         })
       })
@@ -1583,7 +2127,108 @@ describe('shorthandReaders', function () {
       it('should be empty', function (done) {
         io.readYaml(testDataPath('yml/empty.yml'), function (err, json) {
           assert.equal(err, null)
-          assert(_.isUndefined(json))
+          assert(_.isEmpty(json))
+          done()
+        })
+      })
+    })
+
+    describe('basic yml', function () {
+      it('should be empty', function (done) {
+        io.readYaml(testDataPath('yml/basic.yml'), function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+          done()
+        })
+      })
+    })
+
+    describe('basic yaml map', function () {
+      it('should match expected json', function (done) {
+        io.readYaml(testDataPath('yaml/basic.yaml'), {
+          map: function (yamlFile) {
+            yamlFile.height = yamlFile.height * 2
+            return yamlFile
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+          done()
+        })
+      })
+    })
+
+    describe('basic yaml map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readYaml(testDataPath('yaml/basic.yaml'), function (yamlFile) {
+          yamlFile.height = yamlFile.height * 2
+          return yamlFile
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+          done()
+        })
+      })
+    })
+
+    describe('empty yml', function () {
+      it('should be empty', function (done) {
+        io.readYaml(testDataPath('yml/empty.yml'), function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEmpty(json))
+          done()
+        })
+      })
+    })
+
+    describe('basic yml', function () {
+      it('should match expected json', function (done) {
+        io.readYaml(testDataPath('yml/basic.yml'), function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
+          done()
+        })
+      })
+    })
+
+    describe('basic yml map', function () {
+      it('should match expected json', function (done) {
+        io.readYaml(testDataPath('yml/basic.yml'), {
+          map: function (yamlFile) {
+            yamlFile.height = yamlFile.height * 2
+            return yamlFile
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+          done()
+        })
+      })
+    })
+
+    describe('basic yml map', function () {
+      it('should match expected json', function (done) {
+        io.readYaml(testDataPath('yml/basic.yml'), {
+          map: function (yamlFile) {
+            yamlFile.height = yamlFile.height * 2
+            return yamlFile
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
+          done()
+        })
+      })
+    })
+
+    describe('basic yml map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readYaml(testDataPath('yml/basic.yml'), function (yamlFile) {
+          yamlFile.height = yamlFile.height * 2
+          return yamlFile
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
           done()
         })
       })
@@ -1610,5 +2255,41 @@ describe('shorthandReaders', function () {
         })
       })
     })
+
+    describe('basic map', function () {
+      it('should match expected json', function (done) {
+        io.readAml(testDataPath('aml/basic.aml'), {
+          map: function (amlFile) {
+            amlFile.text = 'hey'
+            return amlFile
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"text":"hey"}'))
+          done()
+        })
+      })
+    })
+
+    describe('basic map shorthand', function () {
+      it('should match expected json', function (done) {
+        io.readAml(testDataPath('aml/basic.aml'), function (amlFile) {
+          amlFile.text = 'hey'
+          return amlFile
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(json), '{"text":"hey"}'))
+          done()
+        })
+      })
+    })
   })
+
+  // describe('readDbf()', function () {
+  //   describe('basic', function () {
+  //     it('should match expected json', function (done) {
+        
+  //     })
+  //   })
+  // })
 })
