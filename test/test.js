@@ -8,8 +8,27 @@ var dsv = require('d3-dsv')
 var _ = require('underscore')
 var rimraf = require('rimraf')
 
+var testData = [
+  { 'name': 'jim', 'occupation': 'land surveyor', 'height': 70 },
+  { 'name': 'francis', 'occupation': 'conductor', 'height': 63 }
+]
+
 function testDataPath (name) {
   return path.join(__dirname, 'data', name)
+}
+
+function readAssertBasicValid (path) {
+  var strFormats = ['json', 'geojson', 'topojson', 'yml', 'yaml']
+  var strings = strFormats.indexOf(io.discernFormat(path)) === -1
+  var json = io.readDataSync(path)
+  assertBasicValid(json, strings)
+}
+
+function readAssertBasicValidObject (path) {
+  var strFormats = ['json', 'geojson', 'topojson', 'yml', 'yaml']
+  var strings = strFormats.indexOf(io.discernFormat(path)) === -1
+  var json = io.readDataSync(path)
+  assertBasicValidObject(json, strings)
 }
 
 function assertBasicValid (json, strings) {
@@ -21,6 +40,13 @@ function assertBasicValid (json, strings) {
   assert(_.isEqual(_.keys(json[1]), ['name', 'occupation', 'height']), 'headers match keys')
   assert(_.isEqual(_.values(json[0]), ['jim', 'land surveyor', values[0]]), 'data values match values')
   assert(_.isEqual(_.values(json[1]), ['francis', 'conductor', values[1]]), 'data values match values')
+}
+
+function assertBasicValidObject (obj, strings) {
+  var values = strings ? ['70', '63'] : [70, 63]
+  assert.typeOf(obj, 'object')
+  assert(_.isEqual(_.keys(obj), ['name', 'occupation', 'height']), 'headers match keys')
+  assert(_.isEqual(_.values(obj), ['jim', 'land surveyor', values[0]]), 'data values match values')
 }
 
 describe('discernFormat()', function () {
@@ -2349,53 +2375,631 @@ describe('shorthandReaders', function () {
       })
     })
   })
+})
 
-  describe('readDbf()', function () {
-    describe('empty', function () {
-      it('should be empty array', function (done) {
-        io.readDbf(testDataPath('dbf/empty.dbf'), function (err, json) {
-          assert.equal(err.message, 'unexpected EOF')
-          done()
-        })
+describe('readDbf()', function () {
+  describe('empty', function () {
+    it('should be empty array', function (done) {
+      io.readDbf(testDataPath('dbf/empty.dbf'), function (err, json) {
+        assert.equal(err.message, 'unexpected EOF')
+        done()
       })
     })
+  })
 
-    describe('basic', function () {
-      it('should match expected json', function (done) {
-        io.readDbf(testDataPath('dbf/basic.dbf'), function (err, json) {
-          assert.equal(err, null)
-          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'))
-          done()
-        })
+  describe('basic', function () {
+    it('should match expected json', function (done) {
+      io.readDbf(testDataPath('dbf/basic.dbf'), function (err, json) {
+        assert.equal(err, null)
+        assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'))
+        done()
       })
     })
+  })
 
-    describe('basic map', function () {
-      it('should match expected json', function (done) {
-        io.readDbf(testDataPath('dbf/basic.dbf'), {
-          map: function (row, i) {
-            row.bar = row.bar * 2
-            return row
-          }
-        }, function (err, json) {
-          assert.equal(err, null)
-          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":2},{"foo":"green","bar":4}]'))
-          done()
-        })
-      })
-    })
-
-    describe('basic map shorthand', function () {
-      it('should match expected json', function (done) {
-        io.readDbf(testDataPath('dbf/basic.dbf'), function (row, i) {
+  describe('basic map', function () {
+    it('should match expected json', function (done) {
+      io.readDbf(testDataPath('dbf/basic.dbf'), {
+        map: function (row, i) {
           row.bar = row.bar * 2
           return row
-        }, function (err, json) {
+        }
+      }, function (err, json) {
+        assert.equal(err, null)
+        assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":2},{"foo":"green","bar":4}]'))
+        done()
+      })
+    })
+  })
+
+  describe('basic map shorthand', function () {
+    it('should match expected json', function (done) {
+      io.readDbf(testDataPath('dbf/basic.dbf'), function (row, i) {
+        row.bar = row.bar * 2
+        return row
+      }, function (err, json) {
+        assert.equal(err, null)
+        assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":2},{"foo":"green","bar":4}]'))
+        done()
+      })
+    })
+  })
+})
+
+describe('writers', function () {
+  describe('writeData()', function () {
+    describe('json', function () {
+      it('should write as json', function (done) {
+        var filePath = ['test', 'tmp-write-data-json', 'data.json']
+        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
           assert.equal(err, null)
-          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":2},{"foo":"green","bar":4}]'))
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('geojson', function () {
+      it('should write as geojson', function (done) {
+        var filePath = ['test', 'tmp-write-data-geojson', 'data.geojson']
+        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('topojson', function () {
+      it('should write as topojson', function (done) {
+        var filePath = ['test', 'tmp-write-data-topojson', 'data.topojson']
+        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('csv', function () {
+      it('should write as csv', function (done) {
+        var filePath = ['test', 'tmp-write-data-csv', 'data.csv']
+        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('tsv', function () {
+      it('should write as tsv', function (done) {
+        var filePath = ['test', 'tmp-write-data-tsv', 'data.tsv']
+        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('psv', function () {
+      it('should write as psv', function (done) {
+        var filePath = ['test', 'tmp-write-data-psv', 'data.psv']
+        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('yaml', function () {
+      it('should write as yaml', function (done) {
+        var filePath = ['test', 'tmp-write-data-yaml', 'data.yaml']
+        io.writeData(filePath.join(path.sep), testData[0], {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValidObject(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('yml', function () {
+      it('should write as yml', function (done) {
+        var filePath = ['test', 'tmp-write-data-yml', 'data.yml']
+        io.writeData(filePath.join(path.sep), testData[0], {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValidObject(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+  })
+
+  describe('writeDataSync()', function () {
+    describe('json', function () {
+      it('should write as json', function (done) {
+        var filePath = ['test', 'tmp-write-data-json', 'data.json']
+        io.writeDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('geojson', function () {
+      it('should write as geojson', function (done) {
+        var filePath = ['test', 'tmp-write-data-geojson', 'data.geojson']
+        io.writeDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('topojson', function () {
+      it('should write as topojson', function (done) {
+        var filePath = ['test', 'tmp-write-data-topojson', 'data.topojson']
+        io.writeDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('csv', function () {
+      it('should write as csv', function (done) {
+        var filePath = ['test', 'tmp-write-data-csv', 'data.csv']
+        io.writeDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('tsv', function () {
+      it('should write as tsv', function (done) {
+        var filePath = ['test', 'tmp-write-data-tsv', 'data.tsv']
+        io.writeDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('psv', function () {
+      it('should write as psv', function (done) {
+        var filePath = ['test', 'tmp-write-data-psv', 'data.psv']
+        io.writeDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('yaml', function () {
+      it('should write as yaml', function (done) {
+        var filePath = ['test', 'tmp-write-data-yaml', 'data.yaml']
+        io.writeDataSync(filePath.join(path.sep), testData[0], {makeDirectories: true})
+        readAssertBasicValidObject(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('yml', function () {
+      it('should write as yml', function (done) {
+        var filePath = ['test', 'tmp-write-data-yml', 'data.yml']
+        io.writeDataSync(filePath.join(path.sep), testData[0], {makeDirectories: true})
+        readAssertBasicValidObject(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
           done()
         })
       })
     })
   })
+
+  describe('appendData()', function () {
+    describe('json', function () {
+      it('should append to existing json', function (done) {
+        var filePath = ['test', 'tmp-append-data-json', 'data.json']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendData(filePath.join(path.sep), [testData[1]], function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('geojson', function () {
+      it('should append to existing geojson', function (done) {
+        var filePath = ['test', 'tmp-append-data-geojson', 'data.geojson']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendData(filePath.join(path.sep), [testData[1]], function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('topojson', function () {
+      it('should append to existing topojson', function (done) {
+        var filePath = ['test', 'tmp-append-data-topojson', 'data.topojson']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendData(filePath.join(path.sep), [testData[1]], function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('csv', function () {
+      it('should append to existing csv', function (done) {
+        var filePath = ['test', 'tmp-append-data-csv', 'data.csv']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendData(filePath.join(path.sep), [testData[1]], function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('tsv', function () {
+      it('should append to existing tsv', function (done) {
+        var filePath = ['test', 'tmp-append-data-tsv', 'data.tsv']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendData(filePath.join(path.sep), [testData[1]], function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('psv', function () {
+      it('should append to existing psv', function (done) {
+        var filePath = ['test', 'tmp-append-data-psv', 'data.psv']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendData(filePath.join(path.sep), [testData[1]], function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('json', function () {
+      it('should append to non-existent json', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-json', 'data.json']
+        io.appendData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('geojson', function () {
+      it('should append to non-existent geojson', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-geojson', 'data.geojson']
+        io.appendData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('topojson', function () {
+      it('should append to non-existent topojson', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-topojson', 'data.topojson']
+        io.appendData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('csv', function () {
+      it('should append to non-existent csv', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-csv', 'data.csv']
+        io.appendData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('tsv', function () {
+      it('should append to non-existent tsv', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-tsv', 'data.tsv']
+        io.appendData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('psv', function () {
+      it('should append to non-existent psv', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-psv', 'data.psv']
+        io.appendData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    // TODO, testing appending to json object
+
+    // describe('yaml', function () {
+    //   it('should append to existing yaml', function (done) {
+    //     var filePath = ['test', 'tmp-append-data-yaml', 'data.yaml']
+    //     io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+    //     io.appendData(filePath.join(path.sep), [testData[1]][0], function (err) {
+    //       assert.equal(err, null)
+    //       readAssertBasicValidObject(filePath.join(path.sep))
+    //       rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+    //         assert.equal(err, null)
+    //         done()
+    //       })
+    //     })
+    //   })
+    // })
+
+    // describe('yml', function () {
+    //   it('should append to existing yml', function (done) {
+    //     var filePath = ['test', 'tmp-append-data-yml', 'data.yml']
+    //     io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+    //     io.appendData(filePath.join(path.sep), [testData[1]][0], function (err) {
+    //       assert.equal(err, null)
+    //       readAssertBasicValidObject(filePath.join(path.sep))
+    //       rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+    //         assert.equal(err, null)
+    //         done()
+    //       })
+    //     })
+    //   })
+    // })
+  })
+
+  describe('appendDataSync()', function () {
+    describe('json', function () {
+      it('should append to existing json', function (done) {
+        var filePath = ['test', 'tmp-append-data-json-sync', 'data.json']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendDataSync(filePath.join(path.sep), [testData[1]])
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('geojson', function () {
+      it('should append to existing geojson', function (done) {
+        var filePath = ['test', 'tmp-append-data-geojson-sync', 'data.geojson']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendDataSync(filePath.join(path.sep), [testData[1]])
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('topojson', function () {
+      it('should append to existing topojson', function (done) {
+        var filePath = ['test', 'tmp-append-data-topojson-sync', 'data.topojson']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendDataSync(filePath.join(path.sep), [testData[1]])
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('csv', function () {
+      it('should append to existing csv', function (done) {
+        var filePath = ['test', 'tmp-append-data-csv-sync', 'data.csv']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendDataSync(filePath.join(path.sep), [testData[1]])
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('tsv', function () {
+      it('should append to existing tsv', function (done) {
+        var filePath = ['test', 'tmp-append-data-tsv-sync', 'data.tsv']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendDataSync(filePath.join(path.sep), [testData[1]])
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('psv', function () {
+      it('should append to existing psv', function (done) {
+        var filePath = ['test', 'tmp-append-data-psv', 'data.psv']
+        io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
+        io.appendDataSync(filePath.join(path.sep), [testData[1]])
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('json', function () {
+      it('should append to non-existent json', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-json-sync', 'data.json']
+        io.appendDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('geojson', function () {
+      it('should append to non-existent geojson', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-geojson-sync', 'data.geojson']
+        io.appendDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('topojson', function () {
+      it('should append to non-existent topojson', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-topojson-sync', 'data.topojson']
+        io.appendDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('csv', function () {
+      it('should append to non-existent csv', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-csv-sync', 'data.csv']
+        io.appendDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('tsv', function () {
+      it('should append to non-existent tsv', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-tsv-sync', 'data.tsv']
+        io.appendDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('psv', function () {
+      it('should append to non-existent psv', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-psv-sync', 'data.psv']
+        io.appendDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+  })
+
+  // describe('convertDbfToData()', function () {
+
+  // })
 })
