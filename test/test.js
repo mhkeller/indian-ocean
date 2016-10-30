@@ -1615,60 +1615,112 @@ describe('readers', function () {
 
 describe('shorthandReaders', function () {
   describe('readJsonSync()', function () {
-    describe('empty', function () {
-      it('should be empty', function () {
-        assert.lengthOf(io.readJsonSync(testDataPath('json/empty.json')), 0)
+    describe('parseJson parser', function () {
+      describe('empty', function () {
+        it('should be empty', function () {
+          assert.lengthOf(io.readJsonSync(testDataPath('json/empty.json')), 0)
+        })
       })
-    })
 
-    describe('basic', function () {
-      it('should match expected json', function () {
-        var json = io.readJsonSync(testDataPath('json/basic.json'))
-        assertBasicValid(json)
+      describe('basic', function () {
+        it('should match expected json', function () {
+          var json = io.readJsonSync(testDataPath('json/basic.json'))
+          assertBasicValid(json)
+        })
       })
-    })
 
-    describe('basic', function () {
-      it('should match expected geojson', function () {
-        var json = io.readJsonSync(testDataPath('geojson/basic.geojson'))
-        assertBasicValid(json)
+      describe('basic', function () {
+        it('should match expected geojson', function () {
+          var json = io.readJsonSync(testDataPath('geojson/basic.geojson'))
+          assertBasicValid(json)
+        })
       })
-    })
 
-    describe('basic', function () {
-      it('should match expected topojson', function () {
-        var json = io.readJsonSync(testDataPath('topojson/basic.topojson'))
-        assertBasicValid(json)
+      describe('basic', function () {
+        it('should match expected topojson', function () {
+          var json = io.readJsonSync(testDataPath('topojson/basic.topojson'))
+          assertBasicValid(json)
+        })
       })
-    })
 
-    describe('basic map', function () {
-      it('should use map', function () {
-        var json = io.readJsonSync(testDataPath('json/basic.json'), {
-          map: function (row, i) {
+      describe('basic map', function () {
+        it('should use map', function () {
+          var json = io.readJsonSync(testDataPath('json/basic.json'), {
+            map: function (row, i) {
+              row.height = row.height * 2
+              return row
+            }
+          })
+          assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+        })
+      })
+
+      describe('basic map shorthand', function () {
+        it('should use map shorthand', function () {
+          var json = io.readJsonSync(testDataPath('json/basic.json'), function (row, i) {
             row.height = row.height * 2
             return row
-          }
+          })
+          assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
         })
-        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+      })
+
+      describe('invalid', function () {
+        it('should raise an error', function () {
+          assert.throws(function () {
+            io.readJsonSync(testDataPath('json/invalid.json'))
+          }, Error)
+        })
       })
     })
 
-    describe('basic map shorthand', function () {
-      it('should use map shorthand', function () {
-        var json = io.readJsonSync(testDataPath('json/basic.json'), function (row, i) {
-          row.height = row.height * 2
-          return row
+    describe('native parser', function () {
+      describe('empty', function () {
+        it('should be empty', function () {
+          assert.lengthOf(io.readJsonSync(testDataPath('json/empty.json'), {nativeParser: true}), 0)
         })
-        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
       })
-    })
 
-    describe('invalid', function () {
-      it('should raise an error', function () {
-        assert.throws(function () {
-          io.readJsonSync(testDataPath('json/invalid.json'))
-        }, Error)
+      describe('basic', function () {
+        it('should match expected json', function () {
+          var json = io.readJsonSync(testDataPath('json/basic.json'), {nativeParser: true})
+          assertBasicValid(json)
+        })
+      })
+
+      describe('basic', function () {
+        it('should match expected geojson', function () {
+          var json = io.readJsonSync(testDataPath('geojson/basic.geojson'), {nativeParser: true})
+          assertBasicValid(json)
+        })
+      })
+
+      describe('basic', function () {
+        it('should match expected topojson', function () {
+          var json = io.readJsonSync(testDataPath('topojson/basic.topojson'), {nativeParser: true})
+          assertBasicValid(json)
+        })
+      })
+
+      describe('basic map', function () {
+        it('should use map', function () {
+          var json = io.readJsonSync(testDataPath('json/basic.json'), {
+            map: function (row, i) {
+              row.height = row.height * 2
+              return row
+            },
+            nativeParser: true
+          })
+          assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+        })
+      })
+
+      describe('invalid', function () {
+        it('should raise an error', function () {
+          assert.throws(function () {
+            io.readJsonSync(testDataPath('json/invalid.json'), {nativeParser: true})
+          }, Error)
+        })
       })
     })
   })
@@ -2439,6 +2491,20 @@ describe('writers', function () {
           assert.equal(err, null)
           readAssertBasicValid(filePath.join(path.sep))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('json', function () {
+      it('should write as json without making directory', function (done) {
+        var filePath = ['test', 'test-out-data.json']
+        io.writeData(filePath.join(path.sep), testData, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
           })
