@@ -24,11 +24,11 @@ function readAssertBasicValid (path) {
   assertBasicValid(json, strings)
 }
 
-function readAssertBasicValidObject (path) {
+function readAssertBasicValidObject (path, row) {
   var strFormats = ['json', 'geojson', 'topojson', 'yml', 'yaml']
   var strings = strFormats.indexOf(io.discernFormat(path)) === -1
   var json = io.readDataSync(path)
-  assertBasicValidObject(json, strings)
+  assertBasicValidObject(json, strings, row)
 }
 
 function assertBasicValid (json, strings) {
@@ -42,11 +42,15 @@ function assertBasicValid (json, strings) {
   assert(_.isEqual(_.values(json[1]), ['francis', 'conductor', values[1]]), 'data values match values')
 }
 
-function assertBasicValidObject (obj, strings) {
+function assertBasicValidObject (obj, strings, row) {
   var values = strings ? ['70', '63'] : [70, 63]
   assert.typeOf(obj, 'object')
   assert(_.isEqual(_.keys(obj), ['name', 'occupation', 'height']), 'headers match keys')
-  assert(_.isEqual(_.values(obj), ['jim', 'land surveyor', values[0]]), 'data values match values')
+  if (row === undefined || row === 0) {
+    assert(_.isEqual(_.values(obj), ['jim', 'land surveyor', values[0]]), 'data values match values')
+  } else if (row === 1) {
+    assert(_.isEqual(_.values(obj), ['francis', 'conductor', values[1]]), 'data values match values')
+  }
 }
 
 describe('discernFormat()', function () {
@@ -2814,37 +2818,63 @@ describe('writers', function () {
       })
     })
 
-    // TODO, testing appending to json object
+    describe('yaml', function () {
+      it('should append to existing yaml', function (done) {
+        var filePath = ['test', 'tmp-append-data-yaml', 'data.yaml']
+        io.writeDataSync(filePath.join(path.sep), testData[0], {makeDirectories: true})
+        io.appendData(filePath.join(path.sep), testData[1], function (err) {
+          assert.equal(err, null)
+          readAssertBasicValidObject(filePath.join(path.sep), 1)
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
 
-    // describe('yaml', function () {
-    //   it('should append to existing yaml', function (done) {
-    //     var filePath = ['test', 'tmp-append-data-yaml', 'data.yaml']
-    //     io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
-    //     io.appendData(filePath.join(path.sep), [testData[1]][0], function (err) {
-    //       assert.equal(err, null)
-    //       readAssertBasicValidObject(filePath.join(path.sep))
-    //       rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
-    //         assert.equal(err, null)
-    //         done()
-    //       })
-    //     })
-    //   })
-    // })
+    describe('yaml', function () {
+      it('should append to non-existent yaml', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-yaml', 'data.yaml']
+        io.appendData(filePath.join(path.sep), testData[1], {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValidObject(filePath.join(path.sep), 1)
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
 
-    // describe('yml', function () {
-    //   it('should append to existing yml', function (done) {
-    //     var filePath = ['test', 'tmp-append-data-yml', 'data.yml']
-    //     io.writeDataSync(filePath.join(path.sep), [testData[0]], {makeDirectories: true})
-    //     io.appendData(filePath.join(path.sep), [testData[1]][0], function (err) {
-    //       assert.equal(err, null)
-    //       readAssertBasicValidObject(filePath.join(path.sep))
-    //       rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
-    //         assert.equal(err, null)
-    //         done()
-    //       })
-    //     })
-    //   })
-    // })
+    describe('json-object', function () {
+      it('should append to existing json-object', function (done) {
+        var filePath = ['test', 'tmp-append-data-json-object', 'data.json']
+        io.writeDataSync(filePath.join(path.sep), testData[0], {makeDirectories: true})
+        io.appendData(filePath.join(path.sep), testData[1], function (err) {
+          assert.equal(err, null)
+          readAssertBasicValidObject(filePath.join(path.sep), 1)
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('json-object', function () {
+      it('should append to non-existent json-object', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-json-object', 'data.json']
+        io.appendData(filePath.join(path.sep), testData[1], {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          readAssertBasicValidObject(filePath.join(path.sep), 1)
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
   })
 
   describe('appendDataSync()', function () {
@@ -2991,6 +3021,56 @@ describe('writers', function () {
         var filePath = ['test', 'tmp-append-new-data-psv-sync', 'data.psv']
         io.appendDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
         readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('yaml', function () {
+      it('should append to existing yaml', function (done) {
+        var filePath = ['test', 'tmp-append-data-yaml-sync', 'data.yaml']
+        io.writeDataSync(filePath.join(path.sep), testData[0], {makeDirectories: true})
+        io.appendDataSync(filePath.join(path.sep), testData[1])
+        readAssertBasicValidObject(filePath.join(path.sep), 1)
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('yaml', function () {
+      it('should append to non-existent yaml', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-yaml-sync', 'data.yaml']
+        io.appendDataSync(filePath.join(path.sep), testData[1], {makeDirectories: true})
+        readAssertBasicValidObject(filePath.join(path.sep), 1)
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('json-object', function () {
+      it('should append to existing json-object', function (done) {
+        var filePath = ['test', 'tmp-append-data-json-object-sync', 'data.json']
+        io.writeDataSync(filePath.join(path.sep), testData[0], {makeDirectories: true})
+        io.appendDataSync(filePath.join(path.sep), testData[1])
+        readAssertBasicValidObject(filePath.join(path.sep), 1)
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+    })
+
+    describe('json-object', function () {
+      it('should append to non-existent json-object', function (done) {
+        var filePath = ['test', 'tmp-append-new-data-json-object-sync', 'data.json']
+        io.appendDataSync(filePath.join(path.sep), testData[1], {makeDirectories: true})
+        readAssertBasicValidObject(filePath.join(path.sep), 1)
         rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
           assert.equal(err, null)
           done()
