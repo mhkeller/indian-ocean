@@ -2496,6 +2496,27 @@ describe('writers', function () {
           })
         })
       })
+
+      // it('should with json replacer fn', function (done) {
+      //   var filePath = ['test', 'tmp-write-data-json-replacer', 'data.json']
+      //   io.writeData(filePath.join(path.sep), testData, {
+      //     makeDirectories: true,
+      //     replacer: function (key, value) {
+      //       // Filtering out string properties
+      //       if (typeof value === 'string') {
+      //         return undefined
+      //       }
+      //       return value
+      //     }
+      //   }, function (err) {
+      //     assert.equal(err, null)
+      //     // assert.equal()
+      //     // rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+      //     //   assert.equal(err, null)
+      //     //   done()
+      //     // })
+      //   })
+      // })
     })
 
     describe('json', function () {
