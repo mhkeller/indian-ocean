@@ -57,7 +57,7 @@ console.log(json_data)
 ]
 */
 
-io.writeDataSync('path/to/save/output.json', json_data)
+io.writeDataSync('path/to/save/output.json', json_data, {indent: 2})
 ```
 
 Or, combine methods to read in a directory of csvs as json:
