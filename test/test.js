@@ -1,5 +1,6 @@
 /* global describe, it */
 
+var fs = require('fs')
 var path = require('path')
 var io = require('../lib/index')
 var chai = require('chai')
@@ -2497,26 +2498,59 @@ describe('writers', function () {
         })
       })
 
-      // it('should with json replacer fn', function (done) {
-      //   var filePath = ['test', 'tmp-write-data-json-replacer', 'data.json']
-      //   io.writeData(filePath.join(path.sep), testData, {
-      //     makeDirectories: true,
-      //     replacer: function (key, value) {
-      //       // Filtering out string properties
-      //       if (typeof value === 'string') {
-      //         return undefined
-      //       }
-      //       return value
-      //     }
-      //   }, function (err) {
-      //     assert.equal(err, null)
-      //     // assert.equal()
-      //     // rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
-      //     //   assert.equal(err, null)
-      //     //   done()
-      //     // })
-      //   })
-      // })
+      it('should write with json replacer fn', function (done) {
+        var filePath = ['test', 'tmp-write-data-json-replacer', 'data.json']
+        io.writeData(filePath.join(path.sep), testData, {
+          makeDirectories: true,
+          replacer: function (key, value) {
+            // Filtering out string properties
+            if (typeof value === 'string') {
+              return undefined
+            }
+            return value
+          }
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert.equal(json, '[{"height":70},{"height":63}]')
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), json)
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+
+      it('should write with json replacer array', function (done) {
+        var filePath = ['test', 'tmp-write-data-json-replacer', 'data.json']
+        io.writeData(filePath.join(path.sep), testData, {
+          makeDirectories: true,
+          replacer: ['height']
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert.equal(json, '[{"height":70},{"height":63}]')
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), json)
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+
+      it('should write with json indent', function (done) {
+        var filePath = ['test', 'tmp-write-data-json-replacer', 'data.json']
+        io.writeData(filePath.join(path.sep), testData, {
+          makeDirectories: true,
+          indent: 2
+        }, function (err, json) {
+          assert.equal(err, null)
+          assert.equal(json, '[\n  {\n    "name": "jim",\n    "occupation": "land surveyor",\n    "height": 70\n  },\n  {\n    "name": "francis",\n    "occupation": "conductor",\n    "height": 63\n  }\n]')
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), json)
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
     })
 
     describe('json', function () {
