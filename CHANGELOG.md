@@ -28,6 +28,7 @@ Changelog
   * [be5119509369aad3f1d3060ab176459be9edad06](https://github.com/mhkeller/indian-ocean/commit/be5119509369aad3f1d3060ab176459be9edad06)
   * [0e9579a348cfa23ff45c0a4f70f99fb1827d60ca](https://github.com/mhkeller/indian-ocean/commit/0e9579a348cfa23ff45c0a4f70f99fb1827d60ca)
   * [9edd0dd283823fbcad5efdeab4602040ee6f8b25](https://github.com/mhkeller/indian-ocean/commit/9edd0dd283823fbcad5efdeab4602040ee6f8b25)
+  * [2c7faf5b7ab3a3a89f8cae8ed17e8fa017918270](https://github.com/mhkeller/indian-ocean/commit/2c7faf5b7ab3a3a89f8cae8ed17e8fa017918270)
 * Add `.npmignore`
   * [a9815dbe63acee401d77b1ff3705d33f7ae928ac](https://github.com/mhkeller/indian-ocean/commit/a9815dbe63acee401d77b1ff3705d33f7ae928ac)
 * Better edge cases for empty files
