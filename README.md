@@ -24,7 +24,7 @@ Installation
 ------------
 
 ````
-npm install indian-ocean --save
+npm install --save indian-ocean
 ````
 
 Documentation
