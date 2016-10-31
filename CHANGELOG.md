@@ -5,16 +5,35 @@ Changelog
 
 > Not yet on npm
 
-* Add tests
+* Add tests and allow for parser options
   * [af12b04932cad2d99c2a6403845143c1e13c9643](https://github.com/mhkeller/indian-ocean/commit/af12b04932cad2d99c2a6403845143c1e13c9643)
+  * [499cd2e9bab004eb7f83737d5abdd35107216e95](https://github.com/mhkeller/indian-ocean/commit/499cd2e9bab004eb7f83737d5abdd35107216e95)
+  * [e43ac2ea55d2574d0352171a070be3b01b71a8b3](https://github.com/mhkeller/indian-ocean/commit/e43ac2ea55d2574d0352171a070be3b01b71a8b3)
+  * [79eba7baf184385b22db5a3055ca8daa8f0490b5](https://github.com/mhkeller/indian-ocean/commit/79eba7baf184385b22db5a3055ca8daa8f0490b5)
+  * [8a3752b8d96b54b5f65d7871c4fa3b1c5ff32d91](https://github.com/mhkeller/indian-ocean/commit/8a3752b8d96b54b5f65d7871c4fa3b1c5ff32d91)
+  * [f30f8551f99c35995fdfeddd9fdee406ae907583](https://github.com/mhkeller/indian-ocean/commit/f30f8551f99c35995fdfeddd9fdee406ae907583)
+  * [d17597b55979ae02fd8f1e67698cdd4f040d82a1](https://github.com/mhkeller/indian-ocean/commit/d17597b55979ae02fd8f1e67698cdd4f040d82a1)
+  * [1f8779e35be40b156d8d2b9f17b3a4b0c35baf6f](https://github.com/mhkeller/indian-ocean/commit/1f8779e35be40b156d8d2b9f17b3a4b0c35baf6f)
+  * [cf7cb58b38522831c75f1ffd6a19cdf08f94e142](https://github.com/mhkeller/indian-ocean/commit/cf7cb58b38522831c75f1ffd6a19cdf08f94e142)
+  * [b3cb85af2b02a208d4d2cc5a3dfa09375c66dbf0](https://github.com/mhkeller/indian-ocean/commit/b3cb85af2b02a208d4d2cc5a3dfa09375c66dbf0)
+  * [c98cb5df4a590cc54378c9b63b13ac7c55565328](https://github.com/mhkeller/indian-ocean/commit/c98cb5df4a590cc54378c9b63b13ac7c55565328)
+  * [705a3d395f480548447ca42ad91c37ced447dfd1](https://github.com/mhkeller/indian-ocean/commit/705a3d395f480548447ca42ad91c37ced447dfd1)
+  * [9b3c9f1f04f386faf6effd2b615e97d0078d2a8e](https://github.com/mhkeller/indian-ocean/commit/9b3c9f1f04f386faf6effd2b615e97d0078d2a8e)
+  * [b79c0bdbff90bc9ca1b0526dff9faed454aff55f](https://github.com/mhkeller/indian-ocean/commit/b79c0bdbff90bc9ca1b0526dff9faed454aff55f)
+  * [977194ab87e4f296b57be8c7bd3733c4dd18fae3](https://github.com/mhkeller/indian-ocean/commit/977194ab87e4f296b57be8c7bd3733c4dd18fae3)
+  * [0880df4abb46cd7a585ca3527a3b5f91ec7640bb](https://github.com/mhkeller/indian-ocean/commit/0880df4abb46cd7a585ca3527a3b5f91ec7640bb)
 * Internal: Improve doc workflow, update travis versions
   * [355f0c7fd1b837773185c98d3bc12266f8c85cff](https://github.com/mhkeller/indian-ocean/commit/355f0c7fd1b837773185c98d3bc12266f8c85cff)
   * [cf1eb24492dfdcf1533436882e1fcbda81ed5ce6](https://github.com/mhkeller/indian-ocean/commit/cf1eb24492dfdcf1533436882e1fcbda81ed5ce6)
   * [be5119509369aad3f1d3060ab176459be9edad06](https://github.com/mhkeller/indian-ocean/commit/be5119509369aad3f1d3060ab176459be9edad06)
-  * [be5119509369aad3f1d3060ab176459be9edad06](https://github.com/mhkeller/indian-ocean/commit/be5119509369aad3f1d3060ab176459be9edad06)
-* Forthcoming: allow for parser options
-  * See the `parse-options` branch for now
-* Expose parsers and formatters
+  * [0e9579a348cfa23ff45c0a4f70f99fb1827d60ca](https://github.com/mhkeller/indian-ocean/commit/0e9579a348cfa23ff45c0a4f70f99fb1827d60ca)
+* Add `.npmignore`
+  * [a9815dbe63acee401d77b1ff3705d33f7ae928ac](https://github.com/mhkeller/indian-ocean/commit/a9815dbe63acee401d77b1ff3705d33f7ae928ac)
+* Better edge cases for empty files
+  * [ff1269e6bcb0131c99ff1e07b5abc4cf4efe5b9b](https://github.com/mhkeller/indian-ocean/commit/ff1269e6bcb0131c99ff1e07b5abc4cf4efe5b9b)
+* Allow for deferring to native json parsing
+  * [570e6a9b5727110eb8c8d2e7e130040ec5918d31](https://github.com/mhkeller/indian-ocean/commit/570e6a9b5727110eb8c8d2e7e130040ec5918d31)
+  * Expose parsers and formatters
 * *Breaking changes*
   * Custom delimiters passed to `helpers.discernParser` no longer need to be in an object.
     * Old usage `io.discernParser(null, {delimiter: '_'})`
