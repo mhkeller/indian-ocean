@@ -3,7 +3,7 @@ Changelog
 
 # 2.0.0
 
-> Not yet on npm
+> 2016-10-30
 
 * Add tests and allow for parser options
   * [af12b04932cad2d99c2a6403845143c1e13c9643](https://github.com/mhkeller/indian-ocean/commit/af12b04932cad2d99c2a6403845143c1e13c9643)
