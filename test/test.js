@@ -18,11 +18,11 @@ function testDataPath (name) {
   return path.join(__dirname, 'data', name)
 }
 
-function readAssertBasicValid (path) {
+function readAssertBasicValid (path, columns) {
   var strFormats = ['json', 'geojson', 'topojson', 'yml', 'yaml']
   var strings = strFormats.indexOf(io.discernFormat(path)) === -1
   var json = io.readDataSync(path)
-  assertBasicValid(json, strings)
+  assertBasicValid(json, strings, columns)
 }
 
 function readAssertBasicValidObject (path, row) {
@@ -32,13 +32,15 @@ function readAssertBasicValidObject (path, row) {
   assertBasicValidObject(json, strings, row)
 }
 
-function assertBasicValid (json, strings) {
+function assertBasicValid (json, strings, columns) {
   var values = strings ? ['70', '63'] : [70, 63]
+
+  columns = columns || ['name', 'occupation', 'height']
 
   assert.lengthOf(json, 2)
   assert.typeOf(json[0], 'object')
-  assert(_.isEqual(_.keys(json[0]), ['name', 'occupation', 'height']), 'headers match keys')
-  assert(_.isEqual(_.keys(json[1]), ['name', 'occupation', 'height']), 'headers match keys')
+  assert(_.isEqual(_.keys(json[0]), columns), 'headers match keys')
+  assert(_.isEqual(_.keys(json[1]), columns), 'headers match keys')
   assert(_.isEqual(_.values(json[0]), ['jim', 'land surveyor', values[0]]), 'data values match values')
   assert(_.isEqual(_.values(json[1]), ['francis', 'conductor', values[1]]), 'data values match values')
 }
@@ -2499,7 +2501,7 @@ describe('writers', function () {
       })
 
       it('should write with json replacer fn', function (done) {
-        var filePath = ['test', 'tmp-write-data-json-replacer', 'data.json']
+        var filePath = ['test', 'tmp-write-data-json-replacer-fn', 'data.json']
         io.writeData(filePath.join(path.sep), testData, {
           makeDirectories: true,
           replacer: function (key, value) {
@@ -2521,14 +2523,14 @@ describe('writers', function () {
       })
 
       it('should write with json replacer array', function (done) {
-        var filePath = ['test', 'tmp-write-data-json-replacer', 'data.json']
+        var filePath = ['test', 'tmp-write-data-json-replacer-array', 'data.json']
         io.writeData(filePath.join(path.sep), testData, {
           makeDirectories: true,
           replacer: ['height']
-        }, function (err, json) {
+        }, function (err, dataString) {
           assert.equal(err, null)
-          assert.equal(json, '[{"height":70},{"height":63}]')
-          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), json)
+          assert.equal(dataString, '[{"height":70},{"height":63}]')
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), dataString)
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -2537,14 +2539,14 @@ describe('writers', function () {
       })
 
       it('should write with json indent', function (done) {
-        var filePath = ['test', 'tmp-write-data-json-replacer', 'data.json']
+        var filePath = ['test', 'tmp-write-data-json-indent', 'data.json']
         io.writeData(filePath.join(path.sep), testData, {
           makeDirectories: true,
           indent: 2
-        }, function (err, json) {
+        }, function (err, dataString) {
           assert.equal(err, null)
-          assert.equal(json, '[\n  {\n    "name": "jim",\n    "occupation": "land surveyor",\n    "height": 70\n  },\n  {\n    "name": "francis",\n    "occupation": "conductor",\n    "height": 63\n  }\n]')
-          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), json)
+          assert.equal(dataString, '[\n  {\n    "name": "jim",\n    "occupation": "land surveyor",\n    "height": 70\n  },\n  {\n    "name": "francis",\n    "occupation": "conductor",\n    "height": 63\n  }\n]')
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), dataString)
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -2587,6 +2589,42 @@ describe('writers', function () {
         io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
           assert.equal(err, null)
           readAssertBasicValid(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('geojson', function () {
+      it('should write as geojson with indent', function (done) {
+        var filePath = ['test', 'tmp-write-data-geojson-indent', 'data.geojson']
+        io.writeData(filePath.join(path.sep), testData, {
+          makeDirectories: true,
+          indent: 2
+        }, function (err, dataString) {
+          assert.equal(err, null)
+          assert.equal(dataString, '[\n  {\n    "name": "jim",\n    "occupation": "land surveyor",\n    "height": 70\n  },\n  {\n    "name": "francis",\n    "occupation": "conductor",\n    "height": 63\n  }\n]')
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), dataString)
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('topojson', function () {
+      it('should write as topojson with indent', function (done) {
+        var filePath = ['test', 'tmp-write-data-topojson-indent', 'data.topojson']
+        io.writeData(filePath.join(path.sep), testData, {
+          makeDirectories: true,
+          indent: 2
+        }, function (err, dataString) {
+          assert.equal(err, null)
+          assert.equal(dataString, '[\n  {\n    "name": "jim",\n    "occupation": "land surveyor",\n    "height": 70\n  },\n  {\n    "name": "francis",\n    "occupation": "conductor",\n    "height": 63\n  }\n]')
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), dataString)
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -2649,6 +2687,19 @@ describe('writers', function () {
           })
         })
       })
+
+      it('should write as yaml with indent', function (done) {
+        var filePath = ['test', 'tmp-write-data-yaml-indent', 'data.yaml']
+        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true, indent: 4}, function (err, dataString) {
+          assert.equal(err, null)
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
+          assert.equal(dataString, '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
     })
 
     describe('yml', function () {
@@ -2657,6 +2708,19 @@ describe('writers', function () {
         io.writeData(filePath.join(path.sep), testData[0], {makeDirectories: true}, function (err) {
           assert.equal(err, null)
           readAssertBasicValidObject(filePath.join(path.sep))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+
+      it('should write as yml with indent', function (done) {
+        var filePath = ['test', 'tmp-write-data-yml-indent', 'data.yml']
+        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true, indent: 4}, function (err, dataString) {
+          assert.equal(err, null)
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
+          assert.equal(dataString, '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
