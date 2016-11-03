@@ -1,6 +1,13 @@
 Changelog
 =========
 
+# 2.0.1
+
+> 2016-11-02
+
+* Fix docs to print custom argument names
+  * [5260f6d606b40d0ce89b8f48ad73fd6f6f0e1164](https://github.com/mhkeller/indian-ocean/commit/5260f6d606b40d0ce89b8f48ad73fd6f6f0e1164)
+
 # 2.0.0
 
 > 2016-10-30
