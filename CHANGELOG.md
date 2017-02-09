@@ -1,6 +1,13 @@
 Changelog
 =========
 
+# 2.0.2
+
+> 2017-02-08
+
+* Fix having the callback called inside of the try block
+  * [5ffd5a89d5d179bc741543ae4ffc9978658cf894](https://github.com/mhkeller/indian-ocean/commit/5ffd5a89d5d179bc741543ae4ffc9978658cf894)
+
 # 2.0.1
 
 > 2016-11-02
