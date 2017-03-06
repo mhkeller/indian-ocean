@@ -2,7 +2,7 @@
 
 var fs = require('fs')
 var path = require('path')
-var io = require('../lib/index')
+var io = require('../dist/indian-ocean.node.js')
 var chai = require('chai')
 var assert = chai.assert
 var dsv = require('d3-dsv')
@@ -54,6 +54,10 @@ function assertBasicValidObject (obj, strings, row) {
   } else if (row === 1) {
     assert(_.isEqual(_.values(obj), ['francis', 'conductor', values[1]]), 'data values match values')
   }
+}
+
+function removeWhiteSpace (str) {
+  return str.replace(/\s/g, '')
 }
 
 describe('discernFormat()', function () {
@@ -198,8 +202,8 @@ describe('discernParser()', function () {
   })
 
   describe('custom delimiter: `_`', function () {
-    it('should be customer parser', function () {
-      assert.equal(io.discernParser(null, '_').toString(), dsv.dsvFormat('_').parse.toString())
+    it('should be custom parser', function () {
+      assert.equal(removeWhiteSpace(io.discernParser(null, '_').toString()), removeWhiteSpace(dsv.dsvFormat('_').parse.toString()))
     })
   })
 })
@@ -2440,7 +2444,7 @@ describe('readDbf()', function () {
   describe('empty', function () {
     it('should be empty array', function (done) {
       io.readDbf(testDataPath('dbf/empty.dbf'), function (err, json) {
-        assert.equal(err.message, 'unexpected EOF')
+        assert.equal(err.split('\n')[0], 'TypeError: Cannot read property \'buffer\' of null')
         done()
       })
     })
