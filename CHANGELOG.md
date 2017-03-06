@@ -1,6 +1,16 @@
 Changelog
 =========
 
+# 3.0.0
+
+> Not yet on npm
+
+* Break into es6 modules and build with rollup, Drop support for Node versions less than 3
+  * [bffe689eaac19a3a399fcc832c721c44aba1178e](https://github.com/mhkeller/indian-ocean/commit/bffe689eaac19a3a399fcc832c721c44aba1178e)
+  * [383f8efc68f8c9ec43b98863aa4352821d0a16f8](https://github.com/mhkeller/indian-ocean/commit/383f8efc68f8c9ec43b98863aa4352821d0a16f8)
+* *Possible breaking changes*
+  * Dbf-related functions no longer work on NodeJS versions less than 3 and those versions won't be tested into the future
+
 # 2.0.2
 
 > 2017-02-08
