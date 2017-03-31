@@ -3,7 +3,7 @@
   "version": "2.0.2",
   "description": "A library for reading in and writing out data in Node.js.",
   "main": "dist/indian-ocean.node.js",
-  "module": "index.js",
+  "module": "index.node.js",
   "scripts": {
     "docs-view": "npm run build-docs && npm run serve-docs",
     "coverage": "istanbul cover mocha -- -R spec",
