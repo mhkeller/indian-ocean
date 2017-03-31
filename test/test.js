@@ -257,11 +257,19 @@ describe('discernFileFormatter()', function () {
     it('should be text formatter', function () {
       assert.equal(io.discernFileFormatter('/fake/path/what_is_this_file').toString(), io.formatters.txt.toString())
     })
+
+    it('should be text formatter as method', function () {
+      assert.equal(io.discernFileFormatter('/fake/path/what_is_this_file').toString(), io.formatTxt.toString())
+    })
   })
 
   describe('csv', function () {
     it('should be csv formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('csv/empty.csv')).toString(), io.formatters.csv.toString())
+    })
+
+    it('should be csv formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('csv/empty.csv')).toString(), io.formatCsv.toString())
     })
   })
 
@@ -269,11 +277,19 @@ describe('discernFileFormatter()', function () {
     it('should be tsv formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('tsv/empty.tsv')).toString(), io.formatters.tsv.toString())
     })
+
+    it('should be tsv formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('tsv/empty.tsv')).toString(), io.formatTsv.toString())
+    })
   })
 
   describe('psv', function () {
     it('should be psv formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('psv/empty.psv')).toString(), io.formatters.psv.toString())
+    })
+
+    it('should be psv formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('psv/empty.psv')).toString(), io.formatPsv.toString())
     })
   })
 
@@ -281,11 +297,19 @@ describe('discernFileFormatter()', function () {
     it('should be yaml formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('yaml/empty.yaml')).toString(), io.formatters.yaml.toString())
     })
+
+    it('should be yaml formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('yaml/empty.yaml')).toString(), io.formatYaml.toString())
+    })
   })
 
   describe('yml', function () {
     it('should be yml formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('yml/empty.yml')).toString(), io.formatters.yml.toString())
+    })
+
+    it('should be yml formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('yml/empty.yml')).toString(), io.formatYaml.toString())
     })
   })
 
@@ -293,11 +317,19 @@ describe('discernFileFormatter()', function () {
     it('should be txt formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('txt/empty.txt')).toString(), io.formatters.txt.toString())
     })
+
+    it('should be txt formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('txt/empty.txt')).toString(), io.formatTxt.toString())
+    })
   })
 
   describe('json', function () {
     it('should be json formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('json/empty.json')).toString(), io.formatters.json.toString())
+    })
+
+    it('should be json formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('json/empty.json')).toString(), io.formatJson.toString())
     })
   })
 
@@ -305,11 +337,19 @@ describe('discernFileFormatter()', function () {
     it('should be geojson formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('geojson/empty.geojson')).toString(), io.formatters.geojson.toString())
     })
+
+    it('should be geojson formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('geojson/empty.geojson')).toString(), io.formatJson.toString())
+    })
   })
 
   describe('topojson', function () {
     it('should be topojson formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('topojson/empty.topojson')).toString(), io.formatters.topojson.toString())
+    })
+
+    it('should be topojson formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('topojson/empty.topojson')).toString(), io.formatJson.toString())
     })
   })
 })

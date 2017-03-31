@@ -10906,6 +10906,13 @@ function appendDataSync(outPath, data, opts_) {
 
 exports.convertDbfToData = dbfToData;
 exports.formatters = formatters;
+exports.formatCsv = csv;
+exports.formatDbf = dbf;
+exports.formatJson = json;
+exports.formatPsv = psv;
+exports.formatTsv = tsv;
+exports.formatTxt = txt;
+exports.formatYaml = yaml;
 exports.deepExtend = deepExtend;
 exports.discernFileFormatter = discernFileFormatter;
 exports.discernFormat = discernFormat;
