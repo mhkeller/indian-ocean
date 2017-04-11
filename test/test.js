@@ -2129,7 +2129,7 @@ describe('shorthandReaders', function () {
     describe('invalid', function () {
       it('should raise an error', function (done) {
         io.readJson(testDataPath('json/invalid.json'), function (err, json) {
-          assert.equal(err.message, 'Unexpected token \'w\' at 1:3\n{ wrong: }\n  ^')
+          assert.equal(err.message, 'Unexpected token w in JSON at position 2')
           done()
         })
       })

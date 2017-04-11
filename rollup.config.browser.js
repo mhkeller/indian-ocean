@@ -1,3 +1,4 @@
+// TODO, break this out into its own browser repo to avoid the need for builtins and globals
 import babel from 'rollup-plugin-babel'
 import nodeResolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
@@ -6,8 +7,15 @@ import globals from 'rollup-plugin-node-globals'
 
 export default {
   entry: 'index.browser.js',
-  format: 'umd',
   moduleName: 'io',
-  plugins: [ babel(), nodeResolve(), commonjs(), builtins(), globals() ],
-  dest: 'dist/indian-ocean.js'
+  plugins: [nodeResolve(), commonjs(), builtins(), globals(), babel()],
+  targets: [
+    {
+      format: 'umd',
+      dest: 'dist/indian-ocean.js'
+    }, {
+      format: 'es',
+      dest: 'dist/indian-ocean.browser.es6.js'
+    }
+  ]
 }

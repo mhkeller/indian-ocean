@@ -1,5 +1,5 @@
 import fs from 'fs'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'underscore'
 import makeDirectories from '../helpers/makeDirectories'
 import readData from '../readers/readData'
 import writeData from './writeData'
@@ -51,7 +51,7 @@ export default function appendData (outPath, data, opts_, cb) {
       if (!err) {
         readData(outPath, function (err, existingData) {
           if (!err) {
-            if (!isEmpty(existingData)) {
+            if (!_.isEmpty(existingData)) {
               if (Array.isArray(existingData)) {
                 data = existingData.concat(data)
               } else if (typeof existingData === 'object') {

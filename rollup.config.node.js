@@ -5,7 +5,7 @@ import commonjs from 'rollup-plugin-commonjs'
 export default {
   entry: 'index.node.js',
   format: 'cjs',
-  plugins: [ babel(), nodeResolve(), commonjs() ],
+  plugins: [ nodeResolve(), commonjs(), babel() ],
   dest: 'dist/indian-ocean.node.js',
   external: ['fs', 'path', 'util']
 }

@@ -3,7 +3,7 @@ import getParser from '../helpers/getParser'
 import discernParser from '../helpers/discernParser'
 import discernFormat from '../helpers/discernFormat'
 import {formatsIndex} from '../config/equivalentFormats'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'underscore'
 
 /**
  * Asynchronously read data given a path ending in the file format.
@@ -88,7 +88,7 @@ export default function readData (filePath, opts_, cb_) {
     if (opts_.parser) {
       parser = getParser(opts_.parser)
       delete opts_.parser
-      if (isEmpty(opts_)) {
+      if (_.isEmpty(opts_)) {
         opts_ = undefined
       }
     } else {

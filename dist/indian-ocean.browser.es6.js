@@ -1,10 +1,4 @@
 // https://github.com/mhkeller/indian-ocean Version 2.0.2. Copyright 2017 undefined.
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.io = global.io || {})));
-}(this, (function (exports) { 'use strict';
-
 function objectConverter(columns) {
   return new Function("d", "return {" + columns.map(function (name, i) {
     return JSON.stringify(name) + ": d[" + i + "]";
@@ -8827,18 +8821,4 @@ function matches(fileName, matcher) {
 // export {default as writeData} from './src/writers/writeData'
 // export {default as writeDataSync} from './src/writers/writeDataSync'
 
-exports.formatters = formatters;
-exports.deepExtend = deepExtend;
-exports.discernFileFormatter = discernFileFormatter;
-exports.discernFormat = discernFormat;
-exports.discernParser = discernParser;
-exports.extend = extend$1;
-exports.extMatchesStr = extMatchesStr;
-exports.getParser = getParser;
-exports.matches = matches;
-exports.matchesRegExp = matchesRegExp;
-exports.parsers = parsers;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
+export { formatters, deepExtend, discernFileFormatter, discernFormat, discernParser, extend$1 as extend, extMatchesStr, getParser, matches, matchesRegExp, parsers };

@@ -1,5 +1,5 @@
 import fs from 'fs'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'underscore'
 import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
 import readDataSync from '../readers/readDataSync'
 import writeDataSync from './writeDataSync'
@@ -26,7 +26,7 @@ export default function appendDataSync (outPath, data, opts_) {
   }
   fs.appendFileSync(outPath, '')
   var existingData = readDataSync(outPath)
-  if (!isEmpty(existingData)) {
+  if (!_.isEmpty(existingData)) {
     if (Array.isArray(existingData)) {
       data = existingData.concat(data)
     } else if (typeof existingData === 'object') {

@@ -3,7 +3,7 @@ import getParser from '../helpers/getParser'
 import discernParser from '../helpers/discernParser'
 import discernFormat from '../helpers/discernFormat'
 import {formatsIndex} from '../config/equivalentFormats'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'underscore'
 
 /**
  * Syncronous version of {@link readers#readData}
@@ -66,7 +66,7 @@ export default function readDataSync (filePath, opts_) {
     if (opts_.parser) {
       parser = getParser(opts_.parser)
       delete opts_.parser
-      if (isEmpty(opts_)) {
+      if (_.isEmpty(opts_)) {
         opts_ = undefined
       }
     } else {

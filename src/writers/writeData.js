@@ -1,5 +1,5 @@
 import fs from 'fs'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'underscore'
 import warn from '../reporters/warn'
 import discernFileFormatter from '../helpers/discernFileFormatter'
 import makeDirectories from '../helpers/makeDirectories'
@@ -68,7 +68,7 @@ export default function writeData (outPath, data, opts_, cb) {
     cb = opts_
     opts_ = undefined
   }
-  if (isEmpty(data)) {
+  if (_.isEmpty(data)) {
     warn('You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty file...')
   }
 
