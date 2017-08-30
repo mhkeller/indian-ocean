@@ -3,6 +3,7 @@ import _ from 'underscore'
 import warn from '../reporters/warn'
 import discernFileFormatter from '../helpers/discernFileFormatter'
 import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
+import discernPath from '../helpers/discernPath'
 
 /**
  * Syncronous version of {@link writers#writeData}
@@ -46,6 +47,7 @@ import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
  * })
  */
 export default function writeDataSync (outPath, data, opts_) {
+  outPath = discernPath(outPath)
   if (_.isEmpty(data)) {
     warn('You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty file...')
   }

@@ -1,6 +1,7 @@
 import fs from 'fs'
 import _ from 'underscore'
 import makeDirectories from '../helpers/makeDirectories'
+import discernPath from '../helpers/discernPath'
 import readData from '../readers/readData'
 import writeData from './writeData'
 import extend from '../helpers/extend'
@@ -34,6 +35,7 @@ import extend from '../helpers/extend'
  * })
  */
 export default function appendData (outPath, data, opts_, cb) {
+  outPath = discernPath(outPath)
   if (typeof cb === 'undefined') {
     cb = opts_
   }

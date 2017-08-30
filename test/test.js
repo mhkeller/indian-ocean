@@ -66,6 +66,26 @@ function removeWhiteSpace (str) {
   return str.replace(/\s/g, '')
 }
 
+describe('discernPath()', function () {
+  describe('string', function () {
+    it('should return the string', function () {
+      assert.equal(io.discernPath('/fake/path/what_is_this_file'), '/fake/path/what_is_this_file')
+    })
+  })
+
+  describe('Array', function () {
+    it('should join an array', function () {
+      assert.equal(io.discernPath(['csv', 'empty.csv']), 'csv/empty.csv')
+    })
+  })
+
+  describe('Function', function () {
+    it('should call a Function', function () {
+      assert.equal(io.discernPath(function () { return 'csv/empty.csv' }), 'csv/empty.csv')
+    })
+  })
+})
+
 describe('discernFormat()', function () {
   describe('no extension', function () {
     it('should be false', function () {

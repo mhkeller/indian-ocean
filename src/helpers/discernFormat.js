@@ -1,4 +1,5 @@
 import {extname} from '../utils/path'
+import discernPath from './discernPath'
 
 /**
  * Given a `filePath` return the file's extension. Used internally by {@link discernParser} and {@link discernFileFormatter}. Returns `false` for files without an extension, including dotfiles
@@ -16,7 +17,7 @@ import {extname} from '../utils/path'
  * console.log(format) // false
  */
 export default function discernFormat (filePath) {
-  var ext = extname(filePath)
+  var ext = extname(discernPath(filePath))
   if (ext === '') return false
 
   // Chop '.' off extension returned by extname

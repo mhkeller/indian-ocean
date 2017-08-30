@@ -1,6 +1,7 @@
 import extMatchesStr from './extMatchesStr'
 import matchesRegExp from './matchesRegExp'
 import isRegExp from '../utils/isRegExp'
+import discernPath from './discernPath'
 
 /**
  * Test whether a file name or path matches a given matcher. Delegates to {@link extMatchesStr} if `matcher` is a string` and tests only against the file name extension. Delegates to {@link matchesRegExp} if matcher is a Regular Expression and tests against entire string, which is usefulf or testing the full file path.
@@ -21,9 +22,9 @@ import isRegExp from '../utils/isRegExp'
  */
 export default function matches (filePath, matcher) {
   if (typeof matcher === 'string') {
-    return extMatchesStr(filePath, matcher)
+    return extMatchesStr(discernPath(filePath), matcher)
   } else if (isRegExp(matcher)) {
-    return matchesRegExp(filePath, matcher)
+    return matchesRegExp(discernPath(filePath), matcher)
   } else {
     throw new Error('Matcher argument must be String or Regular Expression')
   }

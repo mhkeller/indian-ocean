@@ -6740,6 +6740,35 @@ function extname(filename) {
   return posixSplitPath(filename)[3];
 }
 
+
+
+function joinPath() {
+  var args = Array.prototype.slice.call(arguments);
+  return args.join('/'); // TODO, windows
+}
+
+/**
+ * If `filePath` is an Array it applies `path.join`. If it's is a function it calls it. Otherwise it returns `filePath`.
+ * @param {(string|string[]|Function)} filePath the name of the file
+ * @returns {string} a file path
+ *
+ * @example
+ * io.discernPath('path/to/data.tsv')
+ * io.discernPath([__dirname, 'path', 'to', 'data.tsv')
+ * io.discernPath(function() { return 'path/to/data-' + now.getYear() + '.tsv' })
+ */
+function discernPath(filePath) {
+  if (Array.isArray(filePath)) {
+    return joinPath.apply(null, filePath);
+  }
+
+  if (typeof filePath === 'function') {
+    return filePath();
+  }
+
+  return filePath;
+}
+
 /**
  * Given a `filePath` return the file's extension. Used internally by {@link discernParser} and {@link discernFileFormatter}. Returns `false` for files without an extension, including dotfiles
  *
@@ -6756,7 +6785,7 @@ function extname(filename) {
  * console.log(format) // false
  */
 function discernFormat(filePath) {
-  var ext = extname(filePath);
+  var ext = extname(discernPath(filePath));
   if (ext === '') return false;
 
   // Chop '.' off extension returned by extname
@@ -6776,7 +6805,7 @@ function discernFormat(filePath) {
  * var csv = formatter(json)
  */
 function discernFileFormatter(filePath) {
-  var format = discernFormat(filePath);
+  var format = discernFormat(discernPath(filePath));
   var formatter = formatters[format];
   // If we don't have a parser for this format, return as text
   if (typeof formatter === 'undefined') {
@@ -8824,9 +8853,9 @@ function isRegExp$1(obj) {
  */
 function matches(filePath, matcher) {
   if (typeof matcher === 'string') {
-    return extMatchesStr(filePath, matcher);
+    return extMatchesStr(discernPath(filePath), matcher);
   } else if (isRegExp$1(matcher)) {
-    return matchesRegExp(filePath, matcher);
+    return matchesRegExp(discernPath(filePath), matcher);
   } else {
     throw new Error('Matcher argument must be String or Regular Expression');
   }

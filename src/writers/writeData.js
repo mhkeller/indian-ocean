@@ -2,6 +2,7 @@ import fs from 'fs'
 import _ from 'underscore'
 import warn from '../reporters/warn'
 import discernFileFormatter from '../helpers/discernFileFormatter'
+import discernPath from '../helpers/discernPath'
 import makeDirectories from '../helpers/makeDirectories'
 
 /**
@@ -65,6 +66,8 @@ import makeDirectories from '../helpers/makeDirectories'
  * })
  */
 export default function writeData (outPath, data, opts_, cb) {
+  outPath = discernPath(outPath)
+
   if (typeof cb === 'undefined') {
     cb = opts_
     opts_ = undefined

@@ -1,5 +1,6 @@
 import mkdirp from 'mkdirp'
 import {dirname} from '../utils/path'
+import discernPath from './discernPath'
 
 /**
  * Asynchronously create directories along a given file path. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module
@@ -15,7 +16,7 @@ import {dirname} from '../utils/path'
  *
  */
 export default function makeDirectories (outPath, cb) {
-  mkdirp(dirname(outPath), function (err) {
+  mkdirp(dirname(discernPath(outPath)), function (err) {
     cb(err)
   })
 }

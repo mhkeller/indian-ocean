@@ -1,3 +1,4 @@
+import discernPath from './discernPath'
 import fs from 'fs'
 
 /**
@@ -14,7 +15,7 @@ import fs from 'fs'
  *
  */
 export default function exists (filePath, cb) {
-  fs.access(filePath, function (err) {
+  fs.access(discernPath(filePath), function (err) {
     var exists
     if (err && err.code === 'ENOENT') {
       exists = false

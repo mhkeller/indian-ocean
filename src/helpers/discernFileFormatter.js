@@ -1,4 +1,5 @@
 import discernFormat from './discernFormat'
+import discernPath from './discernPath'
 import formatters from '../formatters/index'
 
 /**
@@ -13,7 +14,7 @@ import formatters from '../formatters/index'
  * var csv = formatter(json)
  */
 export default function discernFileFormatter (filePath) {
-  var format = discernFormat(filePath)
+  var format = discernFormat(discernPath(filePath))
   var formatter = formatters[format]
   // If we don't have a parser for this format, return as text
   if (typeof formatter === 'undefined') {

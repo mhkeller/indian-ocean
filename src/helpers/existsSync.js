@@ -1,4 +1,5 @@
 import fs from 'fs'
+import discernPath from './discernPath'
 
 /**
  * Syncronous version of {@link exists}. Delegates to `fs.existsSync` if that function is available.
@@ -13,10 +14,10 @@ import fs from 'fs'
  */
 export default function existsSync (filePath) {
   if (fs.existsSync) {
-    return fs.existsSync(filePath)
+    return fs.existsSync(discernPath(filePath))
   } else {
     try {
-      fs.accessSync(filePath)
+      fs.accessSync(discernPath(filePath))
       return true
     } catch (ex) {
       return false

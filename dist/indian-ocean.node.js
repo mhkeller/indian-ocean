@@ -1754,6 +1754,28 @@ function joinPath() {
 }
 
 /**
+ * If `filePath` is an Array it applies `path.join`. If it's is a function it calls it. Otherwise it returns `filePath`.
+ * @param {(string|string[]|Function)} filePath the name of the file
+ * @returns {string} a file path
+ *
+ * @example
+ * io.discernPath('path/to/data.tsv')
+ * io.discernPath([__dirname, 'path', 'to', 'data.tsv')
+ * io.discernPath(function() { return 'path/to/data-' + now.getYear() + '.tsv' })
+ */
+function discernPath(filePath) {
+  if (Array.isArray(filePath)) {
+    return joinPath.apply(null, filePath);
+  }
+
+  if (typeof filePath === 'function') {
+    return filePath();
+  }
+
+  return filePath;
+}
+
+/**
  * Given a `filePath` return the file's extension. Used internally by {@link discernParser} and {@link discernFileFormatter}. Returns `false` for files without an extension, including dotfiles
  *
  * @function discernFormat
@@ -1769,7 +1791,7 @@ function joinPath() {
  * console.log(format) // false
  */
 function discernFormat(filePath) {
-  var ext = extname(filePath);
+  var ext = extname(discernPath(filePath));
   if (ext === '') return false;
 
   // Chop '.' off extension returned by extname
@@ -6726,7 +6748,7 @@ formatsList.forEach(function (format) {
  * var csv = formatter(json)
  */
 function discernFileFormatter(filePath) {
-  var format = discernFormat(filePath);
+  var format = discernFormat(discernPath(filePath));
   var formatter = formatters[format];
   // If we don't have a parser for this format, return as text
   if (typeof formatter === 'undefined') {
@@ -6843,7 +6865,7 @@ mkdirP.sync = function sync(p, opts, made) {
  *
  */
 function makeDirectories(outPath, cb) {
-  index$15(dirname(outPath), function (err) {
+  index$15(dirname(discernPath(outPath)), function (err) {
     cb(err);
   });
 }
@@ -6909,6 +6931,8 @@ function makeDirectories(outPath, cb) {
  * })
  */
 function writeData(outPath, data, opts_, cb) {
+  outPath = discernPath(outPath);
+
   if (typeof cb === 'undefined') {
     cb = opts_;
     opts_ = undefined;
@@ -7143,7 +7167,7 @@ function deepExtend() {
  *
  */
 function exists(filePath, cb) {
-  fs.access(filePath, function (err) {
+  fs.access(discernPath(filePath), function (err) {
     var exists;
     if (err && err.code === 'ENOENT') {
       exists = false;
@@ -7168,10 +7192,10 @@ function exists(filePath, cb) {
  */
 function existsSync(filePath) {
   if (fs.existsSync) {
-    return fs.existsSync(filePath);
+    return fs.existsSync(discernPath(filePath));
   } else {
     try {
-      fs.accessSync(filePath);
+      fs.accessSync(discernPath(filePath));
       return true;
     } catch (ex) {
       return false;
@@ -7208,7 +7232,7 @@ function extMatchesStr(filePath, extension) {
  *
  */
 function makeDirectoriesSync(outPath) {
-  index$15.sync(dirname(outPath));
+  index$15.sync(dirname(discernPath(outPath)));
 }
 
 /**
@@ -7253,9 +7277,9 @@ function isRegExp$1(obj) {
  */
 function matches(filePath, matcher) {
   if (typeof matcher === 'string') {
-    return extMatchesStr(filePath, matcher);
+    return extMatchesStr(discernPath(filePath), matcher);
   } else if (isRegExp$1(matcher)) {
-    return matchesRegExp(filePath, matcher);
+    return matchesRegExp(discernPath(filePath), matcher);
   } else {
     throw new Error('Matcher argument must be String or Regular Expression');
   }
@@ -8209,6 +8233,7 @@ function readYamlSync(filePath, opts_) {
  * })
  */
 function appendData(outPath, data, opts_, cb) {
+  outPath = discernPath(outPath);
   if (typeof cb === 'undefined') {
     cb = opts_;
   }
@@ -8287,6 +8312,7 @@ function appendData(outPath, data, opts_, cb) {
  * })
  */
 function writeDataSync(outPath, data, opts_) {
+  outPath = discernPath(outPath);
   if (underscore.isEmpty(data)) {
     warn('You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty file...');
   }
@@ -8319,6 +8345,7 @@ function writeDataSync(outPath, data, opts_) {
  * io.appendDataSync('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true})
  */
 function appendDataSync(outPath, data, opts_) {
+  outPath = discernPath(outPath);
   // Run append file to delegate creating a new file if none exists
   if (opts_ && opts_.makeDirectories) {
     makeDirectoriesSync(outPath);
@@ -8352,6 +8379,7 @@ exports.deepExtend = deepExtend;
 exports.discernFileFormatter = discernFileFormatter;
 exports.discernFormat = discernFormat;
 exports.discernParser = discernParser;
+exports.discernPath = discernPath;
 exports.exists = exists;
 exports.existsSync = existsSync;
 exports.extend = extend$1;

@@ -1,6 +1,7 @@
 import fs from 'fs'
 import _ from 'underscore'
 import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
+import discernPath from '../helpers/discernPath'
 import readDataSync from '../readers/readDataSync'
 import writeDataSync from './writeDataSync'
 import extend from '../helpers/extend'
@@ -20,6 +21,7 @@ import extend from '../helpers/extend'
  * io.appendDataSync('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true})
  */
 export default function appendDataSync (outPath, data, opts_) {
+  outPath = discernPath(outPath)
   // Run append file to delegate creating a new file if none exists
   if (opts_ && opts_.makeDirectories) {
     makeDirectoriesSync(outPath)
