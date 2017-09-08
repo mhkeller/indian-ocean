@@ -8,6 +8,6 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[test/tmp/**]
+[test/tmp*/**]
 indent_style = none
 indent_size = none
