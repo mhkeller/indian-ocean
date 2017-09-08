@@ -10,7 +10,7 @@ import _ from 'underscore'
  *
  * @param {String} fileName the name of the file
  * @param {Function|Object} [parserOptions] Can be a map function, or an object specifying other options.
- * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method.
+ * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function.
  * @param {Function} [parserOptions.map] Transformation function. Takes `(fileString, options)` where `options` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.
  * @param {Function} [parserOptions.reviver] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
  * @param {Function} [parserOptions.filename] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
@@ -31,10 +31,8 @@ import _ from 'underscore'
  * console.log(data) // Json data
  *
  * // Parser as an object with a `parse` method
- * var naiveJsonLines = {
- *   parse: function(dataAsString)
- *     return dataAsString.split('\n').map(function (row) { return JSON.parse(row) })
- *   }
+ * var naiveJsonLines = function(dataAsString)
+ *   return dataAsString.split('\n').map(function (row) { return JSON.parse(row) })
  * }
  * var data = io.readDataSync('path/to/data.jsonlines', {parser: naiveJsonLines})
  * console.log(data) // Json data

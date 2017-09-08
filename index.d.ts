@@ -30,7 +30,9 @@ export function convertDbfToData(
 	callback: (err: Error) => void
 ): void;
 
-// helpers
+/* --------------------------------------------
+ * Helpers
+ */
 export function deepExtend<T>(
 	destination: T,
 	...sources: object[]
@@ -73,6 +75,10 @@ export function extMatchesStr(
 	fileName: string,
 	extension: string
 ): boolean;
+
+// export function getParser(
+//   delimiterOrParser: string | (str: string, parserOptions?: /* TODO */) =>
+// ): void;
 
 export function makeDirectories(
 	outPath: string,
