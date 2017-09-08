@@ -40,7 +40,8 @@
   "author": "Michael Keller (http://mhkeller.com)",
   "contributors": [
     "Eric Brelsford (https://ebrelsford.github.io/portfolio/)",
-    "Julian Burgess (https://aubergene.com)"
+    "Julian Burgess (https://aubergene.com)",
+    "Rich Harris (http://rich-harris.co.uk)"
   ],
   "license": "MIT",
   "bugs": {
@@ -51,17 +52,11 @@
   "dependencies": {
     "archieml": "^0.4.2",
     "chalk": "^1.1.3",
-    "chokidar-cli": "^1.2.0",
     "d3-dsv": "^1.0.3",
     "d3-queue": "^3.0.3",
     "dbf": "^0.1.2",
-    "documentation": "^5.3.1",
     "js-yaml": "^3.4.2",
-    "live-server": "^1.2.0",
-    "lodash": "^4.17.4",
     "mkdirp": "^0.5.1",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-globals": "^1.1.0",
     "shapefile": "^0.6.2",
     "text-encoding": "^0.6.4"
   },
@@ -70,14 +65,19 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-es2015-rollup": "^3.0.0",
     "chai": "^3.5.0",
+    "chokidar-cli": "^1.2.0",
+    "documentation": "^5.3.1",
     "glob": "^7.1.2",
     "istanbul": "^0.4.5",
+    "live-server": "^1.2.0",
     "mocha": "^3.1.0",
     "package-preamble": "0.0.2",
     "rimraf": "^2.5.4",
     "rollup": "^0.41.4",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^7.0.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.1.0",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-watch": "^3.2.2",
     "standard": "^8.3.0",

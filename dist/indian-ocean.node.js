@@ -12,6 +12,27 @@ var identity = (function (d) {
 });
 
 var shapefile = require('shapefile');
+/**
+ * Asynchronously read a dbf file. Returns an empty array if file is empty.
+ *
+ * @param {String} fileName the name of the file
+ * @param {Function|Object} [map] Optional map function or object with `map` key that is a function, called once for each row (header row skipped). Has signature `(row)`. See example below.
+ * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
+ *
+ * @example
+ * io.readDbf('path/to/data.dbf', function (err, data) {
+ *   console.log(data) // Json data
+ * })
+ *
+ * // Transform values on load
+ * io.readDbf('path/to/data.csv', function (row, i, columns) {
+ *   console.log(columns) // [ 'name', 'occupation', 'height' ]
+ *   row.height = +row.height // Convert this value to a number
+ *   return row
+ * }, function (err, data) {
+ *   console.log(data) // Converted json data
+ * })
+ */
 function readDbf(filePath, opts_, cb) {
   var parserOptions = {
     map: identity
@@ -25,7 +46,7 @@ function readDbf(filePath, opts_, cb) {
   shapefile.openDbf(filePath).then(function (source) {
     return source.read().then(function log(result) {
       if (result.done) return cb(null, values);
-      values.push(parserOptions.map(result.value));
+      values.push(parserOptions.map(result.value)); // TODO, figure out i
       return source.read().then(log);
     });
   }).catch(function (error) {
@@ -1920,6 +1941,12 @@ function discernFormat(fileName) {
   return formatName;
 }
 
+var EOL = {};
+var EOF = {};
+var QUOTE = 34;
+var NEWLINE = 10;
+var RETURN = 13;
+
 function objectConverter(columns) {
   return new Function("d", "return {" + columns.map(function (name, i) {
     return JSON.stringify(name) + ": d[" + i + "]";
@@ -1950,8 +1977,8 @@ function inferColumns(rows) {
 }
 
 var dsvFormat = function (delimiter) {
-  var reFormat = new RegExp("[\"" + delimiter + "\n]"),
-      delimiterCode = delimiter.charCodeAt(0);
+  var reFormat = new RegExp("[\"" + delimiter + "\n\r]"),
+      DELIMITER = delimiter.charCodeAt(0);
 
   function parse(text, f) {
     var convert,
@@ -1965,71 +1992,56 @@ var dsvFormat = function (delimiter) {
   }
 
   function parseRows(text, f) {
-    var EOL = {},
-        // sentinel value for end-of-line
-    EOF = {},
-        // sentinel value for end-of-file
-    rows = [],
+    var rows = [],
         // output rows
     N = text.length,
         I = 0,
         // current character index
     n = 0,
-        // the current line number
+        // current line number
     t,
-        // the current token
-    eol; // is the current token followed by EOL?
+        // current token
+    eof = N <= 0,
+        // current token followed by EOF?
+    eol = false; // current token followed by EOL?
+
+    // Strip the trailing newline.
+    if (text.charCodeAt(N - 1) === NEWLINE) --N;
+    if (text.charCodeAt(N - 1) === RETURN) --N;
 
     function token() {
-      if (I >= N) return EOF; // special case: end of file
-      if (eol) return eol = false, EOL; // special case: end of line
+      if (eof) return EOF;
+      if (eol) return eol = false, EOL;
 
-      // special case: quotes
-      var j = I,
+      // Unescape quotes.
+      var i,
+          j = I,
           c;
-      if (text.charCodeAt(j) === 34) {
-        var i = j;
-        while (i++ < N) {
-          if (text.charCodeAt(i) === 34) {
-            if (text.charCodeAt(i + 1) !== 34) break;
-            ++i;
-          }
+      if (text.charCodeAt(j) === QUOTE) {
+        while (I++ < N && text.charCodeAt(I) !== QUOTE || text.charCodeAt(++I) === QUOTE);
+        if ((i = I) >= N) eof = true;else if ((c = text.charCodeAt(I++)) === NEWLINE) eol = true;else if (c === RETURN) {
+          eol = true;if (text.charCodeAt(I) === NEWLINE) ++I;
         }
-        I = i + 2;
-        c = text.charCodeAt(i + 1);
-        if (c === 13) {
-          eol = true;
-          if (text.charCodeAt(i + 2) === 10) ++I;
-        } else if (c === 10) {
-          eol = true;
-        }
-        return text.slice(j + 1, i).replace(/""/g, "\"");
+        return text.slice(j + 1, i - 1).replace(/""/g, "\"");
       }
 
-      // common case: find next delimiter or newline
+      // Find next delimiter or newline.
       while (I < N) {
-        var k = 1;
-        c = text.charCodeAt(I++);
-        if (c === 10) eol = true; // \n
-        else if (c === 13) {
-            eol = true;if (text.charCodeAt(I) === 10) ++I, ++k;
-          } // \r|\r\n
-          else if (c !== delimiterCode) continue;
-        return text.slice(j, I - k);
+        if ((c = text.charCodeAt(i = I++)) === NEWLINE) eol = true;else if (c === RETURN) {
+          eol = true;if (text.charCodeAt(I) === NEWLINE) ++I;
+        } else if (c !== DELIMITER) continue;
+        return text.slice(j, i);
       }
 
-      // special case: last token before EOF
-      return text.slice(j);
+      // Return last token before EOF.
+      return eof = true, text.slice(j, N);
     }
 
     while ((t = token()) !== EOF) {
-      var a = [];
-      while (t !== EOL && t !== EOF) {
-        a.push(t);
-        t = token();
-      }
-      if (f && (a = f(a, n++)) == null) continue;
-      rows.push(a);
+      var row = [];
+      while (t !== EOL && t !== EOF) row.push(t), t = token();
+      if (f && (row = f(row, n++)) == null) continue;
+      rows.push(row);
     }
 
     return rows;
@@ -2053,7 +2065,7 @@ var dsvFormat = function (delimiter) {
   }
 
   function formatValue(text) {
-    return text == null ? "" : reFormat.test(text += "") ? "\"" + text.replace(/\"/g, "\"\"") + "\"" : text;
+    return text == null ? "" : reFormat.test(text += "") ? "\"" + text.replace(/"/g, "\"\"") + "\"" : text;
   }
 
   return {
@@ -2199,6 +2211,11 @@ function YAMLException$2(reason, mark) {
   // Super constructor
   Error.call(this);
 
+  this.name = 'YAMLException';
+  this.reason = reason;
+  this.mark = mark;
+  this.message = (this.reason || '(unknown reason)') + (this.mark ? ' ' + this.mark.toString() : '');
+
   // Include stack trace in error object
   if (Error.captureStackTrace) {
     // Chrome and NodeJS
@@ -2207,11 +2224,6 @@ function YAMLException$2(reason, mark) {
     // FF, IE 10+ and Safari 6+. Fallback for others
     this.stack = new Error().stack || '';
   }
-
-  this.name = 'YAMLException';
-  this.reason = reason;
-  this.mark = mark;
-  this.message = (this.reason || '(unknown reason)') + (this.mark ? ' ' + this.mark.toString() : '');
 }
 
 // Inherit from Error
@@ -2619,7 +2631,7 @@ function resolveYamlInteger(data) {
         if (ch !== '0' && ch !== '1') return false;
         hasDigits = true;
       }
-      return hasDigits;
+      return hasDigits && ch !== '_';
     }
 
     if (ch === 'x') {
@@ -2632,7 +2644,7 @@ function resolveYamlInteger(data) {
         if (!isHexCode(data.charCodeAt(index))) return false;
         hasDigits = true;
       }
-      return hasDigits;
+      return hasDigits && ch !== '_';
     }
 
     // base 8
@@ -2642,10 +2654,13 @@ function resolveYamlInteger(data) {
       if (!isOctCode(data.charCodeAt(index))) return false;
       hasDigits = true;
     }
-    return hasDigits;
+    return hasDigits && ch !== '_';
   }
 
   // base 10 (except 0) or base 60
+
+  // value should not start with `_`;
+  if (ch === '_') return false;
 
   for (; index < max; index++) {
     ch = data[index];
@@ -2657,7 +2672,8 @@ function resolveYamlInteger(data) {
     hasDigits = true;
   }
 
-  if (!hasDigits) return false;
+  // Should have digits and should not end with `_`
+  if (!hasDigits || ch === '_') return false;
 
   // if !base60 - done;
   if (ch !== ':') return true;
@@ -2748,12 +2764,28 @@ var int_1 = new Type$8('tag:yaml.org,2002:int', {
 var common$6 = common$1;
 var Type$9 = type;
 
-var YAML_FLOAT_PATTERN = new RegExp('^(?:[-+]?(?:[0-9][0-9_]*)\\.[0-9_]*(?:[eE][-+][0-9]+)?' + '|\\.[0-9_]+(?:[eE][-+][0-9]+)?' + '|[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*' + '|[-+]?\\.(?:inf|Inf|INF)' + '|\\.(?:nan|NaN|NAN))$');
+var YAML_FLOAT_PATTERN = new RegExp(
+// 2.5e4, 2.5 and integers
+'^(?:[-+]?(?:0|[1-9][0-9_]*)(?:\\.[0-9_]*)?(?:[eE][-+]?[0-9]+)?' +
+// .2e4, .2
+// special case, seems not from spec
+'|\\.[0-9_]+(?:[eE][-+]?[0-9]+)?' +
+// 20:59
+'|[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\\.[0-9_]*' +
+// .inf
+'|[-+]?\\.(?:inf|Inf|INF)' +
+// .nan
+'|\\.(?:nan|NaN|NAN))$');
 
 function resolveYamlFloat(data) {
   if (data === null) return false;
 
-  if (!YAML_FLOAT_PATTERN.test(data)) return false;
+  if (!YAML_FLOAT_PATTERN.test(data) ||
+  // Quick hack to not allow integers end with `_`
+  // Probably should update regexp & check speed
+  data[data.length - 1] === '_') {
+    return false;
+  }
 
   return true;
 }
@@ -3506,6 +3538,7 @@ function fromDecimalCode(c) {
 }
 
 function simpleEscapeSequence(c) {
+  /* eslint-disable indent */
   return c === 0x30 /* 0 */ ? '\x00' : c === 0x61 /* a */ ? '\x07' : c === 0x62 /* b */ ? '\x08' : c === 0x74 /* t */ ? '\x09' : c === 0x09 /* Tab */ ? '\x09' : c === 0x6E /* n */ ? '\x0A' : c === 0x76 /* v */ ? '\x0B' : c === 0x66 /* f */ ? '\x0C' : c === 0x72 /* r */ ? '\x0D' : c === 0x65 /* e */ ? '\x1B' : c === 0x20 /* Space */ ? ' ' : c === 0x22 /* " */ ? '\x22' : c === 0x2F /* / */ ? '/' : c === 0x5C /* \ */ ? '\x5C' : c === 0x4E /* N */ ? '\x85' : c === 0x5F /* _ */ ? '\xA0' : c === 0x4C /* L */ ? '\u2028' : c === 0x50 /* P */ ? '\u2029' : '';
 }
 
@@ -4883,6 +4916,10 @@ function loadAll$1(input, iterator, options) {
       index,
       length;
 
+  if (typeof iterator !== 'function') {
+    return documents;
+  }
+
   for (index = 0, length = documents.length; index < length; index += 1) {
     iterator(documents[index]);
   }
@@ -4901,7 +4938,11 @@ function load$1(input, options) {
 }
 
 function safeLoadAll$1(input, output, options) {
-  loadAll$1(input, output, common.extend({ schema: DEFAULT_SAFE_SCHEMA$1 }, options));
+  if (typeof output === 'function') {
+    loadAll$1(input, output, common.extend({ schema: DEFAULT_SAFE_SCHEMA$1 }, options));
+  } else {
+    return loadAll$1(input, common.extend({ schema: DEFAULT_SAFE_SCHEMA$1 }, options));
+  }
 }
 
 function safeLoad$1(input, options) {
@@ -5031,6 +5072,7 @@ function State$1(options) {
   this.lineWidth = options['lineWidth'] || 80;
   this.noRefs = options['noRefs'] || false;
   this.noCompatMode = options['noCompatMode'] || false;
+  this.condenseFlow = options['condenseFlow'] || false;
 
   this.implicitTypes = this.schema.compiledImplicit;
   this.explicitTypes = this.schema.compiledExplicit;
@@ -5365,7 +5407,7 @@ function writeFlowSequence(state, level, object) {
   for (index = 0, length = object.length; index < length; index += 1) {
     // Write only valid elements.
     if (writeNode(state, level, object[index], false, false)) {
-      if (index !== 0) _result += ', ';
+      if (index !== 0) _result += ',' + (!state.condenseFlow ? ' ' : '');
       _result += state.dump;
     }
   }
@@ -5386,7 +5428,14 @@ function writeBlockSequence(state, level, object, compact) {
       if (!compact || index !== 0) {
         _result += generateNextLine(state, level);
       }
-      _result += '- ' + state.dump;
+
+      if (state.dump && CHAR_LINE_FEED === state.dump.charCodeAt(0)) {
+        _result += '-';
+      } else {
+        _result += '- ';
+      }
+
+      _result += state.dump;
     }
   }
 
@@ -5418,7 +5467,7 @@ function writeFlowMapping(state, level, object) {
 
     if (state.dump.length > 1024) pairBuffer += '? ';
 
-    pairBuffer += state.dump + ': ';
+    pairBuffer += state.dump + ':' + (state.condenseFlow ? '' : ' ');
 
     if (!writeNode(state, level, objectValue, false, false)) {
       continue; // Skip this pair because of invalid value.
@@ -7221,7 +7270,6 @@ var slice = [].slice;
 var noabort = {};
 
 function Queue(size) {
-  if (!(size >= 1)) throw new Error();
   this._size = size;
   this._call = this._error = null;
   this._tasks = [];
@@ -7232,7 +7280,8 @@ function Queue(size) {
 Queue.prototype = queue.prototype = {
   constructor: Queue,
   defer: function (callback) {
-    if (typeof callback !== "function" || this._call) throw new Error();
+    if (typeof callback !== "function") throw new Error("invalid callback");
+    if (this._call) throw new Error("defer after await");
     if (this._error != null) return this;
     var t = slice.call(arguments, 1);
     t.push(callback);
@@ -7245,7 +7294,8 @@ Queue.prototype = queue.prototype = {
     return this;
   },
   await: function (callback) {
-    if (typeof callback !== "function" || this._call) throw new Error();
+    if (typeof callback !== "function") throw new Error("invalid callback");
+    if (this._call) throw new Error("multiple await");
     this._call = function (error, results) {
       callback.apply(null, [error].concat(results));
     };
@@ -7253,7 +7303,8 @@ Queue.prototype = queue.prototype = {
     return this;
   },
   awaitAll: function (callback) {
-    if (typeof callback !== "function" || this._call) throw new Error();
+    if (typeof callback !== "function") throw new Error("invalid callback");
+    if (this._call) throw new Error("multiple await");
     this._call = callback;
     maybeNotify(this);
     return this;
@@ -7332,7 +7383,8 @@ function maybeNotify(q) {
 }
 
 function queue(concurrency) {
-  return new Queue(arguments.length ? +concurrency : Infinity);
+  if (concurrency == null) concurrency = Infinity;else if (!((concurrency = +concurrency) >= 1)) throw new Error("invalid concurrency");
+  return new Queue(concurrency);
 }
 
 // Used internally by `readdir` functions to make more DRY
@@ -8192,11 +8244,11 @@ exports.parseTxt = parserTxt;
 exports.parseYaml = parserYaml;
 exports.readData = readData;
 exports.readDataSync = readDataSync;
-exports.readDbf = readDbf;
 exports.readdirFilter = readdirFilter;
 exports.readdirFilterSync = readdirFilterSync;
 exports.readAml = readAml;
 exports.readAmlSync = readAmlSync;
+exports.readDbf = readDbf;
 exports.readCsv = readCsv;
 exports.readCsvSync = readCsvSync;
 exports.readJson = readJson;
