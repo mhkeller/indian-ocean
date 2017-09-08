@@ -9,11 +9,11 @@ import _ from 'underscore'
  * Syncronous version of {@link readers#readData}
  *
  * @param {String} fileName the name of the file
- * @param {Object|Function} [options] Optional. Set this as a function as a shorthand for `map`.
- * @param {String|Function|Object} [options.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method.
- * @param {Function} [options.map] Transformation function. Takes `(fileString, options)` where `options` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.
- * @param {Function} [options.reviver] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
- * @param {Function} [options.filename] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
+ * @param {Function|Object} [parserOptions] Can be a map function, or an object specifying other options.
+ * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method.
+ * @param {Function} [parserOptions.map] Transformation function. Takes `(fileString, options)` where `options` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.
+ * @param {Function} [parserOptions.reviver] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
+ * @param {Function} [parserOptions.filename] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
  * @returns {Object} the contents of the file as JSON
  *
  * @example

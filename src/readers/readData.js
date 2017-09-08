@@ -25,8 +25,6 @@ import _ from 'underscore'
  * @param {Object|Function} [parserOptions] Optional. Set this as a function as a shorthand for `map`.
  * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method.
  * @param {Function} [parserOptions.map] Transformation function. Takes `(fileString, parserOptions)` where `parserOptions` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.
- * @param {Boolean} [parserOptions.nativeParser] Used in {@link shorthandReaders.readJson} for now. Otherwise ignored.
- * @param {Function} [parserOptions.comments] Used in {@link shorthandReaders.readAml}. Otherwise ignored.
  * @param {Function} [parserOptions.reviver] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
  * @param {Function} [parserOptions.filename] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
  * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
