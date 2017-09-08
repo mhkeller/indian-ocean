@@ -7,7 +7,7 @@
   "module": "index.node.js",
   "types": "index.d.ts",
   "scripts": {
-    "docs": "documentation build index.node.js -f html -o docs --config documentation.yml",
+    "docs": "documentation build index.node.js -f html -o docs -c documentation.yml -t docs/default_theme/index.js",
     "view": "live-server docs/",
     "dev:docs": "chokidar 'documentation.yml' 'src/**/*.js' -c 'npm run docs'",
     "coverage": "istanbul cover mocha -- -R spec",
