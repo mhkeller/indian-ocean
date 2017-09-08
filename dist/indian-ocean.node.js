@@ -7490,7 +7490,7 @@ function readdirFilter(dirPath, opts_, cb) {
 }
 
 /**
- * Synchronously get a list of a directory's files and folders if certain critera are met.
+ * Synchronously get a list of a directory's files and folders if certain criteria are met.
  *
  * @param {String} dirPath The directory to read from
  * @param {Object} [options] Optional, filter options, see below

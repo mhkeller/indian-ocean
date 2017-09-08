@@ -8,6 +8,12 @@ var assert = chai.assert
 var dsv = require('d3-dsv')
 var _ = require('underscore')
 var rimraf = require('rimraf')
+var glob = require('glob')
+
+// Get rid of all these before testing
+glob.sync('test/**/.DS_Store').forEach(dsStore => {
+  fs.unlinkSync(dsStore)
+})
 
 var testData = [
   { 'name': 'jim', 'occupation': 'land surveyor', 'height': 70 },
@@ -1438,8 +1444,8 @@ describe('readers', function () {
     describe('empty', function () {
       it('should be empty', function (done) {
         io.readdirFilter(__dirname, {include: 'csv'}, function (err, files) {
-          assert.lengthOf(files, 0)
           assert.equal(err, null)
+          assert.lengthOf(files, 0)
           done()
         })
       })
@@ -1450,7 +1456,7 @@ describe('readers', function () {
         var dir = path.join(__dirname, 'data', 'csv')
         io.readdirFilter(dir, function (err, files) {
           assert.equal(err, null)
-          assert(_.isEqual(files.length, 2))
+          assert.lengthOf(files, 2)
           done()
         })
       })
@@ -1461,7 +1467,7 @@ describe('readers', function () {
         var dir = path.join(__dirname, 'data', 'csv')
         io.readdirFilter(dir, {include: 'csv'}, function (err, files) {
           assert.equal(err, null)
-          assert(_.isEqual(files.length, 2))
+          assert.lengthOf(files, 2)
           done()
         })
       })
@@ -1472,7 +1478,7 @@ describe('readers', function () {
         var dir = path.join(__dirname, 'data', 'csv')
         io.readdirFilter(dir, {include: ['csv']}, function (err, files) {
           assert.equal(err, null)
-          assert(_.isEqual(files.length, 2))
+          assert.lengthOf(files, 2)
           done()
         })
       })
