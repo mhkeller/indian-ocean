@@ -11,7 +11,7 @@ var rimraf = require('rimraf')
 var glob = require('glob')
 
 // Get rid of all these before testing
-glob.sync('test/**/.DS_Store').forEach(dsStore => {
+glob.sync('test/**/.DS_Store').forEach(function (dsStore) {
   fs.unlinkSync(dsStore)
 })
 
