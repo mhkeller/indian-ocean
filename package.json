@@ -5,6 +5,7 @@
   "main": "dist/indian-ocean.node.js",
   "browser": "dist/indian-ocean.browser.es6.js",
   "module": "index.node.js",
+  "types": "index.d.ts",
   "scripts": {
     "docs-view": "npm run build-docs && npm run serve-docs",
     "coverage": "istanbul cover mocha -- -R spec",
