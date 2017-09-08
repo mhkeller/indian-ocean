@@ -9,7 +9,7 @@
   "scripts": {
     "docs": "documentation build index.node.js -f html -o docs -c documentation.yml -t docs/default_theme/index.js",
     "view": "live-server docs/",
-    "dev:docs": "chokidar 'documentation.yml' 'src/**/*.js' -c 'npm run docs'",
+    "dev:docs": "chokidar 'documentation.yml' 'src/**/*.js' 'docs/default_theme/**/*' -c 'npm run docs'",
     "coverage": "istanbul cover mocha -- -R spec",
     "build:node": "rollup --config rollup.config.node.js",
     "build:browser": "rollup --config rollup.config.browser.js --banner \"$(preamble)\" && uglifyjs --preamble \"$(preamble)\" -o dist/indian-ocean.min.js -cm -- dist/indian-ocean.js",

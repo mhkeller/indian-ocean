@@ -24,9 +24,9 @@
             <ul class='list-reset h5 py1-ul'>
               <% docs.forEach(function(doc) { %>
                 <% var hasMembers = doc.members.static.length || doc.members.instance.length %>
-                <li><a
+                <li class="<%= doc.kind %>"><a
                   href='#<%=slug(doc.namespace)%>'
-                  class="<% if (doc.kind === 'note') { %>h5 black<% } %><% if (hasMembers) { %> toggle-sibling<% } %>">
+                  class="<% if (doc.kind === 'note') { %>h5 black bold<% } %><% if (hasMembers) { %> toggle-sibling<% } %>">
                   <%- doc.name %>
                   <% if (hasMembers) { %><span class='icon'>▸</span><% } %>
                 </a>
