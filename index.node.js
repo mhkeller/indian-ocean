@@ -35,12 +35,12 @@ export {default as parseYaml} from './src/parsers/yaml'
 // readers
 export {default as readData} from './src/readers/readData'
 export {default as readDataSync} from './src/readers/readDataSync'
-export {default as readDbf} from './src/readers/readDbf'
 export {default as readdirFilter} from './src/readers/readdirFilter'
 export {default as readdirFilterSync} from './src/readers/readdirFilterSync'
 // shorthandreaders
 export {default as readAml} from './src/shorthandreaders/readAml'
 export {default as readAmlSync} from './src/shorthandreaders/readAmlSync'
+export {default as readDbf} from './src/readers/readDbf'
 export {default as readCsv} from './src/shorthandreaders/readCsv'
 export {default as readCsvSync} from './src/shorthandreaders/readCsvSync'
 export {default as readJson} from './src/shorthandreaders/readJson'

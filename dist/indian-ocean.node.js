@@ -6460,8 +6460,7 @@ var parserJson = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   // Do a naive test whether this is a string or an object
   var mapFn = parserOptions.map ? str.trim().charAt(0) === '[' ? underscore.map : underscore.mapObject : identity;
-  var jsonParser = parserOptions.nativeParser === true ? JSON.parse : JSON.parse;
-  // var jsonParser = parserOptions.nativeParser === true ? JSON.parse : parseJson
+  var jsonParser = JSON.parse;
   return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
 };
 
@@ -6874,7 +6873,7 @@ function exists(filename, cb) {
 }
 
 /**
- * Syncronous version of {@link helpers#exists}
+ * Syncronous version of {@link helpers#exists}. Falls back to `fs.existsSync` if that function exists
  *
  * @param {String} fileName the name of the file
  * @returns {Boolean} whether the file exists or not
@@ -6884,11 +6883,15 @@ function exists(filename, cb) {
  * console.log(exists) // `true` if file exists, `false` if not.
  */
 function existsSync(filename) {
-  try {
-    fs.accessSync(filename);
-    return true;
-  } catch (ex) {
-    return false;
+  if (fs.existsSync) {
+    return fs.existsSync(filename);
+  } else {
+    try {
+      fs.accessSync(filename);
+      return true;
+    } catch (ex) {
+      return false;
+    }
   }
 }
 
@@ -7000,10 +7003,8 @@ function matches(fileName, matcher) {
  *
  * @param {String} fileName the name of the file
  * @param {Object|Function} [parserOptions] Optional. Set this as a function as a shorthand for `map`.
- * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method.
+ * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function.
  * @param {Function} [parserOptions.map] Transformation function. Takes `(fileString, parserOptions)` where `parserOptions` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.
- * @param {Boolean} [parserOptions.nativeParser] Used in {@link shorthandReaders.readJson} for now. Otherwise ignored.
- * @param {Function} [parserOptions.comments] Used in {@link shorthandReaders.readAml}. Otherwise ignored.
  * @param {Function} [parserOptions.reviver] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
  * @param {Function} [parserOptions.filename] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
  * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
@@ -7025,11 +7026,9 @@ function matches(fileName, matcher) {
  *   console.log(data) // Json data
  * })
  *
- * // Parser specified with an object that has a `parse` function
- * var naiveJsonLines = {
- *   parse: function (dataAsString) {
- *     return dataAsString.split('\n').map(function (row) { return JSON.parse(row) })
- *   }
+ * // Parser specified as a function
+ * var naiveJsonLines = function (dataAsString) {
+ *   return dataAsString.split('\n').map(function (row) { return JSON.parse(row) })
  * }
  * io.readData('path/to/data.jsonlines', {parser: naiveJsonLines}, function (err, data) {
  *   console.log(data) // Json data
@@ -7118,11 +7117,11 @@ function readData(filePath, opts_, cb_) {
  * Syncronous version of {@link readers#readData}
  *
  * @param {String} fileName the name of the file
- * @param {Object|Function} [options] Optional. Set this as a function as a shorthand for `map`.
- * @param {String|Function|Object} [options.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method.
- * @param {Function} [options.map] Transformation function. Takes `(fileString, options)` where `options` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.
- * @param {Function} [options.reviver] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
- * @param {Function} [options.filename] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
+ * @param {Function|Object} [parserOptions] Can be a map function, or an object specifying other options.
+ * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function.
+ * @param {Function} [parserOptions.map] Transformation function. Takes `(fileString, options)` where `options` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.
+ * @param {Function} [parserOptions.reviver] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
+ * @param {Function} [parserOptions.filename] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
  * @returns {Object} the contents of the file as JSON
  *
  * @example
@@ -7140,10 +7139,8 @@ function readData(filePath, opts_, cb_) {
  * console.log(data) // Json data
  *
  * // Parser as an object with a `parse` method
- * var naiveJsonLines = {
- *   parse: function(dataAsString)
- *     return dataAsString.split('\n').map(function (row) { return JSON.parse(row) })
- *   }
+ * var naiveJsonLines = function(dataAsString)
+ *   return dataAsString.split('\n').map(function (row) { return JSON.parse(row) })
  * }
  * var data = io.readDataSync('path/to/data.jsonlines', {parser: naiveJsonLines})
  * console.log(data) // Json data
@@ -7490,7 +7487,7 @@ function readdirFilter(dirPath, opts_, cb) {
 }
 
 /**
- * Synchronously get a list of a directory's files and folders if certain criteria are met.
+ * Synchronously get a list of a directory's files and folders if certain critera are met.
  *
  * @param {String} dirPath The directory to read from
  * @param {Object} [options] Optional, filter options, see below
@@ -7636,9 +7633,8 @@ function readCsvSync(path$$1, opts_) {
  * Asynchronously read a JSON file. Returns an empty array if file is empty.
  *
  * @param {String} fileName the name of the file
- * @param {Function|String|Object} [parserOptions] Can be a map function, a filename string that's display as an error message or an object specifying both and other options.
+ * @param {Function|Object} [parserOptions] Can be a map function, or an object specifying other options.
  * @param {Function} [parserOptions.map] Optional map function, called once for each row (header row skipped). If your file is an array (tests if first non-whitespace character is a `[`), has signature `(row, i)`, delegates to `_.map`. If file is an object has signature `(value, key)`, delegates to `_.mapObject`. See example below.
- * @param {Boolean} [parserOptions.nativeParser] Use native JSON parser instead of parse-json library for better performance but not as good error messaging. This can be nice to turn on for produciton use.
  * @param {String} [parserOptions.filename] Filename displayed in the error message.
  * @param {String} [parserOptions.reviver] Prescribes how the value originally produced by parsing is mapped, before being returned. See JSON.parse docs for more: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
  * @param {Function} callback Function invoked after data is read, takes error (if any) and the data read
@@ -7712,9 +7708,9 @@ function readJson(path$$1, opts_, cb) {
  * Synchronously read a JSON file. Returns an empty array if file is empty.
  *
  * @param {String} fileName the name of the file
- * @param {Function|String|Object} [parserOptions] Can be a map function, a filename string that's display as an error message or an object specifying both and other options.
+ * @param {Function|Object} [parserOptions] Can be a map function, or an object specifying other options.
  * @param {Function} [parserOptions.map] Optional map function, called once for each row (header row skipped). If your file is an array (tests if first non-whitespace character is a `[`), has signature `(row, i)`, delegates to `_.map`. If file is an object has signature `(value, key)`, delegates to `_.mapObject`. See example below.
- * @param {Boolean} [parserOptions.nativeParser] Use native JSON parser instead of parse-json library for better performance but not as good error messaging. This can be nice to turn on for produciton use.
+ * @param {Function} [parserOptions.comments] Used in {@link shorthandReaders.readAml}. Otherwise ignored.
  * @param {String} [parserOptions.filename] Filename displayed in the error message.
  * @param {String} [parserOptions.reviver] Prescribes how the value originally produced by parsing is mapped, before being returned. See JSON.parse docs for more: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
  * @returns {Array} the contents of the file as JSON

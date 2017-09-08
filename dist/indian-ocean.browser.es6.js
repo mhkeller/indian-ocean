@@ -8317,8 +8317,7 @@ var json$3 = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   // Do a naive test whether this is a string or an object
   var mapFn = parserOptions.map ? str.trim().charAt(0) === '[' ? underscore.map : underscore.mapObject : identity;
-  var jsonParser = parserOptions.nativeParser === true ? JSON.parse : JSON.parse;
-  // var jsonParser = parserOptions.nativeParser === true ? JSON.parse : parseJson
+  var jsonParser = JSON.parse;
   return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
 };
 
