@@ -14,7 +14,9 @@ interface ParserOptions {
 
 type Parser = (str: string, options: ParserOptions) => any;
 
-// converters
+/* --------------------------------------------
+ * Converters
+ */
 export function convertDbfToData(
 	inFileName: string,
 	outFileName: string,
