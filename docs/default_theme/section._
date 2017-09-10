@@ -1,4 +1,4 @@
-<section class='p2 mb2 clearfix bg-white minishadow'>
+<section class='p2 mb2 clearfix'>
 
   <% if (typeof nested === 'undefined' || (section.context && section.context.github)) { %>
   <div class='clearfix'>

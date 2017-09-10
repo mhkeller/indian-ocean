@@ -31,7 +31,7 @@ import _ from 'underscore'
  * console.log(data) // Json data
  *
  * // Parser as an object with a `parse` method
- * var naiveJsonLines = function(dataAsString)
+ * var naiveJsonLines = function(dataAsString) {
  *   return dataAsString.split('\n').map(function (row) { return JSON.parse(row) })
  * }
  * var data = io.readDataSync('path/to/data.jsonlines', {parser: naiveJsonLines})

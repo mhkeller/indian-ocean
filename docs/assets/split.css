@@ -13,3 +13,24 @@
     background-image:  url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
     cursor: ew-resize;
 }
+#split-left{
+  font-family: "Source Code Pro",Consolas,monospace;
+  background-color: #e6ebed;
+}
+#split-right{
+  padding-left: .5em;
+  width: 100%;
+}
+#introduction h1{
+  font-size: 2em;
+}
+#project-name{
+  /*color: #416381;*/
+  font-family: "Helvetica Neue",Helvetica,sans-serif;
+  margin: 0 0 5px 0;
+  /*background-color: #d5dde2;*/
+  font-size: .875rem;
+}
+section{
+  max-width: 800px;
+}

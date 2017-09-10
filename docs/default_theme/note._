@@ -1,6 +1,6 @@
-<section class='py2 clearfix'>
+<section class='clearfix'>
 
-  <h2 id='<%- slug(note.namespace) %>' class='mt0'>
+  <h2 id='<%- slug(note.namespace) %>' class='mt0 mb0'>
     <%- note.name %>
   </h2>
 

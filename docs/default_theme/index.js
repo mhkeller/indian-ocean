@@ -27,6 +27,8 @@ module.exports = function (comments, config) {
 
   var sharedImports = {
     imports: {
+      fs: fs,
+      path: path,
       slug: function slug(str) {
         var slugger = new GithubSlugger();
         return slugger.slug(str);

@@ -1,0 +1,41 @@
+<section id="introduction" class="mb4 px2">
+  <h1><a href="https://github.com/mhkeller/indian-ocean">indian-ocean</a></h1>
+  <p>
+    <a href="https://npmjs.org/package/indian-ocean" target="_blank"><img alt="NPM version" src="https://img.shields.io/npm/v/indian-ocean.svg?style=flat-square"></a>
+
+    <a href="http://travis-ci.org/mhkeller/indian-ocean" target="_blank"><img alt="Build Status" src="https://img.shields.io/travis/mhkeller/indian-ocean.svg?style=flat-square"></a>
+
+    <a href="https://www.npmjs.com/package/indian-ocean" target="_blank"><img alt="NPM downloads" src="https://img.shields.io/npm/dm/indian-ocean.svg?style=flat-square"></a>
+
+    <a href="https://github.com/feross/standard" target="_blank"><img alt="js-standard-style" src="https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square"></a>
+  </p>
+  <p class="sub-hed">A NodeJS library for reading and writing data plus some handy file system utilities. Supports csv, tsv, json, yaml, dbf as well as custom formats and delimeters. 300+ tests on Node versions 0.11 through 6.9.1.</p>
+  <pre class="p1 round fill-light">npm install --save indian-ocean</pre>
+  <p><strong>Example:</strong></p>
+  <pre class="p1 round fill-light">
+var io = require(<span class="hljs-string">'indian-ocean'</span>)
+
+var json_data = io.readDataSync('<span class="hljs-string">path/to/data.csv'</span>)
+
+<span class="hljs-built_in">console</span>.log(json_data)
+
+<span class="hljs-comment">/*</span>
+<span class="hljs-comment">[</span>
+<span class="hljs-comment">  {</span>
+<span class="hljs-comment">    "name": "Gerald",</span>
+<span class="hljs-comment">    "occupation": "Teacher",</span>
+<span class="hljs-comment">    "city": "Philadelphia"</span>
+<span class="hljs-comment">  },</span>
+<span class="hljs-comment">  {</span>
+<span class="hljs-comment">    "name": "Marcy",</span>
+<span class="hljs-comment">    "occupation": "Venture Capitalist",</span>
+<span class="hljs-comment">    "city": "New York"</span>
+<span class="hljs-comment">  }</span>
+<span class="hljs-comment">]</span>
+<span class="hljs-comment">*/</span>
+
+io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, json_data, {indent: 2})
+    </pre>
+</section>
+
+<h2 class="px2">API Documentation</h2>
