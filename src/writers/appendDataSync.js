@@ -8,6 +8,7 @@ import extend from '../helpers/extend'
 /**
  * Synchronous version of {@link writers#appendData}. See that function for supported formats
  *
+ * @function appendDataSync
  * @param {String} fileName the name of the file
  * @param {Object} [options] Optional config object, see below
  * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.

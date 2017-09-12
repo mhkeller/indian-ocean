@@ -18,6 +18,7 @@ import extend from '../helpers/extend'
  *
  * *Note: Does not currently support .dbf files.*
  *
+ * @function appendData
  * @param {String} fileName the name of the file
  * @param {Object} data the data to write
  * @param {Object} [options] Optional config object, see below

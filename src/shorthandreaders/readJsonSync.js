@@ -4,6 +4,7 @@ import parserJson from '../parsers/json'
 /**
  * Synchronously read a JSON file. Returns an empty array if file is empty.
  *
+ * @function readJsonSync
  * @param {String} fileName the name of the file
  * @param {Function|Object} [parserOptions] Can be a map function, or an object specifying other options.
  * @param {Function} [parserOptions.map] Optional map function, called once for each row (header row skipped). If your file is an array (tests if first non-whitespace character is a `[`), has signature `(row, i)`, delegates to `_.map`. If file is an object has signature `(value, key)`, delegates to `_.mapObject`. See example below.

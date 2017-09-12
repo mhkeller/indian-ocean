@@ -4,6 +4,7 @@ import parserTxt from '../parsers/txt'
 /**
  * Synchronously read a text file. Returns an empty string if file is empty.
  *
+ * @function readTxtSync
  * @param {String} fileName the name of the file
  * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @returns {Array} the contents of the file as a string

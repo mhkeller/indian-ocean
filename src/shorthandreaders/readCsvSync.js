@@ -4,6 +4,7 @@ import parserCsv from '../parsers/csv'
 /**
  * Synchronously read a comma-separated value file. Returns an empty array if file is empty.
  *
+ * @function readCsvSync
  * @param {String} fileName the name of the file
  * @param {Function|Object} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @returns {Array} the contents of the file as JSON

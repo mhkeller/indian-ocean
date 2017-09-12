@@ -1,6 +1,7 @@
 /**
  * A port of jQuery's extend. Merge the contents of two or more objects together into the first object. Supports deep extending with `true` as the first argument.
  *
+ * @function extend
  * @param {Boolean} [deepExtend] Optional, set to `true` to merge recursively.
  * @param {Object} destination The object to modify
  * @param {Object} source The object whose contents to take

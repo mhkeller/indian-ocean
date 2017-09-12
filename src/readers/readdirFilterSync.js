@@ -3,6 +3,7 @@ import readdir from './readdir'
 /**
  * Synchronously get a list of a directory's files and folders if certain critera are met.
  *
+ * @function readdirFilterSync
  * @param {String} dirPath The directory to read from
  * @param {Object} [options] Optional, filter options, see below
  * @param {String|RegExp|Array<String>|Array<RegExp>} [options.include] Optional, if given a string, return files that have that string as their extension. If given a Regular Expression, return the file that matches the pattern. Can also take a list of both. List matching behavior is described in `includeAll`.

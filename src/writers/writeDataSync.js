@@ -9,6 +9,7 @@ import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
  *
  * Supports the same formats with the exception of `.dbf` files
  *
+ * @function writeDataSync
  * @param {String} fileName the name of the file
  * @param {Object} [options] Optional config object, see below
  * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.

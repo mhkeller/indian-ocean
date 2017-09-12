@@ -4,6 +4,7 @@ import parserTsv from '../parsers/tsv'
 /**
  * Asynchronously read a tab-separated value file. Returns an empty array if file is empty.
  *
+ * @function readTsv
  * @param {String} fileName the name of the file
  * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @param {Function} callback callback used when read data is read, takes error (if any) and the data read

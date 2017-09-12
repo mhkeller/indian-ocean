@@ -4,6 +4,7 @@ import {dirname} from '../utils/path'
 /**
  * Synchronous version of `makeDirectories`
  *
+ * @function makeDirectoriesSync
  * @param {String} outPath The path to a file
  *
  * @example

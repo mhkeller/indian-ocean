@@ -4,6 +4,7 @@ import parserTxt from '../parsers/txt'
 /**
  * Asynchronously read a text file. Returns an empty string if file is empty.
  *
+ * @function readTxt
  * @param {String} fileName the name of the file
  * @param {Function} [map] Optional map function, take the file and returns any mapped value
  * @param {Function} callback callback used when read data is read, takes error (if any) and the data read

@@ -4,6 +4,7 @@ import writeData from '../writers/writeData'
 /**
  * Reads in a dbf file with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
  *
+ * @function convertDbfToData
  * @param {String} inFileName the input file name
  * @param {String} outFileName the output file name
  * @param {Object} [options] Optional config object, see below

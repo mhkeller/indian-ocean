@@ -4,6 +4,7 @@ import {dirname} from '../utils/path'
 /**
  * Asynchronously Create directories in a given file path
  *
+ * @function makeDirectories
  * @param {String} outPath The path to a file
  * @param {Function} callback The function to do once this is done. Has signature of `(err)`
  *

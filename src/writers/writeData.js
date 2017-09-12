@@ -16,6 +16,7 @@ import makeDirectories from '../helpers/makeDirectories'
  * * `.yaml` Yaml file, also supports `.yml`
  * * `.dbf` Database file, commonly used in ESRI-shapefile format.
  *
+ * @function writeData
  * @param {String} fileName the name of the file
  * @param {Object} data the data to write
  * @param {Object} [options] Optional config object, see below
