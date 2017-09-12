@@ -1,7 +1,7 @@
 <section class='clearfix'>
 
   <h2 id='<%- slug(note.namespace) %>' class='mt0 mb0'>
-    <%- note.name %>
+    <a href="#<%- slug(note.namespace) %>">#</a> <%- note.name %>
   </h2>
 
   <% if (note.description) { %>

@@ -4,7 +4,7 @@
   <div class='clearfix'>
     <% if (typeof nested === 'undefined') { %>
     <h3 class='fl m0 signature' id='<%- slug(section.namespace) %>'>
-      io.<%= signature(section).replace(section.name, a => '<span class="bold">' + a + '</span>') %>
+      <a href="#<%- slug(section.namespace) %>">#</a> io.<%= signature(section).replace(section.name, a => '<span class="bold">' + a + '</span>') %>
     </h3>
     <% } %>
     <% if (section.context && section.context.github) { %>
