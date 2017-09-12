@@ -53,7 +53,8 @@ module.exports = function (comments, config) {
         if (section.returns.length) {
           returns = ': ' + formatters.type(section.returns[0].type);
         }
-        return prefix + section.name + formatters.parameters(section) + returns;
+        return prefix + section.name + formatters.parameters(section)
+        // return prefix + section.name + formatters.parameters(section) + returns;
       },
       md: function md(ast, inline) {
         if (inline && ast && ast.children.length && ast.children[0].type === 'paragraph') {

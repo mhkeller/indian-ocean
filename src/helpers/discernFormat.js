@@ -2,6 +2,8 @@ import {extname} from '../utils/path'
 
 /**
  * Given a `fileName` return its file extension. Used internally by `.discernPaser` and `.discernFileFormatter`.
+ *
+ * @function discernFormat
  * @param {String} fileName the name of the file
  * @returns {String} the file's extension
  *

@@ -41,6 +41,15 @@
   <% if (section.copyright) { %><div>Copyright: <%= md(section.copyright, true) %></div><% }%>
   <% if (section.since) { %><div>Since: <%- section.since %></div><% }%>
 
+  <% if (section.returns.length) { %>
+    <% section.returns.forEach(function(ret) { %>
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><%= formatType(ret.type) %></code><% if (ret.description) { %>:
+        <%= md(ret.description, true) %>
+      <% }%>
+    <% }) %>
+  <% } %>
+
   <% if (section.params.length) { %>
     <div class='py1 quiet mt1 prose-big'>Parameters</div>
     <div class='prose'>
@@ -106,15 +115,6 @@
         </div>
       <% }) %>
     </div>
-  <% } %>
-
-  <% if (section.returns.length) { %>
-    <% section.returns.forEach(function(ret) { %>
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><%= formatType(ret.type) %></code><% if (ret.description) { %>:
-        <%= md(ret.description, true) %>
-      <% }%>
-    <% }) %>
   <% } %>
 
   <% if (section.throws.length) { %>
