@@ -1,5 +1,5 @@
 // converters
-export {default as convertDbfToData} from './src/converters/dbfToData'
+export {default as convertDbfToData} from './src/converters/convertDbfToData'
 // formatters
 export {default as formatters} from './src/formatters/index'
 export {default as formatCsv} from './src/formatters/csv'
