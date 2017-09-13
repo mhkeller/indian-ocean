@@ -2,14 +2,13 @@ import readDbf from '../readers/readDbf'
 import writeData from '../writers/writeData'
 
 /**
- * Reads in a dbf file with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
+ * Reads in a dbf fil e with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
  *
  * @function convertDbfToData
- * @param {String} inFileName the input file name
- * @param {String} outFileName the output file name
- * @param {Object} [options] Optional config object, see below
- * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
- * @param {Function} callback callback that takes error (if any)
+ * @param {String} inFilePath Input file path
+ * @param {String} outFileName Output file path
+ * @param {Object} [options] Optional config object that's passed to {@link writeData}. See its documentation for full options.
+ * @param {Function} callback Has signature `(err)`
  *
  * @example
  * io.convertDbfToData('path/to/data.dbf', 'path/to/data.csv', function (err) {

@@ -18,7 +18,7 @@ function isFunction(section) {
 module.exports = function (comments, config) {
   var linkerStack = new LinkerStack(config).namespaceResolver(comments, function (namespace) {
     var slugger = new GithubSlugger();
-    return '#' + slugger.slug(namespace);
+    return '#' + slugger.slug(namespace, true);
   });
 
   var formatters = createFormatters(linkerStack.link);
@@ -31,7 +31,7 @@ module.exports = function (comments, config) {
       path: path,
       slug: function slug(str) {
         var slugger = new GithubSlugger();
-        return slugger.slug(str);
+        return slugger.slug(str, true);
       },
       shortSignature: function shortSignature(section) {
         var prefix = '';
