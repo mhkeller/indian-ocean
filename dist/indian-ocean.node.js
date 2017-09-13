@@ -16,7 +16,7 @@ var shapefile = require('shapefile');
  * Asynchronously read a dbf file. Returns an empty array if file is empty.
  *
  * @function readDbf
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function|Object} [map] Optional map function or object with `map` key that is a function, called once for each row (header row skipped). Has signature `(row)`. See example below.
  * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
  *
@@ -1929,7 +1929,7 @@ function joinPath() {
  * Given a `fileName` return its file extension. Used internally by `.discernPaser` and `.discernFileFormatter`.
  *
  * @function discernFormat
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @returns {String} the file's extension
  *
  * @example
@@ -6092,7 +6092,7 @@ formatsList.forEach(function (format) {
  * Returns a formatter that will format json data to file type specified by the extension in `fileName`. Used internally by `.writeData` and `.writeDataSync`.
  *
  * @function discernFileFormatter
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @returns {Object} a formatter that can write the file
  *
  * @example
@@ -6241,7 +6241,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * * `.dbf` Database file, commonly used in ESRI-shapefile format.
  *
  * @function writeData
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Object} data the data to write
  * @param {Object} [options] Optional config object, see below
  * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
@@ -6323,12 +6323,12 @@ function writeData(outPath, data, opts_, cb) {
 }
 
 /**
- * Reads in a dbf fil e with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
+ * Reads in a dbf file with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
  *
  * @function convertDbfToData
  * @param {String} inFilePath Input file path
- * @param {String} outFileName Output file path
- * @param {Object} [options] Optional config object that's passed to {@link writeData}. See its documentation for full options.
+ * @param {String} outFilePath Output file path
+ * @param {Object} [options] Optional config object that's passed to {@link writeData}. See that documentation for full options, which vary depending on the output format you choose.
  * @param {Function} callback Has signature `(err)`
  *
  * @example
@@ -6885,7 +6885,7 @@ formatsList.forEach(function (format) {
  * Given a `fileName` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimter string as the second argument, return a parser for that delimiter regardless of `fileName`. Used internally by `.readData` and `.readDataSync`.
  *
  * @function discernParser
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {String} delimiter Alternative usage is to pass a delimiter string. Delegates to `dsv.dsvFormat`.
  * @returns {Object} a parser that can read the file
  *
@@ -6912,7 +6912,7 @@ function discernParser(fileName, delimiter) {
  * Asynchronously test whether a file exists or not by using `fs.access` modified from https://github.com/nodejs/io.js/issues/1592#issuecomment-98392899.
  *
  * @function exists
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function} callback has the signature `(err, exists)`
  *
  * @example
@@ -6938,7 +6938,7 @@ function exists(filename, cb) {
  * Syncronous version of {@link helpers#exists}. Falls back to `fs.existsSync` if that function exists
  *
  * @function existsSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @returns {Boolean} whether the file exists or not
  *
  * @example
@@ -6962,7 +6962,7 @@ function existsSync(filename) {
  * Test whether a file name has the given extension
  *
  * @function extMatchesStr
- * @param {String} fileName The name of the file.
+ * @param {String} filePath Input file path
  * @param {String} extension The extension to test. An empty string will match a file with no extension.
  * @returns {Boolean} whether The extension matched or not.
  *
@@ -7006,7 +7006,7 @@ function makeDirectoriesSync(outPath) {
  * Test whether a string matches a given Regular Expression.
  *
  * @function matchesRegExp
- * @param {String} fileName The name of the file or file path.
+ * @param {String} filePath Input file path or file path.
  * @param {RegExp} RegEx The RegEx to match with.
  * @returns {Boolean} whether The string matches the RegEx.
  *
@@ -7029,7 +7029,7 @@ function isRegExp$1(obj) {
  * Test whether a file name or path matches a given matcher. Delegates to {@link helpers#extMatches} if `matcher` is a string` and tests only against the file name extension. Delegates to {@link helpers#extMatchRegEx} if matcher is a Regular Expression and tests against entire string, which is usefulf or testing the full file path.
  *
  * @function matches
- * @param {String} fileName The name of the file or path to the file.
+ * @param {String} filePath Input file path or path to the file.
  * @returns {String} matcher The string to match with.
  *
  * @example
@@ -7069,7 +7069,7 @@ function matches(fileName, matcher) {
  * *Note: Does not currently support `.dbf` files. `.yaml` and `.yml` formats are read with js-yaml's `.load` method, which has no security checking. See js-yaml library for more secure options.*
  *
  * @function readData
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Object|Function} [parserOptions] Optional. Set this as a function as a shorthand for `map`.
  * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function.
  * @param {Function} [parserOptions.map] Transformation function. Takes `(fileString, parserOptions)` where `parserOptions` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.
@@ -7185,7 +7185,7 @@ function readData(filePath, opts_, cb_) {
  * Syncronous version of {@link readers#readData}
  *
  * @function readDataSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function|Object} [parserOptions] Can be a map function, or an object specifying other options.
  * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function.
  * @param {Function} [parserOptions.map] Transformation function. Takes `(fileString, options)` where `options` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.
@@ -7594,9 +7594,9 @@ function readdirFilterSync(dirPath, opts_) {
  * Asynchronously read an ArchieMl file. Returns an empty object if file is empty.
  *
  * @function readAml
- * @param {String} fileName the name of the file.
- * @param {Function} [map] Optional map function. Takes the parsed filed, return modified file. See example below.
- * @param {Function} callback callback used when read data is read, takes error (if any) and the data read.
+ * @param {String} filePath Input file path
+ * @param {Function} [map] Optional map function. Takes the parsed file (usually an object) and must return the modified file. See example below.
+ * @param {Function} callback Has signature `(err, data)`
  *
  * @example
  * io.readAml('path/to/data.aml', function (err, data) {
@@ -7622,12 +7622,12 @@ function readAml(path$$1, opts_, cb) {
 }
 
 /**
- * Synchronously read an ArchieML file. Returns an empty TK if file is empty.
+ * Synchronously read an ArchieML file. Returns an empty object if file is empty.
  *
  * @function readAmlSync
- * @param {String} fileName the name of the file
- * @param {Function} [map] Optional map function. Takes the parsed filed, return modified file. See example below.
- * @returns {Object} the contents of the file as a string
+ * @param {String} filePath Input file path
+ * @param {Function} [map] Optional map function. Takes the parsed file (usually an object) and must return the modified file. See example below.
+ * @returns {Object} The parsed file
  *
  * @example
  * var data = io.readAmlSync('path/to/data.aml')
@@ -7651,7 +7651,7 @@ function readAmlSync(path$$1, opts_) {
  * Asynchronously read a comma-separated value file. Returns an empty array if file is empty.
  *
  * @function readCsv
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
  *
@@ -7683,7 +7683,7 @@ function readCsv(path$$1, opts_, cb) {
  * Synchronously read a comma-separated value file. Returns an empty array if file is empty.
  *
  * @function readCsvSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function|Object} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @returns {Array} the contents of the file as JSON
  *
@@ -7711,7 +7711,7 @@ function readCsvSync(path$$1, opts_) {
  * Asynchronously read a JSON file. Returns an empty array if file is empty.
  *
  * @function readJson
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function|Object} [parserOptions] Can be a map function, or an object specifying other options.
  * @param {Function} [parserOptions.map] Optional map function, called once for each row (header row skipped). If your file is an array (tests if first non-whitespace character is a `[`), has signature `(row, i)`, delegates to `_.map`. If file is an object has signature `(value, key)`, delegates to `_.mapObject`. See example below.
  * @param {String} [parserOptions.filename] Filename displayed in the error message.
@@ -7787,7 +7787,7 @@ function readJson(path$$1, opts_, cb) {
  * Synchronously read a JSON file. Returns an empty array if file is empty.
  *
  * @function readJsonSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function|Object} [parserOptions] Can be a map function, or an object specifying other options.
  * @param {Function} [parserOptions.map] Optional map function, called once for each row (header row skipped). If your file is an array (tests if first non-whitespace character is a `[`), has signature `(row, i)`, delegates to `_.map`. If file is an object has signature `(value, key)`, delegates to `_.mapObject`. See example below.
  * @param {Function} [parserOptions.comments] Used in {@link shorthandReaders.readAml}. Otherwise ignored.
@@ -7837,7 +7837,7 @@ function readJsonSync(path$$1, opts_) {
  * Asynchronously read a pipe-separated value file. Returns an empty array if file is empty.
  *
  * @function readPsv
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
  *
@@ -7869,7 +7869,7 @@ function readPsv(path$$1, opts_, cb) {
  * Synchronously read a pipe-separated value file. Returns an empty array if file is empty.
  *
  * @function readPsvSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @returns {Array} the contents of the file as JSON
  *
@@ -7896,7 +7896,7 @@ function readPsvSync(path$$1, opts_) {
  * Asynchronously read a tab-separated value file. Returns an empty array if file is empty.
  *
  * @function readTsv
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
  *
@@ -7928,7 +7928,7 @@ function readTsv(path$$1, opts_, cb) {
  * Synchronously read a tab-separated value file. Returns an empty array if file is empty.
  *
  * @function readTsvSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @returns {Array} the contents of the file as JSON
  *
@@ -7956,7 +7956,7 @@ function readTsvSync(path$$1, opts_) {
  * Asynchronously read a text file. Returns an empty string if file is empty.
  *
  * @function readTxt
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function} [map] Optional map function, take the file and returns any mapped value
  * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
  *
@@ -7985,7 +7985,7 @@ function readTxt(path$$1, opts_, cb) {
  * Synchronously read a text file. Returns an empty string if file is empty.
  *
  * @function readTxtSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @returns {Array} the contents of the file as a string
  *
@@ -8010,7 +8010,7 @@ function readTxtSync(path$$1, opts_) {
  * Asynchronously read a yaml file. Returns an empty object if file is empty. `parseOptions` will pass any other optinos directl to js-yaml library. See its documentation for more detail https://github.com/nodeca/js-yaml
  *
  * @function readYaml
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function|Object} [parserOptions] Can be a map function or an object specifying that or other options.
  * @param {Function} [parserOptions.map] Optional map function. Takes the parsed filed, return modified file. See example below.
  * @param {String} [parserOptions.loadMethod="safeLoad"] The js-yaml library allows you to specify a more liberal `load` method which will accept regex and function values.
@@ -8055,7 +8055,7 @@ function readYaml(path$$1, opts_, cb) {
  * Synchronously read a yaml file. Returns an empty object if file is empty. `parseOptions` will pass any other optinos directl to js-yaml library. See its documentation for more detail https://github.com/nodeca/js-yaml
  *
  * @function readYamlSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function|Object} [parserOptions] Can be a map function or an object specifying that or other options.
  * @param {Function} [parserOptions.map] Optional map function. Takes the parsed filed, return modified file. See example below.
  * @param {String} [parserOptions.loadMethod="safeLoad"] The js-yaml library allows you to specify a more liberal `load` method which will accept regex and function values.
@@ -8105,7 +8105,7 @@ function readYamlSync(path$$1, opts_) {
  * *Note: Does not currently support .dbf files.*
  *
  * @function appendData
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Object} data the data to write
  * @param {Object} [options] Optional config object, see below
  * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
@@ -8163,7 +8163,7 @@ function appendData(outPath, data, opts_, cb) {
  * Supports the same formats with the exception of `.dbf` files
  *
  * @function writeDataSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Object} [options] Optional config object, see below
  * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
  * @param {Function|Array} [options.replacer] Used for JSON formats. Filter your objects before writing. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
@@ -8220,7 +8220,7 @@ function writeDataSync(outPath, data, opts_) {
  * Synchronous version of {@link writers#appendData}. See that function for supported formats
  *
  * @function appendDataSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Object} [options] Optional config object, see below
  * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
  * @param {Object} data the data to write

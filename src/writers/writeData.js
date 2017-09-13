@@ -17,7 +17,7 @@ import makeDirectories from '../helpers/makeDirectories'
  * * `.dbf` Database file, commonly used in ESRI-shapefile format.
  *
  * @function writeData
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Object} data the data to write
  * @param {Object} [options] Optional config object, see below
  * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.

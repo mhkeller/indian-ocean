@@ -10,7 +10,7 @@ import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
  * Supports the same formats with the exception of `.dbf` files
  *
  * @function writeDataSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Object} [options] Optional config object, see below
  * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
  * @param {Function|Array} [options.replacer] Used for JSON formats. Filter your objects before writing. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify

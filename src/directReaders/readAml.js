@@ -5,9 +5,9 @@ import parserAml from '../parsers/aml'
  * Asynchronously read an ArchieMl file. Returns an empty object if file is empty.
  *
  * @function readAml
- * @param {String} fileName the name of the file.
- * @param {Function} [map] Optional map function. Takes the parsed filed, return modified file. See example below.
- * @param {Function} callback callback used when read data is read, takes error (if any) and the data read.
+ * @param {String} filePath Input file path
+ * @param {Function} [map] Optional map function. Takes the parsed file (usually an object) and must return the modified file. See example below.
+ * @param {Function} callback Has signature `(err, data)`
  *
  * @example
  * io.readAml('path/to/data.aml', function (err, data) {

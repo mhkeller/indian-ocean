@@ -4,7 +4,7 @@ import fs from 'fs'
  * Asynchronously test whether a file exists or not by using `fs.access` modified from https://github.com/nodejs/io.js/issues/1592#issuecomment-98392899.
  *
  * @function exists
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function} callback has the signature `(err, exists)`
  *
  * @example

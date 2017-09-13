@@ -6744,7 +6744,7 @@ function extname(filename) {
  * Given a `fileName` return its file extension. Used internally by `.discernPaser` and `.discernFileFormatter`.
  *
  * @function discernFormat
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @returns {String} the file's extension
  *
  * @example
@@ -6763,7 +6763,7 @@ function discernFormat(fileName) {
  * Returns a formatter that will format json data to file type specified by the extension in `fileName`. Used internally by `.writeData` and `.writeDataSync`.
  *
  * @function discernFileFormatter
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @returns {Object} a formatter that can write the file
  *
  * @example
@@ -8724,7 +8724,7 @@ formatsList.forEach(function (format) {
  * Given a `fileName` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimter string as the second argument, return a parser for that delimiter regardless of `fileName`. Used internally by `.readData` and `.readDataSync`.
  *
  * @function discernParser
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {String} delimiter Alternative usage is to pass a delimiter string. Delegates to `dsv.dsvFormat`.
  * @returns {Object} a parser that can read the file
  *
@@ -8751,7 +8751,7 @@ function discernParser(fileName, delimiter) {
  * Test whether a file name has the given extension
  *
  * @function extMatchesStr
- * @param {String} fileName The name of the file.
+ * @param {String} filePath Input file path
  * @param {String} extension The extension to test. An empty string will match a file with no extension.
  * @returns {Boolean} whether The extension matched or not.
  *
@@ -8781,7 +8781,7 @@ function getParser(delimiterOrParser) {
  * Test whether a string matches a given Regular Expression.
  *
  * @function matchesRegExp
- * @param {String} fileName The name of the file or file path.
+ * @param {String} filePath Input file path or file path.
  * @param {RegExp} RegEx The RegEx to match with.
  * @returns {Boolean} whether The string matches the RegEx.
  *
@@ -8804,7 +8804,7 @@ function isRegExp$1(obj) {
  * Test whether a file name or path matches a given matcher. Delegates to {@link helpers#extMatches} if `matcher` is a string` and tests only against the file name extension. Delegates to {@link helpers#extMatchRegEx} if matcher is a Regular Expression and tests against entire string, which is usefulf or testing the full file path.
  *
  * @function matches
- * @param {String} fileName The name of the file or path to the file.
+ * @param {String} filePath Input file path or path to the file.
  * @returns {String} matcher The string to match with.
  *
  * @example

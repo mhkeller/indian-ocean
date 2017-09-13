@@ -5,7 +5,7 @@ import parserCsv from '../parsers/csv'
  * Asynchronously read a comma-separated value file. Returns an empty array if file is empty.
  *
  * @function readCsv
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
  *

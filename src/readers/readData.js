@@ -22,7 +22,7 @@ import _ from 'underscore'
  * *Note: Does not currently support `.dbf` files. `.yaml` and `.yml` formats are read with js-yaml's `.load` method, which has no security checking. See js-yaml library for more secure options.*
  *
  * @function readData
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Object|Function} [parserOptions] Optional. Set this as a function as a shorthand for `map`.
  * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function.
  * @param {Function} [parserOptions.map] Transformation function. Takes `(fileString, parserOptions)` where `parserOptions` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.

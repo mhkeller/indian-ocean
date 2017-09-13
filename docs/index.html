@@ -507,11 +507,11 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readData'>
-      <a href="#readData">#</a> io.<span class="bold">readData</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#readData">#</a> io.<span class="bold">readData</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/readers/readData.js#L80-L135' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/readers/readData.js#L80-L135' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -551,8 +551,8 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -715,11 +715,11 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readDataSync'>
-      <a href="#readDataSync">#</a> io.<span class="bold">readDataSync</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)
+      <a href="#readDataSync">#</a> io.<span class="bold">readDataSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/readers/readDataSync.js#L61-L110' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/readers/readDataSync.js#L61-L110' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -755,8 +755,8 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -906,7 +906,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/readers/readdirFilter.js#L29-L36' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/readers/readdirFilter.js#L29-L36' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1090,7 +1090,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/readers/readdirFilterSync.js#L30-L32' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/readers/readdirFilterSync.js#L30-L32' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1281,11 +1281,11 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='writeData'>
-      <a href="#writeData">#</a> io.<span class="bold">writeData</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#writeData">#</a> io.<span class="bold">writeData</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/writers/writeData.js#L67-L99' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/writers/writeData.js#L67-L99' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1322,8 +1322,8 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -1499,11 +1499,11 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='writeDataSync'>
-      <a href="#writeDataSync">#</a> io.<span class="bold">writeDataSync</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+      <a href="#writeDataSync">#</a> io.<span class="bold">writeDataSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/writers/writeDataSync.js#L48-L64' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/writers/writeDataSync.js#L48-L64' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1540,8 +1540,8 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -1690,11 +1690,11 @@ io.writeDataSync(<span class="hljs-string">'path/to/to/data.json'</span>, jsonDa
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='appendData'>
-      <a href="#appendData">#</a> io.<span class="bold">appendData</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#appendData">#</a> io.<span class="bold">appendData</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/writers/appendData.js#L37-L72' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/writers/appendData.js#L37-L72' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1731,8 +1731,8 @@ io.writeDataSync(<span class="hljs-string">'path/to/to/data.json'</span>, jsonDa
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -1833,11 +1833,11 @@ io.appendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, fla
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='appendDataSync'>
-      <a href="#appendDataSync">#</a> io.<span class="bold">appendDataSync</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+      <a href="#appendDataSync">#</a> io.<span class="bold">appendDataSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/writers/appendDataSync.js#L23-L39' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/writers/appendDataSync.js#L23-L39' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1873,8 +1873,8 @@ io.appendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, fla
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -1971,11 +1971,11 @@ io.appendDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</span>,
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readAml'>
-      <a href="#readAml">#</a> io.<span class="bold">readAml</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#readAml">#</a> io.<span class="bold">readAml</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readAml.js#L25-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readAml.js#L25-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2003,8 +2003,8 @@ io.appendDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</span>,
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file.
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -2013,7 +2013,7 @@ io.appendDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</span>,
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>map</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)</code>
-	    Optional map function. Takes the parsed filed, return modified file. See example below.
+	    Optional map function. Takes the parsed file (usually an object) and must return the modified file. See example below.
 
           </div>
           
@@ -2022,7 +2022,8 @@ io.appendDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</span>,
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>callback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    callback used when read data is read, takes error (if any) and the data read.
+	    Has signature 
+<code>(err, data)</code>
 
           </div>
           
@@ -2069,18 +2070,18 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readAmlSync'>
-      <a href="#readAmlSync">#</a> io.<span class="bold">readAmlSync</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)
+      <a href="#readAmlSync">#</a> io.<span class="bold">readAmlSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readAmlSync.js#L22-L28' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readAmlSync.js#L22-L28' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
   </div>
   
 
-  <p>Synchronously read an ArchieML file. Returns an empty TK if file is empty.</p>
+  <p>Synchronously read an ArchieML file. Returns an empty object if file is empty.</p>
 
 
   
@@ -2097,7 +2098,7 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        the contents of the file as a string
+        The parsed file
 
       
     
@@ -2109,8 +2110,8 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -2119,7 +2120,7 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>map</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)</code>
-	    Optional map function. Takes the parsed filed, return modified file. See example below.
+	    Optional map function. Takes the parsed file (usually an object) and must return the modified file. See example below.
 
           </div>
           
@@ -2163,11 +2164,11 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readDbf'>
-      <a href="#readDbf">#</a> io.<span class="bold">readDbf</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#readDbf">#</a> io.<span class="bold">readDbf</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readDbf.js#L26-L44' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readDbf.js#L26-L44' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2195,8 +2196,8 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -2266,11 +2267,11 @@ io.readDbf(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hlj
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readCsv'>
-      <a href="#readCsv">#</a> io.<span class="bold">readCsv</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#readCsv">#</a> io.<span class="bold">readCsv</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readCsv.js#L26-L34' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readCsv.js#L26-L34' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2298,8 +2299,8 @@ io.readDbf(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hlj
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -2367,11 +2368,11 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hlj
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readCsvSync'>
-      <a href="#readCsvSync">#</a> io.<span class="bold">readCsvSync</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)
+      <a href="#readCsvSync">#</a> io.<span class="bold">readCsvSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readCsvSync.js#L24-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readCsvSync.js#L24-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2407,8 +2408,8 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hlj
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -2465,11 +2466,11 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hlj
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readJson'>
-      <a href="#readJson">#</a> io.<span class="bold">readJson</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#readJson">#</a> io.<span class="bold">readJson</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readJson.js#L70-L78' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readJson.js#L70-L78' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2497,8 +2498,8 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hlj
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -2653,11 +2654,11 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readJsonSync'>
-      <a href="#readJsonSync">#</a> io.<span class="bold">readJsonSync</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)
+      <a href="#readJsonSync">#</a> io.<span class="bold">readJsonSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readJsonSync.js#L46-L52' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readJsonSync.js#L46-L52' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2693,8 +2694,8 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -2824,11 +2825,11 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readPsv'>
-      <a href="#readPsv">#</a> io.<span class="bold">readPsv</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#readPsv">#</a> io.<span class="bold">readPsv</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readPsv.js#L26-L34' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readPsv.js#L26-L34' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2856,8 +2857,8 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -2925,11 +2926,11 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readPsvSync'>
-      <a href="#readPsvSync">#</a> io.<span class="bold">readPsvSync</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)
+      <a href="#readPsvSync">#</a> io.<span class="bold">readPsvSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readPsvSync.js#L23-L29' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readPsvSync.js#L23-L29' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2965,8 +2966,8 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -3022,11 +3023,11 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readTsv'>
-      <a href="#readTsv">#</a> io.<span class="bold">readTsv</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#readTsv">#</a> io.<span class="bold">readTsv</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readTsv.js#L26-L34' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readTsv.js#L26-L34' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3054,8 +3055,8 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -3123,11 +3124,11 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readTsvSync'>
-      <a href="#readTsvSync">#</a> io.<span class="bold">readTsvSync</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)
+      <a href="#readTsvSync">#</a> io.<span class="bold">readTsvSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readTsvSync.js#L24-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readTsvSync.js#L24-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3163,8 +3164,8 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -3221,11 +3222,11 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readTxt'>
-      <a href="#readTxt">#</a> io.<span class="bold">readTxt</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#readTxt">#</a> io.<span class="bold">readTxt</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readTxt.js#L23-L31' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readTxt.js#L23-L31' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3253,8 +3254,8 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -3317,11 +3318,11 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readTxtSync'>
-      <a href="#readTxtSync">#</a> io.<span class="bold">readTxtSync</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)
+      <a href="#readTxtSync">#</a> io.<span class="bold">readTxtSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, map: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readTxtSync.js#L21-L27' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readTxtSync.js#L21-L27' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3357,8 +3358,8 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -3412,11 +3413,11 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readYaml'>
-      <a href="#readYaml">#</a> io.<span class="bold">readYaml</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#readYaml">#</a> io.<span class="bold">readYaml</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readYaml.js#L39-L47' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readYaml.js#L39-L47' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3444,8 +3445,8 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -3556,11 +3557,11 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readYamlSync'>
-      <a href="#readYamlSync">#</a> io.<span class="bold">readYamlSync</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)
+      <a href="#readYamlSync">#</a> io.<span class="bold">readYamlSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/directReaders/readYamlSync.js#L36-L42' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/directReaders/readYamlSync.js#L36-L42' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3596,8 +3597,8 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -3711,18 +3712,18 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='convertDbfToData'>
-      <a href="#convertDbfToData">#</a> io.<span class="bold">convertDbfToData</span>(inFilePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, outFileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#convertDbfToData">#</a> io.<span class="bold">convertDbfToData</span>(inFilePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, outFilePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/converters/convertDbfToData.js#L22-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/converters/convertDbfToData.js#L22-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
   </div>
   
 
-  <p>Reads in a dbf fil e with <code>.readDbf</code> and write to file using <code>.writeData</code>. A convenience function for converting DBFs to more useable formats. Formerly known as <code>writeDbfToData</code> and is aliased for legacy support.</p>
+  <p>Reads in a dbf file with <code>.readDbf</code> and write to file using <code>.writeData</code>. A convenience function for converting DBFs to more useable formats. Formerly known as <code>writeDbfToData</code> and is aliased for legacy support.</p>
 
 
   
@@ -3752,7 +3753,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>outFileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+            <span class='code bold'>outFilePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
 	    Output file path
 
           </div>
@@ -3764,7 +3765,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
 	    Optional config object that's passed to 
 <a href="#writeData">writeData</a>
-. See its documentation for full options.
+. See that documentation for full options, which vary depending on the output format you choose.
 
           </div>
           
@@ -3836,7 +3837,7 @@ io.convertDbfToData(<span class="hljs-string">'path/to/data.dbf'</span>, <span c
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/deepExtend.js#L34-L38' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/deepExtend.js#L34-L38' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3949,11 +3950,11 @@ io.deepExtend(object1, object2)
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='discernFileFormatter'>
-      <a href="#discernFileFormatter">#</a> io.<span class="bold">discernFileFormatter</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
+      <a href="#discernFileFormatter">#</a> io.<span class="bold">discernFileFormatter</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/discernFileFormatter.js#L15-L23' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/discernFileFormatter.js#L15-L23' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3989,8 +3990,8 @@ io.deepExtend(object1, object2)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -4028,11 +4029,11 @@ io.deepExtend(object1, object2)
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='discernFormat'>
-      <a href="#discernFormat">#</a> io.<span class="bold">discernFormat</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
+      <a href="#discernFormat">#</a> io.<span class="bold">discernFormat</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/discernFormat.js#L14-L20' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/discernFormat.js#L14-L20' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4068,8 +4069,8 @@ io.deepExtend(object1, object2)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -4107,11 +4108,11 @@ io.deepExtend(object1, object2)
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='discernParser'>
-      <a href="#discernParser">#</a> io.<span class="bold">discernParser</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, delimiter: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
+      <a href="#discernParser">#</a> io.<span class="bold">discernParser</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, delimiter: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/discernParser.js#L19-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/discernParser.js#L19-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4147,8 +4148,8 @@ io.deepExtend(object1, object2)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -4199,11 +4200,11 @@ io.deepExtend(object1, object2)
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='exists'>
-      <a href="#exists">#</a> io.<span class="bold">exists</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#exists">#</a> io.<span class="bold">exists</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/exists.js#L16-L27' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/exists.js#L16-L27' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4231,8 +4232,8 @@ io.deepExtend(object1, object2)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -4281,11 +4282,11 @@ io.deepExtend(object1, object2)
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='existsSync'>
-      <a href="#existsSync">#</a> io.<span class="bold">existsSync</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
+      <a href="#existsSync">#</a> io.<span class="bold">existsSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/existsSync.js#L14-L25' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/existsSync.js#L14-L25' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4321,8 +4322,8 @@ io.deepExtend(object1, object2)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    the name of the file
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -4364,7 +4365,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/extend.js#L50-L118' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/extend.js#L50-L118' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4504,11 +4505,11 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='extMatchesStr'>
-      <a href="#extMatchesStr">#</a> io.<span class="bold">extMatchesStr</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, extension: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
+      <a href="#extMatchesStr">#</a> io.<span class="bold">extMatchesStr</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, extension: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/extMatchesStr.js#L15-L19' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/extMatchesStr.js#L15-L19' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4544,8 +4545,8 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    The name of the file.
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path
 
           </div>
           
@@ -4596,7 +4597,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/makeDirectories.js#L17-L21' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/makeDirectories.js#L17-L21' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4678,7 +4679,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/makeDirectoriesSync.js#L14-L16' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/makeDirectoriesSync.js#L14-L16' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4744,11 +4745,11 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='matches'>
-      <a href="#matches">#</a> io.<span class="bold">matches</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
+      <a href="#matches">#</a> io.<span class="bold">matches</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/matches.js#L22-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/matches.js#L22-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4784,8 +4785,8 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    The name of the file or path to the file.
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path or path to the file.
 
           </div>
           
@@ -4829,11 +4830,11 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='matchesRegExp'>
-      <a href="#matchesRegExp">#</a> io.<span class="bold">matchesRegExp</span>(fileName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, RegEx: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>)
+      <a href="#matchesRegExp">#</a> io.<span class="bold">matchesRegExp</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, RegEx: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/998620a85ecbebbec6f715c49a386245af990870/src/helpers/matchesRegExp.js#L16-L18' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b/src/helpers/matchesRegExp.js#L16-L18' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4869,8 +4870,8 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>fileName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    The name of the file or file path.
+            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Input file path or file path.
 
           </div>
           

@@ -4,7 +4,7 @@ import {extname} from '../utils/path'
  * Test whether a file name has the given extension
  *
  * @function extMatchesStr
- * @param {String} fileName The name of the file.
+ * @param {String} filePath Input file path
  * @param {String} extension The extension to test. An empty string will match a file with no extension.
  * @returns {Boolean} whether The extension matched or not.
  *

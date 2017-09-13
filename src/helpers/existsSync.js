@@ -4,7 +4,7 @@ import fs from 'fs'
  * Syncronous version of {@link helpers#exists}. Falls back to `fs.existsSync` if that function exists
  *
  * @function existsSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @returns {Boolean} whether the file exists or not
  *
  * @example

@@ -5,7 +5,7 @@ import identity from '../utils/identity'
  * Asynchronously read a dbf file. Returns an empty array if file is empty.
  *
  * @function readDbf
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function|Object} [map] Optional map function or object with `map` key that is a function, called once for each row (header row skipped). Has signature `(row)`. See example below.
  * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
  *

@@ -6,7 +6,7 @@ import parsers from '../parsers/index'
  * Given a `fileName` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimter string as the second argument, return a parser for that delimiter regardless of `fileName`. Used internally by `.readData` and `.readDataSync`.
  *
  * @function discernParser
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {String} delimiter Alternative usage is to pass a delimiter string. Delegates to `dsv.dsvFormat`.
  * @returns {Object} a parser that can read the file
  *

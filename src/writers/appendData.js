@@ -19,7 +19,7 @@ import extend from '../helpers/extend'
  * *Note: Does not currently support .dbf files.*
  *
  * @function appendData
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Object} data the data to write
  * @param {Object} [options] Optional config object, see below
  * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.

@@ -5,7 +5,7 @@ import formatters from '../formatters/index'
  * Returns a formatter that will format json data to file type specified by the extension in `fileName`. Used internally by `.writeData` and `.writeDataSync`.
  *
  * @function discernFileFormatter
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @returns {Object} a formatter that can write the file
  *
  * @example

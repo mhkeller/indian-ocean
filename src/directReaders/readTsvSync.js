@@ -5,7 +5,7 @@ import parserTsv from '../parsers/tsv'
  * Synchronously read a tab-separated value file. Returns an empty array if file is empty.
  *
  * @function readTsvSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
  * @returns {Array} the contents of the file as JSON
  *

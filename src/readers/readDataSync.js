@@ -9,7 +9,7 @@ import _ from 'underscore'
  * Syncronous version of {@link readers#readData}
  *
  * @function readDataSync
- * @param {String} fileName the name of the file
+ * @param {String} filePath Input file path
  * @param {Function|Object} [parserOptions] Can be a map function, or an object specifying other options.
  * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function.
  * @param {Function} [parserOptions.map] Transformation function. Takes `(fileString, options)` where `options` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.

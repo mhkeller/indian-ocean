@@ -2,12 +2,12 @@ import readDbf from '../directReaders/readDbf'
 import writeData from '../writers/writeData'
 
 /**
- * Reads in a dbf fil e with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
+ * Reads in a dbf file with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
  *
  * @function convertDbfToData
  * @param {String} inFilePath Input file path
- * @param {String} outFileName Output file path
- * @param {Object} [options] Optional config object that's passed to {@link writeData}. See its documentation for full options.
+ * @param {String} outFilePath Output file path
+ * @param {Object} [options] Optional config object that's passed to {@link writeData}. See that documentation for full options, which vary depending on the output format you choose.
  * @param {Function} callback Has signature `(err)`
  *
  * @example

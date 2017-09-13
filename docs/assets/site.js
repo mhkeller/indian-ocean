@@ -1,4 +1,5 @@
 // // Filter UI
+var tocElements = document.getElementById('toc').getElementsByTagName('li');
 var filter_input = document.getElementById('filter-input');
 
 filter_input.addEventListener('keyup', function(e) {

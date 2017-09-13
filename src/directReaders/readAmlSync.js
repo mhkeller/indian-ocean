@@ -2,12 +2,12 @@ import readDataSync from '../readers/readDataSync'
 import parserAml from '../parsers/aml'
 
 /**
- * Synchronously read an ArchieML file. Returns an empty TK if file is empty.
+ * Synchronously read an ArchieML file. Returns an empty object if file is empty.
  *
  * @function readAmlSync
- * @param {String} fileName the name of the file
- * @param {Function} [map] Optional map function. Takes the parsed filed, return modified file. See example below.
- * @returns {Object} the contents of the file as a string
+ * @param {String} filePath Input file path
+ * @param {Function} [map] Optional map function. Takes the parsed file (usually an object) and must return the modified file. See example below.
+ * @returns {Object} The parsed file
  *
  * @example
  * var data = io.readAmlSync('path/to/data.aml')
