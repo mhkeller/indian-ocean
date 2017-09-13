@@ -37,4 +37,32 @@ section{
 .signature{
   font-weight: normal;
 }
-
+.github-logo{
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  background: url(github.svg) no-repeat;
+  background-size: contain;
+}
+.github-logo.gray{
+  opacity: 0.3;
+}
+.github-source-link,
+.github-source-link .link-text{
+  color: #ccc;
+  text-decoration: none;
+}
+.github-source-link .link-text{
+  position: relative;
+  top: -1px;
+}
+.github-source-link:hover .github-logo.gray{
+  opacity: 0.6;
+}
+a.github-source-link:hover{
+  text-decoration: none !important;
+}
+a.github-source-link:hover .link-text{
+  color: #666;
+  text-decoration: none !important;
+}

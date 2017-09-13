@@ -8,8 +8,8 @@
     </h3>
     <% } %>
     <% if (section.context && section.context.github) { %>
-      <a class='fr fill-darken0 round round pad1x quiet h5' href='<%= section.context.github.url %>'>
-      <span><%= section.context.github.path %></span>
+      <a class='github-source-link' href='<%= section.context.github.url %>' target='_blank' rel='noopener'>
+        <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     <% } %>
   </div>

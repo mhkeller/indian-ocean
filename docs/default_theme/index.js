@@ -15,6 +15,7 @@ function isFunction(section) {
   return section.kind === 'function' || section.kind === 'typedef' && section.type.type === 'NameExpression' && section.type.name === 'Function';
 }
 
+console.log(require('documentation'))
 module.exports = function (comments, config) {
   var linkerStack = new LinkerStack(config).namespaceResolver(comments, function (namespace) {
     var slugger = new GithubSlugger();
