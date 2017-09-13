@@ -2,7 +2,9 @@
 var tocElements = document.getElementById('toc').getElementsByTagName('li');
 var filter_input = document.getElementById('filter-input');
 
-filter_input.addEventListener('keyup', function(e) {
+filter_input.addEventListener('keyup', onChange)
+filter_input.addEventListener('search', onChange)
+function onChange (e) {
   var i, element, children;
 
   // enter key
@@ -39,6 +41,6 @@ filter_input.addEventListener('keyup', function(e) {
       element.classList.add('display-none');
     }
   }
-});
+}
 
 filter_input.focus();
