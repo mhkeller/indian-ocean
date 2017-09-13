@@ -1,4 +1,4 @@
-import readDbf from '../readers/readDbf'
+import readDbf from '../directReaders/readDbf'
 import writeData from '../writers/writeData'
 
 /**
