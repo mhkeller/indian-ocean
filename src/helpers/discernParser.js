@@ -3,12 +3,12 @@ import discernFormat from './discernFormat'
 import parsers from '../parsers/index'
 
 /**
- * Given a `fileName` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimter string as the second argument, return a parser for that delimiter regardless of `fileName`. Used internally by `.readData` and `.readDataSync`.
+ * Given a `filePath` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimter string as the second argument, return a parser for that delimiter regardless of `filePath`. Used internally by {@link readData} and {@link readDataSync}.
  *
  * @function discernParser
- * @param {String} filePath Input file path
- * @param {String} delimiter Alternative usage is to pass a delimiter string. Delegates to `dsv.dsvFormat`.
- * @returns {Object} a parser that can read the file
+ * @param {String} [filePath] Input file path
+ * @param {String} [delimiter] Alternative usage is to pass a delimiter string. Delegates to `dsv.dsvFormat`.
+ * @returns {Function} A parser that can read the file
  *
  * @example
  * var parser = io.discernParser('path/to/data.csv')
@@ -16,11 +16,11 @@ import parsers from '../parsers/index'
  * var parser = io.discernParser(null, '_')
  * var json = parser('path/to/data.usv')
  */
-export default function discernParser (fileName, delimiter) {
+export default function discernParser (filePath, delimiter) {
   if (delimiter) {
     return dsvFormat(delimiter).parse
   }
-  var format = discernFormat(fileName)
+  var format = discernFormat(filePath)
   var parser = parsers[format]
   // If we don't have a parser for this format, return as text
   if (typeof parser === 'undefined') {

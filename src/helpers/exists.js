@@ -5,7 +5,7 @@ import fs from 'fs'
  *
  * @function exists
  * @param {String} filePath Input file path
- * @param {Function} callback has the signature `(err, exists)`
+ * @param {Function} callback Has signature `(err, exists)`
  *
  * @example
  * var exists = io.exists('path/to/data.tsv', function (err, exists) {

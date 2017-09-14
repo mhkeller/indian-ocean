@@ -2,7 +2,7 @@ import mkdirp from 'mkdirp'
 import {dirname} from '../utils/path'
 
 /**
- * Asynchronously Create directories in a given file path
+ * Asynchronously create directories along a given file path. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module
  *
  * @function makeDirectories
  * @param {String} outPath The path to a file

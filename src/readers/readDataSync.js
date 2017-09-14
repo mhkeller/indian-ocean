@@ -6,7 +6,7 @@ import {formatsIndex} from '../config/equivalentFormats'
 import _ from 'underscore'
 
 /**
- * Syncronous version of {@link readers#readData}
+ * Syncronous version of {@link readData}
  *
  * @function readDataSync
  * @param {String} filePath Input file path

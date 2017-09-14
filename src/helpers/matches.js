@@ -3,11 +3,11 @@ import matchesRegExp from './matchesRegExp'
 import isRegExp from '../utils/isRegExp'
 
 /**
- * Test whether a file name or path matches a given matcher. Delegates to {@link helpers#extMatches} if `matcher` is a string` and tests only against the file name extension. Delegates to {@link helpers#extMatchRegEx} if matcher is a Regular Expression and tests against entire string, which is usefulf or testing the full file path.
+ * Test whether a file name or path matches a given matcher. Delegates to {@link extMatchesStr} if `matcher` is a string` and tests only against the file name extension. Delegates to {@link matchesRegExp} if matcher is a Regular Expression and tests against entire string, which is usefulf or testing the full file path.
  *
  * @function matches
  * @param {String} filePath Input file path or path to the file.
- * @returns {String} matcher The string to match with.
+ * @returns {String|RegExp} matcher The string or Regular Expression to match against.
  *
  * @example
  * var matches = io.matches('path/to/data.tsv', 'tsv')

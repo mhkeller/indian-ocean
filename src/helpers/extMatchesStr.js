@@ -6,7 +6,7 @@ import {extname} from '../utils/path'
  * @function extMatchesStr
  * @param {String} filePath Input file path
  * @param {String} extension The extension to test. An empty string will match a file with no extension.
- * @returns {Boolean} whether The extension matched or not.
+ * @returns {Boolean} Whether it matched or not.
  *
  * @example
  * var matches = io.extMatchesStr('path/to/data.tsv', 'tsv')

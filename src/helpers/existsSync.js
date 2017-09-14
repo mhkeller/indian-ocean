@@ -1,11 +1,11 @@
 import fs from 'fs'
 
 /**
- * Syncronous version of {@link helpers#exists}. Falls back to `fs.existsSync` if that function exists
+ * Syncronous version of {@link exists}. Delegates to `fs.existsSync` if that function is available.
  *
  * @function existsSync
  * @param {String} filePath Input file path
- * @returns {Boolean} whether the file exists or not
+ * @returns {Boolean} Whether the file exists or not
  *
  * @example
  * var exists = io.existsSync('path/to/data.tsv')

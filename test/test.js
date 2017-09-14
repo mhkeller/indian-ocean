@@ -71,6 +71,9 @@ describe('discernFormat()', function () {
     it('should be false', function () {
       assert.equal(io.discernFormat('/fake/path/what_is_this_file'), false)
     })
+    it('should be false for dotfiles', function () {
+      assert.equal(io.discernFormat('/fake/path/.gitignore'), false)
+    })
   })
 
   describe('csv', function () {

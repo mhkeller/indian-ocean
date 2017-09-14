@@ -4,7 +4,7 @@
  * @function extend
  * @param {Boolean} [deepExtend] Optional, set to `true` to merge recursively.
  * @param {Object} destination The object to modify
- * @param {Object} source The object whose contents to take
+ * @param {Object} source The object whose keys to take
  * @param {Object} [source2] Optional, You can add any number of objects as arguments.
  * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
  *
