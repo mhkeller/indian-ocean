@@ -37,6 +37,17 @@ section{
 .signature{
   font-weight: normal;
 }
+#project-name .github-logo{
+  position: relative;
+  top: 1px;
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  opacity: 0.6;
+}
+#project-name .github-logo:hover{
+  opacity: 1;
+}
 .github-logo{
   display: inline-block;
   width: 13px;
