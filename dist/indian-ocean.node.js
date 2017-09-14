@@ -6247,14 +6247,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  *
  * @function writeData
  * @param {String} filePath Input file path
- * @param {Object} data the data to write
- * @param {Object} [options] Optional config object, see below
+ * @param {Array|Object|String} data Data to write
+ * @param {Object} [options] Optional options object, see below
  * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
- * @param {Function|Array} [options.replacer] Used for JSON formats. Filter your objects before writing. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+ * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
  * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
  * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
  * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
- * @param {Function} callback callback of `(err, dataString)` where `err` is any error and `dataString` is the data that was written out as a string
+ * @param {Function} callback Has signature `(err, dataStr)`. `dataStr` is the data that was written out as a string
  *
  * @example
  * io.writeData('path/to/data.json', jsonData, function (err, dataString) {
@@ -7195,9 +7195,9 @@ function readData(filePath, opts_, cb_) {
  * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
  * @param {String|Function|Object} [parserOptions.parser] This can be a string that is the file's delimiter, a function that returns JSON, or, for convenience, can also be a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function. See `parsers` in library source for examples.
  * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
- * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJson} for details.
- * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJson} for details.
- * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYaml} for details.
+ * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJsonSync} for details.
+ * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJsonSync} for details.
+ * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYamlSync} for details.
  * @returns {Object} the contents of the file as JSON
  *
  * @example
@@ -8115,7 +8115,7 @@ function readYamlSync(filePath, opts_) {
 }
 
 /**
- * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with `_.extend`. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
+ * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with {@link extend}. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
  *
  * Supported formats:
  *
@@ -8128,11 +8128,10 @@ function readYamlSync(filePath, opts_) {
  * *Note: Does not currently support .dbf files.*
  *
  * @function appendData
- * @param {String} filePath Input file path
- * @param {Object} data the data to write
- * @param {Object} [options] Optional config object, see below
- * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
- * @param {Function} callback callback of `(err, data)` where `err` is any error and `data` is the data that was written out
+ * @param {String} filePath File to append to
+ * @param {Array|Object} data The new data to append
+ * @param {Object} [options] Optional options object passed to {@link writeData}. See that function for format-specific options.
+ * @param {Function} callback Has signature `(err, data)`. Data is the combined data that was written out
  *
  * @example
  * io.appendData('path/to/data.json', jsonData, function (err) {
@@ -8187,14 +8186,14 @@ function appendData(outPath, data, opts_, cb) {
  *
  * @function writeDataSync
  * @param {String} filePath Input file path
- * @param {Object} [options] Optional config object, see below
+ * @param {Array|Object|String} data Data to write
+ * @param {Object} [options] Optional options object, see below
  * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
- * @param {Function|Array} [options.replacer] Used for JSON formats. Filter your objects before writing. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+ * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
  * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
  * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
  * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
- * @param {Object} data the data to write
- * @returns {String} the data string that was written
+ * @returns {String} The that was written as a string
  *
  * @example
  * io.writeDataSync('path/to/data.json', jsonData)
@@ -8243,11 +8242,10 @@ function writeDataSync(outPath, data, opts_) {
  * Synchronous version of {@link writers#appendData}. See that function for supported formats
  *
  * @function appendDataSync
- * @param {String} filePath Input file path
- * @param {Object} [options] Optional config object, see below
- * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
- * @param {Object} data the data to write
- * @returns {Object} the data that was written
+ * @param {String} filePath File to append to
+ * @param {Array|Object} data The new data to append
+ * @param {Object} [options] Optional options object passed to {@link writeData}. See that function for format-specific options.
+ * @returns {Object} The combined data that was written
  *
  * @example
  * io.appendDataSync('path/to/data.json', jsonData)
