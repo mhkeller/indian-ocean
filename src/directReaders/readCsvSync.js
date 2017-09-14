@@ -6,7 +6,7 @@ import parserCsv from '../parsers/csv'
  *
  * @function readCsvSync
  * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
+ * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
  * @returns {Array} the contents of the file as JSON
  *
  * @example
@@ -19,6 +19,14 @@ import parserCsv from '../parsers/csv'
  *   row.height = +row.height // Convert this value to a number
  *   return row
  * })
+ * console.log(data) // Json data with casted values
+ *
+ * // Pass in an object with a `map` key
+ * var data = io.readCsvSync('path/to/data.csv', {map: function (row, i, columns) {
+ *   console.log(columns) // [ 'name', 'occupation', 'height' ]
+ *   row.height = +row.height // Convert this value to a number
+ *   return row
+ * }})
  * console.log(data) // Json data with casted values
  */
 export default function readCsvSync (path, opts_) {

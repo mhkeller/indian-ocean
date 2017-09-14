@@ -6,8 +6,8 @@ import parserTxt from '../parsers/txt'
  *
  * @function readTxt
  * @param {String} filePath Input file path
- * @param {Function} [map] Optional map function, take the file and returns any mapped value
- * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
+ * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Takes the file read in as text and return the modified file. See example below.
+ * @param {Function} callback Has signature `(err, data)`
  *
  * @example
  * io.readTxt('path/to/data.txt', function (err, data) {

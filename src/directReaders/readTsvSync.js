@@ -6,7 +6,7 @@ import parserTsv from '../parsers/tsv'
  *
  * @function readTsvSync
  * @param {String} filePath Input file path
- * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
+ * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)` and must return the transformed row. See example below or d3-dsv documentation for details.
  * @returns {Array} the contents of the file as JSON
  *
  * @example

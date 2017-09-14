@@ -6,8 +6,8 @@ import identity from '../utils/identity'
  *
  * @function readDbf
  * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or object with `map` key that is a function, called once for each row (header row skipped). Has signature `(row)`. See example below.
- * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
+ * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below.
+ * @param {Function} callback Has signature `(err, data)`
  *
  * @example
  * io.readDbf('path/to/data.dbf', function (err, data) {
@@ -15,7 +15,7 @@ import identity from '../utils/identity'
  * })
  *
  * // Transform values on load
- * io.readDbf('path/to/data.csv', function (row, i, columns) {
+ * io.readDbf('path/to/data.csv', function (row, i) {
  *   console.log(columns) // [ 'name', 'occupation', 'height' ]
  *   row.height = +row.height // Convert this value to a number
  *   return row

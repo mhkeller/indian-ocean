@@ -6,8 +6,8 @@ import parserTxt from '../parsers/txt'
  *
  * @function readTxtSync
  * @param {String} filePath Input file path
- * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
- * @returns {Array} the contents of the file as a string
+ * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Takes the file read in as text and must return the modified file. See example below.
+ * @returns {String} the contents of the file as a string
  *
  * @example
  * var data = io.readTxtSync('path/to/data.txt')

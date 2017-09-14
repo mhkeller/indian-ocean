@@ -6,10 +6,10 @@ import parserYaml from '../parsers/yaml'
  *
  * @function readYaml
  * @param {String} filePath Input file path
- * @param {Function|Object} [parserOptions] Can be a map function or an object specifying that or other options.
- * @param {Function} [parserOptions.map] Optional map function. Takes the parsed filed, return modified file. See example below.
- * @param {String} [parserOptions.loadMethod="safeLoad"] The js-yaml library allows you to specify a more liberal `load` method which will accept regex and function values.
- * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying options below.
+ * @param {Function} [parserOptions.map] Optional map function. Called once for each row (header row skipped). If your file is an array (it tests if first non-whitespace character is a `[`), the callback has the signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback has the signature `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {String} [parserOptions.loadMethod="safeLoad"] The js-yaml library allows you to specify a more liberal `"load"` method which will accept RegExp and function values in your file.
+ * @param {Function} callback Has signature `(err, data)`
  *
  * @example
  * // Can be `.yaml` or `.yml` extension

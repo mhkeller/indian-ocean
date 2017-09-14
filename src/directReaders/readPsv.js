@@ -6,8 +6,8 @@ import parserPsv from '../parsers/psv'
  *
  * @function readPsv
  * @param {String} filePath Input file path
- * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
- * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
+ * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
+ * @param {Function} callback Has signature `(err, data)`
  *
  * @example
  * io.readPsv('path/to/data.psv', function (err, data) {

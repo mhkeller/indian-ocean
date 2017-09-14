@@ -6,8 +6,8 @@ import parserCsv from '../parsers/csv'
  *
  * @function readCsv
  * @param {String} filePath Input file path
- * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)`. See example below or d3-dsv documentation for details.
- * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
+ * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
+ * @param {Function} callback Has signature `(err, data)`
  *
  * @example
  * io.readCsv('path/to/data.csv', function (err, data) {
@@ -20,6 +20,15 @@ import parserCsv from '../parsers/csv'
  *   row.height = +row.height // Convert this value to a number
  *   return row
  * }, function (err, data) {
+ *   console.log(data) // Converted json data
+ * })
+ *
+ * // Pass in an object with a `map` key
+ * io.readCsv('path/to/data.csv', {map: function (row, i, columns) {
+ *   console.log(columns) // [ 'name', 'occupation', 'height' ]
+ *   row.height = +row.height // Convert this value to a number
+ *   return row
+ * }}, function (err, data) {
  *   console.log(data) // Converted json data
  * })
  */

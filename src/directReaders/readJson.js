@@ -6,11 +6,11 @@ import parserJson from '../parsers/json'
  *
  * @function readJson
  * @param {String} filePath Input file path
- * @param {Function|Object} [parserOptions] Can be a map function, or an object specifying other options.
- * @param {Function} [parserOptions.map] Optional map function, called once for each row (header row skipped). If your file is an array (tests if first non-whitespace character is a `[`), has signature `(row, i)`, delegates to `_.map`. If file is an object has signature `(value, key)`, delegates to `_.mapObject`. See example below.
- * @param {String} [parserOptions.filename] Filename displayed in the error message.
- * @param {String} [parserOptions.reviver] Prescribes how the value originally produced by parsing is mapped, before being returned. See JSON.parse docs for more: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
- * @param {Function} callback Function invoked after data is read, takes error (if any) and the data read
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying options below.
+ * @param {Function} [parserOptions.map] Optional map function. Called once for each row (header row skipped). If your file is an array (it tests if first non-whitespace character is a `[`), the callback has the signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback has the signature `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {String} [parserOptions.filename] File name displayed in the error message.
+ * @param {String} [parserOptions.reviver] Prescribes how the value originally produced by parsing is mapped before being returned. See JSON.parse docs for more: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
+ * @param {Function} callback Has signature `(err, data)`
  *
  * @example
  * io.readJson('path/to/data.json', function (err, data) {
