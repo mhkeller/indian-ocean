@@ -32,12 +32,12 @@ import parserCsv from '../parsers/csv'
  *   console.log(data) // Converted json data
  * })
  */
-export default function readCsv (path, opts_, cb) {
+export default function readCsv (filePath, opts_, cb) {
   var parserOptions
   if (typeof cb === 'undefined') {
     cb = opts_
   } else {
     parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
   }
-  readData(path, {parser: parserCsv, parserOptions: parserOptions}, cb)
+  readData(filePath, {parser: parserCsv, parserOptions: parserOptions}, cb)
 }

@@ -21,10 +21,10 @@ import parserTsv from '../parsers/tsv'
  * })
  * console.log(data) // Json data with casted values
  */
-export default function readTsvSync (path, opts_) {
+export default function readTsvSync (filePath, opts_) {
   var parserOptions
   if (typeof opts_ !== 'undefined') {
     parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
   }
-  return readDataSync(path, {parser: parserTsv, parserOptions: parserOptions})
+  return readDataSync(filePath, {parser: parserTsv, parserOptions: parserOptions})
 }

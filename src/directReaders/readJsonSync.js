@@ -6,10 +6,10 @@ import parserJson from '../parsers/json'
  *
  * @function readJsonSync
  * @param {String} filePath Input file path
- * @param {Function|Object} [parserOptions] Optional map function or an object specifying options below.
- * @param {Function} [parserOptions.map] Optional map function. Called once for each row (header row skipped). If your file is an array (it tests if first non-whitespace character is a `[`), the callback has the signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback has the signature `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
  * @param {String} [parserOptions.filename] File name displayed in the error message.
- * @param {String} [parserOptions.reviver] Prescribes how the value originally produced by parsing is mapped before being returned. See JSON.parse docs for more: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
+ * @param {Function} [parserOptions.reviver] A function that prescribes how the value originally produced by parsing is mapped before being returned. See JSON.parse docs for more: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
  * @returns {Array|Object} The contents of the file as JSON
  *
  * @example
@@ -42,10 +42,10 @@ import parserJson from '../parsers/json'
  *
  * console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  */
-export default function readJsonSync (path, opts_) {
+export default function readJsonSync (filePath, opts_) {
   var parserOptions
   if (typeof opts_ !== 'undefined') {
     parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
   }
-  return readDataSync(path, {parser: parserJson, parserOptions: parserOptions})
+  return readDataSync(filePath, {parser: parserJson, parserOptions: parserOptions})
 }

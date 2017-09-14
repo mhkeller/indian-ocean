@@ -11,12 +11,12 @@ import fs from 'fs'
  * var exists = io.existsSync('path/to/data.tsv')
  * console.log(exists) // `true` if file exists, `false` if not.
  */
-export default function existsSync (filename) {
+export default function existsSync (filePath) {
   if (fs.existsSync) {
-    return fs.existsSync(filename)
+    return fs.existsSync(filePath)
   } else {
     try {
-      fs.accessSync(filename)
+      fs.accessSync(filePath)
       return true
     } catch (ex) {
       return false

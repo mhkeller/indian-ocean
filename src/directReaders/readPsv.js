@@ -23,12 +23,12 @@ import parserPsv from '../parsers/psv'
  *   console.log(data) // Json data with casted values
  * })
  */
-export default function readPsv (path, opts_, cb) {
+export default function readPsv (filePath, opts_, cb) {
   var parserOptions
   if (typeof cb === 'undefined') {
     cb = opts_
   } else {
     parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
   }
-  readData(path, {parser: parserPsv, parserOptions: parserOptions}, cb)
+  readData(filePath, {parser: parserPsv, parserOptions: parserOptions}, cb)
 }

@@ -10,7 +10,7 @@ import _ from 'underscore'
  *
  * Supported formats / extensions:
  *
- * * `.json` Array of objects
+ * * `.json` Array of objects or object
  * * `.csv` Comma-separated
  * * `.tsv` Tab-separated
  * * `.psv` Pipe-separated
@@ -19,16 +19,17 @@ import _ from 'underscore'
  * * `.txt` Text file (a string)
  * * other All others are read as a text file
  *
- * *Note: Does not currently support `.dbf` files. `.yaml` and `.yml` formats are read with js-yaml's `.load` method, which has no security checking. See js-yaml library for more secure options.*
+ * *Note: Does not currently support `.dbf` files.
  *
  * @function readData
  * @param {String} filePath Input file path
- * @param {Object|Function} [parserOptions] Optional. Set this as a function as a shorthand for `map`.
- * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function.
- * @param {Function} [parserOptions.map] Transformation function. Takes `(fileString, parserOptions)` where `parserOptions` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.
- * @param {Function} [parserOptions.reviver] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
- * @param {Function} [parserOptions.filename] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
- * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {String|Function|Object} [parserOptions.parser] This can be a string that is the file's delimiter, a function that returns JSON, or, for convenience, can also be a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function. See `parsers` in library source for examples.
+ * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
+ * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJson} for details.
+ * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJson} for details.
+ * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYaml} for details.
+ * @param {Function} callback Has signature `(err, data)`
  *
  * @example
  * io.readData('path/to/data.tsv', function (err, data) {

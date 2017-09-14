@@ -6568,7 +6568,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * @function extend
  * @param {Boolean} [deepExtend] Optional, set to `true` to merge recursively.
  * @param {Object} destination The object to modify
- * @param {Object} source The object whose contents to take
+ * @param {Object} source The object whose keys to take
  * @param {Object} [source2] Optional, You can add any number of objects as arguments.
  * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
  *
@@ -6681,11 +6681,11 @@ function extend$1() {
 }
 
 /**
- * A more semantic convenience function. Delegates to {@link helpers#extend} and passes `true` as the first argument. Recursively merge the contents of two or more objects together into the first object.
+ * A more semantic convenience function. Delegates to {@link extend} and passes `true` as the first argument. Deep merge the contents of two or more objects together into the first object.
  *
  * @function deepExtend
  * @param {Object} destination The object to modify
- * @param {Object} source The object whose contents to take
+ * @param {Object} source The object whose keys to take
  * @param {Object} [source2] Optional, You can add any number of objects as arguments.
  * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
  *
@@ -6735,37 +6735,42 @@ function extname(filename) {
 }
 
 /**
- * Given a `fileName` return its file extension. Used internally by `.discernPaser` and `.discernFileFormatter`.
+ * Given a `filePath` return the file's extension. Used internally by {@link discernParser} and {@link discernFileFormatter}. Returns `false` for files without an extension, including dotfiles
  *
  * @function discernFormat
  * @param {String} filePath Input file path
- * @returns {String} the file's extension
+ * @returns {String} The file's extension
  *
  * @example
  * var format = io.discernFormat('path/to/data.csv')
  * console.log(format) // 'csv'
+ *
+ * @example
+ * var format = io.discernFormat('path/to/.dotfile')
+ * console.log(format) // false
  */
-function discernFormat(fileName) {
-  var extension = extname(fileName);
-  if (extension === '') return false;
+function discernFormat(filePath) {
+  var ext = extname(filePath);
+  if (ext === '') return false;
 
-  var formatName = extension.slice(1);
+  // Chop '.' off extension returned by extname
+  var formatName = ext.slice(1);
   return formatName;
 }
 
 /**
- * Returns a formatter that will format json data to file type specified by the extension in `fileName`. Used internally by `.writeData` and `.writeDataSync`.
+ * Returns a formatter that will format json data to file type specified by the extension in `filePath`. Used internally by {@link writeData} and {@link writeDataSync}.
  *
  * @function discernFileFormatter
  * @param {String} filePath Input file path
- * @returns {Object} a formatter that can write the file
+ * @returns {Function} A formatter function that will write the extension format
  *
  * @example
  * var formatter = io.discernFileFormatter('path/to/data.tsv')
  * var csv = formatter(json)
  */
-function discernFileFormatter(fileName) {
-  var format = discernFormat(fileName);
+function discernFileFormatter(filePath) {
+  var format = discernFormat(filePath);
   var formatter = formatters[format];
   // If we don't have a parser for this format, return as text
   if (typeof formatter === 'undefined') {
@@ -8695,7 +8700,7 @@ var aml = function (str, parserOptions) {
   var map = parserOptions.map || identity;
   delete parserOptions.map;
   var data = archieml.load(str, parserOptions);
-  return map(data, map);
+  return map(data);
 };
 
 var parsers = {
@@ -8715,12 +8720,12 @@ formatsList.forEach(function (format) {
 });
 
 /**
- * Given a `fileName` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimter string as the second argument, return a parser for that delimiter regardless of `fileName`. Used internally by `.readData` and `.readDataSync`.
+ * Given a `filePath` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimter string as the second argument, return a parser for that delimiter regardless of `filePath`. Used internally by {@link readData} and {@link readDataSync}.
  *
  * @function discernParser
- * @param {String} filePath Input file path
- * @param {String} delimiter Alternative usage is to pass a delimiter string. Delegates to `dsv.dsvFormat`.
- * @returns {Object} a parser that can read the file
+ * @param {String} [filePath] Input file path
+ * @param {String} [delimiter] Alternative usage is to pass a delimiter string. Delegates to `dsv.dsvFormat`.
+ * @returns {Function} A parser that can read the file
  *
  * @example
  * var parser = io.discernParser('path/to/data.csv')
@@ -8728,11 +8733,11 @@ formatsList.forEach(function (format) {
  * var parser = io.discernParser(null, '_')
  * var json = parser('path/to/data.usv')
  */
-function discernParser(fileName, delimiter) {
+function discernParser(filePath, delimiter) {
   if (delimiter) {
     return dsvFormat(delimiter).parse;
   }
-  var format = discernFormat(fileName);
+  var format = discernFormat(filePath);
   var parser = parsers[format];
   // If we don't have a parser for this format, return as text
   if (typeof parser === 'undefined') {
@@ -8747,7 +8752,7 @@ function discernParser(fileName, delimiter) {
  * @function extMatchesStr
  * @param {String} filePath Input file path
  * @param {String} extension The extension to test. An empty string will match a file with no extension.
- * @returns {Boolean} whether The extension matched or not.
+ * @returns {Boolean} Whether it matched or not.
  *
  * @example
  * var matches = io.extMatchesStr('path/to/data.tsv', 'tsv')
@@ -8776,8 +8781,8 @@ function getParser(delimiterOrParser) {
  *
  * @function matchesRegExp
  * @param {String} filePath Input file path or file path.
- * @param {RegExp} RegEx The RegEx to match with.
- * @returns {Boolean} whether The string matches the RegEx.
+ * @param {RegExp} RegExp The Regular Expression to match against.
+ * @returns {Boolean} Whether they match.
  *
  * @example
  * var matches = io.matchesRegExp('.gitignore', /\.gitignore/)
@@ -8786,8 +8791,8 @@ function getParser(delimiterOrParser) {
  * var matches = io.matchesRegExp('data/final-data/basic.csv', /\/final-data\//)
  * console.log(matches) // `true`
  */
-function matchesRegExp(str, regEx) {
-  return regEx.test(str);
+function matchesRegExp(filePath, regEx) {
+  return regEx.test(filePath);
 }
 
 function isRegExp$1(obj) {
@@ -8795,11 +8800,11 @@ function isRegExp$1(obj) {
 }
 
 /**
- * Test whether a file name or path matches a given matcher. Delegates to {@link helpers#extMatches} if `matcher` is a string` and tests only against the file name extension. Delegates to {@link helpers#extMatchRegEx} if matcher is a Regular Expression and tests against entire string, which is usefulf or testing the full file path.
+ * Test whether a file name or path matches a given matcher. Delegates to {@link extMatchesStr} if `matcher` is a string` and tests only against the file name extension. Delegates to {@link matchesRegExp} if matcher is a Regular Expression and tests against entire string, which is usefulf or testing the full file path.
  *
  * @function matches
  * @param {String} filePath Input file path or path to the file.
- * @returns {String} matcher The string to match with.
+ * @returns {String|RegExp} matcher The string or Regular Expression to match against.
  *
  * @example
  * var matches = io.matches('path/to/data.tsv', 'tsv')
@@ -8811,11 +8816,11 @@ function isRegExp$1(obj) {
  * var matches = io.matches('file/with/no-extention', '') // Nb. Dot files are treated as files with no extention
  * console.log(matches) // `true`
  */
-function matches(fileName, matcher) {
+function matches(filePath, matcher) {
   if (typeof matcher === 'string') {
-    return extMatchesStr(fileName, matcher);
+    return extMatchesStr(filePath, matcher);
   } else if (isRegExp$1(matcher)) {
-    return matchesRegExp(fileName, matcher);
+    return matchesRegExp(filePath, matcher);
   } else {
     throw new Error('Matcher argument must be String or Regular Expression');
   }

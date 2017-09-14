@@ -13,8 +13,8 @@ import fs from 'fs'
  * })
  *
  */
-export default function exists (filename, cb) {
-  fs.access(filename, function (err) {
+export default function exists (filePath, cb) {
+  fs.access(filePath, function (err) {
     var exists
     if (err && err.code === 'ENOENT') {
       exists = false

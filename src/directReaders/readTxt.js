@@ -20,12 +20,12 @@ import parserTxt from '../parsers/txt'
  *   console.log(data) // string data with values replaced
  * })
  */
-export default function readTxt (path, opts_, cb) {
+export default function readTxt (filePath, opts_, cb) {
   var parserOptions
   if (typeof cb === 'undefined') {
     cb = opts_
   } else {
     parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
   }
-  readData(path, {parser: parserTxt, parserOptions: parserOptions}, cb)
+  readData(filePath, {parser: parserTxt, parserOptions: parserOptions}, cb)
 }

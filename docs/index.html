@@ -508,11 +508,11 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readData'>
-      <a href="#readData">#</a> io.<span class="bold">readData</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#readData">#</a> io.<span class="bold">readData</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/readers/readData.js#L80-L135' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/readers/readData.js#L81-L136' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -522,7 +522,7 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
   <p>Asynchronously read data given a path ending in the file format.</p>
 <p>Supported formats / extensions:</p>
 <ul>
-<li><code>.json</code> Array of objects</li>
+<li><code>.json</code> Array of objects or object</li>
 <li><code>.csv</code> Comma-separated</li>
 <li><code>.tsv</code> Tab-separated</li>
 <li><code>.psv</code> Pipe-separated</li>
@@ -531,7 +531,7 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
 <li><code>.txt</code> Text file (a string)</li>
 <li>other All others are read as a text file</li>
 </ul>
-<p><em>Note: Does not currently support <code>.dbf</code> files. <code>.yaml</code> and <code>.yml</code> formats are read with js-yaml's <code>.load</code> method, which has no security checking. See js-yaml library for more secure options.</em></p>
+<p>*Note: Does not currently support <code>.dbf</code> files.</p>
 
 
   
@@ -561,10 +561,8 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>parserOptions</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)?)</code>
-	    Optional. Set this as a function as a shorthand for 
-<code>map</code>
-.
+            <span class='code bold'>parserOptions</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)</code>
+	    Optional map function or an object specifying the optional options below.
 
           </div>
           
@@ -584,46 +582,59 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
                 <tr>
                   <td class='break-word'><span class='code bold'>parserOptions.parser</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?</code>
                   </td>
-                  <td class='break-word'><span>optional This can be a string that is the file's delimiter or a function that returns the json. See 
-<code>parsers</code>
- in library source for examples. For convenience, this can also take a dsv object such as 
+                  <td class='break-word'><span>This can be a string that is the file's delimiter, a function that returns JSON, or, for convenience, can also be a dsv object such as 
 <code>dsv.dsv('_')</code>
  or any object that has a 
 <code>parse</code>
- method that's a function.
+ method that's a function. See 
+<code>parsers</code>
+ in library source for examples.
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>parserOptions.map</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
-                  <td class='break-word'><span>Transformation function. Takes 
-<code>(fileString, parserOptions)</code>
- where 
-<code>parserOptions</code>
- is the hash you pass in minus the 
-<code>parser</code>
- key. See 
-<a href="shorthandReaders">shorthandReaders</a>
- for specifics.
+                  <td class='break-word'><span>Transformation function. See 
+<a href="#directReaders">directReaders</a>
+ for format-specific function signature. In brief, tabular formats get passed a 
+<code>(row, i, columns)</code>
+ and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with 
+<code>(row, i)</code>
+ and return the modified row. JSON objects are mapped with Underscore's 
+<code>_.mapObject</code>
+ with 
+<code>(value, key)</code>
+ and return the modified value.
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>parserOptions.reviver</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
-                  <td class='break-word'><span>Used in 
-<a href="shorthandReaders.readJson">shorthandReaders.readJson</a>
-. Otherwise ignored.
+                  <td class='break-word'><span>Used for JSON files, otherwise ignored. See 
+<a href="#readJson">readJson</a>
+ for details.
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>parserOptions.filename</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
-                  <td class='break-word'><span>Used in 
-<a href="shorthandReaders.readJson">shorthandReaders.readJson</a>
-. Otherwise ignored.
+                  <td class='break-word'><span>Used for JSON files, otherwise ignored. See 
+<a href="#readJson">readJson</a>
+ for details.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>parserOptions.loadMethod</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+                  
+                    (default <code>&quot;safeLoad&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>Used for for YAML files, otherwise ignored. See 
+<a href="#readYaml">readYaml</a>
+ for details.
 </span></td>
                 </tr>
               
@@ -635,7 +646,8 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>callback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    callback used when read data is read, takes error (if any) and the data read
+	    Has signature 
+<code>(err, data)</code>
 
           </div>
           
@@ -720,14 +732,14 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/readers/readDataSync.js#L61-L110' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/readers/readDataSync.js#L62-L111' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
   </div>
   
 
-  <p>Syncronous version of <a href="#readData">readData</a></p>
+  <p>Syncronous version of <a href="#readData">readData</a>. Read data given a path ending in the file format.</p>
 
 
   
@@ -766,7 +778,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>parserOptions</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)</code>
-	    Can be a map function, or an object specifying other options.
+	    Optional map function or an object specifying the optional options below.
 
           </div>
           
@@ -786,46 +798,59 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
                 <tr>
                   <td class='break-word'><span class='code bold'>parserOptions.parser</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?</code>
                   </td>
-                  <td class='break-word'><span>optional This can be a string that is the file's delimiter or a function that returns the json. See 
-<code>parsers</code>
- in library source for examples. For convenience, this can also take a dsv object such as 
+                  <td class='break-word'><span>This can be a string that is the file's delimiter, a function that returns JSON, or, for convenience, can also be a dsv object such as 
 <code>dsv.dsv('_')</code>
  or any object that has a 
 <code>parse</code>
- method that's a function.
+ method that's a function. See 
+<code>parsers</code>
+ in library source for examples.
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>parserOptions.map</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
-                  <td class='break-word'><span>Transformation function. Takes 
-<code>(fileString, options)</code>
- where 
-<code>options</code>
- is the hash you pass in minus the 
-<code>parser</code>
- key. See 
-<a href="shorthandReaders">shorthandReaders</a>
- for specifics.
+                  <td class='break-word'><span>Transformation function. See 
+<a href="#directReaders">directReaders</a>
+ for format-specific function signature. In brief, tabular formats get passed a 
+<code>(row, i, columns)</code>
+ and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with 
+<code>(row, i)</code>
+ and return the modified row. JSON objects are mapped with Underscore's 
+<code>_.mapObject</code>
+ with 
+<code>(value, key)</code>
+ and return the modified value.
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>parserOptions.reviver</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
-                  <td class='break-word'><span>Used in 
-<a href="shorthandReaders.readJson">shorthandReaders.readJson</a>
-. Otherwise ignored.
+                  <td class='break-word'><span>Used for JSON files, otherwise ignored. See 
+<a href="#readJson">readJson</a>
+ for details.
 </span></td>
                 </tr>
               
                 <tr>
                   <td class='break-word'><span class='code bold'>parserOptions.filename</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
-                  <td class='break-word'><span>Used in 
-<a href="shorthandReaders.readJson">shorthandReaders.readJson</a>
-. Otherwise ignored.
+                  <td class='break-word'><span>Used for JSON files, otherwise ignored. See 
+<a href="#readJson">readJson</a>
+ for details.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>parserOptions.loadMethod</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+                  
+                    (default <code>&quot;safeLoad&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>Used for for YAML files, otherwise ignored. See 
+<a href="#readYaml">readYaml</a>
+ for details.
 </span></td>
                 </tr>
               
@@ -907,14 +932,14 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/readers/readdirFilter.js#L29-L36' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/readers/readdirFilter.js#L29-L36' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
   </div>
   
 
-  <p>Get a list of a directory's files and folders if certain critera are met.</p>
+  <p>Asynchronously get a list of a directory's files and folders if certain critera are met.</p>
 
 
   
@@ -945,7 +970,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    Optional, filter options, see below
+	    Filter options, see below
 
           </div>
           
@@ -963,19 +988,52 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
             <tbody class='mt1'>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>options.include</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>>)</code>
+                  <td class='break-word'><span class='code bold'>options.fullPath</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+                  
+                    (default <code>false</code>)
                   </td>
-                  <td class='break-word'><span>If given a string, return files that have that string as their extension. If given a Regular Expression, return the file that matches the pattern. Can also take a list of both. List matching behavior is described in 
-<code>includeAll</code>
+                  <td class='break-word'><span>If 
+<code>true</code>
+, return the full path of the file, otherwise just return the file name.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.skipFiles</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+                  
+                    (default <code>false</code>)
+                  </td>
+                  <td class='break-word'><span>If 
+<code>true</code>
+, omit files from the results.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.skipDirectories</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+                  
+                    (default <code>false</code>)
+                  </td>
+                  <td class='break-word'><span>If 
+<code>true</code>
+, omit directories from the results.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.include</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>)>)</code>
+                  </td>
+                  <td class='break-word'><span>If given a string, return files that have that string as their extension. If given a Regular Expression, return the files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in 
+<code>includeMatchAll</code>
 .
 </span></td>
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>options.exclude</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>>)</code>
+                  <td class='break-word'><span class='code bold'>options.exclude</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>)>)</code>
                   </td>
-                  <td class='break-word'><span>If given a string, return files that do not have that string as their extension. If given a Regular Expression, return the file that matches the pattern. Can also take a list of both. List matching behavior is described in 
-<code>excludeAll</code>
+                  <td class='break-word'><span>If given a string, return files that do not have that string as their extension. If given a Regular Expression, omit files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in 
+<code>excludeMatchAll</code>
 .
 </span></td>
                 </tr>
@@ -998,39 +1056,6 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
 </span></td>
                 </tr>
               
-                <tr>
-                  <td class='break-word'><span class='code bold'>options.fullPath</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
-                  
-                    (default <code>false</code>)
-                  </td>
-                  <td class='break-word'><span>If 
-<code>true</code>
- the full path of the file, otherwise return just the file name.
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>options.skipFiles</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
-                  
-                    (default <code>false</code>)
-                  </td>
-                  <td class='break-word'><span>If 
-<code>true</code>
-, only include directories.
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>options.skipDirectories</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
-                  
-                    (default <code>false</code>)
-                  </td>
-                  <td class='break-word'><span>If 
-<code>true</code>
-, only include files.
-</span></td>
-                </tr>
-              
             </tbody>
           </table>
           
@@ -1039,8 +1064,8 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>callback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    Callback fired with signature of 
-<code>(err, files)</code>
+	    Has signature 
+<code>(err, data)</code>
  where 
 <code>files</code>
  is a list of matching file names.
@@ -1087,18 +1112,18 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='readdirFilterSync'>
-      <a href="#readdirFilterSync">#</a> io.<span class="bold">readdirFilterSync</span>(dirPath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)
+      <a href="#readdirFilterSync">#</a> io.<span class="bold">readdirFilterSync</span>(dirPath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/readers/readdirFilterSync.js#L30-L32' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/readers/readdirFilterSync.js#L30-L32' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
   </div>
   
 
-  <p>Synchronously get a list of a directory's files and folders if certain critera are met.</p>
+  <p>Syncronous version of <a href="#readdirFilter">readdirFilter</a>. Get a list of a directory's files and folders if certain critera are met.</p>
 
 
   
@@ -1115,7 +1140,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>></code>:
-        The matching file names
+        List of matching file names
 
       
     
@@ -1136,8 +1161,8 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
-	    Optional, filter options, see below
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    Filter options, see below
 
           </div>
           
@@ -1155,19 +1180,52 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
             <tbody class='mt1'>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>options.include</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>>)?</code>
+                  <td class='break-word'><span class='code bold'>options.fullPath</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+                  
+                    (default <code>false</code>)
                   </td>
-                  <td class='break-word'><span>Optional, if given a string, return files that have that string as their extension. If given a Regular Expression, return the file that matches the pattern. Can also take a list of both. List matching behavior is described in 
-<code>includeAll</code>
+                  <td class='break-word'><span>If 
+<code>true</code>
+, return the full path of the file, otherwise just return the file name.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.skipFiles</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+                  
+                    (default <code>false</code>)
+                  </td>
+                  <td class='break-word'><span>If 
+<code>true</code>
+, omit files from the results.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.skipDirectories</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+                  
+                    (default <code>false</code>)
+                  </td>
+                  <td class='break-word'><span>If 
+<code>true</code>
+, omit directories from the results.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.include</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>)>)</code>
+                  </td>
+                  <td class='break-word'><span>If given a string, return files that have that string as their extension. If given a Regular Expression, return the files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in 
+<code>includeMatchAll</code>
 .
 </span></td>
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>options.exclude</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>>)?</code>
+                  <td class='break-word'><span class='code bold'>options.exclude</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a>)>)</code>
                   </td>
-                  <td class='break-word'><span>Optional, if given a string, return files that do not have that string as their extension. If given a Regular Expression, return the file that matches the pattern. Can also take a list of both. List matching behavior is described in 
-<code>excludeAll</code>
+                  <td class='break-word'><span>If given a string, return files that do not have that string as their extension. If given a Regular Expression, omit files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in 
+<code>excludeMatchAll</code>
 .
 </span></td>
                 </tr>
@@ -1177,7 +1235,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
                   
                     (default <code>false</code>)
                   </td>
-                  <td class='break-word'><span>Optional, if true, require all include conditions to be met for a file to be included.
+                  <td class='break-word'><span>If true, require all include conditions to be met for a file to be included.
 </span></td>
                 </tr>
               
@@ -1186,40 +1244,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
                   
                     (default <code>false</code>)
                   </td>
-                  <td class='break-word'><span>Optional, if true, require all exclude conditions to be met for a file to be excluded.
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>options.fullPath</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
-                  
-                    (default <code>false</code>)
-                  </td>
-                  <td class='break-word'><span>Optional, if 
-<code>true</code>
- the full path of the file, otherwise return just the file name.
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>options.skipFiles</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
-                  
-                    (default <code>false</code>)
-                  </td>
-                  <td class='break-word'><span>Optional, if 
-<code>true</code>
-, only include directories.
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>options.skipDirectories</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
-                  
-                    (default <code>false</code>)
-                  </td>
-                  <td class='break-word'><span>Optional, if 
-<code>true</code>
-, only include files.
+                  <td class='break-word'><span>If true, require all exclude conditions to be met for a file to be excluded.
 </span></td>
                 </tr>
               
@@ -1286,7 +1311,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/writers/writeData.js#L67-L99' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/writers/writeData.js#L67-L99' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1504,7 +1529,7 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/writers/writeDataSync.js#L48-L64' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/writers/writeDataSync.js#L48-L64' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1695,7 +1720,7 @@ io.writeDataSync(<span class="hljs-string">'path/to/to/data.json'</span>, jsonDa
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/writers/appendData.js#L37-L72' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/writers/appendData.js#L37-L72' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1838,7 +1863,7 @@ io.appendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, fla
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/writers/appendDataSync.js#L23-L39' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/writers/appendDataSync.js#L23-L39' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1976,7 +2001,7 @@ io.appendDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</span>,
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readAml.js#L25-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readAml.js#L25-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2077,7 +2102,7 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readAmlSync.js#L22-L28' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readAmlSync.js#L22-L28' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2171,7 +2196,7 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readDbf.js#L26-L44' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readDbf.js#L26-L44' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2275,7 +2300,7 @@ io.readDbf(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readCsv.js#L35-L43' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readCsv.js#L35-L43' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2388,7 +2413,7 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, {<span class="hl
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readCsvSync.js#L32-L38' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readCsvSync.js#L32-L38' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2496,7 +2521,7 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, {<span class="hl
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readJson.js#L70-L78' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readJson.js#L70-L78' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2534,7 +2559,7 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, {<span class="hl
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>parserOptions</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)</code>
-	    Optional map function or an object specifying options below.
+	    Optional map function or an object specifying the optional options below.
 
           </div>
           
@@ -2554,13 +2579,13 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, {<span class="hl
                 <tr>
                   <td class='break-word'><span class='code bold'>parserOptions.map</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
-                  <td class='break-word'><span>Optional map function. Called once for each row (header row skipped). If your file is an array (it tests if first non-whitespace character is a 
+                  <td class='break-word'><span>Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a 
 <code>[</code>
-), the callback has the signature 
+) with a callback signature 
 <code>(row, i)</code>
  and delegates to 
 <code>_.map</code>
-. Otherwise it's considered an object and the callback has the signature 
+. Otherwise it's considered an object and the callback the signature is 
 <code>(value, key)</code>
  and delegates to 
 <code>_.mapObject</code>
@@ -2576,9 +2601,9 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, {<span class="hl
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>parserOptions.reviver</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</code>
+                  <td class='break-word'><span class='code bold'>parserOptions.reviver</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
-                  <td class='break-word'><span>Prescribes how the value originally produced by parsing is mapped before being returned. See JSON.parse docs for more: 
+                  <td class='break-word'><span>A function that prescribes how the value originally produced by parsing is mapped before being returned. See JSON.parse docs for more: 
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter</a>
 </span></td>
                 </tr>
@@ -2685,7 +2710,7 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readJsonSync.js#L45-L51' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readJsonSync.js#L45-L51' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2731,7 +2756,7 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>parserOptions</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)</code>
-	    Optional map function or an object specifying options below.
+	    Optional map function or an object specifying the optional options below.
 
           </div>
           
@@ -2751,13 +2776,13 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
                 <tr>
                   <td class='break-word'><span class='code bold'>parserOptions.map</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
-                  <td class='break-word'><span>Optional map function. Called once for each row (header row skipped). If your file is an array (it tests if first non-whitespace character is a 
+                  <td class='break-word'><span>Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a 
 <code>[</code>
-), the callback has the signature 
+) with a callback signature 
 <code>(row, i)</code>
  and delegates to 
 <code>_.map</code>
-. Otherwise it's considered an object and the callback has the signature 
+. Otherwise it's considered an object and the callback the signature is 
 <code>(value, key)</code>
  and delegates to 
 <code>_.mapObject</code>
@@ -2773,9 +2798,9 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
                 </tr>
               
                 <tr>
-                  <td class='break-word'><span class='code bold'>parserOptions.reviver</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</code>
+                  <td class='break-word'><span class='code bold'>parserOptions.reviver</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
-                  <td class='break-word'><span>Prescribes how the value originally produced by parsing is mapped before being returned. See JSON.parse docs for more: 
+                  <td class='break-word'><span>A function that prescribes how the value originally produced by parsing is mapped before being returned. See JSON.parse docs for more: 
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter</a>
 </span></td>
                 </tr>
@@ -2847,7 +2872,7 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readPsv.js#L26-L34' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readPsv.js#L26-L34' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2951,7 +2976,7 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readPsvSync.js#L23-L29' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readPsvSync.js#L23-L29' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3050,7 +3075,7 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readTsv.js#L26-L34' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readTsv.js#L26-L34' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3154,7 +3179,7 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readTsvSync.js#L24-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readTsvSync.js#L24-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3252,7 +3277,7 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readTxt.js#L23-L31' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readTxt.js#L23-L31' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3351,7 +3376,7 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readTxtSync.js#L21-L27' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readTxtSync.js#L21-L27' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3446,7 +3471,7 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readYaml.js#L39-L47' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readYaml.js#L39-L47' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3484,7 +3509,7 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>parserOptions</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)</code>
-	    Optional map function or an object specifying options below.
+	    Optional map function or an object specifying the optional options below.
 
           </div>
           
@@ -3525,7 +3550,7 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
                   </td>
                   <td class='break-word'><span>The js-yaml library allows you to specify a more liberal 
 <code>"load"</code>
- method which will accept RegExp and function values in your file.
+ option which will accept RegExp and function values in your file.
 </span></td>
                 </tr>
               
@@ -3601,7 +3626,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/directReaders/readYamlSync.js#L36-L42' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readYamlSync.js#L36-L42' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3647,7 +3672,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>parserOptions</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)</code>
-	    Optional map function or an object specifying options below.
+	    Optional map function or an object specifying the optional options below.
 
           </div>
           
@@ -3766,7 +3791,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/converters/convertDbfToData.js#L22-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/converters/convertDbfToData.js#L22-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3887,7 +3912,7 @@ io.convertDbfToData(<span class="hljs-string">'path/to/data.dbf'</span>, <span c
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/deepExtend.js#L34-L38' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/deepExtend.js#L34-L38' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4004,7 +4029,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/discernFileFormatter.js#L15-L23' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/discernFileFormatter.js#L15-L23' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4083,7 +4108,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/discernFormat.js#L18-L25' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/discernFormat.js#L18-L25' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4166,7 +4191,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/discernParser.js#L19-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/discernParser.js#L19-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4258,7 +4283,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/exists.js#L16-L27' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/exists.js#L16-L27' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4340,7 +4365,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/existsSync.js#L14-L25' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/existsSync.js#L14-L25' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4419,7 +4444,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/extend.js#L50-L118' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/extend.js#L50-L118' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4563,7 +4588,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/extMatchesStr.js#L15-L19' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/extMatchesStr.js#L15-L19' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4651,7 +4676,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/makeDirectories.js#L17-L21' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/makeDirectories.js#L17-L21' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4733,7 +4758,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/makeDirectoriesSync.js#L14-L16' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/makeDirectoriesSync.js#L14-L16' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4803,7 +4828,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/matches.js#L22-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/matches.js#L22-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4888,7 +4913,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550/src/helpers/matchesRegExp.js#L16-L18' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/matchesRegExp.js#L16-L18' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     

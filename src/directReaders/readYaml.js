@@ -6,9 +6,9 @@ import parserYaml from '../parsers/yaml'
  *
  * @function readYaml
  * @param {String} filePath Input file path
- * @param {Function|Object} [parserOptions] Optional map function or an object specifying options below.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
  * @param {Function} [parserOptions.map] Optional map function. Called once for each row (header row skipped). If your file is an array (it tests if first non-whitespace character is a `[`), the callback has the signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback has the signature `(value, key)` and delegates to `_.mapObject`. See example below.
- * @param {String} [parserOptions.loadMethod="safeLoad"] The js-yaml library allows you to specify a more liberal `"load"` method which will accept RegExp and function values in your file.
+ * @param {String} [parserOptions.loadMethod="safeLoad"] The js-yaml library allows you to specify a more liberal `"load"` option which will accept RegExp and function values in your file.
  * @param {Function} callback Has signature `(err, data)`
  *
  * @example
@@ -36,12 +36,12 @@ import parserYaml from '../parsers/yaml'
  *   console.log(data) // json data with `height` values doubled
  * })
  */
-export default function readYaml (path, opts_, cb) {
+export default function readYaml (filePath, opts_, cb) {
   var parserOptions
   if (typeof cb === 'undefined') {
     cb = opts_
   } else {
     parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
   }
-  readData(path, {parser: parserYaml, parserOptions: parserOptions}, cb)
+  readData(filePath, {parser: parserYaml, parserOptions: parserOptions}, cb)
 }

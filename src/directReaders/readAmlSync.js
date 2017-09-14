@@ -19,10 +19,10 @@ import parserAml from '../parsers/aml'
  * })
  * console.log(data) // json data with height multiplied by 2
  */
-export default function readAmlSync (path, opts_) {
+export default function readAmlSync (filePath, opts_) {
   var parserOptions
   if (typeof opts_ !== 'undefined') {
     parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
   }
-  return readDataSync(path, {parser: parserAml, parserOptions: parserOptions})
+  return readDataSync(filePath, {parser: parserAml, parserOptions: parserOptions})
 }

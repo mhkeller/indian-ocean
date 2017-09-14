@@ -29,10 +29,10 @@ import parserCsv from '../parsers/csv'
  * }})
  * console.log(data) // Json data with casted values
  */
-export default function readCsvSync (path, opts_) {
+export default function readCsvSync (filePath, opts_) {
   var parserOptions
   if (typeof opts_ !== 'undefined') {
     parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
   }
-  return readDataSync(path, {parser: parserCsv, parserOptions: parserOptions})
+  return readDataSync(filePath, {parser: parserCsv, parserOptions: parserOptions})
 }

@@ -19,11 +19,11 @@ import isRegExp from '../utils/isRegExp'
  * var matches = io.matches('file/with/no-extention', '') // Nb. Dot files are treated as files with no extention
  * console.log(matches) // `true`
  */
-export default function matches (fileName, matcher) {
+export default function matches (filePath, matcher) {
   if (typeof matcher === 'string') {
-    return extMatchesStr(fileName, matcher)
+    return extMatchesStr(filePath, matcher)
   } else if (isRegExp(matcher)) {
-    return matchesRegExp(fileName, matcher)
+    return matchesRegExp(filePath, matcher)
   } else {
     throw new Error('Matcher argument must be String or Regular Expression')
   }

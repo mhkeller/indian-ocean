@@ -6,5 +6,5 @@ export default function (str, parserOptions) {
   var map = parserOptions.map || identity
   delete parserOptions.map
   var data = archieml.load(str, parserOptions)
-  return map(data, map)
+  return map(data)
 }

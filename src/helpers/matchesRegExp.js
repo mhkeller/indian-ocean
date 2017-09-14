@@ -13,6 +13,6 @@
  * var matches = io.matchesRegExp('data/final-data/basic.csv', /\/final-data\//)
  * console.log(matches) // `true`
  */
-export default function matchesRegExp (str, regEx) {
-  return regEx.test(str)
+export default function matchesRegExp (filePath, regEx) {
+  return regEx.test(filePath)
 }

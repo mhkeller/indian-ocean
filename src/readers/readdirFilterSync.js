@@ -1,19 +1,19 @@
 import readdir from './readdir'
 
 /**
- * Synchronously get a list of a directory's files and folders if certain critera are met.
+ * Syncronous version of {@link readdirFilter}. Get a list of a directory's files and folders if certain critera are met.
  *
  * @function readdirFilterSync
  * @param {String} dirPath The directory to read from
- * @param {Object} [options] Optional, filter options, see below
- * @param {String|RegExp|Array<String>|Array<RegExp>} [options.include] Optional, if given a string, return files that have that string as their extension. If given a Regular Expression, return the file that matches the pattern. Can also take a list of both. List matching behavior is described in `includeAll`.
- * @param {String|RegExp|Array<String>|Array<RegExp>} [options.exclude] Optional, if given a string, return files that do not have that string as their extension. If given a Regular Expression, return the file that matches the pattern. Can also take a list of both. List matching behavior is described in `excludeAll`.
- * @param {Boolean} [options.includeMatchAll=false] Optional, if true, require all include conditions to be met for a file to be included.
- * @param {Boolean} [options.excludeMatchAll=false] Optional, if true, require all exclude conditions to be met for a file to be excluded.
- * @param {Boolean} [options.fullPath=false] Optional, if `true` the full path of the file, otherwise return just the file name.
- * @param {Boolean} [options.skipFiles=false] Optional, if `true`, only include directories.
- * @param {Boolean} [options.skipDirectories=false] Optional, if `true`, only include files.
- * @returns {Array<String>} The matching file names
+ * @param {Object} options Filter options, see below
+ * @param {Boolean} [options.fullPath=false] If `true`, return the full path of the file, otherwise just return the file name.
+ * @param {Boolean} [options.skipFiles=false] If `true`, omit files from the results.
+ * @param {Boolean} [options.skipDirectories=false] If `true`, omit directories from the results.
+ * @param {String|RegExp|Array<String|RegExp>} options.include If given a string, return files that have that string as their extension. If given a Regular Expression, return the files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `includeMatchAll`.
+ * @param {String|RegExp|Array<String|RegExp>} options.exclude If given a string, return files that do not have that string as their extension. If given a Regular Expression, omit files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `excludeMatchAll`.
+ * @param {Boolean} [options.includeMatchAll=false] If true, require all include conditions to be met for a file to be included.
+ * @param {Boolean} [options.excludeMatchAll=false] If true, require all exclude conditions to be met for a file to be excluded.
+ * @returns {Array<String>} List of matching file names
  *
  * @example
  * // dir contains `data-0.tsv`, `data-0.json`, `data-0.csv`, `data-1.csv`, `.hidden-file`
