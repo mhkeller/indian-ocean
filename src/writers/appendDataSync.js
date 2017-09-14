@@ -9,11 +9,10 @@ import extend from '../helpers/extend'
  * Synchronous version of {@link writers#appendData}. See that function for supported formats
  *
  * @function appendDataSync
- * @param {String} filePath Input file path
- * @param {Object} [options] Optional config object, see below
- * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
- * @param {Object} data the data to write
- * @returns {Object} the data that was written
+ * @param {String} filePath File to append to
+ * @param {Array|Object} data The new data to append
+ * @param {Object} [options] Optional options object passed to {@link writeData}. See that function for format-specific options.
+ * @returns {Object} The combined data that was written
  *
  * @example
  * io.appendDataSync('path/to/data.json', jsonData)

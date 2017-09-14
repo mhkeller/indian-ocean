@@ -13,9 +13,9 @@ import _ from 'underscore'
  * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
  * @param {String|Function|Object} [parserOptions.parser] This can be a string that is the file's delimiter, a function that returns JSON, or, for convenience, can also be a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function. See `parsers` in library source for examples.
  * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
- * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJson} for details.
- * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJson} for details.
- * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYaml} for details.
+ * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJsonSync} for details.
+ * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJsonSync} for details.
+ * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYamlSync} for details.
  * @returns {Object} the contents of the file as JSON
  *
  * @example

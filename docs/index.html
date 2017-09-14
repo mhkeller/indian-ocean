@@ -512,7 +512,7 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/readers/readData.js#L81-L136' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/readers/readData.js#L81-L136' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -732,7 +732,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/readers/readDataSync.js#L62-L111' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/readers/readDataSync.js#L62-L111' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -829,7 +829,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
                   <td class='break-word'><span class='code bold'>parserOptions.reviver</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
                   <td class='break-word'><span>Used for JSON files, otherwise ignored. See 
-<a href="#readJson">readJson</a>
+<a href="#readJsonSync">readJsonSync</a>
  for details.
 </span></td>
                 </tr>
@@ -838,7 +838,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
                   <td class='break-word'><span class='code bold'>parserOptions.filename</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
                   </td>
                   <td class='break-word'><span>Used for JSON files, otherwise ignored. See 
-<a href="#readJson">readJson</a>
+<a href="#readJsonSync">readJsonSync</a>
  for details.
 </span></td>
                 </tr>
@@ -849,7 +849,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
                     (default <code>&quot;safeLoad&quot;</code>)
                   </td>
                   <td class='break-word'><span>Used for for YAML files, otherwise ignored. See 
-<a href="#readYaml">readYaml</a>
+<a href="#readYamlSync">readYamlSync</a>
  for details.
 </span></td>
                 </tr>
@@ -932,7 +932,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/readers/readdirFilter.js#L29-L36' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/readers/readdirFilter.js#L29-L36' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1116,7 +1116,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/readers/readdirFilterSync.js#L30-L32' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/readers/readdirFilterSync.js#L30-L32' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1307,11 +1307,11 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='writeData'>
-      <a href="#writeData">#</a> io.<span class="bold">writeData</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#writeData">#</a> io.<span class="bold">writeData</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, data: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>), options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/writers/writeData.js#L67-L99' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/writers/writeData.js#L67-L99' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1357,8 +1357,8 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>data</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    the data to write
+            <span class='code bold'>data</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>))</code>
+	    Data to write
 
           </div>
           
@@ -1367,7 +1367,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
-	    Optional config object, see below
+	    Optional options object, see below
 
           </div>
           
@@ -1396,7 +1396,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
                 <tr>
                   <td class='break-word'><span class='code bold'>options.replacer</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)?</code>
                   </td>
-                  <td class='break-word'><span>Used for JSON formats. Filter your objects before writing. Examples below. See JSON.stringify docs for more info 
+                  <td class='break-word'><span>Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info 
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify</a>
 </span></td>
                 </tr>
@@ -1448,12 +1448,10 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>callback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    callback of 
-<code>(err, dataString)</code>
- where 
-<code>err</code>
- is any error and 
-<code>dataString</code>
+	    Has signature 
+<code>(err, dataStr)</code>
+. 
+<code>dataStr</code>
  is the data that was written out as a string
 
           </div>
@@ -1525,11 +1523,11 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='writeDataSync'>
-      <a href="#writeDataSync">#</a> io.<span class="bold">writeDataSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+      <a href="#writeDataSync">#</a> io.<span class="bold">writeDataSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, data: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>), options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/writers/writeDataSync.js#L48-L64' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/writers/writeDataSync.js#L48-L64' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1554,7 +1552,7 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>:
-        the data string that was written
+        The that was written as a string
 
       
     
@@ -1575,8 +1573,17 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
       
         <div class='space-bottom0'>
           <div>
+            <span class='code bold'>data</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>))</code>
+	    Data to write
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
-	    Optional config object, see below
+	    Optional options object, see below
 
           </div>
           
@@ -1605,7 +1612,7 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
                 <tr>
                   <td class='break-word'><span class='code bold'>options.replacer</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)?</code>
                   </td>
-                  <td class='break-word'><span>Used for JSON formats. Filter your objects before writing. Examples below. See JSON.stringify docs for more info 
+                  <td class='break-word'><span>Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info 
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify</a>
 </span></td>
                 </tr>
@@ -1651,15 +1658,6 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
               
             </tbody>
           </table>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>data</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    the data to write
-
-          </div>
           
         </div>
       
@@ -1716,18 +1714,18 @@ io.writeDataSync(<span class="hljs-string">'path/to/to/data.json'</span>, jsonDa
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='appendData'>
-      <a href="#appendData">#</a> io.<span class="bold">appendData</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
+      <a href="#appendData">#</a> io.<span class="bold">appendData</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, data: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/writers/appendData.js#L37-L72' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/writers/appendData.js#L36-L71' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
   </div>
   
 
-  <p>Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with <code>_.extend</code>. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).</p>
+  <p>Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with <a href="#extend">extend</a>. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).</p>
 <p>Supported formats:</p>
 <ul>
 <li><code>.json</code> Array of objects</li>
@@ -1758,7 +1756,7 @@ io.writeDataSync(<span class="hljs-string">'path/to/to/data.json'</span>, jsonDa
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    Input file path
+	    File to append to
 
           </div>
           
@@ -1766,8 +1764,8 @@ io.writeDataSync(<span class="hljs-string">'path/to/to/data.json'</span>, jsonDa
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>data</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    the data to write
+            <span class='code bold'>data</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code>
+	    The new data to append
 
           </div>
           
@@ -1776,47 +1774,20 @@ io.writeDataSync(<span class="hljs-string">'path/to/to/data.json'</span>, jsonDa
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
-	    Optional config object, see below
+	    Optional options object passed to 
+<a href="#writeData">writeData</a>
+. See that function for format-specific options.
 
           </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>options.makeDirectories</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
-                  
-                    (default <code>false</code>)
-                  </td>
-                  <td class='break-word'><span>If true, create intermediate directories to your data file.
-</span></td>
-                </tr>
-              
-            </tbody>
-          </table>
           
         </div>
       
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>callback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    callback of 
+	    Has signature 
 <code>(err, data)</code>
- where 
-<code>err</code>
- is any error and 
-<code>data</code>
- is the data that was written out
+. Data is the combined data that was written out
 
           </div>
           
@@ -1859,11 +1830,11 @@ io.appendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, fla
   <div class='clearfix'>
     
     <h3 class='fl m0 signature' id='appendDataSync'>
-      <a href="#appendDataSync">#</a> io.<span class="bold">appendDataSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)
+      <a href="#appendDataSync">#</a> io.<span class="bold">appendDataSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, data: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>), options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/writers/appendDataSync.js#L23-L39' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/writers/appendDataSync.js#L22-L38' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1887,7 +1858,7 @@ io.appendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, fla
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
       <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
-        the data that was written
+        The combined data that was written
 
       
     
@@ -1900,7 +1871,16 @@ io.appendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, fla
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    Input file path
+	    File to append to
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>data</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>))</code>
+	    The new data to append
 
           </div>
           
@@ -1909,41 +1889,9 @@ io.appendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, fla
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
-	    Optional config object, see below
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>options.makeDirectories</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
-                  
-                    (default <code>false</code>)
-                  </td>
-                  <td class='break-word'><span>If true, create intermediate directories to your data file.
-</span></td>
-                </tr>
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>data</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    the data to write
+	    Optional options object passed to 
+<a href="#writeData">writeData</a>
+. See that function for format-specific options.
 
           </div>
           
@@ -2001,7 +1949,7 @@ io.appendDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</span>,
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readAml.js#L25-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readAml.js#L25-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2102,7 +2050,7 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readAmlSync.js#L22-L28' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readAmlSync.js#L22-L28' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2196,7 +2144,7 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readDbf.js#L26-L44' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readDbf.js#L26-L44' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2300,7 +2248,7 @@ io.readDbf(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readCsv.js#L35-L43' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readCsv.js#L35-L43' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2413,7 +2361,7 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, {<span class="hl
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readCsvSync.js#L32-L38' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readCsvSync.js#L32-L38' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2521,7 +2469,7 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, {<span class="hl
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readJson.js#L70-L78' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readJson.js#L70-L78' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2710,7 +2658,7 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readJsonSync.js#L45-L51' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readJsonSync.js#L45-L51' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2872,7 +2820,7 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readPsv.js#L26-L34' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readPsv.js#L26-L34' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2976,7 +2924,7 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readPsvSync.js#L23-L29' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readPsvSync.js#L23-L29' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3075,7 +3023,7 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readTsv.js#L26-L34' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readTsv.js#L26-L34' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3179,7 +3127,7 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readTsvSync.js#L24-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readTsvSync.js#L24-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3277,7 +3225,7 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readTxt.js#L23-L31' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readTxt.js#L23-L31' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3376,7 +3324,7 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readTxtSync.js#L21-L27' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readTxtSync.js#L21-L27' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3471,7 +3419,7 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readYaml.js#L39-L47' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readYaml.js#L39-L47' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3626,7 +3574,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/directReaders/readYamlSync.js#L36-L42' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/directReaders/readYamlSync.js#L36-L42' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3791,7 +3739,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/converters/convertDbfToData.js#L22-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/converters/convertDbfToData.js#L22-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3912,7 +3860,7 @@ io.convertDbfToData(<span class="hljs-string">'path/to/data.dbf'</span>, <span c
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/deepExtend.js#L34-L38' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/deepExtend.js#L34-L38' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4029,7 +3977,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/discernFileFormatter.js#L15-L23' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/discernFileFormatter.js#L15-L23' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4108,7 +4056,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/discernFormat.js#L18-L25' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/discernFormat.js#L18-L25' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4191,7 +4139,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/discernParser.js#L19-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/discernParser.js#L19-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4283,7 +4231,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/exists.js#L16-L27' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/exists.js#L16-L27' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4365,7 +4313,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/existsSync.js#L14-L25' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/existsSync.js#L14-L25' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4444,7 +4392,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/extend.js#L50-L118' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/extend.js#L50-L118' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4588,7 +4536,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/extMatchesStr.js#L15-L19' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/extMatchesStr.js#L15-L19' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4676,7 +4624,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/makeDirectories.js#L17-L21' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/makeDirectories.js#L17-L21' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4758,7 +4706,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/makeDirectoriesSync.js#L14-L16' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/makeDirectoriesSync.js#L14-L16' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4828,7 +4776,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/matches.js#L22-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/matches.js#L22-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4913,7 +4861,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/0acca323de329256fb0879c5cc1a6f105a1d3382/src/helpers/matchesRegExp.js#L16-L18' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/35c696c6420068a9dfe4b9455d47d1bcf45abc61/src/helpers/matchesRegExp.js#L16-L18' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
