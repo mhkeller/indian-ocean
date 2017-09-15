@@ -1,4 +1,4 @@
-import readDbf from '../readers/readDbf'
+import readData from '../readers/readData'
 import writeData from '../writers/writeData'
 
 /**
@@ -23,7 +23,7 @@ export default function convertDbfToData (inPath, outPath, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_
   }
-  readDbf(inPath, function (error, jsonData) {
+  readData(inPath, function (error, jsonData) {
     if (error) {
       cb(error)
     } else {
