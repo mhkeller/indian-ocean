@@ -13,7 +13,7 @@
     <div class='flex'>
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
-          <h3 id="project-name" class='mb0 no-anchor'><%- config['project-name'] %> <%- config['project-version'] %> <a href="https://github.com/mhkeller/indian-ocean" target="_blank" rel="noopener"><span class='github-logo'></span></a></h3>
+          <a href="<%= config['project-homepage'] %>" target="_blank" rel="noopener"><h3 id="project-name" class='mb0 no-anchor'><%- config['project-name'] %> <%- config['project-version'] %> <span class='github-logo'></span></a></h3>
           <div id="filter-input-container"><input
             placeholder='Filter'
             id='filter-input'
