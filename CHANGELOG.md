@@ -52,6 +52,7 @@ This is an exciting release because indian-ocean is now broken into es6 modules 
   * [619acfa34f1f36334ea82c9278e770fd9d792363](https://github.com/mhkeller/indian-ocean/commit/619acfa34f1f36334ea82c9278e770fd9d792363)
   * [7b9ce9ae986745824e81c8d8efdecdfa63e878c5](https://github.com/mhkeller/indian-ocean/commit/7b9ce9ae986745824e81c8d8efdecdfa63e878c5)
   * [39076cdf47803d66d1af7c3730f4fe1957289f5e](https://github.com/mhkeller/indian-ocean/commit/39076cdf47803d66d1af7c3730f4fe1957289f5e)
+  * [e297e8a3042337e7359ded77d4de1a9b86fa8ccb](https://github.com/mhkeller/indian-ocean/commit/e297e8a3042337e7359ded77d4de1a9b86fa8ccb)
 
 # 2.0.2
 
