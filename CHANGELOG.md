@@ -7,6 +7,8 @@ Changelog
 
 This is an exciting release because indian-ocean is now broken into es6 modules and brand new documentation. There's also an experimental browser bundle and some minor new features.
 
+* Support reading dbf files in `readData` by way of separating out file loading from file parsing.
+  * [ef9702c6a7e3121956718c1971453835e20c7067](https://github.com/mhkeller/indian-ocean/commit/ef9702c6a7e3121956718c1971453835e20c7067)
 * Parsers and formatters are now exposed as public functions
   * [8796820bd7a472f2561c9fff425c38120046201e](https://github.com/mhkeller/indian-ocean/commit/8796820bd7a472f2561c9fff425c38120046201e)
   * [0434c8c71fd7913c7e0991c51b45b8e2ae9f19b1](https://github.com/mhkeller/indian-ocean/commit/0434c8c71fd7913c7e0991c51b45b8e2ae9f19b1)
