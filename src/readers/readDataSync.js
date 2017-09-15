@@ -1,12 +1,19 @@
-import fs from 'fs'
 import getParser from '../helpers/getParser'
 import discernParser from '../helpers/discernParser'
-import discernFormat from '../helpers/discernFormat'
-import {formatsIndex} from '../config/equivalentFormats'
+import discernLoader from '../helpers/discernLoader'
 import _ from 'underscore'
 
 /**
- * Syncronous version of {@link readData}. Read data given a path ending in the file format.
+ * Syncronous version of {@link readData}. Read data given a path ending in the file format. This function detects the same formats as the asynchronous {@link readData} except for `.dbf` files, which it cannot read.
+ *
+ * * `.json` Array of objects or object
+ * * `.csv` Comma-separated
+ * * `.tsv` Tab-separated
+ * * `.psv` Pipe-separated
+ * * `.yaml` or `.yml` Yaml file
+ * * `.aml` ArchieML
+ * * `.txt` Text file (a string)
+ * * other All others are read as a text file
  *
  * @function readDataSync
  * @param {String} filePath Input file path
@@ -89,23 +96,6 @@ export default function readDataSync (filePath, opts_) {
   } else {
     parser = discernParser(filePath)
   }
-  var data = fs.readFileSync(filePath, 'utf8')
-  var fileFormat = discernFormat(filePath)
-  if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
-    data = '[]'
-  }
-
-  var parsed
-  if (typeof parser === 'function') {
-    parsed = parser(data, parserOptions)
-  } else if (typeof parser === 'object' && typeof parser.parse === 'function') {
-    parsed = parser.parse(data, parserOptions)
-  } else {
-    return new Error('Your specified parser is not properly formatted. It must either be a function or have a `parse` method.')
-  }
-
-  // if (opts_ && opts_.flatten) {
-  //   parsed = _.map(parsed, flatten)
-  // }
-  return parsed
+  var loader = discernLoader(filePath, {sync: true})
+  return loader(filePath, parser, parserOptions)
 }

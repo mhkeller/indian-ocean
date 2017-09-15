@@ -11,50 +11,6 @@ var identity = (function (d) {
   return d;
 });
 
-var shapefile = require('shapefile');
-/**
- * Asynchronously read a dbf file. Returns an empty array if file is empty.
- *
- * @function readDbf
- * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below.
- * @param {Function} callback Has signature `(err, data)`
- *
- * @example
- * io.readDbf('path/to/data.dbf', function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Transform values on load
- * io.readDbf('path/to/data.csv', function (row, i) {
- *   console.log(columns) // [ 'name', 'occupation', 'height' ]
- *   row.height = +row.height // Convert this value to a number
- *   return row
- * }, function (err, data) {
- *   console.log(data) // Converted json data
- * })
- */
-function readDbf(filePath, opts_, cb) {
-  var parserOptions = {
-    map: identity
-  };
-  if (typeof cb === 'undefined') {
-    cb = opts_;
-  } else {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
-  }
-  var values = [];
-  shapefile.openDbf(filePath).then(function (source) {
-    return source.read().then(function log(result) {
-      if (result.done) return cb(null, values);
-      values.push(parserOptions.map(result.value)); // TODO, figure out i
-      return source.read().then(log);
-    });
-  }).catch(function (error) {
-    return cb(error.stack);
-  });
-}
-
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function commonjsRequire () {
@@ -1631,324 +1587,6 @@ var underscore = createCommonjsModule(function (module, exports) {
   }).call(commonjsGlobal);
 });
 
-var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
-
-var index$1 = function (str) {
-	if (typeof str !== 'string') {
-		throw new TypeError('Expected a string');
-	}
-
-	return str.replace(matchOperatorsRe, '\\$&');
-};
-
-var index$3 = createCommonjsModule(function (module) {
-	'use strict';
-
-	function assembleStyles() {
-		var styles = {
-			modifiers: {
-				reset: [0, 0],
-				bold: [1, 22], // 21 isn't widely supported and 22 does the same thing
-				dim: [2, 22],
-				italic: [3, 23],
-				underline: [4, 24],
-				inverse: [7, 27],
-				hidden: [8, 28],
-				strikethrough: [9, 29]
-			},
-			colors: {
-				black: [30, 39],
-				red: [31, 39],
-				green: [32, 39],
-				yellow: [33, 39],
-				blue: [34, 39],
-				magenta: [35, 39],
-				cyan: [36, 39],
-				white: [37, 39],
-				gray: [90, 39]
-			},
-			bgColors: {
-				bgBlack: [40, 49],
-				bgRed: [41, 49],
-				bgGreen: [42, 49],
-				bgYellow: [43, 49],
-				bgBlue: [44, 49],
-				bgMagenta: [45, 49],
-				bgCyan: [46, 49],
-				bgWhite: [47, 49]
-			}
-		};
-
-		// fix humans
-		styles.colors.grey = styles.colors.gray;
-
-		Object.keys(styles).forEach(function (groupName) {
-			var group = styles[groupName];
-
-			Object.keys(group).forEach(function (styleName) {
-				var style = group[styleName];
-
-				styles[styleName] = group[styleName] = {
-					open: '\u001b[' + style[0] + 'm',
-					close: '\u001b[' + style[1] + 'm'
-				};
-			});
-
-			Object.defineProperty(styles, groupName, {
-				value: group,
-				enumerable: false
-			});
-		});
-
-		return styles;
-	}
-
-	Object.defineProperty(module, 'exports', {
-		enumerable: true,
-		get: assembleStyles
-	});
-});
-
-var index$7 = function () {
-	return (/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g
-	);
-};
-
-var ansiRegex = index$7();
-
-var index$5 = function (str) {
-	return typeof str === 'string' ? str.replace(ansiRegex, '') : str;
-};
-
-var ansiRegex$1 = index$7;
-var re = new RegExp(ansiRegex$1().source); // remove the `g` flag
-var index$9 = re.test.bind(re);
-
-var argv = process.argv;
-
-var terminator = argv.indexOf('--');
-var hasFlag = function (flag) {
-	flag = '--' + flag;
-	var pos = argv.indexOf(flag);
-	return pos !== -1 && (terminator !== -1 ? pos < terminator : true);
-};
-
-var index$11 = function () {
-	if ('FORCE_COLOR' in process.env) {
-		return true;
-	}
-
-	if (hasFlag('no-color') || hasFlag('no-colors') || hasFlag('color=false')) {
-		return false;
-	}
-
-	if (hasFlag('color') || hasFlag('colors') || hasFlag('color=true') || hasFlag('color=always')) {
-		return true;
-	}
-
-	if (process.stdout && !process.stdout.isTTY) {
-		return false;
-	}
-
-	if (process.platform === 'win32') {
-		return true;
-	}
-
-	if ('COLORTERM' in process.env) {
-		return true;
-	}
-
-	if (process.env.TERM === 'dumb') {
-		return false;
-	}
-
-	if (/^screen|^xterm|^vt100|color|ansi|cygwin|linux/i.test(process.env.TERM)) {
-		return true;
-	}
-
-	return false;
-}();
-
-var escapeStringRegexp = index$1;
-var ansiStyles = index$3;
-var stripAnsi = index$5;
-var hasAnsi = index$9;
-var supportsColor = index$11;
-var defineProps = Object.defineProperties;
-var isSimpleWindowsTerm = process.platform === 'win32' && !/^xterm/i.test(process.env.TERM);
-
-function Chalk(options) {
-	// detect mode if not set manually
-	this.enabled = !options || options.enabled === undefined ? supportsColor : options.enabled;
-}
-
-// use bright blue on Windows as the normal blue color is illegible
-if (isSimpleWindowsTerm) {
-	ansiStyles.blue.open = '\u001b[94m';
-}
-
-var styles = function () {
-	var ret = {};
-
-	Object.keys(ansiStyles).forEach(function (key) {
-		ansiStyles[key].closeRe = new RegExp(escapeStringRegexp(ansiStyles[key].close), 'g');
-
-		ret[key] = {
-			get: function () {
-				return build.call(this, this._styles.concat(key));
-			}
-		};
-	});
-
-	return ret;
-}();
-
-var proto = defineProps(function chalk() {}, styles);
-
-function build(_styles) {
-	var builder = function () {
-		return applyStyle.apply(builder, arguments);
-	};
-
-	builder._styles = _styles;
-	builder.enabled = this.enabled;
-	// __proto__ is used because we must return a function, but there is
-	// no way to create a function with a different prototype.
-	/* eslint-disable no-proto */
-	builder.__proto__ = proto;
-
-	return builder;
-}
-
-function applyStyle() {
-	// support varags, but simply cast to string in case there's only one arg
-	var args = arguments;
-	var argsLen = args.length;
-	var str = argsLen !== 0 && String(arguments[0]);
-
-	if (argsLen > 1) {
-		// don't slice `arguments`, it prevents v8 optimizations
-		for (var a = 1; a < argsLen; a++) {
-			str += ' ' + args[a];
-		}
-	}
-
-	if (!this.enabled || !str) {
-		return str;
-	}
-
-	var nestedStyles = this._styles;
-	var i = nestedStyles.length;
-
-	// Turns out that on Windows dimmed gray text becomes invisible in cmd.exe,
-	// see https://github.com/chalk/chalk/issues/58
-	// If we're on Windows and we're dealing with a gray color, temporarily make 'dim' a noop.
-	var originalDim = ansiStyles.dim.open;
-	if (isSimpleWindowsTerm && (nestedStyles.indexOf('gray') !== -1 || nestedStyles.indexOf('grey') !== -1)) {
-		ansiStyles.dim.open = '';
-	}
-
-	while (i--) {
-		var code = ansiStyles[nestedStyles[i]];
-
-		// Replace any instances already present with a re-opening code
-		// otherwise only the part of the string until said closing code
-		// will be colored, and the rest will simply be 'plain'.
-		str = code.open + str.replace(code.closeRe, code.open) + code.close;
-	}
-
-	// Reset the original 'dim' if we changed it to work around the Windows dimmed gray issue.
-	ansiStyles.dim.open = originalDim;
-
-	return str;
-}
-
-function init() {
-	var ret = {};
-
-	Object.keys(styles).forEach(function (name) {
-		ret[name] = {
-			get: function () {
-				return build.call(this, [name]);
-			}
-		};
-	});
-
-	return ret;
-}
-
-defineProps(Chalk.prototype, init());
-
-var index = new Chalk();
-var styles_1 = ansiStyles;
-var hasColor = hasAnsi;
-var stripColor = stripAnsi;
-var supportsColor_1 = supportsColor;
-
-index.styles = styles_1;
-index.hasColor = hasColor;
-index.stripColor = stripColor;
-index.supportsColor = supportsColor_1;
-
-var warn = function (msg) {
-  console.log(index.gray('[indian-ocean]') + ' ' + index.yellow('Warning:', msg));
-};
-
-/* --------------------------------------------
- * Browser-implementations of NodeJS path module, adapted from Rich Harris, https://github.com/rollup/rollup/blob/master/browser/path.js
- */
-
-var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^/]+?|)(\.[^./]*|))(?:[/]*)$/;
-
-function posixSplitPath(filename) {
-  var out = splitPathRe.exec(filename);
-  out.shift();
-  return out;
-}
-
-function extname(filename) {
-  return posixSplitPath(filename)[3];
-}
-
-function dirname(path$$1) {
-  var match = /(\/|\\)[^/\\]*$/.exec(path$$1);
-  if (!match) return '.';
-
-  var dir = path$$1.slice(0, -match[0].length);
-
-  // If `dir` is the empty string, we're at root.
-  return dir || '/';
-}
-
-function joinPath() {
-  var args = Array.prototype.slice.call(arguments);
-  return args.join('/'); // TODO, windows
-}
-
-/**
- * Given a `filePath` return the file's extension. Used internally by {@link discernParser} and {@link discernFileFormatter}. Returns `false` for files without an extension, including dotfiles
- *
- * @function discernFormat
- * @param {String} filePath Input file path
- * @returns {String} The file's extension
- *
- * @example
- * var format = io.discernFormat('path/to/data.csv')
- * console.log(format) // 'csv'
- *
- * @example
- * var format = io.discernFormat('path/to/.dotfile')
- * console.log(format) // false
- */
-function discernFormat(filePath) {
-  var ext = extname(filePath);
-  if (ext === '') return false;
-
-  // Chop '.' off extension returned by extname
-  var formatName = ext.slice(1);
-  return formatName;
-}
-
 var EOL = {};
 var EOF = {};
 var QUOTE = 34;
@@ -2084,73 +1722,98 @@ var dsvFormat = function (delimiter) {
   };
 };
 
-var csv$1 = dsvFormat(",");
+/* --------------------------------------------
+ * Browser-implementations of NodeJS path module, adapted from Rich Harris, https://github.com/rollup/rollup/blob/master/browser/path.js
+ */
 
-var csvParse = csv$1.parse;
+var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^/]+?|)(\.[^./]*|))(?:[/]*)$/;
 
-var csvFormat = csv$1.format;
-
-var notListError = function (format) {
-  throw new Error(index.red('[indian-ocean] You passed in an object but converting to ' + index.bold(format) + ' requires a list of objects.') + index.cyan('\nIf you would like to write a one-row csv, put your object in a list like so: `' + index.bold('[data]') + '`\n'));
-};
-
-// Some shared data integrity checks for formatters
-function formattingPreflight(file, format) {
-  if (file === '') {
-    return [];
-  } else if (!Array.isArray(file)) {
-    notListError(format);
-  }
-  return file;
+function posixSplitPath(filename) {
+  var out = splitPathRe.exec(filename);
+  out.shift();
+  return out;
 }
 
-var parseError = function (format) {
-  throw new Error(index.red('[indian-ocean] Error converting your data to ' + index.bold(format) + '.') + '\n\n' + index.cyan('Your data most likely contains objects or lists. Object values can only be strings for this format. Please convert before writing to file.\n'));
+function extname(filename) {
+  return posixSplitPath(filename)[3];
+}
+
+function dirname(path$$1) {
+  var match = /(\/|\\)[^/\\]*$/.exec(path$$1);
+  if (!match) return '.';
+
+  var dir = path$$1.slice(0, -match[0].length);
+
+  // If `dir` is the empty string, we're at root.
+  return dir || '/';
+}
+
+function joinPath() {
+  var args = Array.prototype.slice.call(arguments);
+  return args.join('/'); // TODO, windows
+}
+
+/**
+ * Given a `filePath` return the file's extension. Used internally by {@link discernParser} and {@link discernFileFormatter}. Returns `false` for files without an extension, including dotfiles
+ *
+ * @function discernFormat
+ * @param {String} filePath Input file path
+ * @returns {String} The file's extension
+ *
+ * @example
+ * var format = io.discernFormat('path/to/data.csv')
+ * console.log(format) // 'csv'
+ *
+ * @example
+ * var format = io.discernFormat('path/to/.dotfile')
+ * console.log(format) // false
+ */
+function discernFormat(filePath) {
+  var ext = extname(filePath);
+  if (ext === '') return false;
+
+  // Chop '.' off extension returned by extname
+  var formatName = ext.slice(1);
+  return formatName;
+}
+
+var csv = dsvFormat(",");
+
+var csvParse = csv.parse;
+
+var csvFormat = csv.format;
+
+var parserCsv = function (str, parserOptions) {
+  parserOptions = parserOptions || {};
+  return csvParse(str, parserOptions.map);
 };
 
-var csv = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  file = formattingPreflight(file, 'csv');
-  try {
-    return csvFormat(file, writeOptions.columns);
-  } catch (err) {
-    parseError('csv');
-  }
+var parserJson = function (str, parserOptions) {
+  parserOptions = parserOptions || {};
+  // Do a naive test whether this is a string or an object
+  var mapFn = parserOptions.map ? str.trim().charAt(0) === '[' ? underscore.map : underscore.mapObject : identity;
+  var jsonParser = JSON.parse;
+  return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
 };
 
-var json = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  return JSON.stringify(file, writeOptions.replacer, writeOptions.indent);
+var parserPsv = function (str, parserOptions) {
+  parserOptions = parserOptions || {};
+  return dsvFormat('|').parse(str, parserOptions.map);
 };
 
-var psv = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  file = formattingPreflight(file, 'psv');
-  try {
-    return dsvFormat('|').format(file, writeOptions.columns);
-  } catch (err) {
-    parseError('psv');
-  }
+var tsv = dsvFormat("\t");
+
+var tsvParse = tsv.parse;
+
+var tsvFormat = tsv.format;
+
+var parserTsv = function (str, parserOptions) {
+  parserOptions = parserOptions || {};
+  return tsvParse(str, parserOptions.map);
 };
 
-var tsv$1 = dsvFormat("\t");
-
-var tsvParse = tsv$1.parse;
-
-var tsvFormat = tsv$1.format;
-
-var tsv = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  file = formattingPreflight(file, 'tsv');
-  try {
-    return tsvFormat(file, writeOptions.columns);
-  } catch (err) {
-    parseError('tsv');
-  }
-};
-
-var txt = function (file) {
-  return file;
+var parserTxt = function (str, parserOptions) {
+  return parserOptions && typeof parserOptions.map === 'function' ? parserOptions.map(str) : str;
 };
 
 function isNothing(subject) {
@@ -2890,7 +2553,7 @@ var float_1 = new Type$9('tag:yaml.org,2002:float', {
 
 var Schema$4 = schema;
 
-var json$1 = new Schema$4({
+var json = new Schema$4({
   include: [failsafe],
   implicit: [_null, bool, int_1, float_1]
 });
@@ -2898,7 +2561,7 @@ var json$1 = new Schema$4({
 var Schema$3 = schema;
 
 var core = new Schema$3({
-  include: [json$1]
+  include: [json]
 });
 
 var Type$10 = type;
@@ -5751,7 +5414,7 @@ function deprecated(name) {
 var Type = type;
 var Schema = schema;
 var FAILSAFE_SCHEMA = failsafe;
-var JSON_SCHEMA = json$1;
+var JSON_SCHEMA = json;
 var CORE_SCHEMA = core;
 var DEFAULT_SAFE_SCHEMA = default_safe;
 var DEFAULT_FULL_SCHEMA = default_full;
@@ -5798,748 +5461,9 @@ var jsYaml = {
 		addConstructor: addConstructor
 };
 
-var yaml$1 = jsYaml;
+var yaml = jsYaml;
 
-var index$13 = yaml$1;
-
-// import formattingPreflight from '../utils/formattingPreflight'
-// import parseError from '../reporters/parseError'
-
-var yaml = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  var writeMethod = writeOptions.writeMethod || 'safeDump';
-  delete writeOptions.writeMethod;
-  return index$13[writeMethod](file, writeOptions);
-};
-
-var fieldsize = {
-    // string
-    C: 254,
-    // boolean
-    L: 1,
-    // date
-    D: 8,
-    // number
-    N: 18,
-    // number
-    M: 18,
-    // number, float
-    F: 18,
-    // number
-    B: 8
-};
-
-/**
- * @param {string} str
- * @param {number} len
- * @param {string} char
- * @returns {string}
- */
-var lpad = function lpad(str, len, char) {
-  while (str.length < len) {
-    str = char + str;
-  }return str;
-};
-
-/**
- * @param {string} str
- * @param {number} len
- * @param {string} char
- * @returns {string}
- */
-var rpad = function rpad(str, len, char) {
-  while (str.length < len) {
-    str = str + char;
-  }return str;
-};
-
-/**
- * @param {object} view
- * @param {number} fieldLength
- * @param {string} str
- * @param {number} offset
- * @returns {number}
- */
-var writeField = function writeField(view, fieldLength, str, offset) {
-  for (var i = 0; i < fieldLength; i++) {
-    view.setUint8(offset, str.charCodeAt(i));offset++;
-  }
-  return offset;
-};
-
-var lib$1 = {
-  lpad: lpad,
-  rpad: rpad,
-  writeField: writeField
-};
-
-var fieldSize$1 = fieldsize;
-
-var types = {
-    string: 'C',
-    number: 'N',
-    boolean: 'L',
-    // type to use if all values of a field are null
-    null: 'C'
-};
-
-var multi_1 = multi;
-var bytesPer_1 = bytesPer;
-var obj_1 = obj;
-
-function multi(features) {
-    var fields = {};
-    features.forEach(collect);
-    function collect(f) {
-        inherit(fields, f);
-    }
-    return obj(fields);
-}
-
-/**
- * @param {Object} a
- * @param {Object} b
- * @returns {Object}
- */
-function inherit(a, b) {
-    for (var i in b) {
-        var isDef = typeof b[i] !== 'undefined' && b[i] !== null;
-        if (typeof a[i] === 'undefined' || isDef) {
-            a[i] = b[i];
-        }
-    }
-    return a;
-}
-
-function obj(_) {
-    var fields = {},
-        o = [];
-    for (var p in _) fields[p] = _[p] === null ? 'null' : typeof _[p];
-    for (var n in fields) {
-        var t = types[fields[n]];
-        if (t) {
-            o.push({
-                name: n,
-                type: t,
-                size: fieldSize$1[t]
-            });
-        }
-    }
-    return o;
-}
-
-/**
- * @param {Array} fields
- * @returns {Array}
- */
-function bytesPer(fields) {
-    // deleted flag
-    return fields.reduce(function (memo, f) {
-        return memo + f.size;
-    }, 1);
-}
-
-var fields$1 = {
-    multi: multi_1,
-    bytesPer: bytesPer_1,
-    obj: obj_1
-};
-
-var lib = lib$1;
-var fields = fields$1;
-
-/**
- * @param {Array} data
- * @param {Array} meta
- * @returns {Object} view
- */
-var structure$1 = function structure(data, meta) {
-
-    var field_meta = meta || fields.multi(data),
-        fieldDescLength = 32 * field_meta.length + 1,
-        bytesPerRecord = fields.bytesPer(field_meta),
-        // deleted flag
-    buffer = new ArrayBuffer(
-    // field header
-    fieldDescLength +
-    // header
-    32 +
-    // contents
-    bytesPerRecord * data.length +
-    // EOF marker
-    1),
-        now = new Date(),
-        view = new DataView(buffer);
-
-    // version number - dBase III
-    view.setUint8(0, 0x03);
-    // date of last update
-    view.setUint8(1, now.getFullYear() - 1900);
-    view.setUint8(2, now.getMonth());
-    view.setUint8(3, now.getDate());
-    // number of records
-    view.setUint32(4, data.length, true);
-
-    // length of header
-    var headerLength = fieldDescLength + 32;
-    view.setUint16(8, headerLength, true);
-    // length of each record
-    view.setUint16(10, bytesPerRecord, true);
-
-    // Terminator
-    view.setInt8(32 + fieldDescLength - 1, 0x0D);
-
-    field_meta.forEach(function (f, i) {
-        // field name
-        f.name.split('').slice(0, 8).forEach(function (c, x) {
-            view.setInt8(32 + i * 32 + x, c.charCodeAt(0));
-        });
-        // field type
-        view.setInt8(32 + i * 32 + 11, f.type.charCodeAt(0));
-        // field length
-        view.setInt8(32 + i * 32 + 16, f.size);
-        if (f.type == 'N') view.setInt8(32 + i * 32 + 17, 3);
-    });
-
-    offset = fieldDescLength + 32;
-
-    data.forEach(function (row, num) {
-        // delete flag: this is not deleted
-        view.setUint8(offset, 32);
-        offset++;
-        field_meta.forEach(function (f) {
-            var val = row[f.name];
-            if (val === null || typeof val === 'undefined') val = '';
-
-            switch (f.type) {
-                // boolean
-                case 'L':
-                    view.setUint8(offset, val ? 84 : 70);
-                    offset++;
-                    break;
-
-                // date
-                case 'D':
-                    offset = lib.writeField(view, 8, lib.lpad(val.toString(), 8, ' '), offset);
-                    break;
-
-                // number
-                case 'N':
-                    offset = lib.writeField(view, f.size, lib.lpad(val.toString(), f.size, ' ').substr(0, 18), offset);
-                    break;
-
-                // string
-                case 'C':
-                    offset = lib.writeField(view, f.size, lib.rpad(val.toString(), f.size, ' '), offset);
-                    break;
-
-                default:
-                    throw new Error('Unknown field type');
-            }
-        });
-    });
-
-    // EOF flag
-    view.setUint8(offset, 0x1A);
-
-    return view;
-};
-
-var structure = structure$1;
-
-var index$14 = {
-	structure: structure
-};
-
-var dbf = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  function toBuffer(ab) {
-    var buffer = new Buffer(ab.byteLength);
-    var view = new Uint8Array(ab);
-    for (var i = 0; i < buffer.length; ++i) {
-      buffer[i] = view[i];
-    }
-    return buffer;
-  }
-  var buf = index$14.structure(file);
-  return toBuffer(buf.buffer);
-};
-
-/* --------------------------------------------
- * Formats that should be treated similarly
- */
-var formatsIndex = {
-  json: ['topojson', 'geojson'],
-  yaml: ['yml']
-};
-
-var formatsList = Object.keys(formatsIndex).map(function (key) {
-  return { name: key, equivalents: formatsIndex[key] };
-});
-
-var formatters = {
-  csv: csv,
-  json: json,
-  psv: psv,
-  tsv: tsv,
-  txt: txt,
-  yaml: yaml,
-  dbf: dbf
-};
-
-formatsList.forEach(function (format) {
-  format.equivalents.forEach(function (equivalent) {
-    formatters[equivalent] = formatters[format.name];
-  });
-});
-
-/**
- * Returns a formatter that will format json data to file type specified by the extension in `filePath`. Used internally by {@link writeData} and {@link writeDataSync}.
- *
- * @function discernFileFormatter
- * @param {String} filePath Input file path
- * @returns {Function} A formatter function that will write the extension format
- *
- * @example
- * var formatter = io.discernFileFormatter('path/to/data.tsv')
- * var csv = formatter(json)
- */
-function discernFileFormatter(filePath) {
-  var format = discernFormat(filePath);
-  var formatter = formatters[format];
-  // If we don't have a parser for this format, return as text
-  if (typeof formatter === 'undefined') {
-    formatter = formatters['txt'];
-  }
-  return formatter;
-}
-
-var path$1 = path;
-var fs$1 = fs;
-var _0777 = parseInt('0777', 8);
-
-var index$15 = mkdirP.mkdirp = mkdirP.mkdirP = mkdirP;
-
-function mkdirP(p, opts, f, made) {
-    if (typeof opts === 'function') {
-        f = opts;
-        opts = {};
-    } else if (!opts || typeof opts !== 'object') {
-        opts = { mode: opts };
-    }
-
-    var mode = opts.mode;
-    var xfs = opts.fs || fs$1;
-
-    if (mode === undefined) {
-        mode = _0777 & ~process.umask();
-    }
-    if (!made) made = null;
-
-    var cb = f || function () {};
-    p = path$1.resolve(p);
-
-    xfs.mkdir(p, mode, function (er) {
-        if (!er) {
-            made = made || p;
-            return cb(null, made);
-        }
-        switch (er.code) {
-            case 'ENOENT':
-                mkdirP(path$1.dirname(p), opts, function (er, made) {
-                    if (er) cb(er, made);else mkdirP(p, opts, cb, made);
-                });
-                break;
-
-            // In the case of any other error, just see if there's a dir
-            // there already.  If so, then hooray!  If not, then something
-            // is borked.
-            default:
-                xfs.stat(p, function (er2, stat) {
-                    // if the stat fails, then that's super weird.
-                    // let the original error be the failure reason.
-                    if (er2 || !stat.isDirectory()) cb(er, made);else cb(null, made);
-                });
-                break;
-        }
-    });
-}
-
-mkdirP.sync = function sync(p, opts, made) {
-    if (!opts || typeof opts !== 'object') {
-        opts = { mode: opts };
-    }
-
-    var mode = opts.mode;
-    var xfs = opts.fs || fs$1;
-
-    if (mode === undefined) {
-        mode = _0777 & ~process.umask();
-    }
-    if (!made) made = null;
-
-    p = path$1.resolve(p);
-
-    try {
-        xfs.mkdirSync(p, mode);
-        made = made || p;
-    } catch (err0) {
-        switch (err0.code) {
-            case 'ENOENT':
-                made = sync(path$1.dirname(p), opts, made);
-                sync(p, opts, made);
-                break;
-
-            // In the case of any other error, just see if there's a dir
-            // there already.  If so, then hooray!  If not, then something
-            // is borked.
-            default:
-                var stat;
-                try {
-                    stat = xfs.statSync(p);
-                } catch (err1) {
-                    throw err0;
-                }
-                if (!stat.isDirectory()) throw err0;
-                break;
-        }
-    }
-
-    return made;
-};
-
-/**
- * Asynchronously create directories along a given file path. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module
- *
- * @function makeDirectories
- * @param {String} outPath The path to a file
- * @param {Function} callback The function to do once this is done. Has signature of `(err)`
- *
- * @example
- * io.makeDirectories('path/to/create/to/data.tsv', function (err) {
- *   console.log(err) // null
- * })
- *
- */
-function makeDirectories(outPath, cb) {
-  index$15(dirname(outPath), function (err) {
-    cb(err);
-  });
-}
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-/**
- * Write the data object, inferring the file format from the file ending specified in `fileName`.
- *
- * Supported formats:
- *
- * * `.json` Array of objects, also supports `.geojson` and `.topojson`
- * * `.csv` Comma-separated
- * * `.tsv` Tab-separated
- * * `.psv` Pipe-separated
- * * `.yaml` Yaml file, also supports `.yml`
- * * `.dbf` Database file, commonly used in ESRI-shapefile format.
- *
- * @function writeData
- * @param {String} filePath Input file path
- * @param {Array|Object|String} data Data to write
- * @param {Object} [options] Optional options object, see below
- * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
- * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
- * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
- * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
- * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
- * @param {Function} callback Has signature `(err, dataStr)`. `dataStr` is the data that was written out as a string
- *
- * @example
- * io.writeData('path/to/data.json', jsonData, function (err, dataString) {
- *   console.log(err)
- * })
- *
- * io.writeData('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true}, function (err, dataString) {
- *   console.log(err)
- * })
- *
- * io.writeData('path/to/to/data.yaml', jsonData, {writeMehod: "dump", sortKeys: true}, function (err, dataString) {
- *   console.log(err)
- * })
- *
- * io.writeData('path/to/to/data.json', jsonData, {indent: 4}, function (err, dataString) {
- *   console.log(err)
- * })
- *
- * io.writeData('path/to/to/data.json', jsonData, {
- *   indent: 4,
- *   replacer: function (key, value) {
- *     // Filtering out string properties
- *     if (typeof value === "string") {
- *       return undefined
- *     }
- *     return value
- *   }
- * }, function (err, dataString) {
- *   console.log(err)
- * })
- *
- * io.writeData('path/to/to/data.json', jsonData, {
- *   indent: 4,
- *   replacer: ['name', 'occupation'] // Only keep "name" and "occupation" values
- * }, function (err, dataString) {
- *   console.log(err)
- * })
- */
-function writeData(outPath, data, opts_, cb) {
-  if (typeof cb === 'undefined') {
-    cb = opts_;
-    opts_ = undefined;
-  }
-  if (underscore.isEmpty(data)) {
-    warn('You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty file...');
-  }
-
-  if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && opts_.makeDirectories) {
-    delete opts_.makeDirectories;
-    makeDirectories(outPath, proceed);
-  } else {
-    proceed();
-  }
-
-  function proceed(err) {
-    if (err) {
-      throw err;
-    }
-
-    var writeOptions;
-    if (typeof opts_ !== 'function') {
-      writeOptions = opts_;
-    }
-
-    var fileFormatter = discernFileFormatter(outPath);
-    var formattedData = fileFormatter(data, writeOptions);
-    fs.writeFile(outPath, formattedData, function (err) {
-      cb(err, formattedData);
-    });
-  }
-}
-
-/**
- * Reads in a dbf file with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
- *
- * @function convertDbfToData
- * @param {String} inFilePath Input file path
- * @param {String} outFilePath Output file path
- * @param {Object} [options] Optional config object that's passed to {@link writeData}. See that documentation for full options, which vary depending on the output format you choose.
- * @param {Function} callback Has signature `(err)`
- *
- * @example
- * io.convertDbfToData('path/to/data.dbf', 'path/to/data.csv', function (err) {
- *   console.log(err)
- * })
- *
- * io.convertDbfToData('path/to/data.dbf', 'path/to/create/to/data.csv', {makeDirectories: true}, function (err) {
- *   console.log(err)
- * })
- */
-function convertDbfToData(inPath, outPath, opts_, cb) {
-  if (typeof cb === 'undefined') {
-    cb = opts_;
-  }
-  readDbf(inPath, function (error, jsonData) {
-    if (error) {
-      cb(error);
-    } else {
-      writeData(outPath, jsonData, opts_, cb);
-    }
-  });
-}
-
-/**
- * A port of jQuery's extend. Merge the contents of two or more objects together into the first object. Supports deep extending with `true` as the first argument.
- *
- * @function extend
- * @param {Boolean} [deepExtend] Optional, set to `true` to merge recursively.
- * @param {Object} destination The object to modify
- * @param {Object} source The object whose keys to take
- * @param {Object} [source2] Optional, You can add any number of objects as arguments.
- * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
- *
- * @example
- * var mergedObj = io.extend({}, {name: 'indian-ocean'}, {alias: 'io'})
- * console.log(mergedObj)
- * // {
- * //   name: 'indian-ocean',
- * //   alias: 'io'
- * // }
- *
- * var name = {name: 'indian-ocean'}
- * io.extend(name, {alias: 'io'})
- * console.log(name)
- * // {
- * //   name: 'indian-ocean',
- * //   alias: 'io'
- * // }
- *
- * @example
- * var object1 = {
- *   apple: 0,
- *   banana: { weight: 52, price: 100 },
- *   cherry: 97
- * }
- * var object2 = {
- *   banana: { price: 200 },
- *   almond: 100
- * }
- * io.extend(true, object1, object2)
- * console.log(object1)
- * //  {
- * //   apple: 0,
- * //   banana: {
- * //     weight: 52,
- * //     price: 200
- * //   },
- * //   cherry: 97,
- * //   almond: 100
- * // }
- *
- */
-function extend$1() {
-  var options;
-  var name;
-  var src;
-  var copy;
-  var copyIsArray;
-  var clone;
-  var target = arguments[0] || {};
-  var i = 1;
-  var length = arguments.length;
-  var deep = false;
-
-  // Handle a deep copy situation
-  if (typeof target === 'boolean') {
-    deep = target;
-
-    // Skip the boolean and the target
-    target = arguments[i] || {};
-    i++;
-  }
-
-  // Handle case when target is a string or something (possible in deep copy)
-  if ((typeof target === 'undefined' ? 'undefined' : _typeof(target)) !== 'object' && typeof target !== 'function') {
-    target = {};
-  }
-
-  // Extend indian-ocean itself if only one argument is passed
-  if (i === length) {
-    target = this;
-    i--;
-  }
-
-  for (; i < length; i++) {
-    // Only deal with non-null/undefined values
-    if ((options = arguments[i]) != null) {
-      // Extend the base object
-      for (name in options) {
-        src = target[name];
-        copy = options[name];
-
-        // Prevent never-ending loop
-        if (target === copy) {
-          continue;
-        }
-
-        // Recurse if we're merging plain objects or arrays
-        if (deep && copy && (typeof copy === 'undefined' ? 'undefined' : _typeof(copy)) === 'object' || (copyIsArray = Array.isArray(copy))) {
-          if (copyIsArray) {
-            copyIsArray = false;
-            clone = src && Array.isArray(src) ? src : [];
-          } else {
-            clone = src && (typeof src === 'undefined' ? 'undefined' : _typeof(src)) === 'object' ? src : {};
-          }
-
-          // Never move original objects, clone them
-          target[name] = extend$1(deep, clone, copy);
-
-          // Don't bring in undefined values
-        } else if (copy !== undefined) {
-          target[name] = copy;
-        }
-      }
-    }
-  }
-
-  // Return the modified object
-  return target;
-}
-
-/**
- * A more semantic convenience function. Delegates to {@link extend} and passes `true` as the first argument. Deep merge the contents of two or more objects together into the first object.
- *
- * @function deepExtend
- * @param {Object} destination The object to modify
- * @param {Object} source The object whose keys to take
- * @param {Object} [source2] Optional, You can add any number of objects as arguments.
- * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
- *
- * @example
- * var object1 = {
- *   apple: 0,
- *   banana: { weight: 52, price: 100 },
- *   cherry: 97
- * }
- * var object2 = {
- *   banana: { price: 200 },
- *   almond: 100
- * }
- * io.deepExtend(object1, object2)
- * console.log(object1)
- * //  {
- * //   apple: 0,
- * //   banana: {
- * //     weight: 52,
- * //     price: 200
- * //   },
- * //   cherry: 97,
- * //   almond: 100
- * // }
- *
- */
-function deepExtend() {
-  var args = Array.prototype.slice.call(arguments); // Make real array from arguments
-  args.unshift(true); // Add `true` as first arg.
-  extend$1.apply(this, args);
-}
-
-var parserCsv = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  return csvParse(str, parserOptions.map);
-};
-
-var parserJson = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  // Do a naive test whether this is a string or an object
-  var mapFn = parserOptions.map ? str.trim().charAt(0) === '[' ? underscore.map : underscore.mapObject : identity;
-  var jsonParser = JSON.parse;
-  return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
-};
-
-var parserPsv = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  return dsvFormat('|').parse(str, parserOptions.map);
-};
-
-var parserTsv = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  return tsvParse(str, parserOptions.map);
-};
-
-var parserTxt = function (str, parserOptions) {
-  return parserOptions && typeof parserOptions.map === 'function' ? parserOptions.map(str) : str;
-};
+var index = yaml;
 
 var parserYaml = function (str, parserOptions) {
   parserOptions = parserOptions || {};
@@ -6547,7 +5471,7 @@ var parserYaml = function (str, parserOptions) {
   delete parserOptions.map;
   var loadMethod = parserOptions.loadMethod || 'safeLoad';
   delete parserOptions.loadMethod;
-  var data = index$13[loadMethod](str, parserOptions) || {};
+  var data = index[loadMethod](str, parserOptions) || {};
   return map(data, map);
 };
 
@@ -6870,6 +5794,18 @@ var parserAml = function (str, parserOptions) {
   return map(data);
 };
 
+/* --------------------------------------------
+ * Formats that should be treated similarly
+ */
+var formatsIndex = {
+  json: ['topojson', 'geojson'],
+  yaml: ['yml']
+};
+
+var formatsList = Object.keys(formatsIndex).map(function (key) {
+  return { name: key, equivalents: formatsIndex[key] };
+});
+
 var parsers = {
   csv: parserCsv,
   json: parserJson,
@@ -6913,73 +5849,11 @@ function discernParser(filePath, delimiter) {
   return parser;
 }
 
-/**
- * Asynchronously test whether a file exists or not by using `fs.access` modified from https://github.com/nodejs/io.js/issues/1592#issuecomment-98392899.
- *
- * @function exists
- * @param {String} filePath Input file path
- * @param {Function} callback Has signature `(err, exists)`
- *
- * @example
- * var exists = io.exists('path/to/data.tsv', function (err, exists) {
- *   console.log(exists) // `true` if the file exists, `false` if not.
- * })
- *
- */
-function exists(filePath, cb) {
-  fs.access(filePath, function (err) {
-    var exists;
-    if (err && err.code === 'ENOENT') {
-      exists = false;
-      err = null;
-    } else if (!err) {
-      exists = true;
-    }
-    cb(err, exists);
-  });
-}
-
-/**
- * Syncronous version of {@link exists}. Delegates to `fs.existsSync` if that function is available.
- *
- * @function existsSync
- * @param {String} filePath Input file path
- * @returns {Boolean} Whether the file exists or not
- *
- * @example
- * var exists = io.existsSync('path/to/data.tsv')
- * console.log(exists) // `true` if file exists, `false` if not.
- */
-function existsSync(filePath) {
-  if (fs.existsSync) {
-    return fs.existsSync(filePath);
-  } else {
-    try {
-      fs.accessSync(filePath);
-      return true;
-    } catch (ex) {
-      return false;
-    }
-  }
-}
-
-/**
- * Test whether a file name has the given extension
- *
- * @function extMatchesStr
- * @param {String} filePath Input file path
- * @param {String} extension The extension to test. An empty string will match a file with no extension.
- * @returns {Boolean} Whether it matched or not.
- *
- * @example
- * var matches = io.extMatchesStr('path/to/data.tsv', 'tsv')
- * console.log(matches) // `true`
- */
-function extMatchesStr(filePath, extension) {
-  // Chop '.' off extension returned by extname
-  var ext = extname(filePath).slice(1);
-  return ext === extension;
-}
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
 
 // Our `readData` fns can take either a delimiter to parse a file, or a full blown parser
 // Determine what they passed in with this handy function
@@ -6993,68 +5867,111 @@ function getParser(delimiterOrParser) {
   return parser;
 }
 
-/**
- * Synchronous version of {link #makeDirectories}. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module
- *
- * @function makeDirectoriesSync
- * @param {String} outPath The path to a file
- *
- * @example
- * io.makeDirectories('path/to/create/to/data.tsv')
- *
- */
-function makeDirectoriesSync(outPath) {
-  index$15.sync(dirname(outPath));
+function file(filePath, parser, parserOptions, cb) {
+  fs.readFile(filePath, 'utf8', function (err, data) {
+    var fileFormat = discernFormat(filePath);
+    if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
+      data = '[]';
+    }
+    if (err) {
+      cb(err);
+      return false;
+    }
+    var parsed;
+    try {
+      if (typeof parser === 'function') {
+        parsed = parser(data, parserOptions);
+      } else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
+        parsed = parser.parse(data, parserOptions);
+      } else {
+        parsed = 'Your specified parser is not properly formatted. It must either be a function or have a `parse` method.';
+      }
+    } catch (err) {
+      cb(err);
+      return;
+    }
+    cb(null, parsed);
+  });
 }
 
-/**
- * Test whether a string matches a given Regular Expression.
- *
- * @function matchesRegExp
- * @param {String} filePath Input file path or file path.
- * @param {RegExp} RegExp The Regular Expression to match against.
- * @returns {Boolean} Whether they match.
- *
- * @example
- * var matches = io.matchesRegExp('.gitignore', /\.gitignore/)
- * console.log(matches) // `true`
- *
- * var matches = io.matchesRegExp('data/final-data/basic.csv', /\/final-data\//)
- * console.log(matches) // `true`
- */
-function matchesRegExp(filePath, regEx) {
-  return regEx.test(filePath);
-}
-
-function isRegExp$1(obj) {
-  return Object.prototype.toString.call(obj) === '[object RegExp]';
-}
-
-/**
- * Test whether a file name or path matches a given matcher. Delegates to {@link extMatchesStr} if `matcher` is a string` and tests only against the file name extension. Delegates to {@link matchesRegExp} if matcher is a Regular Expression and tests against entire string, which is usefulf or testing the full file path.
- *
- * @function matches
- * @param {String} filePath Input file path or path to the file.
- * @returns {String|RegExp} matcher The string or Regular Expression to match against.
- *
- * @example
- * var matches = io.matches('path/to/data.tsv', 'tsv')
- * console.log(matches) // `true`
- *
- * var matches = io.matches('.gitignore', /\.gitignore/)
- * console.log(matches) // `true`
- *
- * var matches = io.matches('file/with/no-extention', '') // Nb. Dot files are treated as files with no extention
- * console.log(matches) // `true`
- */
-function matches(filePath, matcher) {
-  if (typeof matcher === 'string') {
-    return extMatchesStr(filePath, matcher);
-  } else if (isRegExp$1(matcher)) {
-    return matchesRegExp(filePath, matcher);
-  } else {
-    throw new Error('Matcher argument must be String or Regular Expression');
+function file$1(filePath, parser, parserOptions, cb) {
+  var data = fs.readFileSync(filePath, 'utf8');
+  var fileFormat = discernFormat(filePath);
+  if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
+    data = '[]';
   }
+
+  var parsed;
+  if (typeof parser === 'function') {
+    parsed = parser(data, parserOptions);
+  } else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
+    parsed = parser.parse(data, parserOptions);
+  } else {
+    return new Error('Your specified parser is not properly formatted. It must either be a function or have a `parse` method.');
+  }
+
+  // if (opts_ && opts_.flatten) {
+  //   parsed = _.map(parsed, flatten)
+  // }
+  return parsed;
+}
+
+var shapefile = require('shapefile');
+
+function dbf(filePath, parser, parserOptions, cb) {
+  var values = [];
+  shapefile.openDbf(filePath).then(function (source) {
+    return source.read().then(function log(result) {
+      if (result.done) return cb(null, values);
+      values.push(parserOptions.map(result.value)); // TODO, figure out i
+      return source.read().then(log);
+    });
+  }).catch(function (error) {
+    return cb(error.stack);
+  });
+}
+
+var loaders = {
+  async: {
+    aml: file,
+    csv: file,
+    psv: file,
+    tsv: file,
+    txt: file,
+    json: file,
+    yaml: file,
+    dbf: dbf
+  },
+  sync: {
+    aml: file$1,
+    csv: file$1,
+    psv: file$1,
+    tsv: file$1,
+    txt: file$1,
+    json: file$1,
+    yaml: file$1
+  }
+};
+
+formatsList.forEach(function (format) {
+  format.equivalents.forEach(function (equivalent) {
+    Object.keys(loaders).forEach(function (key) {
+      loaders[key][equivalent] = loaders[key][format.name];
+    });
+  });
+});
+
+function discernLoader(filePath) {
+  var opts_ = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var which = opts_.sync === true ? 'sync' : 'async';
+  var format = discernFormat(filePath);
+  var loader = loaders[which][format];
+  // If we don't have a loader for this format, read in as a normal file
+  if (typeof loader === 'undefined') {
+    loader = loaders[which]['txt'];
+  }
+  return loader;
 }
 
 /**
@@ -7069,9 +5986,8 @@ function matches(filePath, matcher) {
  * * `.yaml` or `.yml` Yaml file
  * * `.aml` ArchieML
  * * `.txt` Text file (a string)
+ * * `.dbf` Database format used for shapefiles
  * * other All others are read as a text file
- *
- * *Note: Does not currently support `.dbf` files.
  *
  * @function readData
  * @param {String} filePath Input file path
@@ -7161,34 +6077,1201 @@ function readData(filePath, opts_, cb_) {
   } else {
     parser = discernParser(filePath);
   }
-  fs.readFile(filePath, 'utf8', function (err, data) {
-    var fileFormat = discernFormat(filePath);
-    if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
-      data = '[]';
+  var loader = discernLoader(filePath);
+  loader(filePath, parser, parserOptions, cb);
+}
+
+/**
+ * Asynchronously read a dbf file. Returns an empty array if file is empty.
+ *
+ * @function readDbf
+ * @param {String} filePath Input file path
+ * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below.
+ * @param {Function} callback Has signature `(err, data)`
+ *
+ * @example
+ * io.readDbf('path/to/data.dbf', function (err, data) {
+ *   console.log(data) // Json data
+ * })
+ *
+ * // Transform values on load
+ * io.readDbf('path/to/data.csv', function (row, i) {
+ *   console.log(columns) // [ 'name', 'occupation', 'height' ]
+ *   row.height = +row.height // Convert this value to a number
+ *   return row
+ * }, function (err, data) {
+ *   console.log(data) // Converted json data
+ * })
+ */
+function readDbf(filePath, opts_, cb) {
+  var parserOptions = {
+    map: identity
+  };
+  if (typeof cb === 'undefined') {
+    cb = opts_;
+  } else {
+    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+  }
+  readData(filePath, parserOptions, cb);
+}
+
+var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
+
+var index$2 = function (str) {
+	if (typeof str !== 'string') {
+		throw new TypeError('Expected a string');
+	}
+
+	return str.replace(matchOperatorsRe, '\\$&');
+};
+
+var index$4 = createCommonjsModule(function (module) {
+	'use strict';
+
+	function assembleStyles() {
+		var styles = {
+			modifiers: {
+				reset: [0, 0],
+				bold: [1, 22], // 21 isn't widely supported and 22 does the same thing
+				dim: [2, 22],
+				italic: [3, 23],
+				underline: [4, 24],
+				inverse: [7, 27],
+				hidden: [8, 28],
+				strikethrough: [9, 29]
+			},
+			colors: {
+				black: [30, 39],
+				red: [31, 39],
+				green: [32, 39],
+				yellow: [33, 39],
+				blue: [34, 39],
+				magenta: [35, 39],
+				cyan: [36, 39],
+				white: [37, 39],
+				gray: [90, 39]
+			},
+			bgColors: {
+				bgBlack: [40, 49],
+				bgRed: [41, 49],
+				bgGreen: [42, 49],
+				bgYellow: [43, 49],
+				bgBlue: [44, 49],
+				bgMagenta: [45, 49],
+				bgCyan: [46, 49],
+				bgWhite: [47, 49]
+			}
+		};
+
+		// fix humans
+		styles.colors.grey = styles.colors.gray;
+
+		Object.keys(styles).forEach(function (groupName) {
+			var group = styles[groupName];
+
+			Object.keys(group).forEach(function (styleName) {
+				var style = group[styleName];
+
+				styles[styleName] = group[styleName] = {
+					open: '\u001b[' + style[0] + 'm',
+					close: '\u001b[' + style[1] + 'm'
+				};
+			});
+
+			Object.defineProperty(styles, groupName, {
+				value: group,
+				enumerable: false
+			});
+		});
+
+		return styles;
+	}
+
+	Object.defineProperty(module, 'exports', {
+		enumerable: true,
+		get: assembleStyles
+	});
+});
+
+var index$8 = function () {
+	return (/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g
+	);
+};
+
+var ansiRegex = index$8();
+
+var index$6 = function (str) {
+	return typeof str === 'string' ? str.replace(ansiRegex, '') : str;
+};
+
+var ansiRegex$1 = index$8;
+var re = new RegExp(ansiRegex$1().source); // remove the `g` flag
+var index$10 = re.test.bind(re);
+
+var argv = process.argv;
+
+var terminator = argv.indexOf('--');
+var hasFlag = function (flag) {
+	flag = '--' + flag;
+	var pos = argv.indexOf(flag);
+	return pos !== -1 && (terminator !== -1 ? pos < terminator : true);
+};
+
+var index$12 = function () {
+	if ('FORCE_COLOR' in process.env) {
+		return true;
+	}
+
+	if (hasFlag('no-color') || hasFlag('no-colors') || hasFlag('color=false')) {
+		return false;
+	}
+
+	if (hasFlag('color') || hasFlag('colors') || hasFlag('color=true') || hasFlag('color=always')) {
+		return true;
+	}
+
+	if (process.stdout && !process.stdout.isTTY) {
+		return false;
+	}
+
+	if (process.platform === 'win32') {
+		return true;
+	}
+
+	if ('COLORTERM' in process.env) {
+		return true;
+	}
+
+	if (process.env.TERM === 'dumb') {
+		return false;
+	}
+
+	if (/^screen|^xterm|^vt100|color|ansi|cygwin|linux/i.test(process.env.TERM)) {
+		return true;
+	}
+
+	return false;
+}();
+
+var escapeStringRegexp = index$2;
+var ansiStyles = index$4;
+var stripAnsi = index$6;
+var hasAnsi = index$10;
+var supportsColor = index$12;
+var defineProps = Object.defineProperties;
+var isSimpleWindowsTerm = process.platform === 'win32' && !/^xterm/i.test(process.env.TERM);
+
+function Chalk(options) {
+	// detect mode if not set manually
+	this.enabled = !options || options.enabled === undefined ? supportsColor : options.enabled;
+}
+
+// use bright blue on Windows as the normal blue color is illegible
+if (isSimpleWindowsTerm) {
+	ansiStyles.blue.open = '\u001b[94m';
+}
+
+var styles = function () {
+	var ret = {};
+
+	Object.keys(ansiStyles).forEach(function (key) {
+		ansiStyles[key].closeRe = new RegExp(escapeStringRegexp(ansiStyles[key].close), 'g');
+
+		ret[key] = {
+			get: function () {
+				return build.call(this, this._styles.concat(key));
+			}
+		};
+	});
+
+	return ret;
+}();
+
+var proto = defineProps(function chalk() {}, styles);
+
+function build(_styles) {
+	var builder = function () {
+		return applyStyle.apply(builder, arguments);
+	};
+
+	builder._styles = _styles;
+	builder.enabled = this.enabled;
+	// __proto__ is used because we must return a function, but there is
+	// no way to create a function with a different prototype.
+	/* eslint-disable no-proto */
+	builder.__proto__ = proto;
+
+	return builder;
+}
+
+function applyStyle() {
+	// support varags, but simply cast to string in case there's only one arg
+	var args = arguments;
+	var argsLen = args.length;
+	var str = argsLen !== 0 && String(arguments[0]);
+
+	if (argsLen > 1) {
+		// don't slice `arguments`, it prevents v8 optimizations
+		for (var a = 1; a < argsLen; a++) {
+			str += ' ' + args[a];
+		}
+	}
+
+	if (!this.enabled || !str) {
+		return str;
+	}
+
+	var nestedStyles = this._styles;
+	var i = nestedStyles.length;
+
+	// Turns out that on Windows dimmed gray text becomes invisible in cmd.exe,
+	// see https://github.com/chalk/chalk/issues/58
+	// If we're on Windows and we're dealing with a gray color, temporarily make 'dim' a noop.
+	var originalDim = ansiStyles.dim.open;
+	if (isSimpleWindowsTerm && (nestedStyles.indexOf('gray') !== -1 || nestedStyles.indexOf('grey') !== -1)) {
+		ansiStyles.dim.open = '';
+	}
+
+	while (i--) {
+		var code = ansiStyles[nestedStyles[i]];
+
+		// Replace any instances already present with a re-opening code
+		// otherwise only the part of the string until said closing code
+		// will be colored, and the rest will simply be 'plain'.
+		str = code.open + str.replace(code.closeRe, code.open) + code.close;
+	}
+
+	// Reset the original 'dim' if we changed it to work around the Windows dimmed gray issue.
+	ansiStyles.dim.open = originalDim;
+
+	return str;
+}
+
+function init() {
+	var ret = {};
+
+	Object.keys(styles).forEach(function (name) {
+		ret[name] = {
+			get: function () {
+				return build.call(this, [name]);
+			}
+		};
+	});
+
+	return ret;
+}
+
+defineProps(Chalk.prototype, init());
+
+var index$1 = new Chalk();
+var styles_1 = ansiStyles;
+var hasColor = hasAnsi;
+var stripColor = stripAnsi;
+var supportsColor_1 = supportsColor;
+
+index$1.styles = styles_1;
+index$1.hasColor = hasColor;
+index$1.stripColor = stripColor;
+index$1.supportsColor = supportsColor_1;
+
+var warn = function (msg) {
+  console.log(index$1.gray('[indian-ocean]') + ' ' + index$1.yellow('Warning:', msg));
+};
+
+var notListError = function (format) {
+  throw new Error(index$1.red('[indian-ocean] You passed in an object but converting to ' + index$1.bold(format) + ' requires a list of objects.') + index$1.cyan('\nIf you would like to write a one-row csv, put your object in a list like so: `' + index$1.bold('[data]') + '`\n'));
+};
+
+// Some shared data integrity checks for formatters
+function formattingPreflight(file, format) {
+  if (file === '') {
+    return [];
+  } else if (!Array.isArray(file)) {
+    notListError(format);
+  }
+  return file;
+}
+
+var parseError = function (format) {
+  throw new Error(index$1.red('[indian-ocean] Error converting your data to ' + index$1.bold(format) + '.') + '\n\n' + index$1.cyan('Your data most likely contains objects or lists. Object values can only be strings for this format. Please convert before writing to file.\n'));
+};
+
+var csv$1 = function (file, writeOptions) {
+  writeOptions = writeOptions || {};
+  file = formattingPreflight(file, 'csv');
+  try {
+    return csvFormat(file, writeOptions.columns);
+  } catch (err) {
+    parseError('csv');
+  }
+};
+
+var json$2 = function (file, writeOptions) {
+  writeOptions = writeOptions || {};
+  return JSON.stringify(file, writeOptions.replacer, writeOptions.indent);
+};
+
+var psv = function (file, writeOptions) {
+  writeOptions = writeOptions || {};
+  file = formattingPreflight(file, 'psv');
+  try {
+    return dsvFormat('|').format(file, writeOptions.columns);
+  } catch (err) {
+    parseError('psv');
+  }
+};
+
+var tsv$1 = function (file, writeOptions) {
+  writeOptions = writeOptions || {};
+  file = formattingPreflight(file, 'tsv');
+  try {
+    return tsvFormat(file, writeOptions.columns);
+  } catch (err) {
+    parseError('tsv');
+  }
+};
+
+var txt = function (file) {
+  return file;
+};
+
+// import formattingPreflight from '../utils/formattingPreflight'
+// import parseError from '../reporters/parseError'
+
+var yaml$1 = function (file, writeOptions) {
+  writeOptions = writeOptions || {};
+  var writeMethod = writeOptions.writeMethod || 'safeDump';
+  delete writeOptions.writeMethod;
+  return index[writeMethod](file, writeOptions);
+};
+
+var fieldsize = {
+    // string
+    C: 254,
+    // boolean
+    L: 1,
+    // date
+    D: 8,
+    // number
+    N: 18,
+    // number
+    M: 18,
+    // number, float
+    F: 18,
+    // number
+    B: 8
+};
+
+/**
+ * @param {string} str
+ * @param {number} len
+ * @param {string} char
+ * @returns {string}
+ */
+var lpad = function lpad(str, len, char) {
+  while (str.length < len) {
+    str = char + str;
+  }return str;
+};
+
+/**
+ * @param {string} str
+ * @param {number} len
+ * @param {string} char
+ * @returns {string}
+ */
+var rpad = function rpad(str, len, char) {
+  while (str.length < len) {
+    str = str + char;
+  }return str;
+};
+
+/**
+ * @param {object} view
+ * @param {number} fieldLength
+ * @param {string} str
+ * @param {number} offset
+ * @returns {number}
+ */
+var writeField = function writeField(view, fieldLength, str, offset) {
+  for (var i = 0; i < fieldLength; i++) {
+    view.setUint8(offset, str.charCodeAt(i));offset++;
+  }
+  return offset;
+};
+
+var lib$1 = {
+  lpad: lpad,
+  rpad: rpad,
+  writeField: writeField
+};
+
+var fieldSize$1 = fieldsize;
+
+var types = {
+    string: 'C',
+    number: 'N',
+    boolean: 'L',
+    // type to use if all values of a field are null
+    null: 'C'
+};
+
+var multi_1 = multi;
+var bytesPer_1 = bytesPer;
+var obj_1 = obj;
+
+function multi(features) {
+    var fields = {};
+    features.forEach(collect);
+    function collect(f) {
+        inherit(fields, f);
     }
-    if (err) {
-      cb(err);
-      return false;
+    return obj(fields);
+}
+
+/**
+ * @param {Object} a
+ * @param {Object} b
+ * @returns {Object}
+ */
+function inherit(a, b) {
+    for (var i in b) {
+        var isDef = typeof b[i] !== 'undefined' && b[i] !== null;
+        if (typeof a[i] === 'undefined' || isDef) {
+            a[i] = b[i];
+        }
     }
-    var parsed;
+    return a;
+}
+
+function obj(_) {
+    var fields = {},
+        o = [];
+    for (var p in _) fields[p] = _[p] === null ? 'null' : typeof _[p];
+    for (var n in fields) {
+        var t = types[fields[n]];
+        if (t) {
+            o.push({
+                name: n,
+                type: t,
+                size: fieldSize$1[t]
+            });
+        }
+    }
+    return o;
+}
+
+/**
+ * @param {Array} fields
+ * @returns {Array}
+ */
+function bytesPer(fields) {
+    // deleted flag
+    return fields.reduce(function (memo, f) {
+        return memo + f.size;
+    }, 1);
+}
+
+var fields$1 = {
+    multi: multi_1,
+    bytesPer: bytesPer_1,
+    obj: obj_1
+};
+
+var lib = lib$1;
+var fields = fields$1;
+
+/**
+ * @param {Array} data
+ * @param {Array} meta
+ * @returns {Object} view
+ */
+var structure$1 = function structure(data, meta) {
+
+    var field_meta = meta || fields.multi(data),
+        fieldDescLength = 32 * field_meta.length + 1,
+        bytesPerRecord = fields.bytesPer(field_meta),
+        // deleted flag
+    buffer = new ArrayBuffer(
+    // field header
+    fieldDescLength +
+    // header
+    32 +
+    // contents
+    bytesPerRecord * data.length +
+    // EOF marker
+    1),
+        now = new Date(),
+        view = new DataView(buffer);
+
+    // version number - dBase III
+    view.setUint8(0, 0x03);
+    // date of last update
+    view.setUint8(1, now.getFullYear() - 1900);
+    view.setUint8(2, now.getMonth());
+    view.setUint8(3, now.getDate());
+    // number of records
+    view.setUint32(4, data.length, true);
+
+    // length of header
+    var headerLength = fieldDescLength + 32;
+    view.setUint16(8, headerLength, true);
+    // length of each record
+    view.setUint16(10, bytesPerRecord, true);
+
+    // Terminator
+    view.setInt8(32 + fieldDescLength - 1, 0x0D);
+
+    field_meta.forEach(function (f, i) {
+        // field name
+        f.name.split('').slice(0, 8).forEach(function (c, x) {
+            view.setInt8(32 + i * 32 + x, c.charCodeAt(0));
+        });
+        // field type
+        view.setInt8(32 + i * 32 + 11, f.type.charCodeAt(0));
+        // field length
+        view.setInt8(32 + i * 32 + 16, f.size);
+        if (f.type == 'N') view.setInt8(32 + i * 32 + 17, 3);
+    });
+
+    offset = fieldDescLength + 32;
+
+    data.forEach(function (row, num) {
+        // delete flag: this is not deleted
+        view.setUint8(offset, 32);
+        offset++;
+        field_meta.forEach(function (f) {
+            var val = row[f.name];
+            if (val === null || typeof val === 'undefined') val = '';
+
+            switch (f.type) {
+                // boolean
+                case 'L':
+                    view.setUint8(offset, val ? 84 : 70);
+                    offset++;
+                    break;
+
+                // date
+                case 'D':
+                    offset = lib.writeField(view, 8, lib.lpad(val.toString(), 8, ' '), offset);
+                    break;
+
+                // number
+                case 'N':
+                    offset = lib.writeField(view, f.size, lib.lpad(val.toString(), f.size, ' ').substr(0, 18), offset);
+                    break;
+
+                // string
+                case 'C':
+                    offset = lib.writeField(view, f.size, lib.rpad(val.toString(), f.size, ' '), offset);
+                    break;
+
+                default:
+                    throw new Error('Unknown field type');
+            }
+        });
+    });
+
+    // EOF flag
+    view.setUint8(offset, 0x1A);
+
+    return view;
+};
+
+var structure = structure$1;
+
+var index$14 = {
+	structure: structure
+};
+
+var dbf$1 = function (file, writeOptions) {
+  writeOptions = writeOptions || {};
+  function toBuffer(ab) {
+    var buffer = new Buffer(ab.byteLength);
+    var view = new Uint8Array(ab);
+    for (var i = 0; i < buffer.length; ++i) {
+      buffer[i] = view[i];
+    }
+    return buffer;
+  }
+  var buf = index$14.structure(file);
+  return toBuffer(buf.buffer);
+};
+
+var formatters = {
+  csv: csv$1,
+  json: json$2,
+  psv: psv,
+  tsv: tsv$1,
+  txt: txt,
+  yaml: yaml$1,
+  dbf: dbf$1
+};
+
+formatsList.forEach(function (format) {
+  format.equivalents.forEach(function (equivalent) {
+    formatters[equivalent] = formatters[format.name];
+  });
+});
+
+/**
+ * Returns a formatter that will format json data to file type specified by the extension in `filePath`. Used internally by {@link writeData} and {@link writeDataSync}.
+ *
+ * @function discernFileFormatter
+ * @param {String} filePath Input file path
+ * @returns {Function} A formatter function that will write the extension format
+ *
+ * @example
+ * var formatter = io.discernFileFormatter('path/to/data.tsv')
+ * var csv = formatter(json)
+ */
+function discernFileFormatter(filePath) {
+  var format = discernFormat(filePath);
+  var formatter = formatters[format];
+  // If we don't have a parser for this format, return as text
+  if (typeof formatter === 'undefined') {
+    formatter = formatters['txt'];
+  }
+  return formatter;
+}
+
+var path$1 = path;
+var fs$1 = fs;
+var _0777 = parseInt('0777', 8);
+
+var index$15 = mkdirP.mkdirp = mkdirP.mkdirP = mkdirP;
+
+function mkdirP(p, opts, f, made) {
+    if (typeof opts === 'function') {
+        f = opts;
+        opts = {};
+    } else if (!opts || typeof opts !== 'object') {
+        opts = { mode: opts };
+    }
+
+    var mode = opts.mode;
+    var xfs = opts.fs || fs$1;
+
+    if (mode === undefined) {
+        mode = _0777 & ~process.umask();
+    }
+    if (!made) made = null;
+
+    var cb = f || function () {};
+    p = path$1.resolve(p);
+
+    xfs.mkdir(p, mode, function (er) {
+        if (!er) {
+            made = made || p;
+            return cb(null, made);
+        }
+        switch (er.code) {
+            case 'ENOENT':
+                mkdirP(path$1.dirname(p), opts, function (er, made) {
+                    if (er) cb(er, made);else mkdirP(p, opts, cb, made);
+                });
+                break;
+
+            // In the case of any other error, just see if there's a dir
+            // there already.  If so, then hooray!  If not, then something
+            // is borked.
+            default:
+                xfs.stat(p, function (er2, stat) {
+                    // if the stat fails, then that's super weird.
+                    // let the original error be the failure reason.
+                    if (er2 || !stat.isDirectory()) cb(er, made);else cb(null, made);
+                });
+                break;
+        }
+    });
+}
+
+mkdirP.sync = function sync(p, opts, made) {
+    if (!opts || typeof opts !== 'object') {
+        opts = { mode: opts };
+    }
+
+    var mode = opts.mode;
+    var xfs = opts.fs || fs$1;
+
+    if (mode === undefined) {
+        mode = _0777 & ~process.umask();
+    }
+    if (!made) made = null;
+
+    p = path$1.resolve(p);
+
     try {
-      if (typeof parser === 'function') {
-        parsed = parser(data, parserOptions);
-      } else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
-        parsed = parser.parse(data, parserOptions);
-      } else {
-        parsed = 'Your specified parser is not properly formatted. It must either be a function or have a `parse` method.';
-      }
-    } catch (err) {
-      cb(err);
-      return;
+        xfs.mkdirSync(p, mode);
+        made = made || p;
+    } catch (err0) {
+        switch (err0.code) {
+            case 'ENOENT':
+                made = sync(path$1.dirname(p), opts, made);
+                sync(p, opts, made);
+                break;
+
+            // In the case of any other error, just see if there's a dir
+            // there already.  If so, then hooray!  If not, then something
+            // is borked.
+            default:
+                var stat;
+                try {
+                    stat = xfs.statSync(p);
+                } catch (err1) {
+                    throw err0;
+                }
+                if (!stat.isDirectory()) throw err0;
+                break;
+        }
     }
-    cb(null, parsed);
+
+    return made;
+};
+
+/**
+ * Asynchronously create directories along a given file path. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module
+ *
+ * @function makeDirectories
+ * @param {String} outPath The path to a file
+ * @param {Function} callback The function to do once this is done. Has signature of `(err)`
+ *
+ * @example
+ * io.makeDirectories('path/to/create/to/data.tsv', function (err) {
+ *   console.log(err) // null
+ * })
+ *
+ */
+function makeDirectories(outPath, cb) {
+  index$15(dirname(outPath), function (err) {
+    cb(err);
   });
 }
 
 /**
- * Syncronous version of {@link readData}. Read data given a path ending in the file format.
+ * Write the data object, inferring the file format from the file ending specified in `fileName`.
+ *
+ * Supported formats:
+ *
+ * * `.json` Array of objects, also supports `.geojson` and `.topojson`
+ * * `.csv` Comma-separated
+ * * `.tsv` Tab-separated
+ * * `.psv` Pipe-separated
+ * * `.yaml` Yaml file, also supports `.yml`
+ * * `.dbf` Database file, commonly used in ESRI-shapefile format.
+ *
+ * @function writeData
+ * @param {String} filePath Input file path
+ * @param {Array|Object|String} data Data to write
+ * @param {Object} [options] Optional options object, see below
+ * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
+ * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+ * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
+ * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
+ * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
+ * @param {Function} callback Has signature `(err, dataStr)`. `dataStr` is the data that was written out as a string
+ *
+ * @example
+ * io.writeData('path/to/data.json', jsonData, function (err, dataString) {
+ *   console.log(err)
+ * })
+ *
+ * io.writeData('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true}, function (err, dataString) {
+ *   console.log(err)
+ * })
+ *
+ * io.writeData('path/to/to/data.yaml', jsonData, {writeMehod: "dump", sortKeys: true}, function (err, dataString) {
+ *   console.log(err)
+ * })
+ *
+ * io.writeData('path/to/to/data.json', jsonData, {indent: 4}, function (err, dataString) {
+ *   console.log(err)
+ * })
+ *
+ * io.writeData('path/to/to/data.json', jsonData, {
+ *   indent: 4,
+ *   replacer: function (key, value) {
+ *     // Filtering out string properties
+ *     if (typeof value === "string") {
+ *       return undefined
+ *     }
+ *     return value
+ *   }
+ * }, function (err, dataString) {
+ *   console.log(err)
+ * })
+ *
+ * io.writeData('path/to/to/data.json', jsonData, {
+ *   indent: 4,
+ *   replacer: ['name', 'occupation'] // Only keep "name" and "occupation" values
+ * }, function (err, dataString) {
+ *   console.log(err)
+ * })
+ */
+function writeData(outPath, data, opts_, cb) {
+  if (typeof cb === 'undefined') {
+    cb = opts_;
+    opts_ = undefined;
+  }
+  if (underscore.isEmpty(data)) {
+    warn('You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty file...');
+  }
+
+  if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && opts_.makeDirectories) {
+    delete opts_.makeDirectories;
+    makeDirectories(outPath, proceed);
+  } else {
+    proceed();
+  }
+
+  function proceed(err) {
+    if (err) {
+      throw err;
+    }
+
+    var writeOptions;
+    if (typeof opts_ !== 'function') {
+      writeOptions = opts_;
+    }
+
+    var fileFormatter = discernFileFormatter(outPath);
+    var formattedData = fileFormatter(data, writeOptions);
+    fs.writeFile(outPath, formattedData, function (err) {
+      cb(err, formattedData);
+    });
+  }
+}
+
+/**
+ * Reads in a dbf file with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
+ *
+ * @function convertDbfToData
+ * @param {String} inFilePath Input file path
+ * @param {String} outFilePath Output file path
+ * @param {Object} [options] Optional config object that's passed to {@link writeData}. See that documentation for full options, which vary depending on the output format you choose.
+ * @param {Function} callback Has signature `(err)`
+ *
+ * @example
+ * io.convertDbfToData('path/to/data.dbf', 'path/to/data.csv', function (err) {
+ *   console.log(err)
+ * })
+ *
+ * io.convertDbfToData('path/to/data.dbf', 'path/to/create/to/data.csv', {makeDirectories: true}, function (err) {
+ *   console.log(err)
+ * })
+ */
+function convertDbfToData(inPath, outPath, opts_, cb) {
+  if (typeof cb === 'undefined') {
+    cb = opts_;
+  }
+  readDbf(inPath, function (error, jsonData) {
+    if (error) {
+      cb(error);
+    } else {
+      writeData(outPath, jsonData, opts_, cb);
+    }
+  });
+}
+
+/**
+ * A port of jQuery's extend. Merge the contents of two or more objects together into the first object. Supports deep extending with `true` as the first argument.
+ *
+ * @function extend
+ * @param {Boolean} [deepExtend] Optional, set to `true` to merge recursively.
+ * @param {Object} destination The object to modify
+ * @param {Object} source The object whose keys to take
+ * @param {Object} [source2] Optional, You can add any number of objects as arguments.
+ * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
+ *
+ * @example
+ * var mergedObj = io.extend({}, {name: 'indian-ocean'}, {alias: 'io'})
+ * console.log(mergedObj)
+ * // {
+ * //   name: 'indian-ocean',
+ * //   alias: 'io'
+ * // }
+ *
+ * var name = {name: 'indian-ocean'}
+ * io.extend(name, {alias: 'io'})
+ * console.log(name)
+ * // {
+ * //   name: 'indian-ocean',
+ * //   alias: 'io'
+ * // }
+ *
+ * @example
+ * var object1 = {
+ *   apple: 0,
+ *   banana: { weight: 52, price: 100 },
+ *   cherry: 97
+ * }
+ * var object2 = {
+ *   banana: { price: 200 },
+ *   almond: 100
+ * }
+ * io.extend(true, object1, object2)
+ * console.log(object1)
+ * //  {
+ * //   apple: 0,
+ * //   banana: {
+ * //     weight: 52,
+ * //     price: 200
+ * //   },
+ * //   cherry: 97,
+ * //   almond: 100
+ * // }
+ *
+ */
+function extend$1() {
+  var options;
+  var name;
+  var src;
+  var copy;
+  var copyIsArray;
+  var clone;
+  var target = arguments[0] || {};
+  var i = 1;
+  var length = arguments.length;
+  var deep = false;
+
+  // Handle a deep copy situation
+  if (typeof target === 'boolean') {
+    deep = target;
+
+    // Skip the boolean and the target
+    target = arguments[i] || {};
+    i++;
+  }
+
+  // Handle case when target is a string or something (possible in deep copy)
+  if ((typeof target === 'undefined' ? 'undefined' : _typeof(target)) !== 'object' && typeof target !== 'function') {
+    target = {};
+  }
+
+  // Extend indian-ocean itself if only one argument is passed
+  if (i === length) {
+    target = this;
+    i--;
+  }
+
+  for (; i < length; i++) {
+    // Only deal with non-null/undefined values
+    if ((options = arguments[i]) != null) {
+      // Extend the base object
+      for (name in options) {
+        src = target[name];
+        copy = options[name];
+
+        // Prevent never-ending loop
+        if (target === copy) {
+          continue;
+        }
+
+        // Recurse if we're merging plain objects or arrays
+        if (deep && copy && (typeof copy === 'undefined' ? 'undefined' : _typeof(copy)) === 'object' || (copyIsArray = Array.isArray(copy))) {
+          if (copyIsArray) {
+            copyIsArray = false;
+            clone = src && Array.isArray(src) ? src : [];
+          } else {
+            clone = src && (typeof src === 'undefined' ? 'undefined' : _typeof(src)) === 'object' ? src : {};
+          }
+
+          // Never move original objects, clone them
+          target[name] = extend$1(deep, clone, copy);
+
+          // Don't bring in undefined values
+        } else if (copy !== undefined) {
+          target[name] = copy;
+        }
+      }
+    }
+  }
+
+  // Return the modified object
+  return target;
+}
+
+/**
+ * A more semantic convenience function. Delegates to {@link extend} and passes `true` as the first argument. Deep merge the contents of two or more objects together into the first object.
+ *
+ * @function deepExtend
+ * @param {Object} destination The object to modify
+ * @param {Object} source The object whose keys to take
+ * @param {Object} [source2] Optional, You can add any number of objects as arguments.
+ * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
+ *
+ * @example
+ * var object1 = {
+ *   apple: 0,
+ *   banana: { weight: 52, price: 100 },
+ *   cherry: 97
+ * }
+ * var object2 = {
+ *   banana: { price: 200 },
+ *   almond: 100
+ * }
+ * io.deepExtend(object1, object2)
+ * console.log(object1)
+ * //  {
+ * //   apple: 0,
+ * //   banana: {
+ * //     weight: 52,
+ * //     price: 200
+ * //   },
+ * //   cherry: 97,
+ * //   almond: 100
+ * // }
+ *
+ */
+function deepExtend() {
+  var args = Array.prototype.slice.call(arguments); // Make real array from arguments
+  args.unshift(true); // Add `true` as first arg.
+  extend$1.apply(this, args);
+}
+
+/**
+ * Asynchronously test whether a file exists or not by using `fs.access` modified from https://github.com/nodejs/io.js/issues/1592#issuecomment-98392899.
+ *
+ * @function exists
+ * @param {String} filePath Input file path
+ * @param {Function} callback Has signature `(err, exists)`
+ *
+ * @example
+ * var exists = io.exists('path/to/data.tsv', function (err, exists) {
+ *   console.log(exists) // `true` if the file exists, `false` if not.
+ * })
+ *
+ */
+function exists(filePath, cb) {
+  fs.access(filePath, function (err) {
+    var exists;
+    if (err && err.code === 'ENOENT') {
+      exists = false;
+      err = null;
+    } else if (!err) {
+      exists = true;
+    }
+    cb(err, exists);
+  });
+}
+
+/**
+ * Syncronous version of {@link exists}. Delegates to `fs.existsSync` if that function is available.
+ *
+ * @function existsSync
+ * @param {String} filePath Input file path
+ * @returns {Boolean} Whether the file exists or not
+ *
+ * @example
+ * var exists = io.existsSync('path/to/data.tsv')
+ * console.log(exists) // `true` if file exists, `false` if not.
+ */
+function existsSync(filePath) {
+  if (fs.existsSync) {
+    return fs.existsSync(filePath);
+  } else {
+    try {
+      fs.accessSync(filePath);
+      return true;
+    } catch (ex) {
+      return false;
+    }
+  }
+}
+
+/**
+ * Test whether a file name has the given extension
+ *
+ * @function extMatchesStr
+ * @param {String} filePath Input file path
+ * @param {String} extension The extension to test. An empty string will match a file with no extension.
+ * @returns {Boolean} Whether it matched or not.
+ *
+ * @example
+ * var matches = io.extMatchesStr('path/to/data.tsv', 'tsv')
+ * console.log(matches) // `true`
+ */
+function extMatchesStr(filePath, extension) {
+  // Chop '.' off extension returned by extname
+  var ext = extname(filePath).slice(1);
+  return ext === extension;
+}
+
+/**
+ * Synchronous version of {link #makeDirectories}. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module
+ *
+ * @function makeDirectoriesSync
+ * @param {String} outPath The path to a file
+ *
+ * @example
+ * io.makeDirectories('path/to/create/to/data.tsv')
+ *
+ */
+function makeDirectoriesSync(outPath) {
+  index$15.sync(dirname(outPath));
+}
+
+/**
+ * Test whether a string matches a given Regular Expression.
+ *
+ * @function matchesRegExp
+ * @param {String} filePath Input file path or file path.
+ * @param {RegExp} RegExp The Regular Expression to match against.
+ * @returns {Boolean} Whether they match.
+ *
+ * @example
+ * var matches = io.matchesRegExp('.gitignore', /\.gitignore/)
+ * console.log(matches) // `true`
+ *
+ * var matches = io.matchesRegExp('data/final-data/basic.csv', /\/final-data\//)
+ * console.log(matches) // `true`
+ */
+function matchesRegExp(filePath, regEx) {
+  return regEx.test(filePath);
+}
+
+function isRegExp$1(obj) {
+  return Object.prototype.toString.call(obj) === '[object RegExp]';
+}
+
+/**
+ * Test whether a file name or path matches a given matcher. Delegates to {@link extMatchesStr} if `matcher` is a string` and tests only against the file name extension. Delegates to {@link matchesRegExp} if matcher is a Regular Expression and tests against entire string, which is usefulf or testing the full file path.
+ *
+ * @function matches
+ * @param {String} filePath Input file path or path to the file.
+ * @returns {String|RegExp} matcher The string or Regular Expression to match against.
+ *
+ * @example
+ * var matches = io.matches('path/to/data.tsv', 'tsv')
+ * console.log(matches) // `true`
+ *
+ * var matches = io.matches('.gitignore', /\.gitignore/)
+ * console.log(matches) // `true`
+ *
+ * var matches = io.matches('file/with/no-extention', '') // Nb. Dot files are treated as files with no extention
+ * console.log(matches) // `true`
+ */
+function matches(filePath, matcher) {
+  if (typeof matcher === 'string') {
+    return extMatchesStr(filePath, matcher);
+  } else if (isRegExp$1(matcher)) {
+    return matchesRegExp(filePath, matcher);
+  } else {
+    throw new Error('Matcher argument must be String or Regular Expression');
+  }
+}
+
+/**
+ * Syncronous version of {@link readData}. Read data given a path ending in the file format. This function detects the same formats as the asynchronous {@link readData} except for `.dbf` files, which it cannot read.
+ *
+ * * `.json` Array of objects or object
+ * * `.csv` Comma-separated
+ * * `.tsv` Tab-separated
+ * * `.psv` Pipe-separated
+ * * `.yaml` or `.yml` Yaml file
+ * * `.aml` ArchieML
+ * * `.txt` Text file (a string)
+ * * other All others are read as a text file
  *
  * @function readDataSync
  * @param {String} filePath Input file path
@@ -7271,25 +7354,8 @@ function readDataSync(filePath, opts_) {
   } else {
     parser = discernParser(filePath);
   }
-  var data = fs.readFileSync(filePath, 'utf8');
-  var fileFormat = discernFormat(filePath);
-  if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
-    data = '[]';
-  }
-
-  var parsed;
-  if (typeof parser === 'function') {
-    parsed = parser(data, parserOptions);
-  } else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
-    parsed = parser.parse(data, parserOptions);
-  } else {
-    return new Error('Your specified parser is not properly formatted. It must either be a function or have a `parse` method.');
-  }
-
-  // if (opts_ && opts_.flatten) {
-  //   parsed = _.map(parsed, flatten)
-  // }
-  return parsed;
+  var loader = discernLoader(filePath, { sync: true });
+  return loader(filePath, parser, parserOptions);
 }
 
 var slice = [].slice;
@@ -8275,13 +8341,13 @@ function appendDataSync(outPath, data, opts_) {
 exports.convertDbfToData = convertDbfToData;
 exports.writeDbfToData = convertDbfToData;
 exports.formatters = formatters;
-exports.formatCsv = csv;
-exports.formatDbf = dbf;
-exports.formatJson = json;
+exports.formatCsv = csv$1;
+exports.formatDbf = dbf$1;
+exports.formatJson = json$2;
 exports.formatPsv = psv;
-exports.formatTsv = tsv;
+exports.formatTsv = tsv$1;
 exports.formatTxt = txt;
-exports.formatYaml = yaml;
+exports.formatYaml = yaml$1;
 exports.deepExtend = deepExtend;
 exports.discernFileFormatter = discernFileFormatter;
 exports.discernFormat = discernFormat;

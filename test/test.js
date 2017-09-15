@@ -948,9 +948,7 @@ describe('readers', function () {
           done()
         })
       })
-    })
 
-    describe('json', function () {
       it('should match expected geojson', function (done) {
         io.readData(testDataPath('geojson/basic.geojson'), function (err, json) {
           assert.equal(err, null)
@@ -958,9 +956,7 @@ describe('readers', function () {
           done()
         })
       })
-    })
 
-    describe('json', function () {
       it('should match expected topojson', function (done) {
         io.readData(testDataPath('topojson/basic.topojson'), function (err, json) {
           assert.equal(err, null)
@@ -968,9 +964,7 @@ describe('readers', function () {
           done()
         })
       })
-    })
 
-    describe('json with map', function () {
       it('should match expected json', function (done) {
         io.readData(testDataPath('json/basic.json'), {
           map: function (row, i) {
@@ -1370,6 +1364,55 @@ describe('readers', function () {
           assert.equal(err, null)
           assert(_.isEqual(JSON.stringify(json), '{"text":"hey"}'))
           done()
+        })
+      })
+    })
+
+    describe('dbf', function () {
+      describe('empty', function () {
+        it('should be empty array', function (done) {
+          io.readData(testDataPath('dbf/empty.dbf'), function (err, json) {
+            assert.equal(err.split('\n')[0], 'TypeError: Cannot read property \'buffer\' of null')
+            done()
+          })
+        })
+      })
+
+      describe('basic', function () {
+        it('should match expected json', function (done) {
+          io.readDbf(testDataPath('dbf/basic.dbf'), function (err, json) {
+            assert.equal(err, null)
+            assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'))
+            done()
+          })
+        })
+      })
+
+      describe('basic map', function () {
+        it('should match expected json', function (done) {
+          io.readData(testDataPath('dbf/basic.dbf'), {
+            map: function (row, i) {
+              row.bar = row.bar * 2
+              return row
+            }
+          }, function (err, json) {
+            assert.equal(err, null)
+            assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":2},{"foo":"green","bar":4}]'))
+            done()
+          })
+        })
+      })
+
+      describe('basic map shorthand', function () {
+        it('should match expected json', function (done) {
+          io.readData(testDataPath('dbf/basic.dbf'), function (row, i) {
+            row.bar = row.bar * 2
+            return row
+          }, function (err, json) {
+            assert.equal(err, null)
+            assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":2},{"foo":"green","bar":4}]'))
+            done()
+          })
         })
       })
     })

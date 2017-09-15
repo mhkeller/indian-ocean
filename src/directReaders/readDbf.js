@@ -1,5 +1,5 @@
-var shapefile = require('shapefile')
 import identity from '../utils/identity'
+import readData from '../readers/readData'
 
 /**
  * Asynchronously read a dbf file. Returns an empty array if file is empty.
@@ -32,13 +32,5 @@ export default function readDbf (filePath, opts_, cb) {
   } else {
     parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
   }
-  var values = []
-  shapefile.openDbf(filePath)
-    .then(source => source.read()
-      .then(function log (result) {
-        if (result.done) return cb(null, values)
-        values.push(parserOptions.map(result.value)) // TODO, figure out i
-        return source.read().then(log)
-      }))
-    .catch(error => cb(error.stack))
+  readData(filePath, parserOptions, cb)
 }

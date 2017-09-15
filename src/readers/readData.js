@@ -1,9 +1,7 @@
-import fs from 'fs'
-import getParser from '../helpers/getParser'
-import discernParser from '../helpers/discernParser'
-import discernFormat from '../helpers/discernFormat'
-import {formatsIndex} from '../config/equivalentFormats'
 import _ from 'underscore'
+import getParser from '../helpers/getParser'
+import discernLoader from '../helpers/discernLoader'
+import discernParser from '../helpers/discernParser'
 
 /**
  * Asynchronously read data given a path ending in the file format.
@@ -17,9 +15,8 @@ import _ from 'underscore'
  * * `.yaml` or `.yml` Yaml file
  * * `.aml` ArchieML
  * * `.txt` Text file (a string)
+ * * `.dbf` Database format used for shapefiles
  * * other All others are read as a text file
- *
- * *Note: Does not currently support `.dbf` files.
  *
  * @function readData
  * @param {String} filePath Input file path
@@ -109,28 +106,6 @@ export default function readData (filePath, opts_, cb_) {
   } else {
     parser = discernParser(filePath)
   }
-  fs.readFile(filePath, 'utf8', function (err, data) {
-    var fileFormat = discernFormat(filePath)
-    if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
-      data = '[]'
-    }
-    if (err) {
-      cb(err)
-      return false
-    }
-    var parsed
-    try {
-      if (typeof parser === 'function') {
-        parsed = parser(data, parserOptions)
-      } else if (typeof parser === 'object' && typeof parser.parse === 'function') {
-        parsed = parser.parse(data, parserOptions)
-      } else {
-        parsed = 'Your specified parser is not properly formatted. It must either be a function or have a `parse` method.'
-      }
-    } catch (err) {
-      cb(err)
-      return
-    }
-    cb(null, parsed)
-  })
+  var loader = discernLoader(filePath)
+  loader(filePath, parser, parserOptions, cb)
 }
