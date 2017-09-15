@@ -1,6 +1,58 @@
 Changelog
 =========
 
+# 2.1.0
+
+> Not yet on npm
+
+This is an exciting release because indian-ocean is now broken into es6 modules and brand new documentation. There's also an experimental browser bundle and some minor new features.
+
+* Parsers and formatters are now exposed as public functions
+  * [8796820bd7a472f2561c9fff425c38120046201e](https://github.com/mhkeller/indian-ocean/commit/8796820bd7a472f2561c9fff425c38120046201e)
+  * [0434c8c71fd7913c7e0991c51b45b8e2ae9f19b1](https://github.com/mhkeller/indian-ocean/commit/0434c8c71fd7913c7e0991c51b45b8e2ae9f19b1)
+* Switch to es6 modules and bundle with rollup
+  * [bffe689eaac19a3a399fcc832c721c44aba1178e](https://github.com/mhkeller/indian-ocean/commit/bffe689eaac19a3a399fcc832c721c44aba1178e)
+  * [02ae3b7b0cfb02c86b05c2a02c29ab872a137d0d](https://github.com/mhkeller/indian-ocean/commit/02ae3b7b0cfb02c86b05c2a02c29ab872a137d0d)
+  * [879d17131afe5e65357c1fbad8ca76171b2824e2](https://github.com/mhkeller/indian-ocean/commit/879d17131afe5e65357c1fbad8ca76171b2824e2)
+  * [cb8281b5572634cb30a31b86806a3a058eca032e](https://github.com/mhkeller/indian-ocean/commit/cb8281b5572634cb30a31b86806a3a058eca032e)
+* Also export a UMD bundle for the browser
+  * [4ed78583c617f9cfe1f68949c30ae82db6d8c346](https://github.com/mhkeller/indian-ocean/commit/4ed78583c617f9cfe1f68949c30ae82db6d8c346)
+* Thanks to @Rich-Harris, Typescript declarations are being added
+  * [807e109c746e337ffb2497a14c6877734f63f28c](https://github.com/mhkeller/indian-ocean/commit/807e109c746e337ffb2497a14c6877734f63f28c)
+  * [209646f39cd97b59cbc28ef2e4fb6472f31be9ab](https://github.com/mhkeller/indian-ocean/commit/209646f39cd97b59cbc28ef2e4fb6472f31be9ab)
+* Add a test for extensions on dotfiles
+  * [0acca323de329256fb0879c5cc1a6f105a1d3382](https://github.com/mhkeller/indian-ocean/commit/0acca323de329256fb0879c5cc1a6f105a1d3382)
+* Fix tests on newer versions of node that handle JSON error reporting nicer. As a result remove the `json-parse` dependency and remove `nativeParser` option from JSON readers.
+  * [4e0bd9ac1dbe62069242d3cc4b51748f4bdd8ed0](https://github.com/mhkeller/indian-ocean/commit/4e0bd9ac1dbe62069242d3cc4b51748f4bdd8ed0)
+  * [53bfdbd29fb771133635afd5d208a9186b3f11cc](https://github.com/mhkeller/indian-ocean/commit/53bfdbd29fb771133635afd5d208a9186b3f11cc)
+* Clean up dependencies
+  * [efec2917264d3951a090bf025608e71b792c97f8](https://github.com/mhkeller/indian-ocean/commit/efec2917264d3951a090bf025608e71b792c97f8)
+  * [1b91bb54dbf2d449d472ede92f8c6f882b5ba01b](https://github.com/mhkeller/indian-ocean/commit/1b91bb54dbf2d449d472ede92f8c6f882b5ba01b)
+* Add .editorconfig and package-lock.json
+  * [7d2a904b131d78f78c23baebd4d3a33e011f6382](https://github.com/mhkeller/indian-ocean/commit/7d2a904b131d78f78c23baebd4d3a33e011f6382)
+  * [1a659c50f345078f6372f17b1ce173387d43d61f](https://github.com/mhkeller/indian-ocean/commit/1a659c50f345078f6372f17b1ce173387d43d61f)
+* Defer to `fs.existsSync` since newer versions of node brought that back
+  * [ca665bf07e4e4ec56e426cf4ab86cb81f8eabd63](https://github.com/mhkeller/indian-ocean/commit/ca665bf07e4e4ec56e426cf4ab86cb81f8eabd63)
+* Rename `shorthandReaders` to `directReaders`. This only affects internal file paths and doc nomenclature
+  * [64c62cc42a3ed4b852bcdb9995afa08a4ee2878b](https://github.com/mhkeller/indian-ocean/commit/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b)
+* New docs
+  * [1eb69af239b3cfc86bef055c178957603dc562f8](https://github.com/mhkeller/indian-ocean/commit/1eb69af239b3cfc86bef055c178957603dc562f8)
+  * [7cff646f26cf1a593d7093584ddb402874b2c0fe](https://github.com/mhkeller/indian-ocean/commit/7cff646f26cf1a593d7093584ddb402874b2c0fe)
+  * [8db667b98e0e2d2583591c161c628fcca36f2234](https://github.com/mhkeller/indian-ocean/commit/8db667b98e0e2d2583591c161c628fcca36f2234)
+  * [78f4ca3a9a301b8705af5f82b8bd77c1bdc189a3](https://github.com/mhkeller/indian-ocean/commit/78f4ca3a9a301b8705af5f82b8bd77c1bdc189a3)
+  * [fb1e8f56eb8285a4f2df425d789512d656f9d236](https://github.com/mhkeller/indian-ocean/commit/fb1e8f56eb8285a4f2df425d789512d656f9d236)
+  * [ad8855a20225c2cb54dc6cf36fd674affee5eefc](https://github.com/mhkeller/indian-ocean/commit/ad8855a20225c2cb54dc6cf36fd674affee5eefc)
+  * [221173e34ccabda7c4f67f765aefec2553415dd5](https://github.com/mhkeller/indian-ocean/commit/221173e34ccabda7c4f67f765aefec2553415dd5)
+  * [995d440eefdf4800a5de57ab84a7ba70e4366157](https://github.com/mhkeller/indian-ocean/commit/995d440eefdf4800a5de57ab84a7ba70e4366157)
+  * [28d66bed085b92fee74c534f9fca85723c9a4872](https://github.com/mhkeller/indian-ocean/commit/28d66bed085b92fee74c534f9fca85723c9a4872)
+  * [998620a85ecbebbec6f715c49a386245af990870](https://github.com/mhkeller/indian-ocean/commit/998620a85ecbebbec6f715c49a386245af990870)
+  * [e87cb8b2dbd2c149226acb632da55cb26d5a0b72](https://github.com/mhkeller/indian-ocean/commit/e87cb8b2dbd2c149226acb632da55cb26d5a0b72)
+  * [43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550](https://github.com/mhkeller/indian-ocean/commit/43e1bc0cd40fe0a54eafe4ff3dc1c79ccbe4c550)
+  * [35c696c6420068a9dfe4b9455d47d1bcf45abc61](https://github.com/mhkeller/indian-ocean/commit/35c696c6420068a9dfe4b9455d47d1bcf45abc61)
+  * [619acfa34f1f36334ea82c9278e770fd9d792363](https://github.com/mhkeller/indian-ocean/commit/619acfa34f1f36334ea82c9278e770fd9d792363)
+  * [7b9ce9ae986745824e81c8d8efdecdfa63e878c5](https://github.com/mhkeller/indian-ocean/commit/7b9ce9ae986745824e81c8d8efdecdfa63e878c5)
+  * [39076cdf47803d66d1af7c3730f4fe1957289f5e](https://github.com/mhkeller/indian-ocean/commit/39076cdf47803d66d1af7c3730f4fe1957289f5e)
+
 # 2.0.2
 
 > 2017-02-08
