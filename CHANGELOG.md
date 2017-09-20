@@ -37,6 +37,8 @@ This is an exciting release because indian-ocean is now broken into es6 modules 
   * [ca665bf07e4e4ec56e426cf4ab86cb81f8eabd63](https://github.com/mhkeller/indian-ocean/commit/ca665bf07e4e4ec56e426cf4ab86cb81f8eabd63)
 * Don't delete keys off of options object. Fixes [#66](https://github.com/mhkeller/indian-ocean/issues/66).
   * [8a6ab3f60fd1ba885c1c198444613477de9b7ce8](https://github.com/mhkeller/indian-ocean/commit/8a6ab3f60fd1ba885c1c198444613477de9b7ce8)
+  * [0aceac58d54eb4f20a6d421d4673a032a99605bf](https://github.com/mhkeller/indian-ocean/commit/0aceac58d54eb4f20a6d421d4673a032a99605bf)
+  * [c46535a51a21d59e6c4aa724fd8a11a3ec46c8a2](https://github.com/mhkeller/indian-ocean/commit/c46535a51a21d59e6c4aa724fd8a11a3ec46c8a2)
 * Rename `shorthandReaders` to `directReaders`. This only affects internal file paths and doc nomenclature
   * [64c62cc42a3ed4b852bcdb9995afa08a4ee2878b](https://github.com/mhkeller/indian-ocean/commit/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b)
 * New docs
