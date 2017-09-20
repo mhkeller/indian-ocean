@@ -2827,6 +2827,7 @@ describe('writers', function () {
         io.writeDataSync(filePath.join(path.sep), testData, opts)
         io.writeDataSync(filePath2.join(path.sep), testData, opts)
         readAssertBasicValid(filePath.join(path.sep))
+        readAssertBasicValid(filePath2.join(path.sep))
         rimraf(filePath.slice(0, 2).join(path.sep) + '*', function (err) {
           assert.equal(err, null)
           done()
