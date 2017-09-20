@@ -5932,9 +5932,9 @@ function dbf(filePath, parser, parserOptions, cb) {
   var i = 0;
   shapefile.openDbf(filePath).then(function (source) {
     return source.read().then(function log(result) {
-      console.log(i++);
+      i++;
       if (result.done) return cb(null, values);
-      values.push(map(result.value)); // TODO, figure out i
+      values.push(map(result.value, i));
       return source.read().then(log);
     });
   }).catch(function (error) {
@@ -6919,7 +6919,7 @@ function writeData(outPath, data, opts_, cb) {
 }
 
 /**
- * Reads in a dbf file with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
+ * Reads in data given a path ending in the file format with {@link readData} and writes to file using {@link writeData}. A convenience function for converting files to more other formats.
  *
  * @function convertData
  * @param {String} inFilePath Input file path
@@ -6932,7 +6932,7 @@ function writeData(outPath, data, opts_, cb) {
  *   console.log(err)
  * })
  *
- * io.convertData('path/to/data.dbf', 'path/to/create/to/data.csv', {makeDirectories: true}, function (err) {
+ * io.convertData('path/to/data.csv', 'path/to/create/to/data.dbf', {makeDirectories: true}, function (err) {
  *   console.log(err)
  * })
  */
@@ -6984,7 +6984,7 @@ function readDbf(filePath, opts_, cb) {
 }
 
 /**
- * Reads in a dbf file with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
+ * Reads in a dbf file with {@link readData} and write to file using {@link writeData}. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
  *
  * @function convertDbfToData
  * @param {String} inFilePath Input file path

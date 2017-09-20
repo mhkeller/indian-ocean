@@ -3481,9 +3481,6 @@ describe('writers', function () {
       it('should convert dbf to format', function (done) {
         var filePath = ['test', 'tmp-convert-to-data-csv', 'data.csv']
         io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
-          if (err) {
-            console.log(err)
-          }
           assert.equal(err, null)
           var json = io.readDataSync(filePath.join(path.sep))
           assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'))
