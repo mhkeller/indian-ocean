@@ -35,6 +35,8 @@ This is an exciting release because indian-ocean is now broken into es6 modules 
   * [1a659c50f345078f6372f17b1ce173387d43d61f](https://github.com/mhkeller/indian-ocean/commit/1a659c50f345078f6372f17b1ce173387d43d61f)
 * Defer to `fs.existsSync` since newer versions of node brought that back
   * [ca665bf07e4e4ec56e426cf4ab86cb81f8eabd63](https://github.com/mhkeller/indian-ocean/commit/ca665bf07e4e4ec56e426cf4ab86cb81f8eabd63)
+* Don't delete keys off of options object. Fixes [#66](https://github.com/mhkeller/indian-ocean/issues/66).
+  * [8a6ab3f60fd1ba885c1c198444613477de9b7ce8](https://github.com/mhkeller/indian-ocean/commit/8a6ab3f60fd1ba885c1c198444613477de9b7ce8)
 * Rename `shorthandReaders` to `directReaders`. This only affects internal file paths and doc nomenclature
   * [64c62cc42a3ed4b852bcdb9995afa08a4ee2878b](https://github.com/mhkeller/indian-ocean/commit/64c62cc42a3ed4b852bcdb9995afa08a4ee2878b)
 * New docs
