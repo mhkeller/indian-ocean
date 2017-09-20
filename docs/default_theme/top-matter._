@@ -9,7 +9,7 @@
 
     <a href="https://github.com/feross/standard" target="_blank"><img alt="js-standard-style" src="https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square"></a>
   </p>
-  <p class="sub-hed">A NodeJS library for reading and writing data plus some handy file system utilities. Supports csv, tsv, json, yaml, dbf as well as custom formats and delimeters. 300+ tests on Node versions 3 though 8.</p>
+  <p class="sub-hed">A NodeJS library for reading and writing data based on the file's extension. Also includes some handy file system utilities. Supports csv, tsv, json, yaml, dbf as well as custom formats and delimeters. 300+ tests on Node versions 3 though 8.</p>
   <pre class="p1 round fill-light">npm install --save indian-ocean</pre>
   <p><strong>Example:</strong></p>
   <pre class="p1 round fill-light">

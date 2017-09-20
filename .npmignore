@@ -1,2 +1,6 @@
 test/
 docs/
+documentation.yml
+.travis.yml
+rollup.config*
+src/
