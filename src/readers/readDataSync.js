@@ -2,6 +2,7 @@ import getParser from '../helpers/getParser'
 import discernParser from '../helpers/discernParser'
 import discernLoader from '../helpers/discernLoader'
 import _ from 'underscore'
+import omit from '../utils/omit'
 
 /**
  * Syncronous version of {@link readData}. Read data given a path ending in the file format. This function detects the same formats as the asynchronous {@link readData} except for `.dbf` files, which it cannot read.
@@ -72,7 +73,7 @@ export default function readDataSync (filePath, opts_) {
   if (arguments.length === 2) {
     if (opts_.parser) {
       parser = getParser(opts_.parser)
-      delete opts_.parser
+      opts_ = omit(opts_, ['parser'])
       if (_.isEmpty(opts_)) {
         opts_ = undefined
       }

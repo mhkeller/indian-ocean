@@ -1,10 +1,10 @@
-import identity from '../utils/identity'
 import archieml from 'archieml'
+import identity from '../utils/identity'
+import omit from '../utils/omit'
 
 export default function (str, parserOptions) {
   parserOptions = parserOptions || {}
   var map = parserOptions.map || identity
-  delete parserOptions.map
-  var data = archieml.load(str, parserOptions)
+  var data = archieml.load(str, omit(parserOptions, ['map']))
   return map(data)
 }

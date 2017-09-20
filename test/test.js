@@ -2820,6 +2820,19 @@ describe('writers', function () {
         })
       })
 
+      it('should write two json files with shared opts creating different directories', function (done) {
+        var filePath = ['test', 'tmp-write-data-json-sync', 'data.json']
+        var filePath2 = ['test', 'tmp-write-data-json-sync2', 'data.json']
+        var opts = {makeDirectories: true}
+        io.writeDataSync(filePath.join(path.sep), testData, opts)
+        io.writeDataSync(filePath2.join(path.sep), testData, opts)
+        readAssertBasicValid(filePath.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+
       it('should write with json replacer fn', function (done) {
         var filePath = ['test', 'tmp-write-data-json-replacer-fn-sync', 'data.json']
         var dataString = io.writeDataSync(filePath.join(path.sep), testData, {

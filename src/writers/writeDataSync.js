@@ -3,6 +3,7 @@ import _ from 'underscore'
 import warn from '../reporters/warn'
 import discernFileFormatter from '../helpers/discernFileFormatter'
 import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
+import omit from '../utils/omit'
 
 /**
  * Syncronous version of {@link writers#writeData}
@@ -53,8 +54,8 @@ export default function writeDataSync (outPath, data, opts_) {
   if (typeof opts_ === 'object') {
     if (opts_.makeDirectories) {
       makeDirectoriesSync(outPath)
+      opts_ = omit(opts_, ['makeDirectories'])
     }
-    delete opts_.makeDirectories
     writeOptions = opts_
   }
   var fileFormatter = discernFileFormatter(outPath)

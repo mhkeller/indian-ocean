@@ -3,6 +3,7 @@ import _ from 'underscore'
 import warn from '../reporters/warn'
 import discernFileFormatter from '../helpers/discernFileFormatter'
 import makeDirectories from '../helpers/makeDirectories'
+import omit from '../utils/omit'
 
 /**
  * Write the data object, inferring the file format from the file ending specified in `fileName`.
@@ -74,7 +75,7 @@ export default function writeData (outPath, data, opts_, cb) {
   }
 
   if (typeof opts_ === 'object' && opts_.makeDirectories) {
-    delete opts_.makeDirectories
+    opts_ = omit(opts_, ['makeDirectories'])
     makeDirectories(outPath, proceed)
   } else {
     proceed()

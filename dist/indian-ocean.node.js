@@ -5465,13 +5465,22 @@ var yaml = jsYaml;
 
 var index = yaml;
 
+// Return a copy of the object, filtered to omit the blacklisted array of keys.
+function omit(obj, blackList) {
+  var newObj = {};
+  Object.keys(obj || {}).forEach(function (key) {
+    if (blackList.indexOf(key) === -1) {
+      newObj[key] = obj[key];
+    }
+  });
+  return newObj;
+}
+
 var parserYaml = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   var map = parserOptions.map || identity;
-  delete parserOptions.map;
   var loadMethod = parserOptions.loadMethod || 'safeLoad';
-  delete parserOptions.loadMethod;
-  var data = index[loadMethod](str, parserOptions) || {};
+  var data = index[loadMethod](str, omit(parserOptions, ['map', 'loadMethod'])) || {};
   return map(data, map);
 };
 
@@ -5789,8 +5798,7 @@ var archieml = createCommonjsModule(function (module, exports) {
 var parserAml = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   var map = parserOptions.map || identity;
-  delete parserOptions.map;
-  var data = archieml.load(str, parserOptions);
+  var data = archieml.load(str, omit(parserOptions, ['map']));
   return map(data);
 };
 
@@ -6053,7 +6061,7 @@ function readData(filePath, opts_, cb_) {
   if (arguments.length === 3) {
     if (opts_.parser) {
       parser = getParser(opts_.parser);
-      delete opts_.parser;
+      opts_ = omit(opts_, ['parser']);
       if (underscore.isEmpty(opts_)) {
         opts_ = undefined;
       }
@@ -6441,8 +6449,7 @@ var txt = function (file) {
 var yaml$1 = function (file, writeOptions) {
   writeOptions = writeOptions || {};
   var writeMethod = writeOptions.writeMethod || 'safeDump';
-  delete writeOptions.writeMethod;
-  return index[writeMethod](file, writeOptions);
+  return index[writeMethod](file, omit(writeOptions, ['writeMethod']));
 };
 
 var fieldsize = {
@@ -6918,7 +6925,7 @@ function writeData(outPath, data, opts_, cb) {
   }
 
   if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && opts_.makeDirectories) {
-    delete opts_.makeDirectories;
+    opts_ = omit(opts_, ['makeDirectories']);
     makeDirectories(outPath, proceed);
   } else {
     proceed();
@@ -7330,7 +7337,7 @@ function readDataSync(filePath, opts_) {
   if (arguments.length === 2) {
     if (opts_.parser) {
       parser = getParser(opts_.parser);
-      delete opts_.parser;
+      opts_ = omit(opts_, ['parser']);
       if (underscore.isEmpty(opts_)) {
         opts_ = undefined;
       }
@@ -8294,8 +8301,8 @@ function writeDataSync(outPath, data, opts_) {
   if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object') {
     if (opts_.makeDirectories) {
       makeDirectoriesSync(outPath);
+      opts_ = omit(opts_, ['makeDirectories']);
     }
-    delete opts_.makeDirectories;
     writeOptions = opts_;
   }
   var fileFormatter = discernFileFormatter(outPath);

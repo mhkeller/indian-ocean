@@ -2,6 +2,7 @@ import _ from 'underscore'
 import getParser from '../helpers/getParser'
 import discernLoader from '../helpers/discernLoader'
 import discernParser from '../helpers/discernParser'
+import omit from '../utils/omit'
 
 /**
  * Asynchronously read data given a path ending in the file format.
@@ -82,7 +83,7 @@ export default function readData (filePath, opts_, cb_) {
   if (arguments.length === 3) {
     if (opts_.parser) {
       parser = getParser(opts_.parser)
-      delete opts_.parser
+      opts_ = omit(opts_, ['parser'])
       if (_.isEmpty(opts_)) {
         opts_ = undefined
       }

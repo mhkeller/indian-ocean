@@ -4343,14 +4343,24 @@ var yaml$1 = jsYaml;
 
 var index$13 = yaml$1;
 
+// Return a copy of the object, filtered to omit the blacklisted array of keys.
+function omit(obj, blackList) {
+  var newObj = {};
+  Object.keys(obj || {}).forEach(function (key) {
+    if (blackList.indexOf(key) === -1) {
+      newObj[key] = obj[key];
+    }
+  });
+  return newObj;
+}
+
 // import formattingPreflight from '../utils/formattingPreflight'
 // import parseError from '../reporters/parseError'
 
 var yaml = function (file, writeOptions) {
   writeOptions = writeOptions || {};
   var writeMethod = writeOptions.writeMethod || 'safeDump';
-  delete writeOptions.writeMethod;
-  return index$13[writeMethod](file, writeOptions);
+  return index$13[writeMethod](file, omit(writeOptions, ['writeMethod']));
 };
 
 var lookup = [];
@@ -8377,10 +8387,8 @@ var txt$1 = function (str, parserOptions) {
 var yaml$2 = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   var map = parserOptions.map || identity;
-  delete parserOptions.map;
   var loadMethod = parserOptions.loadMethod || 'safeLoad';
-  delete parserOptions.loadMethod;
-  var data = index$13[loadMethod](str, parserOptions) || {};
+  var data = index$13[loadMethod](str, omit(parserOptions, ['map', 'loadMethod'])) || {};
   return map(data, map);
 };
 
@@ -8698,8 +8706,7 @@ var archieml = createCommonjsModule(function (module, exports) {
 var aml = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   var map = parserOptions.map || identity;
-  delete parserOptions.map;
-  var data = archieml.load(str, parserOptions);
+  var data = archieml.load(str, omit(parserOptions, ['map']));
   return map(data);
 };
 
