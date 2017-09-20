@@ -3476,6 +3476,101 @@ describe('writers', function () {
     })
   })
 
+  describe('convertData()', function () {
+    describe('csv', function () {
+      it('should convert dbf to format', function (done) {
+        var filePath = ['test', 'tmp-convert-to-data-csv', 'data.csv']
+        io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+          if (err) {
+            console.log(err)
+          }
+          assert.equal(err, null)
+          var json = io.readDataSync(filePath.join(path.sep))
+          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('psv', function () {
+      it('should convert dbf to format', function (done) {
+        var filePath = ['test', 'tmp-convert-to-data-psv', 'data.psv']
+        io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          var json = io.readDataSync(filePath.join(path.sep))
+          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('tsv', function () {
+      it('should convert dbf to format', function (done) {
+        var filePath = ['test', 'tmp-convert-to-data-tsv', 'data.tsv']
+        io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          var json = io.readDataSync(filePath.join(path.sep))
+          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('yaml', function () {
+      it('should convert dbf to format', function (done) {
+        var filePath = ['test', 'tmp-convert-to-data-yaml', 'data.yaml']
+        io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          var json = io.readDataSync(filePath.join(path.sep))
+          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('yml', function () {
+      it('should convert dbf to format', function (done) {
+        var filePath = ['test', 'tmp-convert-to-data-yml', 'data.yml']
+        io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          var json = io.readDataSync(filePath.join(path.sep))
+          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+
+    describe('json', function () {
+      it('should convert dbf to format', function (done) {
+        var filePath = ['test', 'tmp-convert-to-data-json', 'data.json']
+        io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+          assert.equal(err, null)
+          var json = io.readDataSync(filePath.join(path.sep))
+          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'))
+          rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+            assert.equal(err, null)
+            done()
+          })
+        })
+      })
+    })
+  })
+
   describe('convertDbfToData()', function () {
     describe('csv', function () {
       it('should convert to format', function (done) {

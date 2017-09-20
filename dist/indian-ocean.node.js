@@ -7,10 +7,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var fs = _interopDefault(require('fs'));
 var path = _interopDefault(require('path'));
 
-var identity = (function (d) {
-  return d;
-});
-
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function commonjsRequire () {
@@ -1787,6 +1783,10 @@ var parserCsv = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   return csvParse(str, parserOptions.map);
 };
+
+var identity = (function (d) {
+  return d;
+});
 
 var parserJson = function (str, parserOptions) {
   parserOptions = parserOptions || {};
@@ -5925,13 +5925,16 @@ function file$1(filePath, parser, parserOptions, cb) {
 }
 
 var shapefile = require('shapefile');
-
 function dbf(filePath, parser, parserOptions, cb) {
   var values = [];
+  parserOptions = parserOptions || {};
+  var map = parserOptions.map || identity;
+  var i = 0;
   shapefile.openDbf(filePath).then(function (source) {
     return source.read().then(function log(result) {
+      console.log(i++);
       if (result.done) return cb(null, values);
-      values.push(parserOptions.map(result.value)); // TODO, figure out i
+      values.push(map(result.value)); // TODO, figure out i
       return source.read().then(log);
     });
   }).catch(function (error) {
@@ -6087,40 +6090,6 @@ function readData(filePath, opts_, cb_) {
   }
   var loader = discernLoader(filePath);
   loader(filePath, parser, parserOptions, cb);
-}
-
-/**
- * Asynchronously read a dbf file. Returns an empty array if file is empty.
- *
- * @function readDbf
- * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below.
- * @param {Function} callback Has signature `(err, data)`
- *
- * @example
- * io.readDbf('path/to/data.dbf', function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Transform values on load
- * io.readDbf('path/to/data.csv', function (row, i) {
- *   console.log(columns) // [ 'name', 'occupation', 'height' ]
- *   row.height = +row.height // Convert this value to a number
- *   return row
- * }, function (err, data) {
- *   console.log(data) // Converted json data
- * })
- */
-function readDbf(filePath, opts_, cb) {
-  var parserOptions = {
-    map: identity
-  };
-  if (typeof cb === 'undefined') {
-    cb = opts_;
-  } else {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
-  }
-  readData(filePath, parserOptions, cb);
 }
 
 var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
@@ -6947,6 +6916,71 @@ function writeData(outPath, data, opts_, cb) {
       cb(err, formattedData);
     });
   }
+}
+
+/**
+ * Reads in a dbf file with `.readDbf` and write to file using `.writeData`. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
+ *
+ * @function convertData
+ * @param {String} inFilePath Input file path
+ * @param {String} outFilePath Output file path
+ * @param {Object} [options] Optional config object that's passed to {@link writeData}. See that documentation for full options, which vary depending on the output format you choose.
+ * @param {Function} callback Has signature `(err)`
+ *
+ * @example
+ * io.convertData('path/to/data.dbf', 'path/to/data.csv', function (err) {
+ *   console.log(err)
+ * })
+ *
+ * io.convertData('path/to/data.dbf', 'path/to/create/to/data.csv', {makeDirectories: true}, function (err) {
+ *   console.log(err)
+ * })
+ */
+function convertData(inPath, outPath, opts_, cb) {
+  if (typeof cb === 'undefined') {
+    cb = opts_;
+  }
+  readData(inPath, function (error, jsonData) {
+    if (error) {
+      cb(error);
+    } else {
+      writeData(outPath, jsonData, opts_, cb);
+    }
+  });
+}
+
+/**
+ * Asynchronously read a dbf file. Returns an empty array if file is empty.
+ *
+ * @function readDbf
+ * @param {String} filePath Input file path
+ * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below.
+ * @param {Function} callback Has signature `(err, data)`
+ *
+ * @example
+ * io.readDbf('path/to/data.dbf', function (err, data) {
+ *   console.log(data) // Json data
+ * })
+ *
+ * // Transform values on load
+ * io.readDbf('path/to/data.csv', function (row, i) {
+ *   console.log(columns) // [ 'name', 'occupation', 'height' ]
+ *   row.height = +row.height // Convert this value to a number
+ *   return row
+ * }, function (err, data) {
+ *   console.log(data) // Converted json data
+ * })
+ */
+function readDbf(filePath, opts_, cb) {
+  var parserOptions = {
+    map: identity
+  };
+  if (typeof cb === 'undefined') {
+    cb = opts_;
+  } else {
+    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+  }
+  readData(filePath, parserOptions, cb);
 }
 
 /**
@@ -8345,6 +8379,7 @@ function appendDataSync(outPath, data, opts_) {
 
 // converters
 
+exports.convertData = convertData;
 exports.convertDbfToData = convertDbfToData;
 exports.writeDbfToData = convertDbfToData;
 exports.formatters = formatters;

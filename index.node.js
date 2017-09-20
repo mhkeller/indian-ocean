@@ -1,4 +1,5 @@
 // converters
+export {default as convertData} from './src/converters/convertData'
 export {default as convertDbfToData} from './src/converters/convertDbfToData'
 export {default as writeDbfToData} from './src/converters/convertDbfToData' // Legacy support
 // formatters
