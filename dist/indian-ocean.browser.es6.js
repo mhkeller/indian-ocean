@@ -6448,7 +6448,7 @@ var structure$1 = function structure(data, meta) {
     view.setUint8(0, 0x03);
     // date of last update
     view.setUint8(1, now.getFullYear() - 1900);
-    view.setUint8(2, now.getMonth());
+    view.setUint8(2, now.getMonth() + 1);
     view.setUint8(3, now.getDate());
     // number of records
     view.setUint32(4, data.length, true);
@@ -6464,7 +6464,7 @@ var structure$1 = function structure(data, meta) {
 
     field_meta.forEach(function (f, i) {
         // field name
-        f.name.split('').slice(0, 8).forEach(function (c, x) {
+        f.name.split('').slice(0, 10).forEach(function (c, x) {
             view.setInt8(32 + i * 32 + x, c.charCodeAt(0));
         });
         // field type
@@ -6474,7 +6474,7 @@ var structure$1 = function structure(data, meta) {
         if (f.type == 'N') view.setInt8(32 + i * 32 + 17, 3);
     });
 
-    offset = fieldDescLength + 32;
+    var offset = fieldDescLength + 32;
 
     data.forEach(function (row, num) {
         // delete flag: this is not deleted
@@ -8727,18 +8727,18 @@ formatsList.forEach(function (format) {
 });
 
 /**
- * Given a `filePath` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimter string as the second argument, return a parser for that delimiter regardless of `filePath`. Used internally by {@link readData} and {@link readDataSync}.
+ * Given a `filePath` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimiter string as the second argument, return a parser for that delimiter regardless of `filePath`. Used internally by {@link readData} and {@link readDataSync}.
  *
  * @function discernParser
  * @param {String} [filePath] Input file path
  * @param {String} [delimiter] Alternative usage is to pass a delimiter string. Delegates to `dsv.dsvFormat`.
- * @returns {Function} A parser that can read the file
+ * @returns {Function} A parser that can parse a file string into json
  *
  * @example
  * var parser = io.discernParser('path/to/data.csv')
- * var json = parser('path/to/data.csv')
+ * var json = parser('name,price\nApple,120\nPear,300')
  * var parser = io.discernParser(null, '_')
- * var json = parser('path/to/data.usv')
+ * var json = parser('name_price\nApple_120\nPear_300')
  */
 function discernParser(filePath, delimiter) {
   if (delimiter) {
