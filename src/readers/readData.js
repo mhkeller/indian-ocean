@@ -1,35 +1,33 @@
-import fs from 'fs'
+import _ from 'underscore'
 import getParser from '../helpers/getParser'
+import discernLoader from '../helpers/discernLoader'
 import discernParser from '../helpers/discernParser'
-import discernFormat from '../helpers/discernFormat'
-import {formatsIndex} from '../config/equivalentFormats'
-import isEmpty from 'lodash/isEmpty'
+import omit from '../utils/omit'
 
 /**
  * Asynchronously read data given a path ending in the file format.
  *
  * Supported formats / extensions:
  *
- * * `.json` Array of objects
+ * * `.json` Array of objects or object
  * * `.csv` Comma-separated
  * * `.tsv` Tab-separated
  * * `.psv` Pipe-separated
  * * `.yaml` or `.yml` Yaml file
  * * `.aml` ArchieML
  * * `.txt` Text file (a string)
+ * * `.dbf` Database format used for shapefiles
  * * other All others are read as a text file
  *
- * *Note: Does not currently support `.dbf` files. `.yaml` and `.yml` formats are read with js-yaml's `.load` method, which has no security checking. See js-yaml library for more secure options.*
- *
- * @param {String} fileName the name of the file
- * @param {Object|Function} [parserOptions] Optional. Set this as a function as a shorthand for `map`.
- * @param {String|Function|Object} [parserOptions.parser] optional This can be a string that is the file's delimiter or a function that returns the json. See `parsers` in library source for examples. For convenience, this can also take a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method.
- * @param {Function} [parserOptions.map] Transformation function. Takes `(fileString, parserOptions)` where `parserOptions` is the hash you pass in minus the `parser` key. See {@link shorthandReaders} for specifics.
- * @param {Boolean} [parserOptions.nativeParser] Used in {@link shorthandReaders.readJson} for now. Otherwise ignored.
- * @param {Function} [parserOptions.comments] Used in {@link shorthandReaders.readAml}. Otherwise ignored.
- * @param {Function} [parserOptions.reviver] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
- * @param {Function} [parserOptions.filename] Used in {@link shorthandReaders.readJson}. Otherwise ignored.
- * @param {Function} callback callback used when read data is read, takes error (if any) and the data read
+ * @function readData
+ * @param {String} filePath Input file path
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {String|Function|Object} [parserOptions.parser] This can be a string that is the file's delimiter, a function that returns JSON, or, for convenience, can also be a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function. See `parsers` in library source for examples.
+ * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
+ * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJson} for details.
+ * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJson} for details.
+ * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYaml} for details.
+ * @param {Function} callback Has signature `(err, data)`
  *
  * @example
  * io.readData('path/to/data.tsv', function (err, data) {
@@ -48,11 +46,9 @@ import isEmpty from 'lodash/isEmpty'
  *   console.log(data) // Json data
  * })
  *
- * // Parser specified with an object that has a `parse` function
- * var naiveJsonLines = {
- *   parse: function (dataAsString) {
- *     return dataAsString.split('\n').map(function (row) { return JSON.parse(row) })
- *   }
+ * // Parser specified as a function
+ * var naiveJsonLines = function (dataAsString) {
+ *   return dataAsString.split('\n').map(function (row) { return JSON.parse(row) })
  * }
  * io.readData('path/to/data.jsonlines', {parser: naiveJsonLines}, function (err, data) {
  *   console.log(data) // Json data
@@ -87,8 +83,8 @@ export default function readData (filePath, opts_, cb_) {
   if (arguments.length === 3) {
     if (opts_.parser) {
       parser = getParser(opts_.parser)
-      delete opts_.parser
-      if (isEmpty(opts_)) {
+      opts_ = omit(opts_, ['parser'])
+      if (_.isEmpty(opts_)) {
         opts_ = undefined
       }
     } else {
@@ -111,28 +107,6 @@ export default function readData (filePath, opts_, cb_) {
   } else {
     parser = discernParser(filePath)
   }
-  fs.readFile(filePath, 'utf8', function (err, data) {
-    var fileFormat = discernFormat(filePath)
-    if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
-      data = '[]'
-    }
-    if (err) {
-      cb(err)
-      return false
-    }
-    var parsed
-    try {
-      if (typeof parser === 'function') {
-        parsed = parser(data, parserOptions)
-      } else if (typeof parser === 'object' && typeof parser.parse === 'function') {
-        parsed = parser.parse(data, parserOptions)
-      } else {
-        parsed = 'Your specified parser is not properly formatted. It must either be a function or have a `parse` method.'
-      }
-    } catch (err) {
-      cb(err)
-      return
-    }
-    cb(null, parsed)
-  })
+  var loader = discernLoader(filePath)
+  loader(filePath, parser, parserOptions, cb)
 }

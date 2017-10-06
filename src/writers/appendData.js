@@ -1,12 +1,12 @@
 import fs from 'fs'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'underscore'
 import makeDirectories from '../helpers/makeDirectories'
 import readData from '../readers/readData'
 import writeData from './writeData'
 import extend from '../helpers/extend'
 
 /**
- * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with `_.extend`. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
+ * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with {@link extend}. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
  *
  * Supported formats:
  *
@@ -18,11 +18,11 @@ import extend from '../helpers/extend'
  *
  * *Note: Does not currently support .dbf files.*
  *
- * @param {String} fileName the name of the file
- * @param {Object} data the data to write
- * @param {Object} [options] Optional config object, see below
- * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
- * @param {Function} callback callback of `(err, data)` where `err` is any error and `data` is the data that was written out
+ * @function appendData
+ * @param {String} filePath File to append to
+ * @param {Array|Object} data The new data to append
+ * @param {Object} [options] Optional options object passed to {@link writeData}. See that function for format-specific options.
+ * @param {Function} callback Has signature `(err, data)`. Data is the combined data that was written out
  *
  * @example
  * io.appendData('path/to/data.json', jsonData, function (err) {
@@ -51,7 +51,7 @@ export default function appendData (outPath, data, opts_, cb) {
       if (!err) {
         readData(outPath, function (err, existingData) {
           if (!err) {
-            if (!isEmpty(existingData)) {
+            if (!_.isEmpty(existingData)) {
               if (Array.isArray(existingData)) {
                 data = existingData.concat(data)
               } else if (typeof existingData === 'object') {

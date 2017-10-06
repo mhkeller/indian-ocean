@@ -1,5 +1,5 @@
 import fs from 'fs'
-import isEmpty from 'lodash/isEmpty'
+import _ from 'underscore'
 import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
 import readDataSync from '../readers/readDataSync'
 import writeDataSync from './writeDataSync'
@@ -8,11 +8,11 @@ import extend from '../helpers/extend'
 /**
  * Synchronous version of {@link writers#appendData}. See that function for supported formats
  *
- * @param {String} fileName the name of the file
- * @param {Object} [options] Optional config object, see below
- * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
- * @param {Object} data the data to write
- * @returns {Object} the data that was written
+ * @function appendDataSync
+ * @param {String} filePath File to append to
+ * @param {Array|Object} data The new data to append
+ * @param {Object} [options] Optional options object passed to {@link writeData}. See that function for format-specific options.
+ * @returns {Object} The combined data that was written
  *
  * @example
  * io.appendDataSync('path/to/data.json', jsonData)
@@ -26,7 +26,7 @@ export default function appendDataSync (outPath, data, opts_) {
   }
   fs.appendFileSync(outPath, '')
   var existingData = readDataSync(outPath)
-  if (!isEmpty(existingData)) {
+  if (!_.isEmpty(existingData)) {
     if (Array.isArray(existingData)) {
       data = existingData.concat(data)
     } else if (typeof existingData === 'object') {

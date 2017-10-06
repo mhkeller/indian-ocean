@@ -1,9 +1,10 @@
 /**
  * Test whether a string matches a given Regular Expression.
  *
- * @param {String} fileName The name of the file or file path.
- * @param {RegExp} RegEx The RegEx to match with.
- * @returns {Boolean} whether The string matches the RegEx.
+ * @function matchesRegExp
+ * @param {String} filePath Input file path or file path.
+ * @param {RegExp} RegExp The Regular Expression to match against.
+ * @returns {Boolean} Whether they match.
  *
  * @example
  * var matches = io.matchesRegExp('.gitignore', /\.gitignore/)
@@ -12,6 +13,6 @@
  * var matches = io.matchesRegExp('data/final-data/basic.csv', /\/final-data\//)
  * console.log(matches) // `true`
  */
-export default function matchesRegExp (str, regEx) {
-  return regEx.test(str)
+export default function matchesRegExp (filePath, regEx) {
+  return regEx.test(filePath)
 }

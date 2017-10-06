@@ -1,9 +1,10 @@
 import extend from './extend'
 /**
- * A more semantic convenience function. Delegates to {@link helpers#extend} and passes `true` as the first argument. Recursively merge the contents of two or more objects together into the first object.
+ * A more semantic convenience function. Delegates to {@link extend} and passes `true` as the first argument. Deep merge the contents of two or more objects together into the first object.
  *
+ * @function deepExtend
  * @param {Object} destination The object to modify
- * @param {Object} source The object whose contents to take
+ * @param {Object} source The object whose keys to take
  * @param {Object} [source2] Optional, You can add any number of objects as arguments.
  * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
  *

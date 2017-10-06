@@ -1,18 +1,25 @@
 import {extname} from '../utils/path'
 
 /**
- * Given a `fileName` return its file extension. Used internally by `.discernPaser` and `.discernFileFormatter`.
- * @param {String} fileName the name of the file
- * @returns {String} the file's extension
+ * Given a `filePath` return the file's extension. Used internally by {@link discernParser} and {@link discernFileFormatter}. Returns `false` for files without an extension, including dotfiles
+ *
+ * @function discernFormat
+ * @param {String} filePath Input file path
+ * @returns {String} The file's extension
  *
  * @example
  * var format = io.discernFormat('path/to/data.csv')
  * console.log(format) // 'csv'
+ *
+ * @example
+ * var format = io.discernFormat('path/to/.dotfile')
+ * console.log(format) // false
  */
-export default function discernFormat (fileName) {
-  var extension = extname(fileName)
-  if (extension === '') return false
+export default function discernFormat (filePath) {
+  var ext = extname(filePath)
+  if (ext === '') return false
 
-  var formatName = extension.slice(1)
+  // Chop '.' off extension returned by extname
+  var formatName = ext.slice(1)
   return formatName
 }
