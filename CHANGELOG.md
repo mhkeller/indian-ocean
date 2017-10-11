@@ -5,7 +5,7 @@ Changelog
 
 > Not yet on npm
 
-This is an exciting release because indian-ocean is now broken into es6 modules and brand new documentation. Adds a new `convertData` function which allows for converting from format to format. There's also an experimental browser bundle and some minor new features.
+This is an exciting release because indian-ocean is now broken into es6 modules and brand new documentation. Adds a new `convertData` function which allows for converting from format to format. Aliases `makeDirs` to `makeDirectories` for less typing. There's also an experimental browser bundle and some minor new features.
 
 *This is a breaking change because it drops support below Node 3.*
 
@@ -75,6 +75,8 @@ This is an exciting release because indian-ocean is now broken into es6 modules 
   * [98c0c2c89088336b7978f073c765a15b042f21f9](https://github.com/mhkeller/indian-ocean/commit/98c0c2c89088336b7978f073c765a15b042f21f9)
 * Don't delete options from the options object
   * [8a6ab3f60fd1ba885c1c198444613477de9b7ce8](https://github.com/mhkeller/indian-ocean/commit/8a6ab3f60fd1ba885c1c198444613477de9b7ce8)
+* Alias `makeDirs` option to `makeDirectories`
+  * [14fbedec499a3ba42b6f0ad152143ba0600f127e](https://github.com/mhkeller/indian-ocean/commit/14fbedec499a3ba42b6f0ad152143ba0600f127e)
 
 # 2.0.2
 

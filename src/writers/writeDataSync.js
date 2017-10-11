@@ -14,7 +14,7 @@ import omit from '../utils/omit'
  * @param {String} filePath Input file path
  * @param {Array|Object|String} data Data to write
  * @param {Object} [options] Optional options object, see below
- * @param {Boolean} [options.makeDirectories=false] If true, create intermediate directories to your data file.
+ * @param {Boolean} [options.makeDirectories=false] If `true`, create intermediate directories to your data file. Can also be `makeDirs` for short.
  * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
  * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
  * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
@@ -24,7 +24,7 @@ import omit from '../utils/omit'
  * @example
  * io.writeDataSync('path/to/data.json', jsonData)
  *
- * io.writeDataSync('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true})
+ * io.writeDataSync('path/to/create/to/data.csv', flatJsonData, {makeDirs: true})
  *
  * io.writeDataSync('path/to/to/data.yaml', jsonData, {writeMehod: "dump", sortKeys: true})
  *
