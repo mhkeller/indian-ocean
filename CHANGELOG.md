@@ -1,7 +1,7 @@
 Changelog
 =========
 
-# 2.1.0
+# 3.0.0
 
 > Not yet on npm
 
