@@ -4,6 +4,7 @@ import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
 import readDataSync from '../readers/readDataSync'
 import writeDataSync from './writeDataSync'
 import extend from '../helpers/extend'
+import omit from '../utils/omit'
 
 /**
  * Synchronous version of {@link writers#appendData}. See that function for supported formats
@@ -21,9 +22,10 @@ import extend from '../helpers/extend'
  */
 export default function appendDataSync (outPath, data, opts_) {
   // Run append file to delegate creating a new file if none exists
-  if (opts_ && opts_.makeDirectories) {
+  if (opts_ && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
     makeDirectoriesSync(outPath)
   }
+  opts_ = omit(opts_, ['makeDirectories', 'makeDirs'])
   fs.appendFileSync(outPath, '')
   var existingData = readDataSync(outPath)
   if (!_.isEmpty(existingData)) {

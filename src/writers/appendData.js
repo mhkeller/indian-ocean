@@ -4,6 +4,7 @@ import makeDirectories from '../helpers/makeDirectories'
 import readData from '../readers/readData'
 import writeData from './writeData'
 import extend from '../helpers/extend'
+import omit from '../utils/omit'
 
 /**
  * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with {@link extend}. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
@@ -37,7 +38,7 @@ export default function appendData (outPath, data, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_
   }
-  if (typeof opts_ === 'object' && opts_.makeDirectories) {
+  if (typeof opts_ === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
     makeDirectories(outPath, proceed)
   } else {
     proceed()
@@ -46,6 +47,7 @@ export default function appendData (outPath, data, opts_, cb) {
     if (err) {
       throw err
     }
+    opts_ = omit(opts_, ['makeDirectories', 'makeDirs'])
     // Run append file to delegate creating a new file if none exists
     fs.appendFile(outPath, '', function (err) {
       if (!err) {

@@ -52,12 +52,12 @@ export default function writeDataSync (outPath, data, opts_) {
   }
   var writeOptions
   if (typeof opts_ === 'object') {
-    if (opts_.makeDirectories) {
+    if (opts_.makeDirectories === true || opts_.makeDirs === true) {
       makeDirectoriesSync(outPath)
-      opts_ = omit(opts_, ['makeDirectories'])
     }
     writeOptions = opts_
   }
+  opts_ = omit(opts_, ['makeDirectories', 'makeDirs'])
   var fileFormatter = discernFileFormatter(outPath)
   var formattedData = fileFormatter(data, writeOptions)
   fs.writeFileSync(outPath, formattedData)

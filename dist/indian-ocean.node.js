@@ -6893,8 +6893,7 @@ function writeData(outPath, data, opts_, cb) {
     warn('You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty file...');
   }
 
-  if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && opts_.makeDirectories) {
-    opts_ = omit(opts_, ['makeDirectories']);
+  if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
     makeDirectories(outPath, proceed);
   } else {
     proceed();
@@ -6905,6 +6904,7 @@ function writeData(outPath, data, opts_, cb) {
       throw err;
     }
 
+    opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
     var writeOptions;
     if (typeof opts_ !== 'function') {
       writeOptions = opts_;
@@ -8253,7 +8253,7 @@ function appendData(outPath, data, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_;
   }
-  if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && opts_.makeDirectories) {
+  if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
     makeDirectories(outPath, proceed);
   } else {
     proceed();
@@ -8262,6 +8262,7 @@ function appendData(outPath, data, opts_, cb) {
     if (err) {
       throw err;
     }
+    opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
     // Run append file to delegate creating a new file if none exists
     fs.appendFile(outPath, '', function (err) {
       if (!err) {
@@ -8333,12 +8334,12 @@ function writeDataSync(outPath, data, opts_) {
   }
   var writeOptions;
   if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object') {
-    if (opts_.makeDirectories) {
+    if (opts_.makeDirectories === true || opts_.makeDirs === true) {
       makeDirectoriesSync(outPath);
-      opts_ = omit(opts_, ['makeDirectories']);
     }
     writeOptions = opts_;
   }
+  opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
   var fileFormatter = discernFileFormatter(outPath);
   var formattedData = fileFormatter(data, writeOptions);
   fs.writeFileSync(outPath, formattedData);
@@ -8361,9 +8362,10 @@ function writeDataSync(outPath, data, opts_) {
  */
 function appendDataSync(outPath, data, opts_) {
   // Run append file to delegate creating a new file if none exists
-  if (opts_ && opts_.makeDirectories) {
+  if (opts_ && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
     makeDirectoriesSync(outPath);
   }
+  opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
   fs.appendFileSync(outPath, '');
   var existingData = readDataSync(outPath);
   if (!underscore.isEmpty(existingData)) {

@@ -74,8 +74,7 @@ export default function writeData (outPath, data, opts_, cb) {
     warn('You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty file...')
   }
 
-  if (typeof opts_ === 'object' && opts_.makeDirectories) {
-    opts_ = omit(opts_, ['makeDirectories'])
+  if (typeof opts_ === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
     makeDirectories(outPath, proceed)
   } else {
     proceed()
@@ -86,6 +85,7 @@ export default function writeData (outPath, data, opts_, cb) {
       throw err
     }
 
+    opts_ = omit(opts_, ['makeDirectories', 'makeDirs'])
     var writeOptions
     if (typeof opts_ !== 'function') {
       writeOptions = opts_
