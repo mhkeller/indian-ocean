@@ -3,7 +3,7 @@ Changelog
 
 # 3.0.0
 
-> Not yet on npm
+> 2017-10-11
 
 This is an exciting release because indian-ocean is now broken into es6 modules and brand new documentation. Adds a new `convertData` function which allows for converting from format to format. Aliases `makeDirs` to `makeDirectories` for less typing if you don't feel like typing. There's also an experimental browser bundle and some minor new features.
 
