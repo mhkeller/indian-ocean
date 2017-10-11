@@ -38,7 +38,11 @@
     "files",
     "io"
   ],
-  "author": "Michael Keller (http://mhkeller.com)",
+  "author": {
+    "name": "Michael Keller",
+    "email": "code@mhkeller.com",
+    "url": "https://mhkeller.com"
+  },
   "contributors": [
     "Eric Brelsford (https://ebrelsford.github.io/portfolio/)",
     "Julian Burgess (https://aubergene.com)",
