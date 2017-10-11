@@ -26,6 +26,7 @@ toc:
   - readYaml
   - readYamlSync
   - name: 'converters'
+  - convertData
   - convertDbfToData
   - name: 'helpers'
   - deepExtend

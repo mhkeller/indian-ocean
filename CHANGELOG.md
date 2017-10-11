@@ -5,7 +5,7 @@ Changelog
 
 > Not yet on npm
 
-This is an exciting release because indian-ocean is now broken into es6 modules and brand new documentation. There's also an experimental browser bundle and some minor new features.
+This is an exciting release because indian-ocean is now broken into es6 modules and brand new documentation. Adds a new `convertData` function which allows for converting from format to format. There's also an experimental browser bundle and some minor new features.
 
 * Support reading dbf files in `readData` by way of separating out file loading from file parsing.
   * [ef9702c6a7e3121956718c1971453835e20c7067](https://github.com/mhkeller/indian-ocean/commit/ef9702c6a7e3121956718c1971453835e20c7067)
@@ -22,6 +22,15 @@ This is an exciting release because indian-ocean is now broken into es6 modules 
 * Thanks to @Rich-Harris, Typescript declarations are being added
   * [807e109c746e337ffb2497a14c6877734f63f28c](https://github.com/mhkeller/indian-ocean/commit/807e109c746e337ffb2497a14c6877734f63f28c)
   * [209646f39cd97b59cbc28ef2e4fb6472f31be9ab](https://github.com/mhkeller/indian-ocean/commit/209646f39cd97b59cbc28ef2e4fb6472f31be9ab)
+* Add `convertData` function
+  * [a52a6ca50219cbdb7347088b19b370b25e1929aa](https://github.com/mhkeller/indian-ocean/commit/a52a6ca50219cbdb7347088b19b370b25e1929aa)
+  * [10e1f637735ff64f08514252fc8c8d308b5ca09b](https://github.com/mhkeller/indian-ocean/commit/10e1f637735ff64f08514252fc8c8d308b5ca09b)
+  * [74c6855a88e1b7bfb31ff7ac086629faba98ee00](https://github.com/mhkeller/indian-ocean/commit/74c6855a88e1b7bfb31ff7ac086629faba98ee00)
+  * [14606087f81b413a0801f259bd89269506d733c7](https://github.com/mhkeller/indian-ocean/commit/14606087f81b413a0801f259bd89269506d733c7)
+  * [8ea37b45f779f390f042f4588b979d408f539779](https://github.com/mhkeller/indian-ocean/commit/8ea37b45f779f390f042f4588b979d408f539779)
+  * [672ac65ce8672f4c9436fa0c0860c4fb530b3fa3](https://github.com/mhkeller/indian-ocean/commit/672ac65ce8672f4c9436fa0c0860c4fb530b3fa3)
+  * [d9a8f2b66469df9ca22a4d28fb459a6f006c12fe](https://github.com/mhkeller/indian-ocean/commit/d9a8f2b66469df9ca22a4d28fb459a6f006c12fe)
+  * [50a972e802a00e0676b8e41b641a39b300ab3c86](https://github.com/mhkeller/indian-ocean/commit/50a972e802a00e0676b8e41b641a39b300ab3c86)
 * Add a test for extensions on dotfiles
   * [0acca323de329256fb0879c5cc1a6f105a1d3382](https://github.com/mhkeller/indian-ocean/commit/0acca323de329256fb0879c5cc1a6f105a1d3382)
 * Fix tests on newer versions of node that handle JSON error reporting nicer. As a result remove the `json-parse` dependency and remove `nativeParser` option from JSON readers.
@@ -59,6 +68,11 @@ This is an exciting release because indian-ocean is now broken into es6 modules 
   * [7b9ce9ae986745824e81c8d8efdecdfa63e878c5](https://github.com/mhkeller/indian-ocean/commit/7b9ce9ae986745824e81c8d8efdecdfa63e878c5)
   * [39076cdf47803d66d1af7c3730f4fe1957289f5e](https://github.com/mhkeller/indian-ocean/commit/39076cdf47803d66d1af7c3730f4fe1957289f5e)
   * [e297e8a3042337e7359ded77d4de1a9b86fa8ccb](https://github.com/mhkeller/indian-ocean/commit/e297e8a3042337e7359ded77d4de1a9b86fa8ccb)
+  * [2c4ec09d44295412bda3ff9803bdc9db410bf1e7](https://github.com/mhkeller/indian-ocean/commit/2c4ec09d44295412bda3ff9803bdc9db410bf1e7)
+* Better .npmignore
+  * [98c0c2c89088336b7978f073c765a15b042f21f9](https://github.com/mhkeller/indian-ocean/commit/98c0c2c89088336b7978f073c765a15b042f21f9)
+* Don't delete options from the options object
+  * [8a6ab3f60fd1ba885c1c198444613477de9b7ce8](https://github.com/mhkeller/indian-ocean/commit/8a6ab3f60fd1ba885c1c198444613477de9b7ce8)
 
 # 2.0.2
 
