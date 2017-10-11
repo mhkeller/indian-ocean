@@ -7,18 +7,20 @@ import parsers from '../parsers/index'
  *
  * @function discernParser
  * @param {String} [filePath] Input file path
- * @param {String} [delimiter] Alternative usage is to pass a delimiter string. Delegates to `dsv.dsvFormat`.
+ * @param {Object} [options] Optional options object, see below
+ * @param {Object} [options.delimiter] If `{delimiter: true}`, it will treat the string given as `filePath` as a delimiter and delegate to `dsv.dsvFormat`.
  * @returns {Function} A parser that can parse a file string into json
  *
  * @example
  * var parser = io.discernParser('path/to/data.csv')
  * var json = parser('name,price\nApple,120\nPear,300')
- * var parser = io.discernParser(null, '_')
+
+ * var parser = io.discernParser('_', {delimiter: true})
  * var json = parser('name_price\nApple_120\nPear_300')
  */
-export default function discernParser (filePath, delimiter) {
-  if (delimiter) {
-    return dsvFormat(delimiter).parse
+export default function discernParser (filePath, opts_) {
+  if (opts_ && opts_.delimiter === true) {
+    return dsvFormat(filePath).parse
   }
   var format = discernFormat(filePath)
   var parser = parsers[format]

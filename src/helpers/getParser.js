@@ -5,7 +5,7 @@ import discernParser from './discernParser'
 export default function getParser (delimiterOrParser) {
   var parser
   if (typeof delimiterOrParser === 'string') {
-    parser = discernParser(null, delimiterOrParser)
+    parser = discernParser(delimiterOrParser, {delimiter: true})
   } else if (typeof delimiterOrParser === 'object' || typeof delimiterOrParser === 'function') {
     parser = delimiterOrParser
   }

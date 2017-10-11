@@ -5835,18 +5835,20 @@ formatsList.forEach(function (format) {
  *
  * @function discernParser
  * @param {String} [filePath] Input file path
- * @param {String} [delimiter] Alternative usage is to pass a delimiter string. Delegates to `dsv.dsvFormat`.
+ * @param {Object} [options] Optional options object, see below
+ * @param {Object} [options.delimiter] If `{delimiter: true}`, it will treat the string given as `filePath` as a delimiter and delegate to `dsv.dsvFormat`.
  * @returns {Function} A parser that can parse a file string into json
  *
  * @example
  * var parser = io.discernParser('path/to/data.csv')
  * var json = parser('name,price\nApple,120\nPear,300')
- * var parser = io.discernParser(null, '_')
+
+ * var parser = io.discernParser('_', {delimiter: true})
  * var json = parser('name_price\nApple_120\nPear_300')
  */
-function discernParser(filePath, delimiter) {
-  if (delimiter) {
-    return dsvFormat(delimiter).parse;
+function discernParser(filePath, opts_) {
+  if (opts_ && opts_.delimiter === true) {
+    return dsvFormat(filePath).parse;
   }
   var format = discernFormat(filePath);
   var parser = parsers[format];
@@ -5868,7 +5870,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 function getParser(delimiterOrParser) {
   var parser;
   if (typeof delimiterOrParser === 'string') {
-    parser = discernParser(null, delimiterOrParser);
+    parser = discernParser(delimiterOrParser, { delimiter: true });
   } else if ((typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object' || typeof delimiterOrParser === 'function') {
     parser = delimiterOrParser;
   }

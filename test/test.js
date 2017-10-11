@@ -256,7 +256,7 @@ describe('discernParser()', function () {
 
   describe('custom delimiter: `_`', function () {
     it('should be custom parser', function () {
-      assert.equal(removeWhiteSpace(io.discernParser(null, '_').toString()), removeWhiteSpace(dsv.dsvFormat('_').parse.toString()))
+      assert.equal(removeWhiteSpace(io.discernParser('_', {delimiter: true}).toString()), removeWhiteSpace(dsv.dsvFormat('_').parse.toString()))
     })
   })
 })
