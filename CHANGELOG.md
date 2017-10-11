@@ -7,6 +7,8 @@ Changelog
 
 This is an exciting release because indian-ocean is now broken into es6 modules and brand new documentation. Adds a new `convertData` function which allows for converting from format to format. There's also an experimental browser bundle and some minor new features.
 
+*This is a breaking change because it drops support below Node 3.*
+
 * Support reading dbf files in `readData` by way of separating out file loading from file parsing.
   * [ef9702c6a7e3121956718c1971453835e20c7067](https://github.com/mhkeller/indian-ocean/commit/ef9702c6a7e3121956718c1971453835e20c7067)
 * Parsers and formatters are now exposed as public functions
