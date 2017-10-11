@@ -3756,6 +3756,101 @@ describe('writers', function () {
         })
       })
     })
+
+    describe('from psv to', function () {
+      describe('csv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-csv', 'data.csv']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('dbf', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-dbf', 'data.dbf']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            io.readData(filePath.join(path.sep), function (err, json) {
+              assert.equal(err, null)
+              assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+              rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+                assert.equal(err, null)
+                done()
+              })
+            })
+          })
+        })
+      })
+
+      describe('tsv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-tsv', 'data.tsv']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yaml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-yaml', 'data.yaml']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-json', 'data.json']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
+
   })
 
   describe('convertDbfToData()', function () {
