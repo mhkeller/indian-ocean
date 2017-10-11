@@ -2689,9 +2689,10 @@ describe('writers', function () {
       it('should write as yaml with indent', function (done) {
         var filePath = ['test', 'tmp-write-data-yaml-indent', 'data.yaml']
         io.writeData(filePath.join(path.sep), testData, {makeDirectories: true, indent: 4}, function (err, dataString) {
+          var testString = '-\n    name: jim\n    occupation: land surveyor\n    height: 70\n-\n    name: francis\n    occupation: conductor\n    height: 63\n'
           assert.equal(err, null)
-          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
-          assert.equal(dataString, '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), testString)
+          assert.equal(dataString, testString)
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -2716,9 +2717,10 @@ describe('writers', function () {
       it('should write as yml with indent', function (done) {
         var filePath = ['test', 'tmp-write-data-yml-indent', 'data.yml']
         io.writeData(filePath.join(path.sep), testData, {makeDirectories: true, indent: 4}, function (err, dataString) {
+          var testString = '-\n    name: jim\n    occupation: land surveyor\n    height: 70\n-\n    name: francis\n    occupation: conductor\n    height: 63\n'
           assert.equal(err, null)
-          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
-          assert.equal(dataString, '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), testString)
+          assert.equal(dataString, testString)
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -2908,8 +2910,9 @@ describe('writers', function () {
           makeDirectories: true,
           indent: 4
         })
-        assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
-        assert.equal(dataString, '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
+        var testString = '-\n    name: jim\n    occupation: land surveyor\n    height: 70\n-\n    name: francis\n    occupation: conductor\n    height: 63\n'
+        assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), testString)
+        assert.equal(dataString, testString)
         rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
           assert.equal(err, null)
           done()
@@ -2934,8 +2937,9 @@ describe('writers', function () {
           makeDirectories: true,
           indent: 4
         })
-        assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
-        assert.equal(dataString, '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
+        var testString = '-\n    name: jim\n    occupation: land surveyor\n    height: 70\n-\n    name: francis\n    occupation: conductor\n    height: 63\n'
+        assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), testString)
+        assert.equal(dataString, testString)
         rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
           assert.equal(err, null)
           done()
