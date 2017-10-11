@@ -77,6 +77,7 @@ This is an exciting release because indian-ocean is now broken into es6 modules 
   * [8a6ab3f60fd1ba885c1c198444613477de9b7ce8](https://github.com/mhkeller/indian-ocean/commit/8a6ab3f60fd1ba885c1c198444613477de9b7ce8)
 * Alias `makeDirs` option to `makeDirectories`
   * [14fbedec499a3ba42b6f0ad152143ba0600f127e](https://github.com/mhkeller/indian-ocean/commit/14fbedec499a3ba42b6f0ad152143ba0600f127e)
+  * [3b4f6bc1694e6d34ab32679bd07edc6030ed40ab](https://github.com/mhkeller/indian-ocean/commit/3b4f6bc1694e6d34ab32679bd07edc6030ed40ab)
 
 # 2.0.2
 
