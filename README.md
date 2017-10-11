@@ -46,12 +46,10 @@ console.log(json_data)
 [
   {
     "name": "Gerald",
-    "occupation": "Teacher",
     "city": "Philadelphia"
   },
   {
     "name": "Marcy",
-    "occupation": "Venture Capitalist",
     "city": "New York"
   }
 ]
@@ -75,24 +73,20 @@ console.log(csvs)
   [
     {
       "name": "Gerald",
-      "occupation": "Teacher",
       "city": "Philadelphia"
     },
     {
       "name": "Marcy",
-      "occupation": "Venture Capitalist",
       "city": "New York"
     }
   ],
   [
     {
       "name": "Liza",
-      "occupation": "Principle",
       "city": "Philadelphia"
     },
     {
       "name": "Eileen",
-      "occupation": "CEO",
       "city": "New York"
     }
   ]
@@ -100,7 +94,12 @@ console.log(csvs)
 */
 ```
 
+A word on supported Node versions
+-----
+
+All of the tests pass for the versions listed in [`.travis.yml`](.travis.yml). In addition, everything except dbf-related functions *should* work under NodeJS versions 0.11 through 2.x. If you would like dbf support for those versions, the [2.0 releases of Indian Ocean](https://github.com/mhkeller/indian-ocean/releases/tag/v2.0.1) have that support. Install with `npm install --save indian-ocean@2.0.1`.
+
 License
 -------
 
-MIT 
+MIT

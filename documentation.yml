@@ -1,0 +1,43 @@
+toc:
+  - name: 'readers'
+  - readData
+  - readDataSync
+  - readdirFilter
+  - readdirFilterSync
+  - name: 'writers'
+  - writeData
+  - writeDataSync
+  - appendData
+  - appendDataSync
+  - name: 'directReaders'
+  - readAml
+  - readAmlSync
+  - readDbf
+  - readCsv
+  - readCsvSync
+  - readJson
+  - readJsonSync
+  - readPsv
+  - readPsvSync
+  - readTsv
+  - readTsvSync
+  - readTxt
+  - readTxtSync
+  - readYaml
+  - readYamlSync
+  - name: 'converters'
+  - convertData
+  - convertDbfToData
+  - name: 'helpers'
+  - deepExtend
+  - discernFileFormatter
+  - discernFormat
+  - discernParser
+  - exists
+  - existsSync
+  - extend
+  - extMatchesStr
+  - makeDirectories
+  - makeDirectoriesSync
+  - matches
+  - matchesRegExp

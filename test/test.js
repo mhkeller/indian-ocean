@@ -2,12 +2,18 @@
 
 var fs = require('fs')
 var path = require('path')
-var io = require('../lib/index')
+var io = require('../dist/indian-ocean.node.js')
 var chai = require('chai')
 var assert = chai.assert
 var dsv = require('d3-dsv')
 var _ = require('underscore')
 var rimraf = require('rimraf')
+var glob = require('glob')
+
+// Get rid of all these before testing
+glob.sync('test/**/.DS_Store').forEach(function (dsStore) {
+  fs.unlinkSync(dsStore)
+})
 
 var testData = [
   { 'name': 'jim', 'occupation': 'land surveyor', 'height': 70 },
@@ -56,10 +62,17 @@ function assertBasicValidObject (obj, strings, row) {
   }
 }
 
+function removeWhiteSpace (str) {
+  return str.replace(/\s/g, '')
+}
+
 describe('discernFormat()', function () {
   describe('no extension', function () {
     it('should be false', function () {
       assert.equal(io.discernFormat('/fake/path/what_is_this_file'), false)
+    })
+    it('should be false for dotfiles', function () {
+      assert.equal(io.discernFormat('/fake/path/.gitignore'), false)
     })
   })
 
@@ -135,11 +148,19 @@ describe('discernParser()', function () {
     it('should be text parser', function () {
       assert.equal(io.discernParser('/fake/path/what_is_this_file').toString(), io.parsers.txt.toString())
     })
+
+    it('should be text parser as method', function () {
+      assert.equal(io.discernParser('/fake/path/what_is_this_file').toString(), io.parseTxt.toString())
+    })
   })
 
   describe('csv', function () {
     it('should be csv parser', function () {
       assert.equal(io.discernParser(testDataPath('csv/empty.csv')).toString(), io.parsers.csv.toString())
+    })
+
+    it('should be csv parser as method', function () {
+      assert.equal(io.discernParser(testDataPath('csv/empty.csv')).toString(), io.parseCsv.toString())
     })
   })
 
@@ -147,11 +168,19 @@ describe('discernParser()', function () {
     it('should be tsv parser', function () {
       assert.equal(io.discernParser(testDataPath('tsv/empty.tsv')).toString(), io.parsers.tsv.toString())
     })
+
+    it('should be tsv parser as method', function () {
+      assert.equal(io.discernParser(testDataPath('tsv/empty.tsv')).toString(), io.parseTsv.toString())
+    })
   })
 
   describe('psv', function () {
     it('should be psv parser', function () {
       assert.equal(io.discernParser(testDataPath('psv/empty.psv')).toString(), io.parsers.psv.toString())
+    })
+
+    it('should be psv parser as method', function () {
+      assert.equal(io.discernParser(testDataPath('psv/empty.psv')).toString(), io.parsePsv.toString())
     })
   })
 
@@ -159,11 +188,19 @@ describe('discernParser()', function () {
     it('should be yaml parser', function () {
       assert.equal(io.discernParser(testDataPath('yaml/empty.yaml')).toString(), io.parsers.yaml.toString())
     })
+
+    it('should be yaml parser as method', function () {
+      assert.equal(io.discernParser(testDataPath('yaml/empty.yaml')).toString(), io.parseYaml.toString())
+    })
   })
 
   describe('yml', function () {
     it('should be yml parser', function () {
       assert.equal(io.discernParser(testDataPath('yml/empty.yml')).toString(), io.parsers.yml.toString())
+    })
+
+    it('should be yml parser as method', function () {
+      assert.equal(io.discernParser(testDataPath('yml/empty.yml')).toString(), io.parseYaml.toString())
     })
   })
 
@@ -171,11 +208,19 @@ describe('discernParser()', function () {
     it('should be txt parser', function () {
       assert.equal(io.discernParser(testDataPath('txt/empty.txt')).toString(), io.parsers.txt.toString())
     })
+
+    it('should be txt parser as method', function () {
+      assert.equal(io.discernParser(testDataPath('txt/empty.txt')).toString(), io.parseTxt.toString())
+    })
   })
 
   describe('aml', function () {
     it('should be aml parser', function () {
       assert.equal(io.discernParser(testDataPath('aml/empty.aml')).toString(), io.parsers.aml.toString())
+    })
+
+    it('should be aml parser as method', function () {
+      assert.equal(io.discernParser(testDataPath('aml/empty.aml')).toString(), io.parseAml.toString())
     })
   })
 
@@ -183,11 +228,19 @@ describe('discernParser()', function () {
     it('should be json parser', function () {
       assert.equal(io.discernParser(testDataPath('json/empty.json')).toString(), io.parsers.json.toString())
     })
+
+    it('should be json parser as method', function () {
+      assert.equal(io.discernParser(testDataPath('json/empty.json')).toString(), io.parseJson.toString())
+    })
   })
 
   describe('geojson', function () {
     it('should be geojson parser', function () {
       assert.equal(io.discernParser(testDataPath('geojson/empty.geojson')).toString(), io.parsers.geojson.toString())
+    })
+
+    it('should be geojson parser as method', function () {
+      assert.equal(io.discernParser(testDataPath('geojson/empty.geojson')).toString(), io.parseJson.toString())
     })
   })
 
@@ -195,11 +248,15 @@ describe('discernParser()', function () {
     it('should be topojson parser', function () {
       assert.equal(io.discernParser(testDataPath('topojson/empty.topojson')).toString(), io.parsers.topojson.toString())
     })
+
+    it('should be topojson parser as method', function () {
+      assert.equal(io.discernParser(testDataPath('topojson/empty.topojson')).toString(), io.parseJson.toString())
+    })
   })
 
   describe('custom delimiter: `_`', function () {
-    it('should be customer parser', function () {
-      assert.equal(io.discernParser(null, '_').toString(), dsv.dsvFormat('_').parse.toString())
+    it('should be custom parser', function () {
+      assert.equal(removeWhiteSpace(io.discernParser('_', {delimiter: true}).toString()), removeWhiteSpace(dsv.dsvFormat('_').parse.toString()))
     })
   })
 })
@@ -209,11 +266,19 @@ describe('discernFileFormatter()', function () {
     it('should be text formatter', function () {
       assert.equal(io.discernFileFormatter('/fake/path/what_is_this_file').toString(), io.formatters.txt.toString())
     })
+
+    it('should be text formatter as method', function () {
+      assert.equal(io.discernFileFormatter('/fake/path/what_is_this_file').toString(), io.formatTxt.toString())
+    })
   })
 
   describe('csv', function () {
     it('should be csv formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('csv/empty.csv')).toString(), io.formatters.csv.toString())
+    })
+
+    it('should be csv formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('csv/empty.csv')).toString(), io.formatCsv.toString())
     })
   })
 
@@ -221,11 +286,19 @@ describe('discernFileFormatter()', function () {
     it('should be tsv formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('tsv/empty.tsv')).toString(), io.formatters.tsv.toString())
     })
+
+    it('should be tsv formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('tsv/empty.tsv')).toString(), io.formatTsv.toString())
+    })
   })
 
   describe('psv', function () {
     it('should be psv formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('psv/empty.psv')).toString(), io.formatters.psv.toString())
+    })
+
+    it('should be psv formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('psv/empty.psv')).toString(), io.formatPsv.toString())
     })
   })
 
@@ -233,11 +306,19 @@ describe('discernFileFormatter()', function () {
     it('should be yaml formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('yaml/empty.yaml')).toString(), io.formatters.yaml.toString())
     })
+
+    it('should be yaml formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('yaml/empty.yaml')).toString(), io.formatYaml.toString())
+    })
   })
 
   describe('yml', function () {
     it('should be yml formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('yml/empty.yml')).toString(), io.formatters.yml.toString())
+    })
+
+    it('should be yml formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('yml/empty.yml')).toString(), io.formatYaml.toString())
     })
   })
 
@@ -245,11 +326,19 @@ describe('discernFileFormatter()', function () {
     it('should be txt formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('txt/empty.txt')).toString(), io.formatters.txt.toString())
     })
+
+    it('should be txt formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('txt/empty.txt')).toString(), io.formatTxt.toString())
+    })
   })
 
   describe('json', function () {
     it('should be json formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('json/empty.json')).toString(), io.formatters.json.toString())
+    })
+
+    it('should be json formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('json/empty.json')).toString(), io.formatJson.toString())
     })
   })
 
@@ -257,11 +346,19 @@ describe('discernFileFormatter()', function () {
     it('should be geojson formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('geojson/empty.geojson')).toString(), io.formatters.geojson.toString())
     })
+
+    it('should be geojson formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('geojson/empty.geojson')).toString(), io.formatJson.toString())
+    })
   })
 
   describe('topojson', function () {
     it('should be topojson formatter', function () {
       assert.equal(io.discernFileFormatter(testDataPath('topojson/empty.topojson')).toString(), io.formatters.topojson.toString())
+    })
+
+    it('should be topojson formatter as method', function () {
+      assert.equal(io.discernFileFormatter(testDataPath('topojson/empty.topojson')).toString(), io.formatJson.toString())
     })
   })
 })
@@ -851,9 +948,7 @@ describe('readers', function () {
           done()
         })
       })
-    })
 
-    describe('json', function () {
       it('should match expected geojson', function (done) {
         io.readData(testDataPath('geojson/basic.geojson'), function (err, json) {
           assert.equal(err, null)
@@ -861,9 +956,7 @@ describe('readers', function () {
           done()
         })
       })
-    })
 
-    describe('json', function () {
       it('should match expected topojson', function (done) {
         io.readData(testDataPath('topojson/basic.topojson'), function (err, json) {
           assert.equal(err, null)
@@ -871,9 +964,7 @@ describe('readers', function () {
           done()
         })
       })
-    })
 
-    describe('json with map', function () {
       it('should match expected json', function (done) {
         io.readData(testDataPath('json/basic.json'), {
           map: function (row, i) {
@@ -1277,6 +1368,55 @@ describe('readers', function () {
       })
     })
 
+    describe('dbf', function () {
+      describe('empty', function () {
+        it('should be empty array', function (done) {
+          io.readData(testDataPath('dbf/empty.dbf'), function (err, json) {
+            assert.equal(err.split('\n')[0], 'TypeError: Cannot read property \'buffer\' of null')
+            done()
+          })
+        })
+      })
+
+      describe('basic', function () {
+        it('should match expected json', function (done) {
+          io.readDbf(testDataPath('dbf/basic.dbf'), function (err, json) {
+            assert.equal(err, null)
+            assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'))
+            done()
+          })
+        })
+      })
+
+      describe('basic map', function () {
+        it('should match expected json', function (done) {
+          io.readData(testDataPath('dbf/basic.dbf'), {
+            map: function (row, i) {
+              row.bar = row.bar * 2
+              return row
+            }
+          }, function (err, json) {
+            assert.equal(err, null)
+            assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":2},{"foo":"green","bar":4}]'))
+            done()
+          })
+        })
+      })
+
+      describe('basic map shorthand', function () {
+        it('should match expected json', function (done) {
+          io.readData(testDataPath('dbf/basic.dbf'), function (row, i) {
+            row.bar = row.bar * 2
+            return row
+          }, function (err, json) {
+            assert.equal(err, null)
+            assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":2},{"foo":"green","bar":4}]'))
+            done()
+          })
+        })
+      })
+    })
+
     describe('custom delimiter string: `_`', function () {
       it('should match expected json', function (done) {
         io.readData(testDataPath('other/basic.usv'), {parser: '_'}, function (err, json) {
@@ -1350,8 +1490,8 @@ describe('readers', function () {
     describe('empty', function () {
       it('should be empty', function (done) {
         io.readdirFilter(__dirname, {include: 'csv'}, function (err, files) {
-          assert.lengthOf(files, 0)
           assert.equal(err, null)
+          assert.lengthOf(files, 0)
           done()
         })
       })
@@ -1362,7 +1502,7 @@ describe('readers', function () {
         var dir = path.join(__dirname, 'data', 'csv')
         io.readdirFilter(dir, function (err, files) {
           assert.equal(err, null)
-          assert(_.isEqual(files.length, 2))
+          assert.lengthOf(files, 2)
           done()
         })
       })
@@ -1373,7 +1513,7 @@ describe('readers', function () {
         var dir = path.join(__dirname, 'data', 'csv')
         io.readdirFilter(dir, {include: 'csv'}, function (err, files) {
           assert.equal(err, null)
-          assert(_.isEqual(files.length, 2))
+          assert.lengthOf(files, 2)
           done()
         })
       })
@@ -1384,7 +1524,7 @@ describe('readers', function () {
         var dir = path.join(__dirname, 'data', 'csv')
         io.readdirFilter(dir, {include: ['csv']}, function (err, files) {
           assert.equal(err, null)
-          assert(_.isEqual(files.length, 2))
+          assert.lengthOf(files, 2)
           done()
         })
       })
@@ -1618,112 +1758,50 @@ describe('readers', function () {
 
 describe('shorthandReaders', function () {
   describe('readJsonSync()', function () {
-    describe('parseJson parser', function () {
-      describe('empty', function () {
-        it('should be empty', function () {
-          assert.lengthOf(io.readJsonSync(testDataPath('json/empty.json')), 0)
-        })
-      })
-
-      describe('basic', function () {
-        it('should match expected json', function () {
-          var json = io.readJsonSync(testDataPath('json/basic.json'))
-          assertBasicValid(json)
-        })
-      })
-
-      describe('basic', function () {
-        it('should match expected geojson', function () {
-          var json = io.readJsonSync(testDataPath('geojson/basic.geojson'))
-          assertBasicValid(json)
-        })
-      })
-
-      describe('basic', function () {
-        it('should match expected topojson', function () {
-          var json = io.readJsonSync(testDataPath('topojson/basic.topojson'))
-          assertBasicValid(json)
-        })
-      })
-
-      describe('basic map', function () {
-        it('should use map', function () {
-          var json = io.readJsonSync(testDataPath('json/basic.json'), {
-            map: function (row, i) {
-              row.height = row.height * 2
-              return row
-            }
-          })
-          assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
-        })
-      })
-
-      describe('basic map shorthand', function () {
-        it('should use map shorthand', function () {
-          var json = io.readJsonSync(testDataPath('json/basic.json'), function (row, i) {
-            row.height = row.height * 2
-            return row
-          })
-          assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
-        })
-      })
-
-      describe('invalid', function () {
-        it('should raise an error', function () {
-          assert.throws(function () {
-            io.readJsonSync(testDataPath('json/invalid.json'))
-          }, Error)
-        })
+    describe('empty', function () {
+      it('should be empty', function () {
+        assert.lengthOf(io.readJsonSync(testDataPath('json/empty.json')), 0)
       })
     })
 
-    describe('native parser', function () {
-      describe('empty', function () {
-        it('should be empty', function () {
-          assert.lengthOf(io.readJsonSync(testDataPath('json/empty.json'), {nativeParser: true}), 0)
-        })
+    describe('basic', function () {
+      it('should match expected json', function () {
+        var json = io.readJsonSync(testDataPath('json/basic.json'))
+        assertBasicValid(json)
       })
+    })
 
-      describe('basic', function () {
-        it('should match expected json', function () {
-          var json = io.readJsonSync(testDataPath('json/basic.json'), {nativeParser: true})
-          assertBasicValid(json)
-        })
+    describe('basic', function () {
+      it('should match expected geojson', function () {
+        var json = io.readJsonSync(testDataPath('geojson/basic.geojson'))
+        assertBasicValid(json)
       })
+    })
 
-      describe('basic', function () {
-        it('should match expected geojson', function () {
-          var json = io.readJsonSync(testDataPath('geojson/basic.geojson'), {nativeParser: true})
-          assertBasicValid(json)
-        })
+    describe('basic', function () {
+      it('should match expected topojson', function () {
+        var json = io.readJsonSync(testDataPath('topojson/basic.topojson'))
+        assertBasicValid(json)
       })
+    })
 
-      describe('basic', function () {
-        it('should match expected topojson', function () {
-          var json = io.readJsonSync(testDataPath('topojson/basic.topojson'), {nativeParser: true})
-          assertBasicValid(json)
+    describe('basic map', function () {
+      it('should use map', function () {
+        var json = io.readJsonSync(testDataPath('json/basic.json'), {
+          map: function (row, i) {
+            row.height = row.height * 2
+            return row
+          }
         })
+        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
       })
+    })
 
-      describe('basic map', function () {
-        it('should use map', function () {
-          var json = io.readJsonSync(testDataPath('json/basic.json'), {
-            map: function (row, i) {
-              row.height = row.height * 2
-              return row
-            },
-            nativeParser: true
-          })
-          assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
-        })
-      })
-
-      describe('invalid', function () {
-        it('should raise an error', function () {
-          assert.throws(function () {
-            io.readJsonSync(testDataPath('json/invalid.json'), {nativeParser: true})
-          }, Error)
-        })
+    describe('invalid', function () {
+      it('should raise an error', function () {
+        assert.throws(function () {
+          io.readJsonSync(testDataPath('json/invalid.json'))
+        }, Error)
       })
     })
   })
@@ -2041,7 +2119,7 @@ describe('shorthandReaders', function () {
     describe('invalid', function () {
       it('should raise an error', function (done) {
         io.readJson(testDataPath('json/invalid.json'), function (err, json) {
-          assert.equal(err.message, 'Unexpected token \'w\' at 1:3\n{ wrong: }\n  ^')
+          assert.equal(err.message.indexOf('Unexpected token w') > -1, true)
           done()
         })
       })
@@ -2440,7 +2518,7 @@ describe('readDbf()', function () {
   describe('empty', function () {
     it('should be empty array', function (done) {
       io.readDbf(testDataPath('dbf/empty.dbf'), function (err, json) {
-        assert.equal(err.message, 'unexpected EOF')
+        assert.equal(err.split('\n')[0], 'TypeError: Cannot read property \'buffer\' of null')
         done()
       })
     })
@@ -2490,7 +2568,7 @@ describe('writers', function () {
     describe('json', function () {
       it('should write as json', function (done) {
         var filePath = ['test', 'tmp-write-data-json', 'data.json']
-        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+        io.writeData(filePath.join(path.sep), testData, {makeDirs: true}, function (err) {
           assert.equal(err, null)
           readAssertBasicValid(filePath.join(path.sep))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
@@ -2503,7 +2581,7 @@ describe('writers', function () {
       it('should write with json replacer fn', function (done) {
         var filePath = ['test', 'tmp-write-data-json-replacer-fn', 'data.json']
         io.writeData(filePath.join(path.sep), testData, {
-          makeDirectories: true,
+          makeDirs: true,
           replacer: function (key, value) {
             // Filtering out string properties
             if (typeof value === 'string') {
@@ -2525,7 +2603,7 @@ describe('writers', function () {
       it('should write with json replacer array', function (done) {
         var filePath = ['test', 'tmp-write-data-json-replacer-array', 'data.json']
         io.writeData(filePath.join(path.sep), testData, {
-          makeDirectories: true,
+          makeDirs: true,
           replacer: ['height']
         }, function (err, dataString) {
           assert.equal(err, null)
@@ -2541,7 +2619,7 @@ describe('writers', function () {
       it('should write with json indent', function (done) {
         var filePath = ['test', 'tmp-write-data-json-indent', 'data.json']
         io.writeData(filePath.join(path.sep), testData, {
-          makeDirectories: true,
+          makeDirs: true,
           indent: 2
         }, function (err, dataString) {
           assert.equal(err, null)
@@ -2570,7 +2648,7 @@ describe('writers', function () {
     describe('geojson', function () {
       it('should write as geojson', function (done) {
         var filePath = ['test', 'tmp-write-data-geojson', 'data.geojson']
-        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+        io.writeData(filePath.join(path.sep), testData, {makeDirs: true}, function (err) {
           assert.equal(err, null)
           readAssertBasicValid(filePath.join(path.sep))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
@@ -2584,7 +2662,7 @@ describe('writers', function () {
     describe('topojson', function () {
       it('should write as topojson', function (done) {
         var filePath = ['test', 'tmp-write-data-topojson', 'data.topojson']
-        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+        io.writeData(filePath.join(path.sep), testData, {makeDirs: true}, function (err) {
           assert.equal(err, null)
           readAssertBasicValid(filePath.join(path.sep))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
@@ -2599,7 +2677,7 @@ describe('writers', function () {
       it('should write as geojson with indent', function (done) {
         var filePath = ['test', 'tmp-write-data-geojson-indent', 'data.geojson']
         io.writeData(filePath.join(path.sep), testData, {
-          makeDirectories: true,
+          makeDirs: true,
           indent: 2
         }, function (err, dataString) {
           assert.equal(err, null)
@@ -2617,7 +2695,7 @@ describe('writers', function () {
       it('should write as topojson with indent', function (done) {
         var filePath = ['test', 'tmp-write-data-topojson-indent', 'data.topojson']
         io.writeData(filePath.join(path.sep), testData, {
-          makeDirectories: true,
+          makeDirs: true,
           indent: 2
         }, function (err, dataString) {
           assert.equal(err, null)
@@ -2634,7 +2712,7 @@ describe('writers', function () {
     describe('csv', function () {
       it('should write as csv', function (done) {
         var filePath = ['test', 'tmp-write-data-csv', 'data.csv']
-        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+        io.writeData(filePath.join(path.sep), testData, {makeDirs: true}, function (err) {
           assert.equal(err, null)
           readAssertBasicValid(filePath.join(path.sep))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
@@ -2648,7 +2726,7 @@ describe('writers', function () {
     describe('tsv', function () {
       it('should write as tsv', function (done) {
         var filePath = ['test', 'tmp-write-data-tsv', 'data.tsv']
-        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+        io.writeData(filePath.join(path.sep), testData, {makeDirs: true}, function (err) {
           assert.equal(err, null)
           readAssertBasicValid(filePath.join(path.sep))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
@@ -2662,7 +2740,7 @@ describe('writers', function () {
     describe('psv', function () {
       it('should write as psv', function (done) {
         var filePath = ['test', 'tmp-write-data-psv', 'data.psv']
-        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+        io.writeData(filePath.join(path.sep), testData, {makeDirs: true}, function (err) {
           assert.equal(err, null)
           readAssertBasicValid(filePath.join(path.sep))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
@@ -2676,7 +2754,7 @@ describe('writers', function () {
     describe('yaml', function () {
       it('should write as yaml', function (done) {
         var filePath = ['test', 'tmp-write-data-yaml', 'data.yaml']
-        io.writeData(filePath.join(path.sep), testData[0], {makeDirectories: true}, function (err) {
+        io.writeData(filePath.join(path.sep), testData[0], {makeDirs: true}, function (err) {
           assert.equal(err, null)
           readAssertBasicValidObject(filePath.join(path.sep))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
@@ -2688,10 +2766,11 @@ describe('writers', function () {
 
       it('should write as yaml with indent', function (done) {
         var filePath = ['test', 'tmp-write-data-yaml-indent', 'data.yaml']
-        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true, indent: 4}, function (err, dataString) {
+        io.writeData(filePath.join(path.sep), testData, {makeDirs: true, indent: 4}, function (err, dataString) {
+          var testString = '-\n    name: jim\n    occupation: land surveyor\n    height: 70\n-\n    name: francis\n    occupation: conductor\n    height: 63\n'
           assert.equal(err, null)
-          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
-          assert.equal(dataString, '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), testString)
+          assert.equal(dataString, testString)
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -2703,7 +2782,7 @@ describe('writers', function () {
     describe('yml', function () {
       it('should write as yml', function (done) {
         var filePath = ['test', 'tmp-write-data-yml', 'data.yml']
-        io.writeData(filePath.join(path.sep), testData[0], {makeDirectories: true}, function (err) {
+        io.writeData(filePath.join(path.sep), testData[0], {makeDirs: true}, function (err) {
           assert.equal(err, null)
           readAssertBasicValidObject(filePath.join(path.sep))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
@@ -2715,10 +2794,11 @@ describe('writers', function () {
 
       it('should write as yml with indent', function (done) {
         var filePath = ['test', 'tmp-write-data-yml-indent', 'data.yml']
-        io.writeData(filePath.join(path.sep), testData, {makeDirectories: true, indent: 4}, function (err, dataString) {
+        io.writeData(filePath.join(path.sep), testData, {makeDirs: true, indent: 4}, function (err, dataString) {
+          var testString = '-\n    name: jim\n    occupation: land surveyor\n    height: 70\n-\n    name: francis\n    occupation: conductor\n    height: 63\n'
           assert.equal(err, null)
-          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
-          assert.equal(dataString, '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
+          assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), testString)
+          assert.equal(dataString, testString)
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -2732,9 +2812,23 @@ describe('writers', function () {
     describe('json', function () {
       it('should write as json', function (done) {
         var filePath = ['test', 'tmp-write-data-json-sync', 'data.json']
-        io.writeDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        io.writeDataSync(filePath.join(path.sep), testData, {makeDirs: true})
         readAssertBasicValid(filePath.join(path.sep))
         rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+          assert.equal(err, null)
+          done()
+        })
+      })
+
+      it('should write two json files with shared opts creating different directories', function (done) {
+        var filePath = ['test', 'tmp-write-data-json-sync', 'data.json']
+        var filePath2 = ['test', 'tmp-write-data-json-sync2', 'data.json']
+        var opts = {makeDirs: true}
+        io.writeDataSync(filePath.join(path.sep), testData, opts)
+        io.writeDataSync(filePath2.join(path.sep), testData, opts)
+        readAssertBasicValid(filePath.join(path.sep))
+        readAssertBasicValid(filePath2.join(path.sep))
+        rimraf(filePath.slice(0, 2).join(path.sep) + '*', function (err) {
           assert.equal(err, null)
           done()
         })
@@ -2777,7 +2871,7 @@ describe('writers', function () {
       it('should write with json indent', function (done) {
         var filePath = ['test', 'tmp-write-data-json-indent-sync', 'data.json']
         var dataString = io.writeDataSync(filePath.join(path.sep), testData, {
-          makeDirectories: true,
+          makeDirs: true,
           indent: 2
         })
         assert.equal(dataString, '[\n  {\n    "name": "jim",\n    "occupation": "land surveyor",\n    "height": 70\n  },\n  {\n    "name": "francis",\n    "occupation": "conductor",\n    "height": 63\n  }\n]')
@@ -2908,8 +3002,9 @@ describe('writers', function () {
           makeDirectories: true,
           indent: 4
         })
-        assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
-        assert.equal(dataString, '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
+        var testString = '-\n    name: jim\n    occupation: land surveyor\n    height: 70\n-\n    name: francis\n    occupation: conductor\n    height: 63\n'
+        assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), testString)
+        assert.equal(dataString, testString)
         rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
           assert.equal(err, null)
           done()
@@ -2934,8 +3029,9 @@ describe('writers', function () {
           makeDirectories: true,
           indent: 4
         })
-        assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
-        assert.equal(dataString, '- \n    name: jim\n    occupation: land surveyor\n    height: 70\n- \n    name: francis\n    occupation: conductor\n    height: 63\n')
+        var testString = '-\n    name: jim\n    occupation: land surveyor\n    height: 70\n-\n    name: francis\n    occupation: conductor\n    height: 63\n'
+        assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), testString)
+        assert.equal(dataString, testString)
         rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
           assert.equal(err, null)
           done()
@@ -3080,7 +3176,7 @@ describe('writers', function () {
     describe('csv', function () {
       it('should append to non-existent csv', function (done) {
         var filePath = ['test', 'tmp-append-new-data-csv', 'data.csv']
-        io.appendData(filePath.join(path.sep), testData, {makeDirectories: true}, function (err) {
+        io.appendData(filePath.join(path.sep), testData, {makeDirs: true}, function (err) {
           assert.equal(err, null)
           readAssertBasicValid(filePath.join(path.sep))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
@@ -3260,7 +3356,7 @@ describe('writers', function () {
     describe('json', function () {
       it('should append to non-existent json', function (done) {
         var filePath = ['test', 'tmp-append-new-data-json-sync', 'data.json']
-        io.appendDataSync(filePath.join(path.sep), testData, {makeDirectories: true})
+        io.appendDataSync(filePath.join(path.sep), testData, {makeDirs: true})
         readAssertBasicValid(filePath.join(path.sep))
         rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
           assert.equal(err, null)
@@ -3380,14 +3476,801 @@ describe('writers', function () {
     })
   })
 
+  describe('convertData()', function () {
+    describe('from dbf to', function () {
+      describe('csv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-to-data-csv', 'data.csv']
+          io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('psv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-to-data-psv', 'data.psv']
+          io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('tsv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-to-data-tsv', 'data.tsv']
+          io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yaml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-to-data-yaml', 'data.yaml']
+          io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-to-data-json', 'data.json']
+          io.convertData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
+
+    describe('from csv to', function () {
+      describe('dbf', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-csv-to-data-dbf', 'data.dbf']
+          io.convertData(testDataPath('csv/basic.csv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            io.readData(filePath.join(path.sep), function (err, json) {
+              assert.equal(err, null)
+              assert(_.isEqual(JSON.stringify(json), result))
+              rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+                assert.equal(err, null)
+                done()
+              })
+            })
+          })
+        })
+      })
+
+      describe('psv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-csv-to-data-psv', 'data.psv']
+          io.convertData(testDataPath('csv/basic.csv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('tsv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-csv-to-data-tsv', 'data.tsv']
+          io.convertData(testDataPath('csv/basic.csv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yaml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-csv-to-data-yaml', 'data.yaml']
+          io.convertData(testDataPath('csv/basic.csv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-csv-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('csv/basic.csv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-csv-to-data-json', 'data.json']
+          io.convertData(testDataPath('csv/basic.csv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
+
+    describe('from json to', function () {
+      describe('csv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-json-to-data-csv', 'data.csv']
+          io.convertData(testDataPath('json/basic.json'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('psv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-json-to-data-psv', 'data.psv']
+          io.convertData(testDataPath('json/basic.json'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('tsv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-json-to-data-tsv', 'data.tsv']
+          io.convertData(testDataPath('json/basic.json'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yaml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-json-to-data-yaml', 'data.yaml']
+          io.convertData(testDataPath('json/basic.json'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":70},{"name":"francis","occupation":"conductor","height":63}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-json-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('json/basic.json'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":70},{"name":"francis","occupation":"conductor","height":63}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('dbf', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-json-to-data-dbf', 'data.dbf']
+          io.convertData(testDataPath('json/basic.json'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":70},{"name":"francis","occupation":"conductor","height":63}]'
+            io.readData(filePath.join(path.sep), function (err, json) {
+              assert.equal(err, null)
+              assert(_.isEqual(JSON.stringify(json), result))
+              rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+                assert.equal(err, null)
+                done()
+              })
+            })
+          })
+        })
+      })
+    })
+
+    describe('from psv to', function () {
+      describe('csv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-csv', 'data.csv']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('dbf', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-dbf', 'data.dbf']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            io.readData(filePath.join(path.sep), function (err, json) {
+              assert.equal(err, null)
+              assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+              rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+                assert.equal(err, null)
+                done()
+              })
+            })
+          })
+        })
+      })
+
+      describe('tsv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-tsv', 'data.tsv']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yaml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-yaml', 'data.yaml']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-psv-to-data-json', 'data.json']
+          io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
+
+    describe('from tsv to', function () {
+      describe('csv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-csv', 'data.csv']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('psv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-psv', 'data.psv']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('dbf', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-dbf', 'data.dbf']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            io.readData(filePath.join(path.sep), function (err, json) {
+              assert.equal(err, null)
+              assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+              rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+                assert.equal(err, null)
+                done()
+              })
+            })
+          })
+        })
+      })
+
+      describe('yaml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-yaml', 'data.yaml']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-json', 'data.json']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
+
+    describe('from yaml to', function () {
+      describe('csv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-csv', 'data.csv']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('psv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-psv', 'data.psv']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('tsv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-tsv', 'data.tsv']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('dbf', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-dbf', 'data.dbf']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            io.readData(filePath.join(path.sep), function (err, json) {
+              assert.equal(err, null)
+              assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":70}]'))
+              rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+                assert.equal(err, null)
+                done()
+              })
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":70}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-json', 'data.json']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":70}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
+
+    describe('from yml to', function () {
+      describe('csv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-csv', 'data.csv']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('psv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-psv', 'data.psv']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('tsv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-tsv', 'data.tsv']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":"70"}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('dbf', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-dbf', 'data.dbf']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            io.readData(filePath.join(path.sep), function (err, json) {
+              assert.equal(err, null)
+              assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":70}]'))
+              rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+                assert.equal(err, null)
+                done()
+              })
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":70}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-json', 'data.json']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '[{"name":"jim","occupation":"land surveyor","height":70}]'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
+
+    describe('from aml to', function () {
+      describe('yaml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-aml-to-data-yaml', 'data.yaml']
+          io.convertData(testDataPath('aml/basic-2.aml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '{"name":"jim","occupation":"land surveyor","height":"70"}'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-aml-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('aml/basic-2.aml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '{"name":"jim","occupation":"land surveyor","height":"70"}'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-aml-to-data-json', 'data.json']
+          io.convertData(testDataPath('aml/basic-2.aml'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
+            assert.equal(err, null)
+            var result = '{"name":"jim","occupation":"land surveyor","height":"70"}'
+            assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), result))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
+  })
+
   describe('convertDbfToData()', function () {
     describe('csv', function () {
       it('should convert to format', function (done) {
         var filePath = ['test', 'tmp-convert-dbf-to-data-csv', 'data.csv']
-        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
           assert.equal(err, null)
+          var result = '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'
+          assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
           var json = io.readDataSync(filePath.join(path.sep))
-          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'))
+          assert(_.isEqual(JSON.stringify(json), result))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -3399,10 +4282,12 @@ describe('writers', function () {
     describe('psv', function () {
       it('should convert to format', function (done) {
         var filePath = ['test', 'tmp-convert-dbf-to-data-psv', 'data.psv']
-        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
           assert.equal(err, null)
+          var result = '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'
+          assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
           var json = io.readDataSync(filePath.join(path.sep))
-          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'))
+          assert(_.isEqual(JSON.stringify(json), result))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -3414,10 +4299,12 @@ describe('writers', function () {
     describe('tsv', function () {
       it('should convert to format', function (done) {
         var filePath = ['test', 'tmp-convert-dbf-to-data-tsv', 'data.tsv']
-        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
           assert.equal(err, null)
+          var result = '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'
+          assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
           var json = io.readDataSync(filePath.join(path.sep))
-          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":"0"},{"foo":"blue","bar":"1"},{"foo":"green","bar":"2"}]'))
+          assert(_.isEqual(JSON.stringify(json), result))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -3429,10 +4316,12 @@ describe('writers', function () {
     describe('yaml', function () {
       it('should convert to format', function (done) {
         var filePath = ['test', 'tmp-convert-dbf-to-data-yaml', 'data.yaml']
-        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
           assert.equal(err, null)
+          var result = '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'
+          assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
           var json = io.readDataSync(filePath.join(path.sep))
-          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'))
+          assert(_.isEqual(JSON.stringify(json), result))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -3444,10 +4333,12 @@ describe('writers', function () {
     describe('yml', function () {
       it('should convert to format', function (done) {
         var filePath = ['test', 'tmp-convert-dbf-to-data-yml', 'data.yml']
-        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
           assert.equal(err, null)
+          var result = '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'
+          assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
           var json = io.readDataSync(filePath.join(path.sep))
-          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'))
+          assert(_.isEqual(JSON.stringify(json), result))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
@@ -3459,10 +4350,12 @@ describe('writers', function () {
     describe('json', function () {
       it('should convert to format', function (done) {
         var filePath = ['test', 'tmp-convert-dbf-to-data-json', 'data.json']
-        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+        io.convertDbfToData(testDataPath('dbf/basic.dbf'), filePath.join(path.sep), {makeDirectories: true}, function (err, dataStr) {
           assert.equal(err, null)
+          var result = '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'
+          assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result))
           var json = io.readDataSync(filePath.join(path.sep))
-          assert(_.isEqual(JSON.stringify(json), '[{"foo":"orange","bar":0},{"foo":"blue","bar":1},{"foo":"green","bar":2}]'))
+          assert(_.isEqual(JSON.stringify(json), result))
           rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
             assert.equal(err, null)
             done()
