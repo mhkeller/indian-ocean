@@ -5,7 +5,7 @@ Changelog
 
 > Not yet on npm
 
-This is an exciting release because indian-ocean is now broken into es6 modules and brand new documentation. Adds a new `convertData` function which allows for converting from format to format. Aliases `makeDirs` to `makeDirectories` for less typing. There's also an experimental browser bundle and some minor new features.
+This is an exciting release because indian-ocean is now broken into es6 modules and brand new documentation. Adds a new `convertData` function which allows for converting from format to format. Aliases `makeDirs` to `makeDirectories` for less typing if you don't feel like typing. There's also an experimental browser bundle and some minor new features.
 
 *This is a breaking change because it drops support below Node 3 and changes the API for `io.discernParser`*
 
