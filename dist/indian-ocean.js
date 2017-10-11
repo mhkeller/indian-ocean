@@ -1,4 +1,4 @@
-// https://github.com/mhkeller/indian-ocean Version 2.0.2. Copyright 2017 undefined.
+// https://github.com/mhkeller/indian-ocean Version 3.0.0. Copyright 2017 undefined.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :

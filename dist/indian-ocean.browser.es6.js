@@ -1,4 +1,4 @@
-// https://github.com/mhkeller/indian-ocean Version 2.0.2. Copyright 2017 undefined.
+// https://github.com/mhkeller/indian-ocean Version 3.0.0. Copyright 2017 undefined.
 var EOL = {};
 var EOF = {};
 var QUOTE = 34;
