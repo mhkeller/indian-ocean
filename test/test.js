@@ -3851,6 +3851,334 @@ describe('writers', function () {
       })
     })
 
+    describe('from tsv to', function () {
+      describe('csv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-csv', 'data.csv']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('psv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-psv', 'data.psv']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('dbf', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-dbf', 'data.dbf']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            io.readData(filePath.join(path.sep), function (err, json) {
+              assert.equal(err, null)
+              assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+              rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+                assert.equal(err, null)
+                done()
+              })
+            })
+          })
+        })
+      })
+
+      describe('yaml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-yaml', 'data.yaml']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-tsv-to-data-json', 'data.json']
+          io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
+
+    describe('from yaml to', function () {
+      describe('csv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-csv', 'data.csv']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('psv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-psv', 'data.psv']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('tsv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-tsv', 'data.tsv']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('dbf', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-dbf', 'data.dbf']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            io.readData(filePath.join(path.sep), function (err, json) {
+              assert.equal(err, null)
+              assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":70}]'))
+              rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+                assert.equal(err, null)
+                done()
+              })
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":70}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-json', 'data.json']
+          io.convertData(testDataPath('yaml/basic-list.yaml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":70}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
+
+    describe('from yml to', function () {
+      describe('csv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-csv', 'data.csv']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('psv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-psv', 'data.psv']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('tsv', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-tsv', 'data.tsv']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('dbf', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-dbf', 'data.dbf']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            io.readData(filePath.join(path.sep), function (err, json) {
+              assert.equal(err, null)
+              assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":70}]'))
+              rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+                assert.equal(err, null)
+                done()
+              })
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":70}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-yaml-to-data-json', 'data.json']
+          io.convertData(testDataPath('yml/basic-list.yml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":70}]'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
+
+    describe('from aml to', function () {
+      describe('yaml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-aml-to-data-yaml', 'data.yaml']
+          io.convertData(testDataPath('aml/basic-2.aml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":"70"}'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('yml', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-aml-to-data-yml', 'data.yml']
+          io.convertData(testDataPath('aml/basic-2.aml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":"70"}'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+
+      describe('json', function () {
+        it('should convert to format', function (done) {
+          var filePath = ['test', 'tmp-convert-aml-to-data-json', 'data.json']
+          io.convertData(testDataPath('aml/basic-2.aml'), filePath.join(path.sep), {makeDirectories: true}, function (err) {
+            assert.equal(err, null)
+            var json = io.readDataSync(filePath.join(path.sep))
+            assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":"70"}'))
+            rimraf(filePath.slice(0, 2).join(path.sep), {glob: false}, function (err) {
+              assert.equal(err, null)
+              done()
+            })
+          })
+        })
+      })
+    })
   })
 
   describe('convertDbfToData()', function () {
