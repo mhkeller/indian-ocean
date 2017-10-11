@@ -7,7 +7,7 @@ Changelog
 
 This is an exciting release because indian-ocean is now broken into es6 modules and brand new documentation. Adds a new `convertData` function which allows for converting from format to format. Aliases `makeDirs` to `makeDirectories` for less typing. There's also an experimental browser bundle and some minor new features.
 
-*This is a breaking change because it drops support below Node 3.*
+*This is a breaking change because it drops support below Node 3 and changes the API for `io.discernParser`*
 
 * Support reading dbf files in `readData` by way of separating out file loading from file parsing.
   * [ef9702c6a7e3121956718c1971453835e20c7067](https://github.com/mhkeller/indian-ocean/commit/ef9702c6a7e3121956718c1971453835e20c7067)
@@ -78,6 +78,8 @@ This is an exciting release because indian-ocean is now broken into es6 modules 
 * Alias `makeDirs` option to `makeDirectories`
   * [14fbedec499a3ba42b6f0ad152143ba0600f127e](https://github.com/mhkeller/indian-ocean/commit/14fbedec499a3ba42b6f0ad152143ba0600f127e)
   * [3b4f6bc1694e6d34ab32679bd07edc6030ed40ab](https://github.com/mhkeller/indian-ocean/commit/3b4f6bc1694e6d34ab32679bd07edc6030ed40ab)
+* Clean up `discernParser` API. Fixes [#63](https://github.com/mhkeller/indian-ocean/issues/63).
+  * [0a5469cc08a1975e3546d443425b222d00012301](https://github.com/mhkeller/indian-ocean/commit/0a5469cc08a1975e3546d443425b222d00012301)
 
 # 2.0.2
 
