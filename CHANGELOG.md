@@ -15,6 +15,7 @@ Small bug fix release. Puts `shapefile` library as an external dependency to fix
   * [853354ada369d7e899ae56cb82b34229e49609d0](https://github.com/mhkeller/indian-ocean/commit/853354ada369d7e899ae56cb82b34229e49609d0)
 * Doc tweaks
   * [cf09315e20fdc8cddf576433d10a9b8cb75b5592](https://github.com/mhkeller/indian-ocean/commit/cf09315e20fdc8cddf576433d10a9b8cb75b5592)
+  * [b4b34c9c08dcf183985fffc3e0a278e137796c60](https://github.com/mhkeller/indian-ocean/commit/b4b34c9c08dcf183985fffc3e0a278e137796c60)
 
 # 3.0.0
 
