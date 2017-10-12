@@ -1,9 +1,36 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset='utf-8' />
-  <title><%- config['project-name'] %> <%- config['project-version'] %> | Documentation</title>
-  <meta name='viewport' content='width=device-width,initial-scale=1'>
+
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <meta property="og:site_name" content="<%= config['project-homepage'] %>"/>
+  <meta property="og:type" content="article"/>
+
+  <meta name="twitter:card" content="summary_large_image"/>
+
+  <title>Indian Ocean <%- config['project-version'] %> | Documentation</title>
+
+  <!-- What is the main headline? -->
+  <meta property="og:title" content="Indian Ocean | Easy data i/o in NodeJs">
+  <!-- What is the share-able image -->
+  <!-- Image aspect ratio: 1.91:1 Image Dimensions: 1200x630px -->
+  <meta property="og:image" content="<%= config['project-homepage'] %>/assets/comma.png"/>
+  <!-- What shows up in Facebook -->
+  <meta property="og:description" content="A NodeJS library for reading and writing data based on the file's extension."/>
+  <!-- What shows up in search engines -->
+  <meta name="description" content="A NodeJS library for reading and writing data based on the file's extension.">
+  <!-- Some keywords if you want -->
+  <meta name="keywords" content="data, indian ocean, nodejs, csv, json, psv, tsv, dbf, fs, convert, files, io, mhkeller, michael keller"/>
+  <!-- The full link to this graphic -->
+  <!-- If you're using https, change these urls -->
+  <meta property="og:url" content="<%= config['project-homepage'] %>"/>
+
+  <meta name="twitter:site" content="@mhkeller"/>
+  <meta name="twitter:title" content="A NodeJS library for reading and writing data based on the file's extension.">
+  <meta name="twitter:image" content="<%= config['project-homepage'] %>/assets/comma.png">
+
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
   <link href='assets/github.css' type='text/css' rel='stylesheet' />

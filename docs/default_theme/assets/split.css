@@ -16,6 +16,7 @@
 #split-left{
   font-family: "Source Code Pro",Consolas,monospace;
   background-color: #e6ebed;
+  width: 220px;
 }
 #split-right{
   padding-left: .5em;
