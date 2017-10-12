@@ -18,9 +18,9 @@
   <!-- Image aspect ratio: 1.91:1 Image Dimensions: 1200x630px -->
   <meta property="og:image" content="<%= config['project-homepage'] %>/assets/comma.png"/>
   <!-- What shows up in Facebook -->
-  <meta property="og:description" content="A NodeJS library for reading and writing data based on the file's extension."/>
+  <meta property="og:description" content="A NodeJS library for reading and writing data based on the file's extension + some other conveniences."/>
   <!-- What shows up in search engines -->
-  <meta name="description" content="A NodeJS library for reading and writing data based on the file's extension.">
+  <meta name="description" content="A NodeJS library for reading and writing data based on the file's extension + some other conveniences.">
   <!-- Some keywords if you want -->
   <meta name="keywords" content="data, indian ocean, nodejs, csv, json, psv, tsv, dbf, fs, convert, files, io, mhkeller, michael keller"/>
   <!-- The full link to this graphic -->
@@ -28,7 +28,7 @@
   <meta property="og:url" content="<%= config['project-homepage'] %>"/>
 
   <meta name="twitter:site" content="@mhkeller"/>
-  <meta name="twitter:title" content="A NodeJS library for reading and writing data based on the file's extension.">
+  <meta name="twitter:title" content="A NodeJS library for reading and writing data based on the file's extension + some other conveniences.">
   <meta name="twitter:image" content="<%= config['project-homepage'] %>/assets/comma.png">
 
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
