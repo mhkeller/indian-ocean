@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import mkdirp from 'mkdirp'
 import {dirname} from '../utils/path'
 

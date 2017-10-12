@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import chalk from 'chalk'
 
 export default function (format) {

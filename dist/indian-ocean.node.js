@@ -1,4 +1,4 @@
-// var TextDecoder = require('text-encoding').TextDecoder // eslint-disable-line no-unused-vars
+'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -1779,6 +1779,7 @@ var csvParse = csv.parse;
 
 var csvFormat = csv.format;
 
+/* istanbul ignore next */
 var parserCsv = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   return csvParse(str, parserOptions.map);
@@ -1788,6 +1789,7 @@ var identity = (function (d) {
   return d;
 });
 
+/* istanbul ignore next */
 var parserJson = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   // Do a naive test whether this is a string or an object
@@ -1796,6 +1798,7 @@ var parserJson = function (str, parserOptions) {
   return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
 };
 
+/* istanbul ignore next */
 var parserPsv = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   return dsvFormat('|').parse(str, parserOptions.map);
@@ -1807,6 +1810,7 @@ var tsvParse = tsv.parse;
 
 var tsvFormat = tsv.format;
 
+/* istanbul ignore next */
 var parserTsv = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   return tsvParse(str, parserOptions.map);
@@ -5581,6 +5585,7 @@ function omit(obj, blackList) {
   return newObj;
 }
 
+/* istanbul ignore next */
 var parserYaml = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   var map = parserOptions.map || identity;
@@ -5899,6 +5904,7 @@ var archieml = createCommonjsModule(function (module, exports) {
   }).call(commonjsGlobal);
 });
 
+/* istanbul ignore next */
 var parserAml = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   var map = parserOptions.map || identity;
@@ -5934,6 +5940,7 @@ formatsList.forEach(function (format) {
   });
 });
 
+/* istanbul ignore next */
 /**
  * Given a `filePath` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimiter string as the second argument, return a parser for that delimiter regardless of `filePath`. Used internally by {@link readData} and {@link readDataSync}.
  *
@@ -6092,12 +6099,15 @@ function getParser(delimiterOrParser) {
   var parser;
   if (typeof delimiterOrParser === 'string') {
     parser = discernParser(delimiterOrParser, { delimiter: true });
-  } else if ((typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object' || typeof delimiterOrParser === 'function') {
+  } else if (typeof delimiterOrParser === 'function' || (typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object') {
+    console.log('object', (typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object');
+    console.log('function', typeof delimiterOrParser === 'function');
     parser = delimiterOrParser;
   }
   return parser;
 }
 
+/* istanbul ignore next */
 function file(filePath, parser, parserOptions, cb) {
   fs.readFile(filePath, 'utf8', function (err, data) {
     var fileFormat = discernFormat(filePath);
@@ -6125,6 +6135,7 @@ function file(filePath, parser, parserOptions, cb) {
   });
 }
 
+/* istanbul ignore next */
 function file$1(filePath, parser, parserOptions, cb) {
   var data = fs.readFileSync(filePath, 'utf8');
   var fileFormat = discernFormat(filePath);
@@ -6147,6 +6158,7 @@ function file$1(filePath, parser, parserOptions, cb) {
   return parsed;
 }
 
+/* istanbul ignore next */
 var shapefile = require('shapefile');
 function dbf(filePath, parser, parserOptions, cb) {
   var values = [];
@@ -6208,6 +6220,7 @@ function discernLoader(filePath) {
   return loader;
 }
 
+/* istanbul ignore next */
 /**
  * Asynchronously read data given a path ending in the file format.
  *
@@ -6583,10 +6596,12 @@ index$1.hasColor = hasColor;
 index$1.stripColor = stripColor;
 index$1.supportsColor = supportsColor_1;
 
+/* istanbul ignore next */
 var warn = function (msg) {
   console.log(index$1.gray('[indian-ocean]') + ' ' + index$1.yellow('Warning:', msg));
 };
 
+/* istanbul ignore next */
 var notListError = function (format) {
   throw new Error(index$1.red('[indian-ocean] You passed in an object but converting to ' + index$1.bold(format) + ' requires a list of objects.') + index$1.cyan('\nIf you would like to write a one-row csv, put your object in a list like so: `' + index$1.bold('[data]') + '`\n'));
 };
@@ -6601,10 +6616,12 @@ function formattingPreflight(file, format) {
   return file;
 }
 
+/* istanbul ignore next */
 var parseError = function (format) {
   throw new Error(index$1.red('[indian-ocean] Error converting your data to ' + index$1.bold(format) + '.') + '\n\n' + index$1.cyan('Your data most likely contains objects or lists. Object values can only be strings for this format. Please convert before writing to file.\n'));
 };
 
+/* istanbul ignore next */
 var csv$1 = function (file, writeOptions) {
   writeOptions = writeOptions || {};
   file = formattingPreflight(file, 'csv');
@@ -6620,6 +6637,7 @@ var json$2 = function (file, writeOptions) {
   return JSON.stringify(file, writeOptions.replacer, writeOptions.indent);
 };
 
+/* istanbul ignore next */
 var psv = function (file, writeOptions) {
   writeOptions = writeOptions || {};
   file = formattingPreflight(file, 'psv');
@@ -6630,6 +6648,7 @@ var psv = function (file, writeOptions) {
   }
 };
 
+/* istanbul ignore next */
 var tsv$1 = function (file, writeOptions) {
   writeOptions = writeOptions || {};
   file = formattingPreflight(file, 'tsv');
@@ -6644,6 +6663,7 @@ var txt = function (file) {
   return file;
 };
 
+/* istanbul ignore next */
 // import formattingPreflight from '../utils/formattingPreflight'
 // import parseError from '../reporters/parseError'
 
@@ -6892,6 +6912,7 @@ var index$14 = {
 	structure: structure
 };
 
+/* istanbul ignore next */
 var dbf$1 = function (file, writeOptions) {
   writeOptions = writeOptions || {};
   function toBuffer(ab) {
@@ -7037,6 +7058,7 @@ mkdirP.sync = function sync(p, opts, made) {
     return made;
 };
 
+/* istanbul ignore next */
 /**
  * Asynchronously create directories along a given file path. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module
  *
@@ -7056,6 +7078,8 @@ function makeDirectories(outPath, cb) {
   });
 }
 
+/* istanbul ignore next */
+/* istanbul ignore next */
 /**
  * Write the data object, inferring the file format from the file ending specified in `fileName`.
  *
@@ -7402,6 +7426,7 @@ function deepExtend() {
   extend$1.apply(this, args);
 }
 
+/* istanbul ignore next */
 /**
  * Asynchronously test whether a file exists or not by using `fs.access` modified from https://github.com/nodejs/io.js/issues/1592#issuecomment-98392899.
  *
@@ -7428,6 +7453,7 @@ function exists(filePath, cb) {
   });
 }
 
+/* istanbul ignore next */
 /**
  * Syncronous version of {@link exists}. Delegates to `fs.existsSync` if that function is available.
  *
@@ -7470,6 +7496,7 @@ function extMatchesStr(filePath, extension) {
   return ext === extension;
 }
 
+/* istanbul ignore next */
 /**
  * Synchronous version of {link #makeDirectories}. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module
  *
@@ -7534,6 +7561,7 @@ function matches(filePath, matcher) {
   }
 }
 
+/* istanbul ignore next */
 /**
  * Syncronous version of {@link readData}. Read data given a path ending in the file format. This function detects the same formats as the asynchronous {@link readData} except for `.dbf` files, which it cannot read.
  *
@@ -7754,6 +7782,8 @@ function queue(concurrency) {
 }
 
 // Used internally by `readdir` functions to make more DRY
+/* istanbul ignore next */
+/* istanbul ignore next */
 function readdir(modeInfo, dirPath, opts_, cb) {
   opts_ = opts_ || {};
   var isAsync = modeInfo.async;
@@ -8453,6 +8483,8 @@ function readYamlSync(filePath, opts_) {
   return readDataSync(filePath, { parser: parserYaml, parserOptions: parserOptions });
 }
 
+/* istanbul ignore next */
+/* istanbul ignore next */
 /**
  * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with {@link extend}. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
  *
@@ -8519,6 +8551,8 @@ function appendData(outPath, data, opts_, cb) {
   }
 }
 
+/* istanbul ignore next */
+/* istanbul ignore next */
 /**
  * Syncronous version of {@link writers#writeData}
  *
@@ -8578,6 +8612,8 @@ function writeDataSync(outPath, data, opts_) {
   return formattedData;
 }
 
+/* istanbul ignore next */
+/* istanbul ignore next */
 /**
  * Synchronous version of {@link writers#appendData}. See that function for supported formats
  *
@@ -8668,3 +8704,4 @@ exports.appendData = appendData;
 exports.appendDataSync = appendDataSync;
 exports.writeData = writeData;
 exports.writeDataSync = writeDataSync;
+//# sourceMappingURL=indian-ocean.node.js.map

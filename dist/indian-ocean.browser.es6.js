@@ -639,6 +639,7 @@ index.hasColor = hasColor;
 index.stripColor = stripColor;
 index.supportsColor = supportsColor_1;
 
+/* istanbul ignore next */
 var notListError = function (format) {
   throw new Error(index.red('[indian-ocean] You passed in an object but converting to ' + index.bold(format) + ' requires a list of objects.') + index.cyan('\nIf you would like to write a one-row csv, put your object in a list like so: `' + index.bold('[data]') + '`\n'));
 };
@@ -653,10 +654,12 @@ function formattingPreflight(file, format) {
   return file;
 }
 
+/* istanbul ignore next */
 var parseError = function (format) {
   throw new Error(index.red('[indian-ocean] Error converting your data to ' + index.bold(format) + '.') + '\n\n' + index.cyan('Your data most likely contains objects or lists. Object values can only be strings for this format. Please convert before writing to file.\n'));
 };
 
+/* istanbul ignore next */
 var csv = function (file, writeOptions) {
   writeOptions = writeOptions || {};
   file = formattingPreflight(file, 'csv');
@@ -672,6 +675,7 @@ var json = function (file, writeOptions) {
   return JSON.stringify(file, writeOptions.replacer, writeOptions.indent);
 };
 
+/* istanbul ignore next */
 var psv = function (file, writeOptions) {
   writeOptions = writeOptions || {};
   file = formattingPreflight(file, 'psv');
@@ -688,6 +692,7 @@ var tsvParse = tsv$1.parse;
 
 var tsvFormat = tsv$1.format;
 
+/* istanbul ignore next */
 var tsv = function (file, writeOptions) {
   writeOptions = writeOptions || {};
   file = formattingPreflight(file, 'tsv');
@@ -4467,6 +4472,7 @@ function omit(obj, blackList) {
   return newObj;
 }
 
+/* istanbul ignore next */
 // import formattingPreflight from '../utils/formattingPreflight'
 // import parseError from '../reporters/parseError'
 
@@ -6635,6 +6641,7 @@ var index$14 = {
 	structure: structure
 };
 
+/* istanbul ignore next */
 var dbf = function (file, writeOptions) {
   writeOptions = writeOptions || {};
   function toBuffer(ab) {
@@ -7017,14 +7024,11 @@ function discernFileFormatter(filePath) {
   return formatter;
 }
 
+/* istanbul ignore next */
 var csv$2 = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   return csvParse(str, parserOptions.map);
 };
-
-var identity = (function (d) {
-  return d;
-});
 
 var underscore = createCommonjsModule(function (module, exports) {
   //     Underscore.js 1.8.3
@@ -8590,6 +8594,11 @@ var underscore = createCommonjsModule(function (module, exports) {
   }).call(commonjsGlobal);
 });
 
+var identity = (function (d) {
+  return d;
+});
+
+/* istanbul ignore next */
 var json$3 = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   // Do a naive test whether this is a string or an object
@@ -8598,11 +8607,13 @@ var json$3 = function (str, parserOptions) {
   return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
 };
 
+/* istanbul ignore next */
 var psv$1 = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   return dsvFormat('|').parse(str, parserOptions.map);
 };
 
+/* istanbul ignore next */
 var tsv$2 = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   return tsvParse(str, parserOptions.map);
@@ -8612,6 +8623,7 @@ var txt$1 = function (str, parserOptions) {
   return parserOptions && typeof parserOptions.map === 'function' ? parserOptions.map(str) : str;
 };
 
+/* istanbul ignore next */
 var yaml$2 = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   var map = parserOptions.map || identity;
@@ -8930,6 +8942,7 @@ var archieml = createCommonjsModule(function (module, exports) {
   }).call(commonjsGlobal);
 });
 
+/* istanbul ignore next */
 var aml = function (str, parserOptions) {
   parserOptions = parserOptions || {};
   var map = parserOptions.map || identity;
@@ -8953,6 +8966,7 @@ formatsList.forEach(function (format) {
   });
 });
 
+/* istanbul ignore next */
 /**
  * Given a `filePath` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimiter string as the second argument, return a parser for that delimiter regardless of `filePath`. Used internally by {@link readData} and {@link readDataSync}.
  *
@@ -9006,7 +9020,9 @@ function getParser(delimiterOrParser) {
   var parser;
   if (typeof delimiterOrParser === 'string') {
     parser = discernParser(delimiterOrParser, { delimiter: true });
-  } else if ((typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object' || typeof delimiterOrParser === 'function') {
+  } else if (typeof delimiterOrParser === 'function' || (typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object') {
+    console.log('object', (typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object');
+    console.log('function', typeof delimiterOrParser === 'function');
     parser = delimiterOrParser;
   }
   return parser;
@@ -9101,3 +9117,4 @@ function matches(filePath, matcher) {
 // export {default as writeDataSync} from './src/writers/writeDataSync'
 
 export { formatters, deepExtend, discernFileFormatter, discernFormat, discernParser, extend$1 as extend, extMatchesStr, getParser, matches, matchesRegExp, parsers };
+//# sourceMappingURL=indian-ocean.browser.es6.js.map

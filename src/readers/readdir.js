@@ -1,5 +1,7 @@
 // Used internally by `readdir` functions to make more DRY
+/* istanbul ignore next */
 import fs from 'fs'
+/* istanbul ignore next */
 import queue from 'd3-queue/src/queue'
 import matches from '../helpers/matches'
 import identity from '../utils/identity'

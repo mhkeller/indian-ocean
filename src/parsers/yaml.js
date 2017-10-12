@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import yamlParser from 'js-yaml'
 import identity from '../utils/identity'
 import omit from '../utils/omit'

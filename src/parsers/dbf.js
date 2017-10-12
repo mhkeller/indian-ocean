@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import parseDBF from 'parsedbf'
 import identity from '../utils/identity'
 

@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 var shapefile = require('shapefile')
 import identity from '../utils/identity'
 

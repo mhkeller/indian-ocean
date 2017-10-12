@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import _ from 'underscore'
 import getParser from '../helpers/getParser'
 import discernLoader from '../helpers/discernLoader'

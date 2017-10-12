@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import archieml from 'archieml'
 import identity from '../utils/identity'
 import omit from '../utils/omit'

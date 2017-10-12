@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import fs from 'fs'
 
 /**

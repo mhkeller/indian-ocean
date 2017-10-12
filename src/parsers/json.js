@@ -1,5 +1,6 @@
-import identity from '../utils/identity'
+/* istanbul ignore next */
 import _ from 'underscore'
+import identity from '../utils/identity'
 
 export default function (str, parserOptions) {
   parserOptions = parserOptions || {}

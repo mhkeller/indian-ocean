@@ -1,4 +1,6 @@
+/* istanbul ignore next */
 import fs from 'fs'
+/* istanbul ignore next */
 import _ from 'underscore'
 import warn from '../reporters/warn'
 import discernFileFormatter from '../helpers/discernFileFormatter'

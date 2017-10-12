@@ -15,7 +15,7 @@
     "build": "rm -rf dist && mkdir dist && npm run build:node && npm run build:browser",
     "dev": "rm -rf dist && mkdir dist && rollup --config -w",
     "start": "npm run build && npm test",
-    "test": "standard --fix src/**/*.js && rm -rf test/tmp-* && mocha"
+    "test": "standard --fix src/**/*.js && rm -rf test/tmp-* && nyc --reporter=lcov mocha"
   },
   "repository": {
     "type": "git",
@@ -73,7 +73,9 @@
     "live-server": "^1.2.0",
     "mkdirp": "^0.5.1",
     "mocha": "^3.1.0",
+    "nyc": "^11.2.1",
     "package-preamble": "0.0.2",
+    "remap-istanbul": "^0.9.5",
     "rimraf": "^2.5.4",
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^2.7.1",
@@ -81,6 +83,7 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.1.0",
     "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-watch": "^3.2.2",
     "standard": "^8.3.0",
     "uglify-js": "^2.4.11",

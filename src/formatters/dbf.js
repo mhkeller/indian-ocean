@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import dbf from 'dbf'
 
 export default function (file, writeOptions) {

@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import dsvFormat from 'd3-dsv/src/dsv'
 import discernFormat from './discernFormat'
 import parsers from '../parsers/index'

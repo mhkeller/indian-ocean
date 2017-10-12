@@ -62,10 +62,6 @@ function assertBasicValidObject (obj, strings, row) {
   }
 }
 
-function removeWhiteSpace (str) {
-  return str.replace(/\s/g, '')
-}
-
 describe('discernFormat()', function () {
   describe('no extension', function () {
     it('should be false', function () {
@@ -892,6 +888,13 @@ describe('readers', function () {
     describe('custom delimiter string: `_`', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('other/basic.usv'), {parser: '_'})
+        assertBasicValid(json, true)
+      })
+    })
+
+    describe('custom delimiter obj: `_`', function () {
+      it('should match expected json', function () {
+        var json = io.readDataSync(testDataPath('other/basic.usv'), {parser: dsv.dsvFormat('_')})
         assertBasicValid(json, true)
       })
     })
@@ -1757,7 +1760,7 @@ describe('readers', function () {
   })
 })
 
-describe('shorthandReaders', function () {
+describe('directReaders', function () {
   describe('readJsonSync()', function () {
     describe('empty', function () {
       it('should be empty', function () {
@@ -1793,6 +1796,14 @@ describe('shorthandReaders', function () {
             row.height = row.height * 2
             return row
           }
+        })
+        assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
+      })
+
+      it('should use map', function () {
+        var json = io.readJsonSync(testDataPath('json/basic.json'), function (row, i) {
+          row.height = row.height * 2
+          return row
         })
         assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":140},{"name":"francis","occupation":"conductor","height":126}]'))
       })

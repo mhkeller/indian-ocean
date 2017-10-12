@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import yamlParser from 'js-yaml'
 import omit from '../utils/omit'
 // import formattingPreflight from '../utils/formattingPreflight'

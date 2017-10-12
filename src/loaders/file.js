@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import fs from 'fs'
 import discernFormat from '../helpers/discernFormat'
 import {formatsIndex} from '../config/equivalentFormats'

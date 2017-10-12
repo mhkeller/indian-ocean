@@ -1,4 +1,6 @@
+/* istanbul ignore next */
 import fs from 'fs'
+/* istanbul ignore next */
 import _ from 'underscore'
 import makeDirectories from '../helpers/makeDirectories'
 import readData from '../readers/readData'

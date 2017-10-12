@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 import {tsvFormat} from 'd3-dsv/src/tsv'
 import formattingPreflight from '../utils/formattingPreflight'
 import parseError from '../reporters/parseError'
