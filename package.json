@@ -55,7 +55,7 @@
   "homepage": "https://github.com/mhkeller/indian-ocean",
   "readmeFilename": "README.md",
   "dependencies": {
-    "text-encoding": "^0.6.4"
+    "shapefile": "^0.6.2"
   },
   "devDependencies": {
     "archieml": "^0.4.2",
@@ -85,7 +85,6 @@
     "rollup-plugin-node-globals": "^1.1.0",
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-watch": "^3.2.2",
-    "shapefile": "^0.6.2",
     "standard": "^8.3.0",
     "uglifyjs": "^2.4.10",
     "underscore": "^1.8.3"
