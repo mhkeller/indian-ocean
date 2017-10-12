@@ -7,12 +7,10 @@
   "module": "index.node.js",
   "types": "index.d.ts",
   "scripts": {
-    "d": "documentation build",
     "docs": "documentation build index.node.js -f html -o docs -c documentation.yml -t docs/default_theme/index.js --github",
     "view": "live-server docs/",
     "dev:docs": "chokidar 'documentation.yml' 'src/**/*.js' 'docs/default_theme/**/*' -c 'npm run docs'",
-    "coverage": "istanbul cover mocha -- -R spec",
-    "build:node": " cp index.node.stub.js dist/indian-ocean.node.js && rollup --config rollup.config.node.js | tail -n +2 >> dist/indian-ocean.node.js",
+    "build:node": "rollup --config rollup.config.node.js ",
     "build:browser": "rollup --config rollup.config.browser.js --banner \"$(preamble)\" && uglifyjs --preamble \"$(preamble)\" -o dist/indian-ocean.min.js -cm -- dist/indian-ocean.js",
     "build": "rm -rf dist && mkdir dist && npm run build:node && npm run build:browser",
     "dev": "rm -rf dist && mkdir dist && rollup --config -w",
@@ -71,7 +69,6 @@
     "documentation": "^5.3.1",
     "github-slugger": "^1.2.0",
     "glob": "^7.1.2",
-    "istanbul": "^0.4.5",
     "js-yaml": "^3.4.2",
     "live-server": "^1.2.0",
     "mkdirp": "^0.5.1",
@@ -86,7 +83,7 @@
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-watch": "^3.2.2",
     "standard": "^8.3.0",
-    "uglifyjs": "^2.4.10",
+    "uglify-js": "^2.4.11",
     "underscore": "^1.8.3"
   }
 }

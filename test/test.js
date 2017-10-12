@@ -256,7 +256,8 @@ describe('discernParser()', function () {
 
   describe('custom delimiter: `_`', function () {
     it('should be custom parser', function () {
-      assert.equal(removeWhiteSpace(io.discernParser('_', {delimiter: true}).toString()), removeWhiteSpace(dsv.dsvFormat('_').parse.toString()))
+      var testStr = 'name_city\nAlice_New York\nBob_Philadelphia'
+      assert.equal(JSON.stringify(io.discernParser('_', {delimiter: true})(testStr)), JSON.stringify(dsv.dsvFormat('_').parse(testStr)))
     })
   })
 })
