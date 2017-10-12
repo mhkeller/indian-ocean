@@ -6100,8 +6100,6 @@ function getParser(delimiterOrParser) {
   if (typeof delimiterOrParser === 'string') {
     parser = discernParser(delimiterOrParser, { delimiter: true });
   } else if (typeof delimiterOrParser === 'function' || (typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object') {
-    console.log('object', (typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object');
-    console.log('function', typeof delimiterOrParser === 'function');
     parser = delimiterOrParser;
   }
   return parser;

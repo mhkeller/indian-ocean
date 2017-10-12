@@ -7,8 +7,6 @@ export default function getParser (delimiterOrParser) {
   if (typeof delimiterOrParser === 'string') {
     parser = discernParser(delimiterOrParser, {delimiter: true})
   } else if (typeof delimiterOrParser === 'function' || typeof delimiterOrParser === 'object') {
-    console.log('object', typeof delimiterOrParser === 'object')
-    console.log('function', typeof delimiterOrParser === 'function')
     parser = delimiterOrParser
   }
   return parser
