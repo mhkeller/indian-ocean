@@ -3,9 +3,10 @@ import nodeResolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 
 export default {
-  entry: 'index.node.js',
-  format: 'cjs',
+  input: 'index.node.js',
+  output: {
+    format: 'cjs'
+  },
   plugins: [ nodeResolve(), commonjs(), babel() ],
-  dest: 'dist/indian-ocean.node.js',
-  external: ['fs', 'path', 'util']
+  external: ['fs', 'path', 'util', 'shapefile']
 }

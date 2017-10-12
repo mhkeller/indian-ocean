@@ -1,4 +1,4 @@
-'use strict';
+// var TextDecoder = require('text-encoding').TextDecoder // eslint-disable-line no-unused-vars
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -1816,6 +1816,8 @@ var parserTxt = function (str, parserOptions) {
   return parserOptions && typeof parserOptions.map === 'function' ? parserOptions.map(str) : str;
 };
 
+'use strict';
+
 function isNothing(subject) {
   return typeof subject === 'undefined' || subject === null;
 }
@@ -1878,6 +1880,8 @@ var common$1 = {
 
 // YAML error class. http://stackoverflow.com/questions/8458984
 //
+'use strict';
+
 function YAMLException$2(reason, mark) {
   // Super constructor
   Error.call(this);
@@ -1914,6 +1918,8 @@ YAMLException$2.prototype.toString = function toString(compact) {
 };
 
 var exception = YAMLException$2;
+
+'use strict';
 
 var common$3 = common$1;
 
@@ -1985,6 +1991,8 @@ Mark$1.prototype.toString = function toString(compact) {
 
 var mark = Mark$1;
 
+'use strict';
+
 var YAMLException$4 = exception;
 
 var TYPE_CONSTRUCTOR_OPTIONS = ['kind', 'resolve', 'construct', 'instanceOf', 'predicate', 'represent', 'defaultStyle', 'styleAliases'];
@@ -2035,6 +2043,8 @@ function Type$2(tag, options) {
 }
 
 var type = Type$2;
+
+'use strict';
 
 /*eslint-disable max-len*/
 
@@ -2143,6 +2153,8 @@ Schema$2.create = function createSchema() {
 
 var schema = Schema$2;
 
+'use strict';
+
 var Type$3 = type;
 
 var str = new Type$3('tag:yaml.org,2002:str', {
@@ -2151,6 +2163,8 @@ var str = new Type$3('tag:yaml.org,2002:str', {
     return data !== null ? data : '';
   }
 });
+
+'use strict';
 
 var Type$4 = type;
 
@@ -2161,6 +2175,8 @@ var seq = new Type$4('tag:yaml.org,2002:seq', {
   }
 });
 
+'use strict';
+
 var Type$5 = type;
 
 var map = new Type$5('tag:yaml.org,2002:map', {
@@ -2170,11 +2186,19 @@ var map = new Type$5('tag:yaml.org,2002:map', {
   }
 });
 
+// Standard YAML's Failsafe schema.
+// http://www.yaml.org/spec/1.2/spec.html#id2802346
+
+
+'use strict';
+
 var Schema$5 = schema;
 
 var failsafe = new Schema$5({
   explicit: [str, seq, map]
 });
+
+'use strict';
 
 var Type$6 = type;
 
@@ -2216,6 +2240,8 @@ var _null = new Type$6('tag:yaml.org,2002:null', {
   defaultStyle: 'lowercase'
 });
 
+'use strict';
+
 var Type$7 = type;
 
 function resolveYamlBoolean(data) {
@@ -2252,6 +2278,8 @@ var bool = new Type$7('tag:yaml.org,2002:bool', {
   },
   defaultStyle: 'lowercase'
 });
+
+'use strict';
 
 var common$5 = common$1;
 var Type$8 = type;
@@ -2432,6 +2460,8 @@ var int_1 = new Type$8('tag:yaml.org,2002:int', {
   }
 });
 
+'use strict';
+
 var common$6 = common$1;
 var Type$9 = type;
 
@@ -2551,6 +2581,16 @@ var float_1 = new Type$9('tag:yaml.org,2002:float', {
   defaultStyle: 'lowercase'
 });
 
+// Standard YAML's JSON schema.
+// http://www.yaml.org/spec/1.2/spec.html#id2803231
+//
+// NOTE: JS-YAML does not support schema-specific tag resolution restrictions.
+// So, this schema is not such strict as defined in the YAML specification.
+// It allows numbers in binary notaion, use `Null` and `NULL` as `null`, etc.
+
+
+'use strict';
+
 var Schema$4 = schema;
 
 var json = new Schema$4({
@@ -2558,11 +2598,22 @@ var json = new Schema$4({
   implicit: [_null, bool, int_1, float_1]
 });
 
+// Standard YAML's Core schema.
+// http://www.yaml.org/spec/1.2/spec.html#id2804923
+//
+// NOTE: JS-YAML does not support schema-specific tag resolution restrictions.
+// So, Core schema has no distinctions from JSON schema is JS-YAML.
+
+
+'use strict';
+
 var Schema$3 = schema;
 
 var core = new Schema$3({
   include: [json]
 });
+
+'use strict';
 
 var Type$10 = type;
 
@@ -2661,6 +2712,8 @@ var timestamp = new Type$10('tag:yaml.org,2002:timestamp', {
   represent: representYamlTimestamp
 });
 
+'use strict';
+
 var Type$11 = type;
 
 function resolveYamlMerge(data) {
@@ -2671,6 +2724,8 @@ var merge = new Type$11('tag:yaml.org,2002:merge', {
   kind: 'scalar',
   resolve: resolveYamlMerge
 });
+
+'use strict';
 
 /*eslint-disable no-bitwise*/
 
@@ -2816,6 +2871,8 @@ var binary = new Type$12('tag:yaml.org,2002:binary', {
   represent: representYamlBinary
 });
 
+'use strict';
+
 var Type$13 = type;
 
 var _hasOwnProperty$1 = Object.prototype.hasOwnProperty;
@@ -2861,6 +2918,8 @@ var omap = new Type$13('tag:yaml.org,2002:omap', {
   resolve: resolveYamlOmap,
   construct: constructYamlOmap
 });
+
+'use strict';
 
 var Type$14 = type;
 
@@ -2922,6 +2981,8 @@ var pairs = new Type$14('tag:yaml.org,2002:pairs', {
   construct: constructYamlPairs
 });
 
+'use strict';
+
 var Type$15 = type;
 
 var _hasOwnProperty$2 = Object.prototype.hasOwnProperty;
@@ -2951,6 +3012,15 @@ var set = new Type$15('tag:yaml.org,2002:set', {
   construct: constructYamlSet
 });
 
+// JS-YAML's default schema for `safeLoad` function.
+// It is not described in the YAML specification.
+//
+// This schema is based on standard YAML's Core schema and includes most of
+// extra types described at YAML tag repository. (http://yaml.org/type/)
+
+
+'use strict';
+
 var Schema$1 = schema;
 
 var default_safe = new Schema$1({
@@ -2958,6 +3028,8 @@ var default_safe = new Schema$1({
   implicit: [timestamp, merge],
   explicit: [binary, omap, pairs, set]
 });
+
+'use strict';
 
 var Type$16 = type;
 
@@ -2985,6 +3057,8 @@ var _undefined = new Type$16('tag:yaml.org,2002:js/undefined', {
   predicate: isUndefined,
   represent: representJavascriptUndefined
 });
+
+'use strict';
 
 var Type$17 = type;
 
@@ -3044,6 +3118,8 @@ var regexp = new Type$17('tag:yaml.org,2002:js/regexp', {
   predicate: isRegExp,
   represent: representJavascriptRegExp
 });
+
+'use strict';
 
 var esprima;
 
@@ -3122,12 +3198,25 @@ var _function = new Type$18('tag:yaml.org,2002:js/function', {
   represent: representJavascriptFunction
 });
 
+// JS-YAML's default schema for `load` function.
+// It is not described in the YAML specification.
+//
+// This schema is based on JS-YAML's default safe schema and includes
+// JavaScript-specific types: !!js/undefined, !!js/regexp and !!js/function.
+//
+// Also this schema is used as default base schema at `Schema.create` function.
+
+
+'use strict';
+
 var Schema$6 = schema;
 
 var default_full = Schema$6.DEFAULT = new Schema$6({
   include: [default_safe],
   explicit: [_undefined, regexp, _function]
 });
+
+'use strict';
 
 /*eslint-disable max-len,no-use-before-define*/
 
@@ -4632,6 +4721,8 @@ var loader$1 = {
   safeLoad: safeLoad_1
 };
 
+'use strict';
+
 /*eslint-disable no-use-before-define*/
 
 var common$7 = common$1;
@@ -5402,6 +5493,8 @@ var dumper$1 = {
   safeDump: safeDump_1
 };
 
+'use strict';
+
 var loader = loader$1;
 var dumper = dumper$1;
 
@@ -5460,6 +5553,8 @@ var jsYaml = {
 		compose: compose,
 		addConstructor: addConstructor
 };
+
+'use strict';
 
 var yaml = jsYaml;
 
@@ -5777,7 +5872,6 @@ var archieml = createCommonjsModule(function (module, exports) {
       return data;
     }
 
-    var root = this;
     var archieml = { load: load };
 
     {
@@ -5864,6 +5958,123 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 } : function (obj) {
   return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
+
+
+
+
+
+var asyncGenerator = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type, value) {
+      switch (type) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
 
 // Our `readData` fns can take either a delimiter to parse a file, or a full blown parser
 // Determine what they passed in with this handy function
@@ -6094,6 +6305,8 @@ function readData(filePath, opts_, cb_) {
   loader(filePath, parser, parserOptions, cb);
 }
 
+'use strict';
+
 var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
 
 var index$2 = function (str) {
@@ -6172,20 +6385,26 @@ var index$4 = createCommonjsModule(function (module) {
 	});
 });
 
+'use strict';
+
 var index$8 = function () {
 	return (/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g
 	);
 };
 
+'use strict';
 var ansiRegex = index$8();
 
 var index$6 = function (str) {
 	return typeof str === 'string' ? str.replace(ansiRegex, '') : str;
 };
 
+'use strict';
 var ansiRegex$1 = index$8;
 var re = new RegExp(ansiRegex$1().source); // remove the `g` flag
 var index$10 = re.test.bind(re);
+
+'use strict';
 
 var argv = process.argv;
 
@@ -6232,6 +6451,7 @@ var index$12 = function () {
 	return false;
 }();
 
+'use strict';
 var escapeStringRegexp = index$2;
 var ansiStyles = index$4;
 var stripAnsi = index$6;

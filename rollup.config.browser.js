@@ -6,16 +6,17 @@ import builtins from 'rollup-plugin-node-builtins'
 import globals from 'rollup-plugin-node-globals'
 
 export default {
-  entry: 'index.browser.js',
-  moduleName: 'io',
+  input: 'index.browser.js',
   plugins: [nodeResolve(), commonjs(), builtins(), globals(), babel()],
-  targets: [
+  output: [
     {
       format: 'umd',
-      dest: 'dist/indian-ocean.js'
+      file: 'dist/indian-ocean.js',
+      name: 'io'
     }, {
       format: 'es',
-      dest: 'dist/indian-ocean.browser.es6.js'
+      file: 'dist/indian-ocean.browser.es6.js',
+      name: 'io'
     }
   ]
 }
