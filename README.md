@@ -4,7 +4,12 @@ Indian Ocean
 [![Build Status](https://secure.travis-ci.org/mhkeller/indian-ocean.png?branch=master&style=flat-square)](http://travis-ci.org/mhkeller/indian-ocean) [![NPM version](https://badge.fury.io/js/indian-ocean.png?style=flat)](http://badge.fury.io/js/indian-ocean) [![npm](https://img.shields.io/npm/dm/indian-ocean.svg)](https://www.npmjs.com/package/indian-ocean)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
-A library for reading in and writing out data in Node.js. 300+ tests on Node versions 0.11 through 6.9.1.
+A Node.js library for reading in and writing out data plus some other useful filesystem functions.
+
+Documentation
+-------------
+
+### See the full [API docs](http://mhkeller.github.io/indian-ocean/docs/).
 
 Currently supports:
 
@@ -27,11 +32,6 @@ Installation
 npm install --save indian-ocean
 ````
 
-Documentation
--------------
-
-See the full [API docs](http://mhkeller.github.io/indian-ocean/docs/).
-
 Usage
 -----
 
@@ -46,11 +46,11 @@ console.log(json_data)
 [
   {
     "name": "Gerald",
-    "city": "Philadelphia"
+    "city": "Los Angeles"
   },
   {
     "name": "Marcy",
-    "city": "New York"
+    "city": "Tuscaloosa"
   }
 ]
 */
@@ -73,21 +73,21 @@ console.log(csvs)
   [
     {
       "name": "Gerald",
-      "city": "Philadelphia"
+      "city": "Los Angeles"
     },
     {
       "name": "Marcy",
-      "city": "New York"
+      "city": "Tuscaloosa"
     }
   ],
   [
     {
       "name": "Liza",
-      "city": "Philadelphia"
+      "city": "Minneapolis"
     },
     {
       "name": "Eileen",
-      "city": "New York"
+      "city": "Mobile"
     }
   ]
 ]
