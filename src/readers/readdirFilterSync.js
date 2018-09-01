@@ -7,6 +7,7 @@ import readdir from './readdir'
  * @param {String} dirPath The directory to read from
  * @param {Object} options Filter options, see below
  * @param {Boolean} [options.fullPath=false] If `true`, return the full path of the file, otherwise just return the file name.
+ * @param {Boolean} [options.detailed=false] If `true`, return an object like `{basePath: 'path/to', fileName: 'file.csv'}`. Whether `basePath` has a trailing will follow what you give to `dirPath`, which can take either.
  * @param {Boolean} [options.skipFiles=false] If `true`, omit files from results.
  * @param {Boolean} [options.skipDirs=false] If `true`, omit directories from results.
  * @param {Boolean} [options.skipHidden=false] If `true`, omit files that start with a dot from results. Shorthand for `{exclude: /^\./}`.

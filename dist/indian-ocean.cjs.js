@@ -7389,7 +7389,14 @@ function readdir(modeInfo, dirPath, opts_, cb) {
   }
 
   function filterByType(file, cb) {
-    var filePath = opts_.fullPath ? file : joinPath(dirPath, file);
+    // We need the full path so convert it if it isn't already
+    var filePath = file;
+    if (opts_.detailed === true) {
+      filePath = joinPath(file.basePath, file.fileName);
+    } else if (!opts_.fullPath) {
+      filePath = joinPath(dirPath, file);
+    }
+
     if (isAsync === true) {
       fs.stat(filePath, function (err, stats) {
         var filtered = getFiltered(stats.isDirectory());
@@ -7442,10 +7449,19 @@ function readdir(modeInfo, dirPath, opts_, cb) {
       return true;
     });
 
+    if (opts_.fullPath === true && opts_.detailed === true) {
+      throw new Error('[indian-ocean] Both `fullPath` and `detailed` are `true`. You can only set one or the other.');
+    }
     // Prefix with the full path if that's what we asked for
     if (opts_.fullPath === true) {
-      filtered = filtered.map(function (fileName) {
+      return filtered.map(function (fileName) {
         return joinPath(dirPath, fileName);
+      });
+    }
+    // Or return detailed format
+    if (opts_.detailed === true) {
+      return filtered.map(function (fileName) {
+        return { basePath: dirPath, fileName: fileName };
       });
     }
 
@@ -7491,6 +7507,7 @@ function readdirFilter(dirPath, opts_, cb) {
  * @param {String} dirPath The directory to read from
  * @param {Object} options Filter options, see below
  * @param {Boolean} [options.fullPath=false] If `true`, return the full path of the file, otherwise just return the file name.
+ * @param {Boolean} [options.detailed=false] If `true`, return an object like `{basePath: 'path/to', fileName: 'file.csv'}`. Whether `basePath` has a trailing will follow what you give to `dirPath`, which can take either.
  * @param {Boolean} [options.skipFiles=false] If `true`, omit files from results.
  * @param {Boolean} [options.skipDirs=false] If `true`, omit directories from results.
  * @param {Boolean} [options.skipHidden=false] If `true`, omit files that start with a dot from results. Shorthand for `{exclude: /^\./}`.
