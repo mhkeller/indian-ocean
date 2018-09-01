@@ -1,6 +1,15 @@
 Changelog
 =========
 
+# 3.1.0
+
+> 2018-08-31
+
+Add `verbose` option to `writeData` and `writeDataSync`, which allows you to turn off empty file warnings and also makes the error message more descriptive.
+
+* Add verbose
+  * [2f2fff19a3282c559a18b502eba9262cef75fafd](https://github.com/mhkeller/indian-ocean/commit/2f2fff19a3282c559a18b502eba9262cef75fafd)
+
 # 3.0.1
 
 > 2017-10-12
