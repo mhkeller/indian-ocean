@@ -1,4 +1,6 @@
+import fs from 'fs'
 import readdir from './readdir'
+import {joinPath} from '../utils/path'
 
 /**
  * Syncronous version of {@link readdirFilter}. Get a list of a directory's files and folders if certain critera are met.
@@ -30,5 +32,18 @@ import readdir from './readdir'
  *
  */
 export default function readdirFilterSync (dirPath, opts_) {
-  return readdir({async: false}, dirPath, opts_)
+  var results = readdir({async: false}, dirPath, opts_)
+  if (opts_.recursive === true) {
+    return results.map(file => {
+      var filePath = file
+      if (opts_.detailed === true) {
+        filePath = joinPath(file.basePath, file.fileName)
+      } else if (!opts_.fullPath) {
+        filePath = joinPath(dirPath, file)
+      }
+      return fs.statSync(filePath).isDirectory() ? readdirFilterSync(filePath, opts_) : filePath
+    })
+  } else {
+    return results
+  }
 }

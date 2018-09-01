@@ -70,6 +70,10 @@ export default function readdir (modeInfo, dirPath, opts_, cb) {
         if (isDir) {
           return false
         }
+      } else {
+        if (isDir) {
+          return file + '/'
+        }
       }
       if (opts_.skipFiles === true) {
         if (!isDir) {
