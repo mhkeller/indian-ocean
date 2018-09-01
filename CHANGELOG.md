@@ -14,6 +14,7 @@ Add `verbose` option to `writeData` and `writeDataSync`, which allows you to tur
   * [013fa6db847f46c984346b37674c232be44f3b5d](https://github.com/mhkeller/indian-ocean/commit/013fa6db847f46c984346b37674c232be44f3b5d)
 * Add skipHidden option to readdir functions, closes [#76](https://github.com/mhkeller/indian-ocean/issues/76)
   * [cd616f92371ad16f9bae6eecdb6ab067c193cb93](https://github.com/mhkeller/indian-ocean/commit/cd616f92371ad16f9bae6eecdb6ab067c193cb93)
+  * [dd0fec83660d101972b0daf1ee51a24f81844788](https://github.com/mhkeller/indian-ocean/commit/dd0fec83660d101972b0daf1ee51a24f81844788)
 
 # 3.0.1
 
