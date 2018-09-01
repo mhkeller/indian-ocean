@@ -1,7 +1,7 @@
 Indian Ocean
 ============
 
-[![Build Status](https://secure.travis-ci.org/mhkeller/indian-ocean.png?branch=master&style=flat-square)](http://travis-ci.org/mhkeller/indian-ocean) [![NPM version](https://badge.fury.io/js/indian-ocean.png?style=flat)](http://badge.fury.io/js/indian-ocean) [![npm](https://img.shields.io/npm/dm/indian-ocean.svg)](https://www.npmjs.com/package/indian-ocean)
+[![Travis (.org) branch](https://img.shields.io/travis/mhkeller/indian-ocean/master.svg)](https://travis-ci.org/mhkeller/indian-ocean) [![npm version](https://img.shields.io/npm/v/indian-ocean.svg)](https://npmjs.org/package/indian-ocean) [![npm](https://img.shields.io/npm/dm/indian-ocean.svg)](https://www.npmjs.com/package/indian-ocean)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
 A Node.js library for reading in and writing out data plus some other useful filesystem functions.
