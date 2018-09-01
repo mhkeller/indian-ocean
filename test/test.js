@@ -2,7 +2,7 @@
 
 var fs = require('fs')
 var path = require('path')
-var io = require('../dist/indian-ocean.node.js')
+var io = require('../dist/indian-ocean.cjs.js')
 var chai = require('chai')
 var assert = chai.assert
 var dsv = require('d3-dsv')

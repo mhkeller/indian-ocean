@@ -7,7 +7,7 @@ export default {
   input: 'index.node.js',
   output: {
     format: 'cjs',
-    file: 'dist/indian-ocean.node.js',
+    file: 'dist/indian-ocean.cjs.js',
     sourcemap: true
   },
   plugins: [ nodeResolve(), commonjs(), babel(), sourcemaps() ],

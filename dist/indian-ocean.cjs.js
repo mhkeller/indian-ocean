@@ -8724,4 +8724,4 @@ exports.appendData = appendData;
 exports.appendDataSync = appendDataSync;
 exports.writeData = writeData;
 exports.writeDataSync = writeDataSync;
-//# sourceMappingURL=indian-ocean.node.js.map
+//# sourceMappingURL=indian-ocean.cjs.js.map

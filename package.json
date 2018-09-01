@@ -2,7 +2,7 @@
   "name": "indian-ocean",
   "version": "3.0.2",
   "description": "A library for reading in and writing out data in Node.js.",
-  "main": "dist/indian-ocean.node.js",
+  "main": "dist/indian-ocean.cjs.js",
   "browser": "dist/indian-ocean.browser.es6.js",
   "module": "index.node.js",
   "types": "index.d.ts",
