@@ -6595,11 +6595,6 @@ index$1.stripColor = stripColor;
 index$1.supportsColor = supportsColor_1;
 
 /* istanbul ignore next */
-var warn = function (msg) {
-  console.log(index$1.gray('[indian-ocean]') + ' ' + index$1.yellow('Warning:', msg));
-};
-
-/* istanbul ignore next */
 var notListError = function (format) {
   throw new Error(index$1.red('[indian-ocean] You passed in an object but converting to ' + index$1.bold(format) + ' requires a list of objects.') + index$1.cyan('\nIf you would like to write a one-row csv, put your object in a list like so: `' + index$1.bold('[data]') + '`\n'));
 };
@@ -7058,7 +7053,7 @@ mkdirP.sync = function sync(p, opts, made) {
 
 /* istanbul ignore next */
 /**
- * Asynchronously create directories along a given file path. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module
+ * Asynchronously create directories along a given file path. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module. If the last element in your file path is also a folder, it must end in `/` or else it will be interpreted as a file and not created.
  *
  * @function makeDirectories
  * @param {String} outPath The path to a file
@@ -7069,11 +7064,36 @@ mkdirP.sync = function sync(p, opts, made) {
  *   console.log(err) // null
  * })
  *
+ * // Must end in `/` for the last item to be interpreted as a folder as well.
+ * io.makeDirectories('path/to/create/to/another-folder/', function (err) {
+ *   console.log(err) // null
+ * })
+ *
  */
 function makeDirectories(outPath, cb) {
   index$15(dirname(outPath), function (err) {
     cb(err);
   });
+}
+
+/* istanbul ignore next */
+var warn = function (msg) {
+  console.log(index$1.gray('[indian-ocean]') + ' ' + index$1.yellow('Warning:', msg));
+};
+
+function warnIfEmpty(data, outPath, verbose) {
+  if (verbose !== false) {
+    if (!data || underscore.isEmpty(data)) {
+      var msg = 'You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty ';
+      if (!data) {
+        msg += 'file';
+      } else if (underscore.isEmpty(data)) {
+        msg += Array.isArray(data) === true ? 'array' : 'object';
+      }
+      msg += '...';
+      warn(msg);
+    }
+  }
 }
 
 /* istanbul ignore next */
@@ -7096,6 +7116,7 @@ function makeDirectories(outPath, cb) {
  * @param {Object} [options] Optional options object, see below
  * @param {Boolean} [options.makeDirectories=false] If `true`, create intermediate directories to your data file. Can also be `makeDirs` for short.
  * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+ * @param {Boolean} [options.verbose=true] Verbose logging output, mostly just warns if you write an empty file. Set to `false` if don't want any output.
  * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
  * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
  * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
@@ -7143,9 +7164,7 @@ function writeData(outPath, data, opts_, cb) {
     cb = opts_;
     opts_ = undefined;
   }
-  if (underscore.isEmpty(data)) {
-    warn('You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty file...');
-  }
+  warnIfEmpty(data, outPath, opts_.verbose);
 
   if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
     makeDirectories(outPath, proceed);
@@ -7496,13 +7515,17 @@ function extMatchesStr(filePath, extension) {
 
 /* istanbul ignore next */
 /**
- * Synchronous version of {link #makeDirectories}. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module
+ * Synchronous version of {@link makeDirectories}. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module.
  *
  * @function makeDirectoriesSync
  * @param {String} outPath The path to a file
  *
  * @example
- * io.makeDirectories('path/to/create/to/data.tsv')
+ * io.makeDirectoriesSync('path/to/create/to/data.tsv')
+ *
+ * @example
+ * // Must end in `/` for the last item to be interpreted as a folder as well.
+ * io.makeDirectoriesSync('path/to/create/to/another-folder/')
  *
  */
 function makeDirectoriesSync(outPath) {
@@ -8562,6 +8585,7 @@ function appendData(outPath, data, opts_, cb) {
  * @param {Object} [options] Optional options object, see below
  * @param {Boolean} [options.makeDirectories=false] If `true`, create intermediate directories to your data file. Can also be `makeDirs` for short.
  * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+ * @param {Boolean} [options.verbose=true] Verbose logging output, mostly just warns if you write an empty file. Set to `false` if don't want any output.
  * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
  * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
  * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
@@ -8593,9 +8617,7 @@ function appendData(outPath, data, opts_, cb) {
  * })
  */
 function writeDataSync(outPath, data, opts_) {
-  if (underscore.isEmpty(data)) {
-    warn('You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty file...');
-  }
+  warnIfEmpty(data, outPath, opts_.verbose);
   var writeOptions;
   if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object') {
     if (opts_.makeDirectories === true || opts_.makeDirs === true) {

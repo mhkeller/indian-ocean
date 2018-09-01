@@ -547,7 +547,7 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/readers/readData.js#L80-L113' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/readers/readData.js#L80-L113' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -767,7 +767,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/readers/readDataSync.js#L71-L103' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/readers/readDataSync.js#L71-L103' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -977,7 +977,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/readers/readdirFilter.js#L29-L36' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/readers/readdirFilter.js#L29-L36' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1161,7 +1161,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/readers/readdirFilterSync.js#L30-L32' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/readers/readdirFilterSync.js#L30-L32' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1356,7 +1356,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/writers/writeData.js#L70-L102' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/writers/writeData.js#L70-L100' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1447,6 +1447,17 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
                   </td>
                   <td class='break-word'><span>Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info 
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify</a>
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.verbose</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+                  
+                    (default <code>true</code>)
+                  </td>
+                  <td class='break-word'><span>Verbose logging output. Currently, the only logging output is a warning if you write an empty file. Set to 
+<code>false</code>
+ if don't want that.
 </span></td>
                 </tr>
               
@@ -1576,7 +1587,7 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/writers/writeDataSync.js#L51-L67' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/writers/writeDataSync.js#L51-L65' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1667,6 +1678,17 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
                   </td>
                   <td class='break-word'><span>Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info 
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify</a>
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.verbose</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+                  
+                    (default <code>true</code>)
+                  </td>
+                  <td class='break-word'><span>Verbose logging output. Currently, the only logging output is a warning if you write an empty file. Set to 
+<code>false</code>
+ if don't want that.
 </span></td>
                 </tr>
               
@@ -1771,7 +1793,7 @@ io.writeDataSync(<span class="hljs-string">'path/to/to/data.json'</span>, jsonDa
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/writers/appendData.js#L39-L75' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/writers/appendData.js#L39-L75' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1887,7 +1909,7 @@ io.appendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, fla
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/writers/appendDataSync.js#L25-L42' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/writers/appendDataSync.js#L25-L42' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2002,7 +2024,7 @@ io.appendDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</span>,
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readAml.js#L25-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readAml.js#L25-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2103,7 +2125,7 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readAmlSync.js#L22-L28' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readAmlSync.js#L22-L28' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2197,7 +2219,7 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readDbf.js#L26-L36' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readDbf.js#L26-L36' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2301,7 +2323,7 @@ io.readDbf(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readCsv.js#L35-L43' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readCsv.js#L35-L43' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2414,7 +2436,7 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, {<span class="hl
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readCsvSync.js#L32-L38' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readCsvSync.js#L32-L38' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2522,7 +2544,7 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, {<span class="hl
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readJson.js#L70-L78' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readJson.js#L70-L78' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2711,7 +2733,7 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readJsonSync.js#L45-L51' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readJsonSync.js#L45-L51' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2873,7 +2895,7 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readPsv.js#L26-L34' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readPsv.js#L26-L34' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2977,7 +2999,7 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readPsvSync.js#L23-L29' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readPsvSync.js#L23-L29' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3076,7 +3098,7 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readTsv.js#L26-L34' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readTsv.js#L26-L34' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3180,7 +3202,7 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readTsvSync.js#L24-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readTsvSync.js#L24-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3278,7 +3300,7 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readTxt.js#L23-L31' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readTxt.js#L23-L31' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3377,7 +3399,7 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readTxtSync.js#L21-L27' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readTxtSync.js#L21-L27' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3472,7 +3494,7 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readYaml.js#L39-L47' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readYaml.js#L39-L47' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3627,7 +3649,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/directReaders/readYamlSync.js#L36-L42' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/directReaders/readYamlSync.js#L36-L42' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3792,7 +3814,7 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/converters/convertData.js#L22-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/converters/convertData.js#L22-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3901,7 +3923,7 @@ io.convertData(<span class="hljs-string">'path/to/data.tsv'</span>, <span class=
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/converters/convertDbfToData.js#L22-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/converters/convertDbfToData.js#L22-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4025,7 +4047,7 @@ io.convertDbfToData(<span class="hljs-string">'path/to/data.dbf'</span>, <span c
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/deepExtend.js#L34-L38' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/deepExtend.js#L34-L38' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4142,7 +4164,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/discernFileFormatter.js#L15-L23' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/discernFileFormatter.js#L15-L23' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4221,7 +4243,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/discernFormat.js#L18-L25' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/discernFormat.js#L18-L25' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4304,7 +4326,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/discernParser.js#L22-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/discernParser.js#L22-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4424,7 +4446,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/exists.js#L17-L28' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/exists.js#L17-L28' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4506,7 +4528,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/existsSync.js#L15-L26' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/existsSync.js#L15-L26' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4585,7 +4607,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/extend.js#L50-L118' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/extend.js#L50-L118' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4729,7 +4751,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/extMatchesStr.js#L15-L19' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/extMatchesStr.js#L15-L19' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4817,7 +4839,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/makeDirectories.js#L23-L27' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/makeDirectories.js#L23-L27' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4904,7 +4926,7 @@ io.makeDirectories(<span class="hljs-string">'path/to/create/to/another-folder/'
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/makeDirectoriesSync.js#L19-L21' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/makeDirectoriesSync.js#L19-L21' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4978,7 +5000,7 @@ io.makeDirectoriesSync(<span class="hljs-string">'path/to/create/to/another-fold
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/matches.js#L22-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/matches.js#L22-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -5063,7 +5085,7 @@ io.makeDirectoriesSync(<span class="hljs-string">'path/to/create/to/another-fold
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/c6b9f5a5c59777a19c84fc4b9c4e97647644ecec/src/helpers/matchesRegExp.js#L16-L18' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/da2d898bc5fa8870cea0ffa5dd57506139fe36cb/src/helpers/matchesRegExp.js#L16-L18' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     

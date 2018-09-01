@@ -1,11 +1,10 @@
 /* istanbul ignore next */
 import fs from 'fs'
 /* istanbul ignore next */
-import _ from 'underscore'
-import warn from '../reporters/warn'
 import discernFileFormatter from '../helpers/discernFileFormatter'
 import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
 import omit from '../utils/omit'
+import warnIfEmpty from '../utils/warnIfEmpty'
 
 /**
  * Syncronous version of {@link writers#writeData}
@@ -18,6 +17,7 @@ import omit from '../utils/omit'
  * @param {Object} [options] Optional options object, see below
  * @param {Boolean} [options.makeDirectories=false] If `true`, create intermediate directories to your data file. Can also be `makeDirs` for short.
  * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+ * @param {Boolean} [options.verbose=true] Verbose logging output. Currently, the only logging output is a warning if you write an empty file. Set to `false` if don't want that.
  * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
  * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
  * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
@@ -49,9 +49,7 @@ import omit from '../utils/omit'
  * })
  */
 export default function writeDataSync (outPath, data, opts_) {
-  if (_.isEmpty(data)) {
-    warn('You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty file...')
-  }
+  warnIfEmpty(data, outPath, opts_.verbose)
   var writeOptions
   if (typeof opts_ === 'object') {
     if (opts_.makeDirectories === true || opts_.makeDirs === true) {
