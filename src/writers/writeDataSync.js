@@ -49,7 +49,7 @@ import warnIfEmpty from '../utils/warnIfEmpty'
  * })
  */
 export default function writeDataSync (outPath, data, opts_) {
-  warnIfEmpty(data, outPath, opts_.verbose)
+  warnIfEmpty(data, outPath, opts_)
   var writeOptions
   if (typeof opts_ === 'object') {
     if (opts_.makeDirectories === true || opts_.makeDirs === true) {

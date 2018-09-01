@@ -7081,8 +7081,8 @@ var warn = function (msg) {
   console.log(index$1.gray('[indian-ocean]') + ' ' + index$1.yellow('Warning:', msg));
 };
 
-function warnIfEmpty(data, outPath, verbose) {
-  if (verbose !== false) {
+function warnIfEmpty(data, outPath, opts_) {
+  if (!opts_ || opts_ && opts_.verbose !== false) {
     if (!data || underscore.isEmpty(data)) {
       var msg = 'You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty ';
       if (!data) {
@@ -7116,7 +7116,7 @@ function warnIfEmpty(data, outPath, verbose) {
  * @param {Object} [options] Optional options object, see below
  * @param {Boolean} [options.makeDirectories=false] If `true`, create intermediate directories to your data file. Can also be `makeDirs` for short.
  * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
- * @param {Boolean} [options.verbose=true] Verbose logging output, mostly just warns if you write an empty file. Set to `false` if don't want any output.
+ * @param {Boolean} [options.verbose=true] Verbose logging output. Currently, the only logging output is a warning if you write an empty file. Set to `false` if don't want that.
  * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
  * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
  * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
@@ -7164,7 +7164,7 @@ function writeData(outPath, data, opts_, cb) {
     cb = opts_;
     opts_ = undefined;
   }
-  warnIfEmpty(data, outPath, opts_.verbose);
+  warnIfEmpty(data, outPath, opts_);
 
   if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
     makeDirectories(outPath, proceed);
@@ -8585,7 +8585,7 @@ function appendData(outPath, data, opts_, cb) {
  * @param {Object} [options] Optional options object, see below
  * @param {Boolean} [options.makeDirectories=false] If `true`, create intermediate directories to your data file. Can also be `makeDirs` for short.
  * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
- * @param {Boolean} [options.verbose=true] Verbose logging output, mostly just warns if you write an empty file. Set to `false` if don't want any output.
+ * @param {Boolean} [options.verbose=true] Verbose logging output. Currently, the only logging output is a warning if you write an empty file. Set to `false` if don't want that.
  * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
  * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
  * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
@@ -8617,7 +8617,7 @@ function appendData(outPath, data, opts_, cb) {
  * })
  */
 function writeDataSync(outPath, data, opts_) {
-  warnIfEmpty(data, outPath, opts_.verbose);
+  warnIfEmpty(data, outPath, opts_);
   var writeOptions;
   if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object') {
     if (opts_.makeDirectories === true || opts_.makeDirs === true) {

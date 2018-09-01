@@ -72,7 +72,7 @@ export default function writeData (outPath, data, opts_, cb) {
     cb = opts_
     opts_ = undefined
   }
-  warnIfEmpty(data, outPath, opts_.verbose)
+  warnIfEmpty(data, outPath, opts_)
 
   if (typeof opts_ === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
     makeDirectories(outPath, proceed)
