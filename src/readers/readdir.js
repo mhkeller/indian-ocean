@@ -15,6 +15,15 @@ export default function readdir (modeInfo, dirPath, opts_, cb) {
   opts_.include = strToArray(opts_.include)
   opts_.exclude = strToArray(opts_.exclude)
 
+  if (opts_.skipHidden === true) {
+    const regex = /^\./
+    if (Array.isArray(opts_.exclude)) {
+      opts_.exclude.push(regex)
+    } else {
+      opts_.exclude = [regex]
+    }
+  }
+
   // Set defaults if not provided
   opts_.includeMatchAll = (opts_.includeMatchAll) ? 'every' : 'some'
   opts_.excludeMatchAll = (opts_.excludeMatchAll) ? 'every' : 'some'
@@ -49,12 +58,13 @@ export default function readdir (modeInfo, dirPath, opts_, cb) {
     }
 
     function getFiltered (isDir) {
-      if (opts_.skipDirectories) {
+      // Keep the two names for legacy reasons
+      if (opts_.skipDirectories === true || opts_.skipDirs === true) {
         if (isDir) {
           return false
         }
       }
-      if (opts_.skipFiles) {
+      if (opts_.skipFiles === true) {
         if (!isDir) {
           return false
         }

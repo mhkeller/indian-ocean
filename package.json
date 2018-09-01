@@ -10,10 +10,10 @@
     "docs": "documentation build index.node.js -f html -o docs -c documentation.yml -t docs/default_theme/index.js --github",
     "view": "live-server docs/",
     "dev:docs": "chokidar 'documentation.yml' 'src/**/*.js' 'docs/default_theme/**/*' -c 'npm run docs'",
-    "build:node": "rollup --config rollup.config.node.js ",
+    "build:node": "rollup --config rollup.config.node.js",
     "build:browser": "rollup --config rollup.config.browser.js --banner \"$(preamble)\" && uglifyjs --preamble \"$(preamble)\" -o dist/indian-ocean.min.js -cm -- dist/indian-ocean.js",
     "build": "rm -rf dist && mkdir dist && npm run build:node && npm run build:browser",
-    "dev": "rm -rf dist && mkdir dist && rollup --config -w",
+    "dev": "rm -rf dist && mkdir dist && rollup --config rollup.config.node.js -w",
     "start": "npm run build && npm test",
     "test": "standard --fix src/**/*.js && rm -rf test/tmp-* && mocha",
     "coverage": "nyc --reporter=lcov mocha"

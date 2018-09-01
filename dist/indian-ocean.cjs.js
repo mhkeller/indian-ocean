@@ -7813,6 +7813,15 @@ function readdir(modeInfo, dirPath, opts_, cb) {
   opts_.include = strToArray(opts_.include);
   opts_.exclude = strToArray(opts_.exclude);
 
+  if (opts_.skipHidden === true) {
+    var regex = /^\./;
+    if (Array.isArray(opts_.exclude)) {
+      opts_.exclude.push(regex);
+    } else {
+      opts_.exclude = [regex];
+    }
+  }
+
   // Set defaults if not provided
   opts_.includeMatchAll = opts_.includeMatchAll ? 'every' : 'some';
   opts_.excludeMatchAll = opts_.excludeMatchAll ? 'every' : 'some';
@@ -7847,12 +7856,13 @@ function readdir(modeInfo, dirPath, opts_, cb) {
     }
 
     function getFiltered(isDir) {
-      if (opts_.skipDirectories) {
+      // Keep the two names for legacy reasons
+      if (opts_.skipDirectories === true || opts_.skipDirs === true) {
         if (isDir) {
           return false;
         }
       }
-      if (opts_.skipFiles) {
+      if (opts_.skipFiles === true) {
         if (!isDir) {
           return false;
         }
@@ -7929,7 +7939,7 @@ function readdir(modeInfo, dirPath, opts_, cb) {
  * @param {Object} options Filter options, see below
  * @param {Boolean} [options.fullPath=false] If `true`, return the full path of the file, otherwise just return the file name.
  * @param {Boolean} [options.skipFiles=false] If `true`, omit files from the results.
- * @param {Boolean} [options.skipDirectories=false] If `true`, omit directories from the results.
+ * @param {Boolean} [options.skipDirs=false] If `true`, omit directories from the results.
  * @param {String|RegExp|Array<String|RegExp>} options.include If given a string, return files that have that string as their extension. If given a Regular Expression, return the files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `includeMatchAll`.
  * @param {String|RegExp|Array<String|RegExp>} options.exclude If given a string, return files that do not have that string as their extension. If given a Regular Expression, omit files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `excludeMatchAll`.
  * @param {Boolean} [options.includeMatchAll=false] If true, require all include conditions to be met for a file to be included.
@@ -7964,7 +7974,7 @@ function readdirFilter(dirPath, opts_, cb) {
  * @param {Object} options Filter options, see below
  * @param {Boolean} [options.fullPath=false] If `true`, return the full path of the file, otherwise just return the file name.
  * @param {Boolean} [options.skipFiles=false] If `true`, omit files from the results.
- * @param {Boolean} [options.skipDirectories=false] If `true`, omit directories from the results.
+ * @param {Boolean} [options.skipDirs=false] If `true`, omit directories from the results.
  * @param {String|RegExp|Array<String|RegExp>} options.include If given a string, return files that have that string as their extension. If given a Regular Expression, return the files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `includeMatchAll`.
  * @param {String|RegExp|Array<String|RegExp>} options.exclude If given a string, return files that do not have that string as their extension. If given a Regular Expression, omit files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `excludeMatchAll`.
  * @param {Boolean} [options.includeMatchAll=false] If true, require all include conditions to be met for a file to be included.

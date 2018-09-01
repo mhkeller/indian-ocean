@@ -8,7 +8,7 @@ import readdir from './readdir'
  * @param {Object} options Filter options, see below
  * @param {Boolean} [options.fullPath=false] If `true`, return the full path of the file, otherwise just return the file name.
  * @param {Boolean} [options.skipFiles=false] If `true`, omit files from the results.
- * @param {Boolean} [options.skipDirectories=false] If `true`, omit directories from the results.
+ * @param {Boolean} [options.skipDirs=false] If `true`, omit directories from the results.
  * @param {String|RegExp|Array<String|RegExp>} options.include If given a string, return files that have that string as their extension. If given a Regular Expression, return the files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `includeMatchAll`.
  * @param {String|RegExp|Array<String|RegExp>} options.exclude If given a string, return files that do not have that string as their extension. If given a Regular Expression, omit files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `excludeMatchAll`.
  * @param {Boolean} [options.includeMatchAll=false] If true, require all include conditions to be met for a file to be included.

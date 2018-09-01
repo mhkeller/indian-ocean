@@ -1643,6 +1643,17 @@ describe('readers', function () {
       })
     })
 
+    describe('exclude by extension list and skipHidden', function () {
+      it('match expected output', function (done) {
+        var dir = path.join(__dirname, 'data', 'mixed')
+        io.readdirFilter(dir, {exclude: ['tsv', 'csv'], skipHidden: true}, function (err, files) {
+          assert.equal(err, null)
+          assert(_.isEqual(JSON.stringify(files), '["data-0.json","data-1.json"]'))
+          done()
+        })
+      })
+    })
+
     describe('dirPath in filename', function () {
       it('should match expected output', function (done) {
         var dir = path.join(__dirname, 'data', 'other')
@@ -1750,10 +1761,17 @@ describe('readers', function () {
       })
     })
 
-    describe('get files only', function () {
+    describe('get files only, skipDirectories', function () {
       it('should match expected output', function () {
         var dir = path.join(__dirname, 'data', 'mixed-dirs')
         var files = io.readdirFilterSync(dir, {exclude: /^\./, skipDirectories: true})
+        assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.json","data-0.tsv","data-1.csv","data-1.json"]'))
+      })
+    })
+    describe('get files only, skipDirs', function () {
+      it('should match expected output', function () {
+        var dir = path.join(__dirname, 'data', 'mixed-dirs')
+        var files = io.readdirFilterSync(dir, {exclude: /^\./, skipDirs: true})
         assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.json","data-0.tsv","data-1.csv","data-1.json"]'))
       })
     })
