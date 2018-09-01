@@ -12,9 +12,11 @@ Add `verbose` option to `writeData` and `writeDataSync`, which allows you to tur
   * [2233598aa3ce4c6df17f1e39da4c397d1796e620](https://github.com/mhkeller/indian-ocean/commit/2233598aa3ce4c6df17f1e39da4c397d1796e620)
 * Rename dist output, closes [#73](https://github.com/mhkeller/indian-ocean/issues/73)
   * [013fa6db847f46c984346b37674c232be44f3b5d](https://github.com/mhkeller/indian-ocean/commit/013fa6db847f46c984346b37674c232be44f3b5d)
-* Add skipHidden option to readdir functions, closes [#76](https://github.com/mhkeller/indian-ocean/issues/76)
+* Add `skipHidden` option to readdir functions, closes [#76](https://github.com/mhkeller/indian-ocean/issues/76)
   * [cd616f92371ad16f9bae6eecdb6ab067c193cb93](https://github.com/mhkeller/indian-ocean/commit/cd616f92371ad16f9bae6eecdb6ab067c193cb93)
   * [dd0fec83660d101972b0daf1ee51a24f81844788](https://github.com/mhkeller/indian-ocean/commit/dd0fec83660d101972b0daf1ee51a24f81844788)
+* Add `detailed` option to readdir functions, closes [#75](https://github.com/mhkeller/indian-ocean/issues/75)
+  * [6d76f51f106d5212a6dc45617b0cd902ec6677ae](https://github.com/mhkeller/indian-ocean/commit/6d76f51f106d5212a6dc45617b0cd902ec6677ae)
 
 # 3.0.1
 
