@@ -9,6 +9,7 @@ Add `verbose` option to `writeData` and `writeDataSync`, which allows you to tur
 
 * Add verbose
   * [2f2fff19a3282c559a18b502eba9262cef75fafd](https://github.com/mhkeller/indian-ocean/commit/2f2fff19a3282c559a18b502eba9262cef75fafd)
+  * [2233598aa3ce4c6df17f1e39da4c397d1796e620](https://github.com/mhkeller/indian-ocean/commit/2233598aa3ce4c6df17f1e39da4c397d1796e620)
 
 # 3.0.1
 
