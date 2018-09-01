@@ -1,9 +1,9 @@
 <section id="introduction" class="mb4 px2">
   <h1><a href="https://github.com/mhkeller/indian-ocean">indian-ocean</a></h1>
   <p>
-    <a href="https://npmjs.org/package/indian-ocean" target="_blank"><img alt="NPM version" src="https://img.shields.io/npm/v/indian-ocean.svg?style=flat-square"></a>
+    <a href="http://travis-ci.org/mhkeller/indian-ocean" target="_blank"><img alt="Build Status" src="https://img.shields.io/travis/mhkeller/indian-ocean/master.svg?style=flat-square"></a>
 
-    <a href="http://travis-ci.org/mhkeller/indian-ocean" target="_blank"><img alt="Build Status" src="https://img.shields.io/travis/mhkeller/indian-ocean.svg?style=flat-square"></a>
+    <a href="https://npmjs.org/package/indian-ocean" target="_blank"><img alt="NPM version" src="https://img.shields.io/npm/v/indian-ocean.svg?style=flat-square"></a>
 
     <a href="https://www.npmjs.com/package/indian-ocean" target="_blank"><img alt="NPM downloads" src="https://img.shields.io/npm/dm/indian-ocean.svg?style=flat-square"></a>
 
