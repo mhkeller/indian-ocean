@@ -1749,21 +1749,6 @@ function joinPath() {
   return args.join('/'); // TODO, windows
 }
 
-/**
- * Given a `filePath` return the file's extension. Used internally by {@link discernParser} and {@link discernFileFormatter}. Returns `false` for files without an extension, including dotfiles
- *
- * @function discernFormat
- * @param {String} filePath Input file path
- * @returns {String} The file's extension
- *
- * @example
- * var format = io.discernFormat('path/to/data.csv')
- * console.log(format) // 'csv'
- *
- * @example
- * var format = io.discernFormat('path/to/.dotfile')
- * console.log(format) // false
- */
 function discernFormat(filePath) {
   var ext = extname(filePath);
   if (ext === '') return false;
@@ -2190,10 +2175,6 @@ var map = new Type$5('tag:yaml.org,2002:map', {
   }
 });
 
-// Standard YAML's Failsafe schema.
-// http://www.yaml.org/spec/1.2/spec.html#id2802346
-
-
 'use strict';
 
 var Schema$5 = schema;
@@ -2585,14 +2566,6 @@ var float_1 = new Type$9('tag:yaml.org,2002:float', {
   defaultStyle: 'lowercase'
 });
 
-// Standard YAML's JSON schema.
-// http://www.yaml.org/spec/1.2/spec.html#id2803231
-//
-// NOTE: JS-YAML does not support schema-specific tag resolution restrictions.
-// So, this schema is not such strict as defined in the YAML specification.
-// It allows numbers in binary notaion, use `Null` and `NULL` as `null`, etc.
-
-
 'use strict';
 
 var Schema$4 = schema;
@@ -2601,13 +2574,6 @@ var json = new Schema$4({
   include: [failsafe],
   implicit: [_null, bool, int_1, float_1]
 });
-
-// Standard YAML's Core schema.
-// http://www.yaml.org/spec/1.2/spec.html#id2804923
-//
-// NOTE: JS-YAML does not support schema-specific tag resolution restrictions.
-// So, Core schema has no distinctions from JSON schema is JS-YAML.
-
 
 'use strict';
 
@@ -3016,13 +2982,6 @@ var set = new Type$15('tag:yaml.org,2002:set', {
   construct: constructYamlSet
 });
 
-// JS-YAML's default schema for `safeLoad` function.
-// It is not described in the YAML specification.
-//
-// This schema is based on standard YAML's Core schema and includes most of
-// extra types described at YAML tag repository. (http://yaml.org/type/)
-
-
 'use strict';
 
 var Schema$1 = schema;
@@ -3201,15 +3160,6 @@ var _function = new Type$18('tag:yaml.org,2002:js/function', {
   predicate: isFunction,
   represent: representJavascriptFunction
 });
-
-// JS-YAML's default schema for `load` function.
-// It is not described in the YAML specification.
-//
-// This schema is based on JS-YAML's default safe schema and includes
-// JavaScript-specific types: !!js/undefined, !!js/regexp and !!js/function.
-//
-// Also this schema is used as default base schema at `Schema.create` function.
-
 
 'use strict';
 
@@ -5941,22 +5891,6 @@ formatsList.forEach(function (format) {
 });
 
 /* istanbul ignore next */
-/**
- * Given a `filePath` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimiter string as the second argument, return a parser for that delimiter regardless of `filePath`. Used internally by {@link readData} and {@link readDataSync}.
- *
- * @function discernParser
- * @param {String} [filePath] Input file path
- * @param {Object} [options] Optional options object, see below
- * @param {Object} [options.delimiter] If `{delimiter: true}`, it will treat the string given as `filePath` as a delimiter and delegate to `dsv.dsvFormat`.
- * @returns {Function} A parser that can parse a file string into json
- *
- * @example
- * var parser = io.discernParser('path/to/data.csv')
- * var json = parser('name,price\nApple,120\nPear,300')
-
- * var parser = io.discernParser('_', {delimiter: true})
- * var json = parser('name_price\nApple_120\nPear_300')
- */
 function discernParser(filePath, opts_) {
   if (opts_ && opts_.delimiter === true) {
     return dsvFormat(filePath).parse;
@@ -6093,8 +6027,6 @@ var asyncGenerator = function () {
   };
 }();
 
-// Our `readData` fns can take either a delimiter to parse a file, or a full blown parser
-// Determine what they passed in with this handy function
 function getParser(delimiterOrParser) {
   var parser;
   if (typeof delimiterOrParser === 'string') {
@@ -6219,78 +6151,6 @@ function discernLoader(filePath) {
 }
 
 /* istanbul ignore next */
-/**
- * Asynchronously read data given a path ending in the file format.
- *
- * Supported formats / extensions:
- *
- * * `.json` Array of objects or object
- * * `.csv` Comma-separated
- * * `.tsv` Tab-separated
- * * `.psv` Pipe-separated
- * * `.yaml` or `.yml` Yaml file
- * * `.aml` ArchieML
- * * `.txt` Text file (a string)
- * * `.dbf` Database format used for shapefiles
- * * other All others are read as a text file
- *
- * @function readData
- * @param {String} filePath Input file path
- * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
- * @param {String|Function|Object} [parserOptions.parser] This can be a string that is the file's delimiter, a function that returns JSON, or, for convenience, can also be a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function. See `parsers` in library source for examples.
- * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
- * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJson} for details.
- * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJson} for details.
- * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYaml} for details.
- * @param {Function} callback Has signature `(err, data)`
- *
- * @example
- * io.readData('path/to/data.tsv', function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Parser specified as a string
- * io.readData('path/to/data.usv', {parser: '_'}, function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Parser specified as a function
- * var myParser = dsv.dsv('_').parse
- * // var myParser = dsv.dsv('_') // This also works
- * io.readData('path/to/data.usv', {parser: myParser}, function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Parser specified as a function
- * var naiveJsonLines = function (dataAsString) {
- *   return dataAsString.split('\n').map(function (row) { return JSON.parse(row) })
- * }
- * io.readData('path/to/data.jsonlines', {parser: naiveJsonLines}, function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Shorthand for specifying a map function
- * io.readData('path/to/data.csv', function (row, i, columns) {
- *   console.log(columns) // [ 'name', 'occupation', 'height' ]
- *   row.height = +row.height // Convert this value to a number
- *   return row
- * }, function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Explicitly specify a map function and a filename for a json file. See `readJson` for more details
- * io.readData('path/to/data.json', {
- *   map: function (k, v) {
- *     if (typeof v === 'number') {
- *       return v * 2
- *     }
- *     return v
- *   },
- *   filename: 'awesome-data.json'
- * }, function (err, data) {
- *   console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
- * })
- */
 function readData(filePath, opts_, cb_) {
   var cb = arguments[arguments.length - 1];
   var parser;
@@ -6599,7 +6459,6 @@ var notListError = function (format) {
   throw new Error(index$1.red('[indian-ocean] You passed in an object but converting to ' + index$1.bold(format) + ' requires a list of objects.') + index$1.cyan('\nIf you would like to write a one-row csv, put your object in a list like so: `' + index$1.bold('[data]') + '`\n'));
 };
 
-// Some shared data integrity checks for formatters
 function formattingPreflight(file, format) {
   if (file === '') {
     return [];
@@ -6657,9 +6516,6 @@ var txt = function (file) {
 };
 
 /* istanbul ignore next */
-// import formattingPreflight from '../utils/formattingPreflight'
-// import parseError from '../reporters/parseError'
-
 var yaml$1 = function (file, writeOptions) {
   writeOptions = writeOptions || {};
   var writeMethod = writeOptions.writeMethod || 'safeDump';
@@ -6936,17 +6792,6 @@ formatsList.forEach(function (format) {
   });
 });
 
-/**
- * Returns a formatter that will format json data to file type specified by the extension in `filePath`. Used internally by {@link writeData} and {@link writeDataSync}.
- *
- * @function discernFileFormatter
- * @param {String} filePath Input file path
- * @returns {Function} A formatter function that will write the extension format
- *
- * @example
- * var formatter = io.discernFileFormatter('path/to/data.tsv')
- * var csv = formatter(json)
- */
 function discernFileFormatter(filePath) {
   var format = discernFormat(filePath);
   var formatter = formatters[format];
@@ -7052,24 +6897,6 @@ mkdirP.sync = function sync(p, opts, made) {
 };
 
 /* istanbul ignore next */
-/**
- * Asynchronously create directories along a given file path. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module. If the last element in your file path is also a folder, it must end in `/` or else it will be interpreted as a file and not created.
- *
- * @function makeDirectories
- * @param {String} outPath The path to a file
- * @param {Function} callback The function to do once this is done. Has signature of `(err)`
- *
- * @example
- * io.makeDirectories('path/to/create/to/data.tsv', function (err) {
- *   console.log(err) // null
- * })
- *
- * // Must end in `/` for the last item to be interpreted as a folder as well.
- * io.makeDirectories('path/to/create/to/another-folder/', function (err) {
- *   console.log(err) // null
- * })
- *
- */
 function makeDirectories(outPath, cb) {
   index$15(dirname(outPath), function (err) {
     cb(err);
@@ -7097,68 +6924,6 @@ function warnIfEmpty(data, outPath, opts_) {
 }
 
 /* istanbul ignore next */
-/* istanbul ignore next */
-/**
- * Write the data object, inferring the file format from the file ending specified in `fileName`.
- *
- * Supported formats:
- *
- * * `.json` Array of objects, also supports `.geojson` and `.topojson`
- * * `.csv` Comma-separated
- * * `.tsv` Tab-separated
- * * `.psv` Pipe-separated
- * * `.yaml` Yaml file, also supports `.yml`
- * * `.dbf` Database file, commonly used in ESRI-shapefile format.
- *
- * @function writeData
- * @param {String} filePath Input file path
- * @param {Array|Object|String} data Data to write
- * @param {Object} [options] Optional options object, see below
- * @param {Boolean} [options.makeDirectories=false] If `true`, create intermediate directories to your data file. Can also be `makeDirs` for short.
- * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
- * @param {Boolean} [options.verbose=true] Verbose logging output. Currently, the only logging output is a warning if you write an empty file. Set to `false` if don't want that.
- * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
- * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
- * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
- * @param {Function} callback Has signature `(err, dataStr)`. `dataStr` is the data that was written out as a string
- *
- * @example
- * io.writeData('path/to/data.json', jsonData, function (err, dataString) {
- *   console.log(err)
- * })
- *
- * io.writeData('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true}, function (err, dataString) {
- *   console.log(err)
- * })
- *
- * io.writeData('path/to/to/data.yaml', jsonData, {writeMehod: "dump", sortKeys: true}, function (err, dataString) {
- *   console.log(err)
- * })
- *
- * io.writeData('path/to/to/data.json', jsonData, {indent: 4}, function (err, dataString) {
- *   console.log(err)
- * })
- *
- * io.writeData('path/to/to/data.json', jsonData, {
- *   indent: 4,
- *   replacer: function (key, value) {
- *     // Filtering out string properties
- *     if (typeof value === "string") {
- *       return undefined
- *     }
- *     return value
- *   }
- * }, function (err, dataString) {
- *   console.log(err)
- * })
- *
- * io.writeData('path/to/to/data.json', jsonData, {
- *   indent: 4,
- *   replacer: ['name', 'occupation'] // Only keep "name" and "occupation" values
- * }, function (err, dataString) {
- *   console.log(err)
- * })
- */
 function writeData(outPath, data, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_;
@@ -7191,24 +6956,6 @@ function writeData(outPath, data, opts_, cb) {
   }
 }
 
-/**
- * Reads in data given a path ending in the file format with {@link readData} and writes to file using {@link writeData}. A convenience function for converting files to more other formats. All formats can convert to all others except you can't convert object-only formats such as aml or yaml files that are not lists into tabular formats, which must be lists.
- *
- * @function convertData
- * @param {String} inFilePath Input file path
- * @param {String} outFilePath Output file path
- * @param {Object} [options] Optional config object that's passed to {@link writeData}. See that documentation for full options, which vary depending on the output format you choose.
- * @param {Function} callback Has signature `(err, dataStr)`. `dataStr` is the data that was written out as a string
- *
- * @example
- * io.convertData('path/to/data.dbf', 'path/to/data.csv', function (err, dataStr) {
- *   console.log(err)
- * })
- *
- * io.convertData('path/to/data.tsv', 'path/to/create/to/data.dbf', {makeDirectories: true}, function (err, dataStr) {
- *   console.log(err)
- * })
- */
 function convertData(inPath, outPath, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_;
@@ -7222,28 +6969,6 @@ function convertData(inPath, outPath, opts_, cb) {
   });
 }
 
-/**
- * Asynchronously read a dbf file. Returns an empty array if file is empty.
- *
- * @function readDbf
- * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below.
- * @param {Function} callback Has signature `(err, data)`
- *
- * @example
- * io.readDbf('path/to/data.dbf', function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Transform values on load
- * io.readDbf('path/to/data.csv', function (row, i) {
- *   console.log(columns) // [ 'name', 'occupation', 'height' ]
- *   row.height = +row.height // Convert this value to a number
- *   return row
- * }, function (err, data) {
- *   console.log(data) // Converted json data
- * })
- */
 function readDbf(filePath, opts_, cb) {
   var parserOptions = {
     map: identity
@@ -7256,24 +6981,6 @@ function readDbf(filePath, opts_, cb) {
   readData(filePath, parserOptions, cb);
 }
 
-/**
- * Reads in a dbf file with {@link readData} and write to file using {@link writeData}. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
- *
- * @function convertDbfToData
- * @param {String} inFilePath Input file path
- * @param {String} outFilePath Output file path
- * @param {Object} [options] Optional config object that's passed to {@link writeData}. See that documentation for full options, which vary depending on the output format you choose.
- * @param {Function} callback Has signature `(err, dataStr)`. `dataStr` is the data that was written out as a string
- *
- * @example
- * io.convertDbfToData('path/to/data.dbf', 'path/to/data.csv', function (err, dataStr) {
- *   console.log(err)
- * })
- *
- * io.convertDbfToData('path/to/data.dbf', 'path/to/create/to/data.csv', {makeDirectories: true}, function (err, dataStr) {
- *   console.log(err)
- * })
- */
 function convertDbfToData(inPath, outPath, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_;
@@ -7405,38 +7112,6 @@ function extend$1() {
   return target;
 }
 
-/**
- * A more semantic convenience function. Delegates to {@link extend} and passes `true` as the first argument. Deep merge the contents of two or more objects together into the first object.
- *
- * @function deepExtend
- * @param {Object} destination The object to modify
- * @param {Object} source The object whose keys to take
- * @param {Object} [source2] Optional, You can add any number of objects as arguments.
- * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
- *
- * @example
- * var object1 = {
- *   apple: 0,
- *   banana: { weight: 52, price: 100 },
- *   cherry: 97
- * }
- * var object2 = {
- *   banana: { price: 200 },
- *   almond: 100
- * }
- * io.deepExtend(object1, object2)
- * console.log(object1)
- * //  {
- * //   apple: 0,
- * //   banana: {
- * //     weight: 52,
- * //     price: 200
- * //   },
- * //   cherry: 97,
- * //   almond: 100
- * // }
- *
- */
 function deepExtend() {
   var args = Array.prototype.slice.call(arguments); // Make real array from arguments
   args.unshift(true); // Add `true` as first arg.
@@ -7444,19 +7119,6 @@ function deepExtend() {
 }
 
 /* istanbul ignore next */
-/**
- * Asynchronously test whether a file exists or not by using `fs.access` modified from https://github.com/nodejs/io.js/issues/1592#issuecomment-98392899.
- *
- * @function exists
- * @param {String} filePath Input file path
- * @param {Function} callback Has signature `(err, exists)`
- *
- * @example
- * var exists = io.exists('path/to/data.tsv', function (err, exists) {
- *   console.log(exists) // `true` if the file exists, `false` if not.
- * })
- *
- */
 function exists(filePath, cb) {
   fs.access(filePath, function (err) {
     var exists;
@@ -7471,17 +7133,6 @@ function exists(filePath, cb) {
 }
 
 /* istanbul ignore next */
-/**
- * Syncronous version of {@link exists}. Delegates to `fs.existsSync` if that function is available.
- *
- * @function existsSync
- * @param {String} filePath Input file path
- * @returns {Boolean} Whether the file exists or not
- *
- * @example
- * var exists = io.existsSync('path/to/data.tsv')
- * console.log(exists) // `true` if file exists, `false` if not.
- */
 function existsSync(filePath) {
   if (fs.existsSync) {
     return fs.existsSync(filePath);
@@ -7495,18 +7146,6 @@ function existsSync(filePath) {
   }
 }
 
-/**
- * Test whether a file name has the given extension
- *
- * @function extMatchesStr
- * @param {String} filePath Input file path
- * @param {String} extension The extension to test. An empty string will match a file with no extension.
- * @returns {Boolean} Whether it matched or not.
- *
- * @example
- * var matches = io.extMatchesStr('path/to/data.tsv', 'tsv')
- * console.log(matches) // `true`
- */
 function extMatchesStr(filePath, extension) {
   // Chop '.' off extension returned by extname
   var ext = extname(filePath).slice(1);
@@ -7514,20 +7153,6 @@ function extMatchesStr(filePath, extension) {
 }
 
 /* istanbul ignore next */
-/**
- * Synchronous version of {@link makeDirectories}. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module.
- *
- * @function makeDirectoriesSync
- * @param {String} outPath The path to a file
- *
- * @example
- * io.makeDirectoriesSync('path/to/create/to/data.tsv')
- *
- * @example
- * // Must end in `/` for the last item to be interpreted as a folder as well.
- * io.makeDirectoriesSync('path/to/create/to/another-folder/')
- *
- */
 function makeDirectoriesSync(outPath) {
   index$15.sync(dirname(outPath));
 }
@@ -7555,23 +7180,6 @@ function isRegExp$1(obj) {
   return Object.prototype.toString.call(obj) === '[object RegExp]';
 }
 
-/**
- * Test whether a file name or path matches a given matcher. Delegates to {@link extMatchesStr} if `matcher` is a string` and tests only against the file name extension. Delegates to {@link matchesRegExp} if matcher is a Regular Expression and tests against entire string, which is usefulf or testing the full file path.
- *
- * @function matches
- * @param {String} filePath Input file path or path to the file.
- * @returns {String|RegExp} matcher The string or Regular Expression to match against.
- *
- * @example
- * var matches = io.matches('path/to/data.tsv', 'tsv')
- * console.log(matches) // `true`
- *
- * var matches = io.matches('.gitignore', /\.gitignore/)
- * console.log(matches) // `true`
- *
- * var matches = io.matches('file/with/no-extention', '') // Nb. Dot files are treated as files with no extention
- * console.log(matches) // `true`
- */
 function matches(filePath, matcher) {
   if (typeof matcher === 'string') {
     return extMatchesStr(filePath, matcher);
@@ -7583,69 +7191,6 @@ function matches(filePath, matcher) {
 }
 
 /* istanbul ignore next */
-/**
- * Syncronous version of {@link readData}. Read data given a path ending in the file format. This function detects the same formats as the asynchronous {@link readData} except for `.dbf` files, which it cannot read.
- *
- * * `.json` Array of objects or object
- * * `.csv` Comma-separated
- * * `.tsv` Tab-separated
- * * `.psv` Pipe-separated
- * * `.yaml` or `.yml` Yaml file
- * * `.aml` ArchieML
- * * `.txt` Text file (a string)
- * * other All others are read as a text file
- *
- * @function readDataSync
- * @param {String} filePath Input file path
- * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
- * @param {String|Function|Object} [parserOptions.parser] This can be a string that is the file's delimiter, a function that returns JSON, or, for convenience, can also be a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function. See `parsers` in library source for examples.
- * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
- * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJsonSync} for details.
- * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJsonSync} for details.
- * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYamlSync} for details.
- * @returns {Object} the contents of the file as JSON
- *
- * @example
- * var data = io.readDataSync('path/to/data.tsv')
- * console.log(data) // Json data
- *
- * // Parser specified as a string
- * var data = io.readDataSync('path/to/data.usv', {parser: '_'})
- * console.log(data) // Json data
- *
- * // Parser specified as a function
- * var myParser = dsv.dsv('_').parse
- * // var myParser = dsv.dsv('_') // This also works
- * var data = io.readDataSync('path/to/data.usv', {parser: myParser})
- * console.log(data) // Json data
- *
- * // Parser as an object with a `parse` method
- * var naiveJsonLines = function(dataAsString) {
- *   return dataAsString.split('\n').map(function (row) { return JSON.parse(row) })
- * }
- * var data = io.readDataSync('path/to/data.jsonlines', {parser: naiveJsonLines})
- * console.log(data) // Json data
- *
- * // Shorthand for specifying a map function
- * var data = io.readData('path/to/data.csv', function (row, i, columns) {
- *   console.log(columns) // [ 'name', 'occupation', 'height' ]
- *   row.height = +row.height // Convert this value to a number
- *   return row
- * })
- * console.log(data) // Json data
- *
- * // Explicitly specify a map function and a filename for a json file. See `readJson` for more details
- * var data = io.readData('path/to/data.json', {
- *   map: function (k, v) {
- *     if (typeof v === 'number') {
- *       return v * 2
- *     }
- *     return v
- *   },
- *   filename: 'awesome-data.json'
- * })
- * console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
- */
 function readDataSync(filePath, opts_) {
   var parser;
   var parserOptions;
@@ -7804,7 +7349,6 @@ function queue(concurrency) {
 
 // Used internally by `readdir` functions to make more DRY
 /* istanbul ignore next */
-/* istanbul ignore next */
 function readdir(modeInfo, dirPath, opts_, cb) {
   opts_ = opts_ || {};
   var isAsync = modeInfo.async;
@@ -7931,32 +7475,6 @@ function readdir(modeInfo, dirPath, opts_, cb) {
   }
 }
 
-/**
- * Asynchronously get a list of a directory's files and folders if certain critera are met.
- *
- * @function readdirFilter
- * @param {String} dirPath The directory to read from
- * @param {Object} options Filter options, see below
- * @param {Boolean} [options.fullPath=false] If `true`, return the full path of the file, otherwise just return the file name.
- * @param {Boolean} [options.skipFiles=false] If `true`, omit files from the results.
- * @param {Boolean} [options.skipDirs=false] If `true`, omit directories from the results.
- * @param {String|RegExp|Array<String|RegExp>} options.include If given a string, return files that have that string as their extension. If given a Regular Expression, return the files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `includeMatchAll`.
- * @param {String|RegExp|Array<String|RegExp>} options.exclude If given a string, return files that do not have that string as their extension. If given a Regular Expression, omit files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `excludeMatchAll`.
- * @param {Boolean} [options.includeMatchAll=false] If true, require all include conditions to be met for a file to be included.
- * @param {Boolean} [options.excludeMatchAll=false] If true, require all exclude conditions to be met for a file to be excluded.
- * @param {Function} callback Has signature `(err, data)` where `files` is a list of matching file names.
- *
- * @example
- * // dir contains `data-0.tsv`, `data-0.json`, `data-0.csv`, `data-1.csv`, `.hidden-file`
- * io.readdirFilter('path/to/files', {include: 'csv'}, function(err, files){
- *   console.log(files) // ['data-0.csv', 'data-1.csv']
- * })
- *
- * io.readdirFilter('path/to/files', {include: [/^data/], exclude: ['csv', 'json']}, , function(err, files){
- *   console.log(files) // ['path/to/files/data-0.csv', 'path/to/files/data-1.csv', 'path/to/files/data-0.tsv']
- * })
- *
- */
 function readdirFilter(dirPath, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_;
@@ -7973,8 +7491,9 @@ function readdirFilter(dirPath, opts_, cb) {
  * @param {String} dirPath The directory to read from
  * @param {Object} options Filter options, see below
  * @param {Boolean} [options.fullPath=false] If `true`, return the full path of the file, otherwise just return the file name.
- * @param {Boolean} [options.skipFiles=false] If `true`, omit files from the results.
- * @param {Boolean} [options.skipDirs=false] If `true`, omit directories from the results.
+ * @param {Boolean} [options.skipFiles=false] If `true`, omit files from results.
+ * @param {Boolean} [options.skipDirs=false] If `true`, omit directories from results.
+ * @param {Boolean} [options.skipHidden=false] If `true`, omit files that start with a dot from results. Shorthand for `{exclude: /^\./}`.
  * @param {String|RegExp|Array<String|RegExp>} options.include If given a string, return files that have that string as their extension. If given a Regular Expression, return the files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `includeMatchAll`.
  * @param {String|RegExp|Array<String|RegExp>} options.exclude If given a string, return files that do not have that string as their extension. If given a Regular Expression, omit files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `excludeMatchAll`.
  * @param {Boolean} [options.includeMatchAll=false] If true, require all include conditions to be met for a file to be included.
@@ -7997,27 +7516,6 @@ function readdirFilterSync(dirPath, opts_) {
   return readdir({ async: false }, dirPath, opts_);
 }
 
-/**
- * Asynchronously read an ArchieMl file. Returns an empty object if file is empty.
- *
- * @function readAml
- * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Takes the parsed file (usually an object) and must return the modified file. See example below.
- * @param {Function} callback Has signature `(err, data)`
- *
- * @example
- * io.readAml('path/to/data.aml', function (err, data) {
- *   console.log(data) // json data
- * })
- *
- * // With map
- * io.readAml('path/to/data.aml', function (amlFile) {
- *   amlFile.height = amlFile.height * 2
- *   return amlFile
- * }, function (err, data) {
- *   console.log(data) // json data with height multiplied by 2
- * })
- */
 function readAml(filePath, opts_, cb) {
   var parserOptions;
   if (typeof cb === 'undefined') {
@@ -8028,24 +7526,6 @@ function readAml(filePath, opts_, cb) {
   readData(filePath, { parser: parserAml, parserOptions: parserOptions }, cb);
 }
 
-/**
- * Synchronously read an ArchieML file. Returns an empty object if file is empty.
- *
- * @function readAmlSync
- * @param {String} filePath Input file path
- * @param {Function} [map] Optional map function. Takes the parsed file (usually an object) and must return the modified file. See example below.
- * @returns {Object} The parsed file
- *
- * @example
- * var data = io.readAmlSync('path/to/data.aml')
- * console.log(data) // json data
- *
- * var data = io.readAmlSync('path/to/data-with-comments.aml', function (amlFile) {
- *   amlFile.height = amlFile.height * 2
- *   return amlFile
- * })
- * console.log(data) // json data with height multiplied by 2
- */
 function readAmlSync(filePath, opts_) {
   var parserOptions;
   if (typeof opts_ !== 'undefined') {
@@ -8054,37 +7534,6 @@ function readAmlSync(filePath, opts_) {
   return readDataSync(filePath, { parser: parserAml, parserOptions: parserOptions });
 }
 
-/**
- * Asynchronously read a comma-separated value file. Returns an empty array if file is empty.
- *
- * @function readCsv
- * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
- * @param {Function} callback Has signature `(err, data)`
- *
- * @example
- * io.readCsv('path/to/data.csv', function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Transform values on load
- * io.readCsv('path/to/data.csv', function (row, i, columns) {
- *   console.log(columns) // [ 'name', 'occupation', 'height' ]
- *   row.height = +row.height // Convert this value to a number
- *   return row
- * }, function (err, data) {
- *   console.log(data) // Converted json data
- * })
- *
- * // Pass in an object with a `map` key
- * io.readCsv('path/to/data.csv', {map: function (row, i, columns) {
- *   console.log(columns) // [ 'name', 'occupation', 'height' ]
- *   row.height = +row.height // Convert this value to a number
- *   return row
- * }}, function (err, data) {
- *   console.log(data) // Converted json data
- * })
- */
 function readCsv(filePath, opts_, cb) {
   var parserOptions;
   if (typeof cb === 'undefined') {
@@ -8095,34 +7544,6 @@ function readCsv(filePath, opts_, cb) {
   readData(filePath, { parser: parserCsv, parserOptions: parserOptions }, cb);
 }
 
-/**
- * Synchronously read a comma-separated value file. Returns an empty array if file is empty.
- *
- * @function readCsvSync
- * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
- * @returns {Array} the contents of the file as JSON
- *
- * @example
- * var data = io.readCsvSync('path/to/data.csv')
- * console.log(data) // Json data
- *
- * // Transform values on load
- * var data = io.readCsvSync('path/to/data.csv', function (row, i, columns) {
- *   console.log(columns) // [ 'name', 'occupation', 'height' ]
- *   row.height = +row.height // Convert this value to a number
- *   return row
- * })
- * console.log(data) // Json data with casted values
- *
- * // Pass in an object with a `map` key
- * var data = io.readCsvSync('path/to/data.csv', {map: function (row, i, columns) {
- *   console.log(columns) // [ 'name', 'occupation', 'height' ]
- *   row.height = +row.height // Convert this value to a number
- *   return row
- * }})
- * console.log(data) // Json data with casted values
- */
 function readCsvSync(filePath, opts_) {
   var parserOptions;
   if (typeof opts_ !== 'undefined') {
@@ -8131,72 +7552,6 @@ function readCsvSync(filePath, opts_) {
   return readDataSync(filePath, { parser: parserCsv, parserOptions: parserOptions });
 }
 
-/**
- * Asynchronously read a JSON file. Returns an empty array if file is empty.
- *
- * @function readJson
- * @param {String} filePath Input file path
- * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
- * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
- * @param {String} [parserOptions.filename] File name displayed in the error message.
- * @param {Function} [parserOptions.reviver] A function that prescribes how the value originally produced by parsing is mapped before being returned. See JSON.parse docs for more: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
- * @param {Function} callback Has signature `(err, data)`
- *
- * @example
- * io.readJson('path/to/data.json', function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Specify a map
- * io.readJson('path/to/data.json', function (row, i) {
- *   row.height = row.height * 2
- *   return row
- * }, function (err, data) {
- *   console.log(data) // Json data with height multiplied by two
- * })
- *
- * // Specify a filename
- * io.readJson('path/to/data.json', 'awesome-data.json', function (err, data) {
- *   console.log(data) // Json data, any errors are reported with `fileName`.
- * })
- *
- * // Specify a map and a filename
- * io.readJson('path/to/data.json', {
- *   map: function (row, i) {
- *     row.height = row.height * 2
- *     return row
- *   },
- *   filename: 'awesome-data.json'
- * }, function (err, data) {
- *   console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
- * })
- *
- * // Specify a map and a filename on json object
- * io.readJson('path/to/json-object.json', {
- *   map: function (value, key) {
- *     if (typeof value === 'number') {
- *       return value * 2
- *     }
- *     return value
- *   },
- *   filename: 'awesome-data.json'
- * }, function (err, data) {
- *   console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
- * })
- *
- * // Specify a reviver function and a filename
- * io.readJson('path/to/data.json', {
- *   reviver: function (k, v) {
- *     if (typeof v === 'number') {
- *       return v * 2
- *     }
- *     return v
- *   },
- *   filename: 'awesome-data.json'
- * }, function (err, data) {
- *   console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
- * })
- */
 function readJson(filePath, opts_, cb) {
   var parserOptions;
   if (typeof cb === 'undefined') {
@@ -8207,47 +7562,6 @@ function readJson(filePath, opts_, cb) {
   readData(filePath, { parser: parserJson, parserOptions: parserOptions }, cb);
 }
 
-/**
- * Synchronously read a JSON file. Returns an empty array if file is empty.
- *
- * @function readJsonSync
- * @param {String} filePath Input file path
- * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
- * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
- * @param {String} [parserOptions.filename] File name displayed in the error message.
- * @param {Function} [parserOptions.reviver] A function that prescribes how the value originally produced by parsing is mapped before being returned. See JSON.parse docs for more: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
- * @returns {Array|Object} The contents of the file as JSON
- *
- * @example
- * var data = io.readJsonSync('path/to/data.json')
- * console.log(data) // Json data
- *
- * // Specify a map
- * var data = io.readJson('path/to/data.json', function (k, v) {
- *   if (typeof v === 'number') {
- *     return v * 2
- *   }
- *   return v
- * })
- * console.log(data) // Json data with any number values multiplied by two
- *
- * // Specify a filename
- * var data = io.readJson('path/to/data.json', 'awesome-data.json')
- * console.log(data) // Json data, any errors are reported with `fileName`.
- *
- * // Specify a map and a filename
- * var data = io.readJsonSync('path/to/data.json', {
- *   map: function (k, v) {
- *     if (typeof v === 'number') {
- *       return v * 2
- *     }
- *     return v
- *   },
- *   filename: 'awesome-data.json'
- * })
- *
- * console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
- */
 function readJsonSync(filePath, opts_) {
   var parserOptions;
   if (typeof opts_ !== 'undefined') {
@@ -8256,28 +7570,6 @@ function readJsonSync(filePath, opts_) {
   return readDataSync(filePath, { parser: parserJson, parserOptions: parserOptions });
 }
 
-/**
- * Asynchronously read a pipe-separated value file. Returns an empty array if file is empty.
- *
- * @function readPsv
- * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
- * @param {Function} callback Has signature `(err, data)`
- *
- * @example
- * io.readPsv('path/to/data.psv', function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Transform values on load
- * io.readPsv('path/to/data.psv', function (row, i, columns) {
- *     console.log(columns) // [ 'name', 'occupation', 'height' ]
- *     row.height = +row.height // Convert this value to a number
- *     return row
- * }, function (err, data) {
- *   console.log(data) // Json data with casted values
- * })
- */
 function readPsv(filePath, opts_, cb) {
   var parserOptions;
   if (typeof cb === 'undefined') {
@@ -8288,25 +7580,6 @@ function readPsv(filePath, opts_, cb) {
   readData(filePath, { parser: parserPsv, parserOptions: parserOptions }, cb);
 }
 
-/**
- * Synchronously read a pipe-separated value file. Returns an empty array if file is empty.
- *
- * @function readPsvSync
- * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
- * @returns {Array} The contents of the file as JSON
- *
- * @example
- * var data = io.readPsvSync('path/to/data.psv')
- * console.log(data) // Json data
- *
- * var data = io.readPsvSync('path/to/data.psv', function (row, i, columns) {
- *   console.log(columns) // [ 'name', 'occupation', 'height' ]
- *   row.height = +row.height // Convert this value to a number
- *   return row
- * })
- * console.log(data) // Json data with casted values
- */
 function readPsvSync(filePath, opts_) {
   var parserOptions;
   if (typeof opts_ !== 'undefined') {
@@ -8315,28 +7588,6 @@ function readPsvSync(filePath, opts_) {
   return readDataSync(filePath, { parser: parserPsv, parserOptions: parserOptions });
 }
 
-/**
- * Asynchronously read a tab-separated value file. Returns an empty array if file is empty.
- *
- * @function readTsv
- * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
- * @param {Function} callback Has signature `(err, data)`
- *
- * @example
- * io.readTsv('path/to/data.tsv', function (err, data) {
- *   console.log(data) // Json data
- * })
- *
- * // Transform values on load
- * io.readTsv('path/to/data.tsv', function (row, i, columns) {
- *     console.log(columns) // [ 'name', 'occupation', 'height' ]
- *     row.height = +row.height // Convert this value to a number
- *     return row
- * }, function (err, data) {
- *   console.log(data) // Json data with casted values
- * })
- */
 function readTsv(filePath, opts_, cb) {
   var parserOptions;
   if (typeof cb === 'undefined') {
@@ -8347,26 +7598,6 @@ function readTsv(filePath, opts_, cb) {
   readData(filePath, { parser: parserTsv, parserOptions: parserOptions }, cb);
 }
 
-/**
- * Synchronously read a tab-separated value file. Returns an empty array if file is empty.
- *
- * @function readTsvSync
- * @param {String} filePath Input file path
- * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)` and must return the transformed row. See example below or d3-dsv documentation for details.
- * @returns {Array} the contents of the file as JSON
- *
- * @example
- * var data = io.readTsvSync('path/to/data.tsv')
- * console.log(data) // Json data
- *
- * // Transform values on load
- * var data = io.readTsvSync('path/to/data.tsv', function (row, i, columns) {
- *   console.log(columns) // [ 'name', 'occupation', 'height' ]
- *   row.height = +row.height // Convert this value to a number
- *   return row
- * })
- * console.log(data) // Json data with casted values
- */
 function readTsvSync(filePath, opts_) {
   var parserOptions;
   if (typeof opts_ !== 'undefined') {
@@ -8375,25 +7606,6 @@ function readTsvSync(filePath, opts_) {
   return readDataSync(filePath, { parser: parserTsv, parserOptions: parserOptions });
 }
 
-/**
- * Asynchronously read a text file. Returns an empty string if file is empty.
- *
- * @function readTxt
- * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Takes the file read in as text and return the modified file. See example below.
- * @param {Function} callback Has signature `(err, data)`
- *
- * @example
- * io.readTxt('path/to/data.txt', function (err, data) {
- *   console.log(data) // string data
- * })
- *
- * io.readTxt('path/to/data.txt', function (str) {
- *   return str.replace(/hello/g, 'goodbye') // Replace all instances of `"hello"` with `"goodbye"`
- * }, function (err, data) {
- *   console.log(data) // string data with values replaced
- * })
- */
 function readTxt(filePath, opts_, cb) {
   var parserOptions;
   if (typeof cb === 'undefined') {
@@ -8404,23 +7616,6 @@ function readTxt(filePath, opts_, cb) {
   readData(filePath, { parser: parserTxt, parserOptions: parserOptions }, cb);
 }
 
-/**
- * Synchronously read a text file. Returns an empty string if file is empty.
- *
- * @function readTxtSync
- * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Takes the file read in as text and must return the modified file. See example below.
- * @returns {String} the contents of the file as a string
- *
- * @example
- * var data = io.readTxtSync('path/to/data.txt')
- * console.log(data) // string data
- *
- * var data = io.readTxtSync('path/to/data.txt', function (str) {
- *   return str.replace(/hello/g, 'goodbye') // Replace all instances of `"hello"` with `"goodbye"`
- * })
- * console.log(data) // string data with values replaced
- */
 function readTxtSync(filePath, opts_) {
   var parserOptions;
   if (typeof opts_ !== 'undefined') {
@@ -8429,41 +7624,6 @@ function readTxtSync(filePath, opts_) {
   return readDataSync(filePath, { parser: parserTxt, parserOptions: parserOptions });
 }
 
-/**
- * Asynchronously read a yaml file. Returns an empty object if file is empty. `parseOptions` will pass any other optinos directl to js-yaml library. See its documentation for more detail https://github.com/nodeca/js-yaml
- *
- * @function readYaml
- * @param {String} filePath Input file path
- * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
- * @param {Function} [parserOptions.map] Optional map function. Called once for each row (header row skipped). If your file is an array (it tests if first non-whitespace character is a `[`), the callback has the signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback has the signature `(value, key)` and delegates to `_.mapObject`. See example below.
- * @param {String} [parserOptions.loadMethod="safeLoad"] The js-yaml library allows you to specify a more liberal `"load"` option which will accept RegExp and function values in your file.
- * @param {Function} callback Has signature `(err, data)`
- *
- * @example
- * // Can be `.yaml` or `.yml` extension
- * io.readYaml('path/to/data.yaml', function (err, data) {
- *   console.log(data) // json data
- * })
- *
- * // With map function shorthand on an object
- * io.readYaml('path/to/data.yaml', function (yamlFile) {
- *   yamlFile.height = yamlFile.height * 2
- *   return yamlFile
- * }, function (err, data) {
- *   console.log(data) // json data with `height` values doubled
- * })
- *
- * // With map function on an object and load settings
- * io.readYaml('path/to/data.yaml', {
- *   loadMethod: 'load',
- *   map: function (value, key) {
- *     yamlFile.height = yamlFile.height * 2
- *     return yamlFile
- *   }
- * }, function (err, data) {
- *   console.log(data) // json data with `height` values doubled
- * })
- */
 function readYaml(filePath, opts_, cb) {
   var parserOptions;
   if (typeof cb === 'undefined') {
@@ -8474,38 +7634,6 @@ function readYaml(filePath, opts_, cb) {
   readData(filePath, { parser: parserYaml, parserOptions: parserOptions }, cb);
 }
 
-/**
- * Synchronously read a yaml file. Returns an empty object if file is empty. `parseOptions` will pass any other optinos directl to js-yaml library. See its documentation for more detail https://github.com/nodeca/js-yaml
- *
- * @function readYamlSync
- * @param {String} filePath Input file path
- * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
- * @param {Function} [parserOptions.map] Optional map function. Called once for each row (header row skipped). If your file is an array (it tests if first non-whitespace character is a `[`), the callback has the signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback has the signature `(value, key)` and delegates to `_.mapObject`. See example below.
- * @param {String} [parserOptions.loadMethod="safeLoad"] The js-yaml library allows you to specify a more liberal `"load"` method which will accept RegExp and function values in your file.
- * @returns {Array|Object} the contents of the file as a string
- *
- * @example
- * // Can be `.yaml` or `.yml` extension
- * var data = io.readYamlSync('path/to/data.yaml')
- * console.log(data) // json data
- *
- * // With map function
- * var data = io.readYaml('path/to/data.yaml', function (yamlFile) {
- *   yamlFile.height = yamlFile.height * 2
- *   return yamlFile
- * })
- * console.log(data) // json data with `height` values doubled
- *
- * // With map function and load settings
- * var data = io.readYaml('path/to/data.yaml', {
- *   loadMethod: 'load',
- *   map: function (yamlFile) {
- *     yamlFile.height = yamlFile.height * 2
- *     return yamlFile
- *   }
- * })
- * console.log(data) // json data with `height` values doubled
- */
 function readYamlSync(filePath, opts_) {
   var parserOptions;
   if (typeof opts_ !== 'undefined') {
@@ -8515,35 +7643,6 @@ function readYamlSync(filePath, opts_) {
 }
 
 /* istanbul ignore next */
-/* istanbul ignore next */
-/**
- * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with {@link extend}. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
- *
- * Supported formats:
- *
- * * `.json` Array of objects
- * * `.csv` Comma-separated
- * * `.tsv` Tab-separated
- * * `.psv` Pipe-separated
- * * `.yaml` or `.yml` Yaml
- *
- * *Note: Does not currently support .dbf files.*
- *
- * @function appendData
- * @param {String} filePath File to append to
- * @param {Array|Object} data The new data to append
- * @param {Object} [options] Optional options object passed to {@link writeData}. See that function for format-specific options.
- * @param {Function} callback Has signature `(err, data)`. Data is the combined data that was written out
- *
- * @example
- * io.appendData('path/to/data.json', jsonData, function (err) {
- *   console.log(err)
- * })
- *
- * io.appendData('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true}, function (err){
- *   console.log(err)
- * })
- */
 function appendData(outPath, data, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_;
@@ -8583,49 +7682,6 @@ function appendData(outPath, data, opts_, cb) {
 }
 
 /* istanbul ignore next */
-/* istanbul ignore next */
-/**
- * Syncronous version of {@link writers#writeData}
- *
- * Supports the same formats with the exception of `.dbf` files
- *
- * @function writeDataSync
- * @param {String} filePath Input file path
- * @param {Array|Object|String} data Data to write
- * @param {Object} [options] Optional options object, see below
- * @param {Boolean} [options.makeDirectories=false] If `true`, create intermediate directories to your data file. Can also be `makeDirs` for short.
- * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
- * @param {Boolean} [options.verbose=true] Verbose logging output. Currently, the only logging output is a warning if you write an empty file. Set to `false` if don't want that.
- * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
- * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
- * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
- * @returns {String} The that was written as a string
- *
- * @example
- * io.writeDataSync('path/to/data.json', jsonData)
- *
- * io.writeDataSync('path/to/create/to/data.csv', flatJsonData, {makeDirs: true})
- *
- * io.writeDataSync('path/to/to/data.yaml', jsonData, {writeMehod: "dump", sortKeys: true})
- *
- * io.writeDataSync('path/to/to/data.json', jsonData, {indent: 4})
- *
- * io.writeDataSync('path/to/to/data.json', jsonData, {
- *   indent: 4,
- *   replacer: function (key, value) {
- *     // Filtering out string properties
- *     if (typeof value === "string") {
- *       return undefined
- *     }
- *     return value
- *   }
- * })
- *
- * io.writeDataSync('path/to/to/data.json', jsonData, {
- *   indent: 4,
- *   replacer: ['name', 'occupation'] // Only keep "name" and "occupation" values
- * })
- */
 function writeDataSync(outPath, data, opts_) {
   warnIfEmpty(data, outPath, opts_);
   var writeOptions;
@@ -8643,21 +7699,6 @@ function writeDataSync(outPath, data, opts_) {
 }
 
 /* istanbul ignore next */
-/* istanbul ignore next */
-/**
- * Synchronous version of {@link writers#appendData}. See that function for supported formats
- *
- * @function appendDataSync
- * @param {String} filePath File to append to
- * @param {Array|Object} data The new data to append
- * @param {Object} [options] Optional options object passed to {@link writeData}. See that function for format-specific options.
- * @returns {Object} The combined data that was written
- *
- * @example
- * io.appendDataSync('path/to/data.json', jsonData)
- *
- * io.appendDataSync('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true})
- */
 function appendDataSync(outPath, data, opts_) {
   // Run append file to delegate creating a new file if none exists
   if (opts_ && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
