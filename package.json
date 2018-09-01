@@ -1,6 +1,6 @@
 {
   "name": "indian-ocean",
-  "version": "3.1.0",
+  "version": "3.0.2",
   "description": "A library for reading in and writing out data in Node.js.",
   "main": "dist/indian-ocean.cjs.js",
   "browser": "dist/indian-ocean.browser.es6.js",
