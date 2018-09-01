@@ -3,9 +3,9 @@ Changelog
 
 # 3.1.0
 
-> Not yet on npm
+> 2018-09-01
 
-Add `verbose` option to `writeData` and `writeDataSync`, which allows you to turn off empty file warnings and also makes the error message more descriptive. Rename the dist output to be `.cjs.js` instead of `.node.js`.
+Add `verbose` option to `writeData` and `writeDataSync`, which allows you to turn off empty file warnings and also makes the error message more descriptive. Rename the dist output to be `.cjs.js` instead of `.node.js`. Add `skipHidden` and `detailed` options to `readdir` functions.
 
 * Add verbose, closes [#77](https://github.com/mhkeller/indian-ocean/issues/77)
   * [2f2fff19a3282c559a18b502eba9262cef75fafd](https://github.com/mhkeller/indian-ocean/commit/2f2fff19a3282c559a18b502eba9262cef75fafd)
