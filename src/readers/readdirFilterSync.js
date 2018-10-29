@@ -1,9 +1,9 @@
 import fs from 'fs'
 import readdir from './readdir'
-import {joinPath} from '../utils/path'
+import { joinPath } from '../utils/path'
 
 /**
- * Syncronous version of {@link readdirFilter}. Get a list of a directory's files and folders if certain critera are met.
+ * Syncronous version of {@link readdirFilter}. Get a list of a directory's files and folders if certain critera are met. Directories will include a trailing slash.
  *
  * @function readdirFilterSync
  * @param {String} dirPath The directory to read from
@@ -32,14 +32,14 @@ import {joinPath} from '../utils/path'
  *
  */
 export default function readdirFilterSync (dirPath, opts_) {
-  var results = readdir({async: false}, dirPath, opts_)
-  if (opts_.recursive === true) {
+  var results = readdir({ async: false }, dirPath, opts_)
+  if (opts_ && opts_.recursive === true) {
     return results.map(file => {
       var filePath = file
       if (opts_.detailed === true) {
         filePath = joinPath(file.basePath, file.fileName)
       } else if (!opts_.fullPath) {
-        filePath = joinPath(dirPath, file)
+        filePath = !dirPath.endsWith('/') ? joinPath(dirPath, file) : dirPath + file
       }
       return fs.statSync(filePath).isDirectory() ? readdirFilterSync(filePath, opts_) : filePath
     })

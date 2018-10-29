@@ -1,7 +1,7 @@
 import readdir from './readdir'
 
 /**
- * Asynchronously get a list of a directory's files and folders if certain critera are met.
+ * Asynchronously get a list of a directory's files and folders if certain critera are met. Directories will include a trailing slash.
  *
  * @function readdirFilter
  * @param {String} dirPath The directory to read from
@@ -34,5 +34,5 @@ export default function readdirFilter (dirPath, opts_, cb) {
     opts_ = undefined
   }
 
-  readdir({async: true}, dirPath, opts_, cb)
+  readdir({ async: true }, dirPath, opts_, cb)
 }

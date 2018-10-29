@@ -5,7 +5,7 @@ import fs from 'fs'
 import queue from 'd3-queue/src/queue'
 import matches from '../helpers/matches'
 import identity from '../utils/identity'
-import {joinPath} from '../utils/path'
+import { joinPath } from '../utils/path'
 
 export default function readdir (modeInfo, dirPath, opts_, cb) {
   opts_ = opts_ || {}

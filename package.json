@@ -16,7 +16,8 @@
     "dev": "rm -rf dist && mkdir dist && rollup --config rollup.config.node.js -w",
     "start": "npm run build && npm test",
     "test": "standard --fix src/**/*.js && rm -rf test/tmp-* && mocha",
-    "coverage": "nyc --reporter=lcov mocha"
+    "coverage": "nyc --reporter=lcov mocha",
+    "test-file": "node -r esm test.js"
   },
   "repository": {
     "type": "git",
@@ -72,6 +73,7 @@
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "esm": "^3.0.84",
     "github-slugger": "^1.2.0",
     "glob": "^7.1.2",
     "js-yaml": "^3.4.2",
