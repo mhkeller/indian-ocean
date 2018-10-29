@@ -8025,7 +8025,7 @@ function readdirFilterSync(dirPath, opts_) {
       if (opts_.detailed === true) {
         filePath = joinPath(file.basePath, file.fileName);
       } else if (!opts_.fullPath) {
-        filePath = joinPath(dirPath, file);
+        filePath = !dirPath.endsWith('/') ? joinPath(dirPath, file) : dirPath + file;
       }
       return fs.statSync(filePath).isDirectory() ? readdirFilterSync(filePath, opts_) : filePath;
     });
