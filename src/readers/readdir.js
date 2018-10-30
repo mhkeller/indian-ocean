@@ -6,7 +6,7 @@ import queue from 'd3-queue/src/queue'
 import matches from '../helpers/matches'
 import identity from '../utils/identity'
 import flatten from '../utils/flatten'
-import { joinPath } from '../utils/path'
+import { joinPath, dirname } from '../utils/path'
 
 function readdirRecursiveSync (dirPath) {
   return fs.readdirSync(dirPath).map(d => {
@@ -62,6 +62,8 @@ export default function readdir (modeInfo, dirPath, opts_, cb) {
       filePath = joinPath(file.basePath, file.fileName)
     } else if (!opts_.fullPath && !opts_.recursive) {
       filePath = joinPath(dirPath, file)
+    } else if (opts_.fullPath && opts_.recursive) {
+      console.log(dirPath, file)
     }
 
     if (isAsync === true) {
@@ -94,7 +96,9 @@ export default function readdir (modeInfo, dirPath, opts_, cb) {
   }
 
   function filterByMatchers (files) {
-    var filtered = files.filter(function (fileName) {
+    var filtered = files.filter(function (d) {
+      var dir = dirname(d)
+      var fileName = d.replace(dir + '/', '')
       var isExcluded
       var isIncluded
 
@@ -126,7 +130,9 @@ export default function readdir (modeInfo, dirPath, opts_, cb) {
     // Prefix with the full path if that's what we asked for
     if (opts_.fullPath === true) {
       return filtered.map(function (fileName) {
-        return joinPath(dirPath, fileName)
+        var dir = dirname(fileName)
+        var f = fileName.replace(dir, '')
+        return joinPath(dirPath, f)
       })
     }
     // Or return detailed format

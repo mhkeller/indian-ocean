@@ -479,8 +479,8 @@ describe('matches()', function () {
 describe('extend()', function () {
   describe('shallow', function () {
     it('should be equal', function () {
-      var mergedObj = io.extend({}, {name: 'indian-ocean'}, {alias: 'io'})
-      assert.equal(JSON.stringify(mergedObj), JSON.stringify({name: 'indian-ocean', alias: 'io'}))
+      var mergedObj = io.extend({}, {name: 'indian-ocean' }, {alias: 'io' })
+      assert.equal(JSON.stringify(mergedObj), JSON.stringify({name: 'indian-ocean', alias: 'io' }))
     })
   })
 
@@ -887,7 +887,7 @@ describe('readers', function () {
 
     describe('custom delimiter string: `_`', function () {
       it('should match expected json', function () {
-        var json = io.readDataSync(testDataPath('other/basic.usv'), {parser: '_'})
+        var json = io.readDataSync(testDataPath('other/basic.usv'), {parser: '_' })
         assertBasicValid(json, true)
       })
     })
@@ -1690,14 +1690,14 @@ describe('readers', function () {
   describe('readdirFilterSync()', function () {
     describe('empty', function () {
       it('should be empty', function () {
-        assert.lengthOf(io.readdirFilterSync(__dirname, { include: 'csv'}), 0)
+        assert.lengthOf(io.readdirFilterSync(__dirname, { include: 'csv' }), 0)
       })
     })
 
     describe('actual extension', function () {
       it('should not be empty', function () {
         var dir = path.join(__dirname, 'data', 'csv')
-        assert.isAbove(io.readdirFilterSync(dir, { include: 'csv'}).length, 0)
+        assert.isAbove(io.readdirFilterSync(dir, { include: 'csv' }).length, 0)
       })
     })
 
@@ -1711,7 +1711,7 @@ describe('readers', function () {
     describe('extension in filename', function () {
       it('should be empty', function () {
         var dir = path.join(__dirname, 'data', 'json')
-        assert.lengthOf(io.readdirFilterSync(dir, { include: 'csv'}), 0)
+        assert.lengthOf(io.readdirFilterSync(dir, { include: 'csv' }), 0)
       })
     })
 
@@ -1723,13 +1723,39 @@ describe('readers', function () {
       })
     })
 
+    describe('recursive csv', function () {
+      it('should match expected output', function () {
+        var dir = path.join(__dirname, 'data', 'recursive')
+        var files = io.readdirFilterSync(dir, { recursive: true, include: 'csv' })
+        assert.deepEqual(files, [
+          path.join(__dirname, 'data/recursive/csvs/csv.csv'),
+          path.join(__dirname, 'data/recursive/csvs/sample.csv'),
+          path.join(__dirname, 'data/recursive/other.csv'),
+          path.join(__dirname, 'data/recursive/sample.csv')
+        ])
+      })
+    })
+
+    describe('recursive detailed csv', function () {
+      it('should match expected output', function () {
+        var dir = path.join(__dirname, 'data', 'recursive')
+        var files = io.readdirFilterSync(dir, { recursive: true, detailed: true, include: 'csv' })
+        assert.deepEqual(files, [
+          { basePath: path.join(__dirname, 'data/recursive/csvs'), fileName: 'csv.csv' },
+          { basePath: path.join(__dirname, 'data/recursive/csvs'), fileName: 'sample.csv' },
+          { basePath: path.join(__dirname, 'data/recursive'), fileName: 'other.csv' },
+          { basePath: path.join(__dirname, 'data/recursive'), fileName: 'sample.csv' }
+        ])
+      })
+    })
+
     describe('detailed readdir results', function () {
       it('should match expected output', function () {
         var dir = path.join(__dirname, 'data', 'csv')
         var files = io.readdirFilterSync(dir, { include: 'csv', detailed: true })
         assert.deepEqual(files, [
-          {basePath: dir, fileName: 'basic.csv'},
-          {basePath: dir, fileName: 'empty.csv'}
+          { basePath: dir, fileName: 'basic.csv' },
+          { basePath: dir, fileName: 'empty.csv' }
         ])
       })
     })
@@ -1739,8 +1765,8 @@ describe('readers', function () {
         var dir = path.join(__dirname, 'data', 'csv') + '/'
         var files = io.readdirFilterSync(dir, { include: 'csv', detailed: true })
         assert.deepEqual(files, [
-          {basePath: dir, fileName: 'basic.csv'},
-          {basePath: dir, fileName: 'empty.csv'}
+          { basePath: dir, fileName: 'basic.csv' },
+          { basePath: dir, fileName: 'empty.csv' }
         ])
       })
     })
@@ -1756,21 +1782,21 @@ describe('readers', function () {
     describe('all files match', function () {
       it('should be empty', function () {
         var dir = path.join(__dirname, 'data', 'csv')
-        assert.lengthOf(io.readdirFilterSync(dir, { exclude: 'csv'}), 0)
+        assert.lengthOf(io.readdirFilterSync(dir, { exclude: 'csv' }), 0)
       })
     })
 
     describe('no matching files', function () {
       it('should not be empty', function () {
         var dir = path.join(__dirname, 'data', 'csv')
-        assert.isAbove(io.readdirFilterSync(dir, { exclude: 'tsv'}).length, 0)
+        assert.isAbove(io.readdirFilterSync(dir, { exclude: 'tsv' }).length, 0)
       })
     })
 
     describe('extension in filename', function () {
       it('should not be empty', function () {
         var dir = path.join(__dirname, 'data', 'mixed')
-        assert.isAbove(io.readdirFilterSync(dir, { exclude: 'csv'}).length, 0)
+        assert.isAbove(io.readdirFilterSync(dir, { exclude: 'csv' }).length, 0)
       })
     })
 

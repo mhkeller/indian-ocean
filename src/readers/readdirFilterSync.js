@@ -11,6 +11,7 @@ import readdir from './readdir'
  * @param {Boolean} [options.skipFiles=false] If `true`, omit files from results.
  * @param {Boolean} [options.skipDirs=false] If `true`, omit directories from results.
  * @param {Boolean} [options.skipHidden=false] If `true`, omit files that start with a dot from results. Shorthand for `{exclude: /^\./}`.
+ * @param {Boolean} [options.recursive=false] If `true`, looks for files recursively.
  * @param {String|RegExp|Array<String|RegExp>} options.include If given a string, return files that have that string as their extension. If given a Regular Expression, return the files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `includeMatchAll`.
  * @param {String|RegExp|Array<String|RegExp>} options.exclude If given a string, return files that do not have that string as their extension. If given a Regular Expression, omit files whose name matches the pattern. Can also take a list of either type. List matching behavior is described in `excludeMatchAll`.
  * @param {Boolean} [options.includeMatchAll=false] If true, require all include conditions to be met for a file to be included.
