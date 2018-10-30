@@ -2,3 +2,4 @@ node_modules/
 coverage
 .exrc
 .nyc_output
+/test.js

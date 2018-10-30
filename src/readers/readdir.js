@@ -5,7 +5,15 @@ import fs from 'fs'
 import queue from 'd3-queue/src/queue'
 import matches from '../helpers/matches'
 import identity from '../utils/identity'
+import flatten from '../utils/flatten'
 import { joinPath } from '../utils/path'
+
+function readdirRecursiveSync (dirPath) {
+  return fs.readdirSync(dirPath).map(d => {
+    var childPath = joinPath(dirPath, d)
+    return fs.statSync(childPath).isDirectory() ? readdirRecursiveSync(childPath) : childPath
+  })
+}
 
 export default function readdir (modeInfo, dirPath, opts_, cb) {
   opts_ = opts_ || {}
@@ -36,7 +44,8 @@ export default function readdir (modeInfo, dirPath, opts_, cb) {
       filter(files, cb)
     })
   } else {
-    return filterSync(fs.readdirSync(dirPath))
+    var dirs = opts_ && opts_.recursive === true ? flatten(readdirRecursiveSync(dirPath)) : fs.readdirSync(dirPath)
+    return filterSync(dirs)
   }
 
   function strToArray (val) {
@@ -51,7 +60,7 @@ export default function readdir (modeInfo, dirPath, opts_, cb) {
     var filePath = file
     if (opts_.detailed === true) {
       filePath = joinPath(file.basePath, file.fileName)
-    } else if (!opts_.fullPath) {
+    } else if (!opts_.fullPath && !opts_.recursive) {
       filePath = joinPath(dirPath, file)
     }
 

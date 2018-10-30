@@ -7802,9 +7802,38 @@ function queue(concurrency) {
   return new Queue(concurrency);
 }
 
+/* --------------------------------------------
+ *
+ * Underscore's _.flatten
+ *
+ * --------------------------------------------
+ */
+function flatten(input, output) {
+  output = output || [];
+  var idx = output.length;
+  var ll = input.length;
+  for (var i = 0; i < ll; i++) {
+    var value = input[i];
+    if (Array.isArray(value)) {
+      flatten(value, output);
+      idx = output.length;
+    } else {
+      output[idx++] = value;
+    }
+  }
+  return output;
+}
+
 // Used internally by `readdir` functions to make more DRY
 /* istanbul ignore next */
 /* istanbul ignore next */
+function readdirRecursiveSync(dirPath) {
+  return fs.readdirSync(dirPath).map(function (d) {
+    var childPath = joinPath(dirPath, d);
+    return fs.statSync(childPath).isDirectory() ? readdirRecursiveSync(childPath) : childPath;
+  });
+}
+
 function readdir(modeInfo, dirPath, opts_, cb) {
   opts_ = opts_ || {};
   var isAsync = modeInfo.async;
@@ -7834,7 +7863,8 @@ function readdir(modeInfo, dirPath, opts_, cb) {
       filter(files, cb);
     });
   } else {
-    return filterSync(fs.readdirSync(dirPath));
+    var dirs = opts_ && opts_.recursive === true ? flatten(readdirRecursiveSync(dirPath)) : fs.readdirSync(dirPath);
+    return filterSync(dirs);
   }
 
   function strToArray(val) {
@@ -7849,7 +7879,7 @@ function readdir(modeInfo, dirPath, opts_, cb) {
     var filePath = file;
     if (opts_.detailed === true) {
       filePath = joinPath(file.basePath, file.fileName);
-    } else if (!opts_.fullPath) {
+    } else if (!opts_.fullPath && !opts_.recursive) {
       filePath = joinPath(dirPath, file);
     }
 
@@ -8018,20 +8048,7 @@ function readdirFilter(dirPath, opts_, cb) {
  *
  */
 function readdirFilterSync(dirPath, opts_) {
-  var results = readdir({ async: false }, dirPath, opts_);
-  if (opts_ && opts_.recursive === true) {
-    return results.map(function (file) {
-      var filePath = file;
-      if (opts_.detailed === true) {
-        filePath = joinPath(file.basePath, file.fileName);
-      } else if (!opts_.fullPath) {
-        filePath = !dirPath.endsWith('/') ? joinPath(dirPath, file) : dirPath + file;
-      }
-      return fs.statSync(filePath).isDirectory() ? readdirFilterSync(filePath, opts_) : filePath;
-    });
-  } else {
-    return results;
-  }
+  return readdir({ async: false }, dirPath, opts_);
 }
 
 /**
