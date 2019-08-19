@@ -55,7 +55,8 @@
   "readmeFilename": "README.md",
   "dependencies": {
     "http-server": "^0.11.1",
-    "shapefile": "^0.6.2"
+    "shapefile": "^0.6.2",
+    "strip-bom": "^4.0.0"
   },
   "devDependencies": {
     "archieml": "^0.4.2",
