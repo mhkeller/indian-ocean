@@ -1,3 +1,4 @@
+
 /* global describe, it */
 
 var fs = require('fs')
@@ -1713,28 +1714,6 @@ describe('readers', function () {
         var dir = path.join(__dirname, 'data', 'csv')
         var files = io.readdirFilterSync(dir, {include: 'csv', fullPath: true})
         assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
-      })
-    })
-
-    describe('detailed readdir results', function () {
-      it('should match expected output', function () {
-        var dir = path.join(__dirname, 'data', 'csv')
-        var files = io.readdirFilterSync(dir, {include: 'csv', detailed: true})
-        assert.deepEqual(files, [
-          {basePath: dir, fileName: 'basic.csv'},
-          {basePath: dir, fileName: 'empty.csv'}
-        ])
-      })
-    })
-
-    describe('detailed readdir results', function () {
-      it('should match expected output', function () {
-        var dir = path.join(__dirname, 'data', 'csv') + '/'
-        var files = io.readdirFilterSync(dir, {include: 'csv', detailed: true})
-        assert.deepEqual(files, [
-          {basePath: dir, fileName: 'basic.csv'},
-          {basePath: dir, fileName: 'empty.csv'}
-        ])
       })
     })
 

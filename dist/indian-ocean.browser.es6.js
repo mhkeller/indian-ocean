@@ -1,4 +1,4 @@
-// https://github.com/mhkeller/indian-ocean Version 3.0.2. Copyright 2018 Michael Keller.
+// https://github.com/mhkeller/indian-ocean Version 3.1.0. Copyright 2019 Michael Keller.
 var EOL = {};
 var EOF = {};
 var QUOTE = 34;
