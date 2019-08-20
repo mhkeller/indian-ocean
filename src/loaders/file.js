@@ -2,6 +2,7 @@
 import fs from 'fs'
 import discernFormat from '../helpers/discernFormat'
 import {formatsIndex} from '../config/equivalentFormats'
+import stripBom from '../utils/stripBom.js'
 
 export default function file (filePath, parser, parserOptions, cb) {
   fs.readFile(filePath, 'utf8', function (err, data) {
@@ -26,6 +27,6 @@ export default function file (filePath, parser, parserOptions, cb) {
       cb(err)
       return
     }
-    cb(null, parsed)
+    cb(null, stripBom(parsed))
   })
 }

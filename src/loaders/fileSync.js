@@ -2,6 +2,7 @@
 import fs from 'fs'
 import discernFormat from '../helpers/discernFormat'
 import {formatsIndex} from '../config/equivalentFormats'
+import stripBom from '../utils/stripBom.js'
 
 export default function file (filePath, parser, parserOptions, cb) {
   var data = fs.readFileSync(filePath, 'utf8')
@@ -19,8 +20,5 @@ export default function file (filePath, parser, parserOptions, cb) {
     return new Error('Your specified parser is not properly formatted. It must either be a function or have a `parse` method.')
   }
 
-  // if (opts_ && opts_.flatten) {
-  //   parsed = _.map(parsed, flatten)
-  // }
-  return parsed
+  return stripBom(parsed)
 }
