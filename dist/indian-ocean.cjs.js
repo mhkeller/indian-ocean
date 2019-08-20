@@ -1744,9 +1744,16 @@ function dirname(path$$1) {
   return dir || '/';
 }
 
+/* --------------------------------------------
+ * Join a path with a slash, removing any stub entries that end in a slash
+ * to avoid a double slash scenario
+ */
 function joinPath() {
   var args = Array.prototype.slice.call(arguments);
-  return args.join('/'); // TODO, windows
+  return args.map(function (d, i) {
+    if (i === args.length - 1) return d;
+    return d.replace(/\/$/, '');
+  }).join('/'); // TODO, windows
 }
 
 /**

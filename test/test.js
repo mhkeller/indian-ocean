@@ -1662,6 +1662,13 @@ describe('readers', function () {
           done(assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1))
         })
       })
+      it('should match expected output stripping trailing slash', function (done) {
+        var dir = path.join(__dirname, 'data', 'other/')
+        io.readdirFilter(dir, {exclude: 'csv', fullPath: true}, function (err, files) {
+          assert.equal(err, null)
+          done(assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1))
+        })
+      })
     })
 
     describe('get dirs only', function () {
@@ -1711,6 +1718,11 @@ describe('readers', function () {
     describe('dirPath in filename', function () {
       it('should match expected output', function () {
         var dir = path.join(__dirname, 'data', 'csv')
+        var files = io.readdirFilterSync(dir, {include: 'csv', fullPath: true})
+        assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
+      })
+      it('should match expected output with trailing slash', function () {
+        var dir = path.join(__dirname, 'data', 'csv/')
         var files = io.readdirFilterSync(dir, {include: 'csv', fullPath: true})
         assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
       })

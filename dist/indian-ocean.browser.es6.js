@@ -1,4 +1,4 @@
-// https://github.com/mhkeller/indian-ocean Version 3.0.2. Copyright 2018 Michael Keller.
+// https://github.com/mhkeller/indian-ocean Version 3.1.0. Copyright 2019 Michael Keller.
 var EOL = {};
 var EOF = {};
 var QUOTE = 34;
@@ -6978,6 +6978,13 @@ function posixSplitPath(filename) {
 function extname(filename) {
   return posixSplitPath(filename)[3];
 }
+
+
+
+/* --------------------------------------------
+ * Join a path with a slash, removing any stub entries that end in a slash
+ * to avoid a double slash scenario
+ */
 
 /**
  * Given a `filePath` return the file's extension. Used internally by {@link discernParser} and {@link discernFileFormatter}. Returns `false` for files without an extension, including dotfiles
