@@ -66,11 +66,6 @@ describe('csv with bom characters', function () {
   describe('readDataSync()', function () {
     it('should be read proper keys', function () {
       var file = io.readDataSync(testDataPath('bom/bom.csv'))
-      // file.forEach(d => {
-      //   Object.keys(d).forEach(k => {
-      //     d[k.trim()]= d[k]
-      //   })
-      // })
       assert.equal(file[0].name, 'jim')
       assert.equal(file[0].occupation, 'land surveyor')
       assert.equal(file[0].height, 70)
@@ -83,11 +78,6 @@ describe('csv with bom characters', function () {
   describe('readData()', function () {
     it('should be read proper keys', function (done) {
       io.readData(testDataPath('bom/bom.csv'), (err, file) => {
-        // file.forEach(d => {
-        //   Object.keys(d).forEach(k => {
-        //     d[k.trim()]= d[k]
-        //   })
-        // })
         assert.equal(file[0].name, 'jim')
         assert.equal(file[0].occupation, 'land surveyor')
         assert.equal(file[0].height, 70)
