@@ -6105,6 +6105,18 @@ function getParser(delimiterOrParser) {
   return parser;
 }
 
+// from https://github.com/sindresorhus/strip-bom/blob/d5696fdc9eeb6cc8d97e390cf1de7558f74debd5/index.js#L3
+
+function stripBom(string) {
+  // Catches EFBBBF (UTF-8 BOM) because the buffer-to-string
+  // conversion translates it to FEFF (UTF-16 BOM)
+  if (string.charCodeAt(0) === 0xFEFF) {
+    return string.slice(1);
+  }
+
+  return string;
+}
+
 /* istanbul ignore next */
 function file(filePath, parser, parserOptions, cb) {
   fs.readFile(filePath, 'utf8', function (err, data) {
@@ -6118,6 +6130,7 @@ function file(filePath, parser, parserOptions, cb) {
     }
     var parsed;
     try {
+      data = stripBom(data);
       if (typeof parser === 'function') {
         parsed = parser(data, parserOptions);
       } else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
@@ -6141,6 +6154,7 @@ function file$1(filePath, parser, parserOptions, cb) {
     data = '[]';
   }
 
+  data = stripBom(data);
   var parsed;
   if (typeof parser === 'function') {
     parsed = parser(data, parserOptions);
@@ -6150,9 +6164,6 @@ function file$1(filePath, parser, parserOptions, cb) {
     return new Error('Your specified parser is not properly formatted. It must either be a function or have a `parse` method.');
   }
 
-  // if (opts_ && opts_.flatten) {
-  //   parsed = _.map(parsed, flatten)
-  // }
   return parsed;
 }
 
