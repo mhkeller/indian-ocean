@@ -63,6 +63,34 @@ function assertBasicValidObject (obj, strings, row) {
   }
 }
 
+describe('csv with bom characters', function () {
+  describe('readDataSync()', function () {
+    it('should be read proper keys', function () {
+      var file = io.readDataSync(testDataPath('bom/bom.csv'))
+      assert.equal(file[0].name, 'jim')
+      assert.equal(file[0].occupation, 'land surveyor')
+      assert.equal(file[0].height, 70)
+      assert.equal(file[1].name, 'francis')
+      assert.equal(file[1].occupation, 'conductor')
+      assert.equal(file[1].height, 63)
+    })
+  })
+
+  describe('readData()', function () {
+    it('should be read proper keys', function (done) {
+      io.readData(testDataPath('bom/bom.csv'), (err, file) => {
+        assert.equal(file[0].name, 'jim')
+        assert.equal(file[0].occupation, 'land surveyor')
+        assert.equal(file[0].height, 70)
+        assert.equal(file[1].name, 'francis')
+        assert.equal(file[1].occupation, 'conductor')
+        assert.equal(file[1].height, 63)
+        done()
+      })
+    })
+  })
+
+})
 describe('discernFormat()', function () {
   describe('no extension', function () {
     it('should be false', function () {
@@ -1663,6 +1691,13 @@ describe('readers', function () {
           done(assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1))
         })
       })
+      it('should match expected output stripping trailing slash', function (done) {
+        var dir = path.join(__dirname, 'data', 'other/')
+        io.readdirFilter(dir, {exclude: 'csv', fullPath: true}, function (err, files) {
+          assert.equal(err, null)
+          done(assert.notEqual(files.indexOf(path.join(dir, 'this_is_not_a_csv.txt')), -1))
+        })
+      })
     })
 
     describe('get dirs only', function () {
@@ -1712,6 +1747,11 @@ describe('readers', function () {
     describe('dirPath in filename', function () {
       it('should match expected output', function () {
         var dir = path.join(__dirname, 'data', 'csv')
+        var files = io.readdirFilterSync(dir, {include: 'csv', fullPath: true})
+        assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
+      })
+      it('should match expected output with trailing slash', function () {
+        var dir = path.join(__dirname, 'data', 'csv/')
         var files = io.readdirFilterSync(dir, {include: 'csv', fullPath: true})
         assert.equal(files.indexOf(path.join(dir, 'basic.csv')), 0)
       })
