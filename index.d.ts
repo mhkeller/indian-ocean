@@ -33,11 +33,6 @@ export function convertDbfToData(
 /* --------------------------------------------
  * Helpers
  */
-export function deepExtend<T>(
-	destination: T,
-	...sources: object[]
-): T;
-
 export function discernFileFormatter(
 	fileName: string
 ): Formatter;
@@ -59,17 +54,6 @@ export function exists(
 export function existsSync(
 	fileName: string
 ): boolean;
-
-export function extend<T>(
-	deep: boolean,
-	destination: T,
-	...sources: T[]
-): T;
-
-export function extend<T>(
-	destination: T,
-	...sources: T[]
-): T;
 
 export function extMatchesStr(
 	fileName: string,

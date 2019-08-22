@@ -5,11 +5,10 @@ import _ from 'underscore'
 import makeDirectories from '../helpers/makeDirectories'
 import readData from '../readers/readData'
 import writeData from './writeData'
-import extend from '../helpers/extend'
 import omit from '../utils/omit'
 
 /**
- * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with {@link extend}. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
+ * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with `Object.assign`. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
  *
  * Supported formats:
  *
@@ -58,7 +57,7 @@ export default function appendData (outPath, data, opts_, cb) {
               if (Array.isArray(existingData)) {
                 data = existingData.concat(data)
               } else if (typeof existingData === 'object') {
-                data = extend({}, existingData, data)
+                data = Object.assign({}, existingData, data)
               }
             }
             writeData(outPath, data, opts_, cb)
