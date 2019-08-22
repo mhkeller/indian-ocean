@@ -19,13 +19,15 @@ Adds XLSX file reading! Removes a few functions that weren't really ever used an
 * Add `{ recursive: true }` optiont `readdirFilter` functions
   * TODO
 * Remove `extend` and `deepExtend` functions
-  * TODO
+  * [47c06001e8a48cb60e0655380c5844ede329a23d](https://github.com/mhkeller/indian-ocean/commit/47c06001e8a48cb60e0655380c5844ede329a23d)
 * Support reading XLSX files
   * TODO
 * Remove double slashes on `readdirFilter` functions if input dir ends in a slash and `{ fullPath: true }`.
   * [440029a2265e94fb9b1ffc05a10b374392e2bf82](https://github.com/mhkeller/indian-ocean/commit/440029a2265e94fb9b1ffc05a10b374392e2bf82)
-* Update test command for getter travis testing
+* Update test command for getter travis testing and travis-node versions
   * [8e4b23d1d71b137780aa80dc56909ed98e43a2db](https://github.com/mhkeller/indian-ocean/commit/8e4b23d1d71b137780aa80dc56909ed98e43a2db)
+  * [0d76d1ce516c8b042f02e724989a1287974e73ab](https://github.com/mhkeller/indian-ocean/commit/0d76d1ce516c8b042f02e724989a1287974e73ab)
+  * [5b97b8f8e00fe79c58c7ce8795728e4ffe1384d0](https://github.com/mhkeller/indian-ocean/commit/5b97b8f8e00fe79c58c7ce8795728e4ffe1384d0)
 * File readers now strip BOM characters
   * [88ccb5a55bc9ab5ba40be5f8a86a266d11ff8a90](https://github.com/mhkeller/indian-ocean/commit/88ccb5a55bc9ab5ba40be5f8a86a266d11ff8a90)
   * [8bb2259d28dddd69bf95bc03806ffcb5dc7acac3](https://github.com/mhkeller/indian-ocean/commit/8bb2259d28dddd69bf95bc03806ffcb5dc7acac3)
