@@ -20,6 +20,7 @@ Adds XLSX file reading! Removes a few functions that weren't really ever used an
   * TODO
 * Remove `extend` and `deepExtend` functions
   * [47c06001e8a48cb60e0655380c5844ede329a23d](https://github.com/mhkeller/indian-ocean/commit/47c06001e8a48cb60e0655380c5844ede329a23d)
+  * [91cbeff745722b216d3b56131a44a800ef1ea227](https://github.com/mhkeller/indian-ocean/commit/91cbeff745722b216d3b56131a44a800ef1ea227)
 * Support reading XLSX files
   * TODO
 * Remove double slashes on `readdirFilter` functions if input dir ends in a slash and `{ fullPath: true }`.
