@@ -92,7 +92,7 @@ console.log(csvs)
 ]
 */
 
-// Concatenate them into one file and write them out as one csv
+// Concatenate them into one file with Javascript's Array.flat() method and write out one combined csv
 io.writeDataSync('single-file.csv', csvs.flat())
 
 /*
