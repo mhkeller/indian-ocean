@@ -7864,12 +7864,7 @@ function readdir(modeInfo, dirPath, opts_, cb) {
 
   function filterByType(file, cb) {
     // We need the full path so convert it if it isn't already
-    var filePath = file;
-    if (opts_.detailed === true) {
-      filePath = joinPath(file.basePath, file.fileName);
-    } else if (!opts_.fullPath) {
-      filePath = joinPath(dirPath, file);
-    }
+    var filePath = opts_.fullPath ? file : joinPath(dirPath, file);
 
     if (isAsync === true) {
       fs.stat(filePath, function (err, stats) {
@@ -7923,19 +7918,10 @@ function readdir(modeInfo, dirPath, opts_, cb) {
       return true;
     });
 
-    if (opts_.fullPath === true && opts_.detailed === true) {
-      throw new Error('[indian-ocean] Both `fullPath` and `detailed` are `true`. You can only set one or the other.');
-    }
     // Prefix with the full path if that's what we asked for
     if (opts_.fullPath === true) {
       return filtered.map(function (fileName) {
         return joinPath(dirPath, fileName);
-      });
-    }
-    // Or return detailed format
-    if (opts_.detailed === true) {
-      return filtered.map(function (fileName) {
-        return { basePath: dirPath, fileName: fileName };
       });
     }
 

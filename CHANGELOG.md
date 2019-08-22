@@ -10,7 +10,8 @@ Adds XLSX file reading! Removes a few functions that weren't really ever used an
 * Remove YAML readers
   * TODO
 * Remove `{ detailed: true }` option from `readdirFilter` functions
-  * TODO
+  * [3ed95d28524dbaf5ec8fedf2ad0ab4776976ae26](https://github.com/mhkeller/indian-ocean/commit/3ed95d28524dbaf5ec8fedf2ad0ab4776976ae26)
+  * [c9c130955a1fee4d5dc844eab0416e6b7a332d1d](https://github.com/mhkeller/indian-ocean/commit/c9c130955a1fee4d5dc844eab0416e6b7a332d1d)
 * Add `{ recursive: true }` optiont `readdirFilter` functions
   * TODO
 * Remove `extend` and `deepExtend` functions
