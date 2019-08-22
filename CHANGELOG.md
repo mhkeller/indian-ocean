@@ -12,6 +12,7 @@ Adds XLSX file reading! Removes a few functions that weren't really ever used an
   * [950280f50e0e4eaaa5f23fe56ea7c86714b2675c](https://github.com/mhkeller/indian-ocean/commit/950280f50e0e4eaaa5f23fe56ea7c86714b2675c)
   * [17d0b203e14f6c25922ce897657fb2b2503dcd88](https://github.com/mhkeller/indian-ocean/commit/17d0b203e14f6c25922ce897657fb2b2503dcd88)
   * [7a849ce97fd6b096b305609695f3c158a4d81196](https://github.com/mhkeller/indian-ocean/commit/7a849ce97fd6b096b305609695f3c158a4d81196)
+  * [d717838c158e8e027d7258b2a31a2990c2395e50](https://github.com/mhkeller/indian-ocean/commit/d717838c158e8e027d7258b2a31a2990c2395e50)
 * Remove `{ detailed: true }` option from `readdirFilter` functions
   * [3ed95d28524dbaf5ec8fedf2ad0ab4776976ae26](https://github.com/mhkeller/indian-ocean/commit/3ed95d28524dbaf5ec8fedf2ad0ab4776976ae26)
   * [c9c130955a1fee4d5dc844eab0416e6b7a332d1d](https://github.com/mhkeller/indian-ocean/commit/c9c130955a1fee4d5dc844eab0416e6b7a332d1d)
