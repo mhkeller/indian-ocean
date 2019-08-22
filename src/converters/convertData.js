@@ -2,7 +2,7 @@ import readData from '../readers/readData'
 import writeData from '../writers/writeData'
 
 /**
- * Reads in data given a path ending in the file format with {@link readData} and writes to file using {@link writeData}. A convenience function for converting files to more other formats. All formats can convert to all others except you can't convert object-only formats such as aml or yaml files that are not lists into tabular formats, which must be lists.
+ * Reads in data given a path ending in the file format with {@link readData} and writes to file using {@link writeData}. A convenience function for converting files to more other formats. All formats can convert to all others except as long as they are lists. For example, you can't convert an object-based aml file to a list format.
  *
  * @function convertData
  * @param {String} inFilePath Input file path

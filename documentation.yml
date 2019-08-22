@@ -23,8 +23,6 @@ toc:
   - readTsvSync
   - readTxt
   - readTxtSync
-  - readYaml
-  - readYamlSync
   - name: 'converters'
   - convertData
   - convertDbfToData

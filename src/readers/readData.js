@@ -14,7 +14,6 @@ import omit from '../utils/omit'
  * * `.csv` Comma-separated
  * * `.tsv` Tab-separated
  * * `.psv` Pipe-separated
- * * `.yaml` or `.yml` Yaml file
  * * `.aml` ArchieML
  * * `.txt` Text file (a string)
  * * `.dbf` Database format used for shapefiles
@@ -27,7 +26,6 @@ import omit from '../utils/omit'
  * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
  * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJson} for details.
  * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJson} for details.
- * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYaml} for details.
  * @param {Function} callback Has signature `(err, data)`
  *
  * @example
