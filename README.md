@@ -54,7 +54,7 @@ console.log(json_data)
 ]
 */
 
-io.writeDataSync('path/to/save/output.json', json_data, {indent: 2})
+io.writeDataSync('path/to/save/output.json', json_data, { indent: 2 })
 ```
 
 Or, combine methods to read in a directory of csvs as json:
@@ -63,7 +63,7 @@ Or, combine methods to read in a directory of csvs as json:
 var io = require('indian-ocean')
 
 // Let's say this directory contains two csvs, each with two rows like the above example
-var csvs = io.readdirFilterSync('csvs-folder', {include: 'csv', fullPath: true}).map(io.readDataSync)
+var csvs = io.readdirFilterSync('csvs-folder', { include: 'csv', fullPath: true }).map(io.readDataSync)
 
 console.log(csvs)
 
@@ -90,6 +90,17 @@ console.log(csvs)
     }
   ]
 ]
+*/
+
+// Concatenate them into one file and write them out as one csv
+io.writeDataSync('single-file.csv', csvs.flat())
+
+/*
+name,city
+Gerald,Los Angeles
+Marcy,Tuscaloosa
+Liza,Minneapolis
+Eileen,Mobile
 */
 ```
 
