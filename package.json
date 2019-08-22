@@ -15,7 +15,7 @@
     "build": "rm -rf dist && mkdir dist && npm run build:node && npm run build:browser",
     "dev": "rm -rf dist && mkdir dist && rollup --config rollup.config.node.js -w",
     "start": "npm run build && npm test",
-    "test": "standard --fix src/**/*.js && rm -rf test/tmp-* && mocha",
+    "test": "npm run build && standard --fix src/**/*.js && rm -rf test/tmp-* && mocha",
     "coverage": "nyc --reporter=lcov mocha"
   },
   "repository": {
