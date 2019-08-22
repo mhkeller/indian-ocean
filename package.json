@@ -73,7 +73,7 @@
     "glob": "^7.1.2",
     "mkdirp": "^0.5.1",
     "mocha": "^5.2.0",
-    "nyc": "^13.0.1",
+    "nyc": "^14.1.1",
     "package-preamble": "0.0.2",
     "remap-istanbul": "^0.9.5",
     "rimraf": "^2.5.4",
