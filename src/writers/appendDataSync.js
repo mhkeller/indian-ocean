@@ -5,7 +5,6 @@ import _ from 'underscore'
 import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
 import readDataSync from '../readers/readDataSync'
 import writeDataSync from './writeDataSync'
-import extend from '../helpers/extend'
 import omit from '../utils/omit'
 
 /**
@@ -34,7 +33,7 @@ export default function appendDataSync (outPath, data, opts_) {
     if (Array.isArray(existingData)) {
       data = existingData.concat(data)
     } else if (typeof existingData === 'object') {
-      data = extend({}, existingData, data)
+      data = Object.assign({}, existingData, data)
     }
   }
   writeDataSync(outPath, data, opts_)

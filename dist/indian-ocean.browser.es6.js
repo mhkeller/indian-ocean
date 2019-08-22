@@ -2905,285 +2905,6 @@ formatsList.forEach(function (format) {
   });
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-
-
-
-
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
-
-  function AsyncGenerator(gen) {
-    var front, back;
-
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
-
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
-
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
-
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-/**
- * A port of jQuery's extend. Merge the contents of two or more objects together into the first object. Supports deep extending with `true` as the first argument.
- *
- * @function extend
- * @param {Boolean} [deepExtend] Optional, set to `true` to merge recursively.
- * @param {Object} destination The object to modify
- * @param {Object} source The object whose keys to take
- * @param {Object} [source2] Optional, You can add any number of objects as arguments.
- * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
- *
- * @example
- * var mergedObj = io.extend({}, {name: 'indian-ocean'}, {alias: 'io'})
- * console.log(mergedObj)
- * // {
- * //   name: 'indian-ocean',
- * //   alias: 'io'
- * // }
- *
- * var name = {name: 'indian-ocean'}
- * io.extend(name, {alias: 'io'})
- * console.log(name)
- * // {
- * //   name: 'indian-ocean',
- * //   alias: 'io'
- * // }
- *
- * @example
- * var object1 = {
- *   apple: 0,
- *   banana: { weight: 52, price: 100 },
- *   cherry: 97
- * }
- * var object2 = {
- *   banana: { price: 200 },
- *   almond: 100
- * }
- * io.extend(true, object1, object2)
- * console.log(object1)
- * //  {
- * //   apple: 0,
- * //   banana: {
- * //     weight: 52,
- * //     price: 200
- * //   },
- * //   cherry: 97,
- * //   almond: 100
- * // }
- *
- */
-function extend() {
-  var options;
-  var name;
-  var src;
-  var copy;
-  var copyIsArray;
-  var clone;
-  var target = arguments[0] || {};
-  var i = 1;
-  var length = arguments.length;
-  var deep = false;
-
-  // Handle a deep copy situation
-  if (typeof target === 'boolean') {
-    deep = target;
-
-    // Skip the boolean and the target
-    target = arguments[i] || {};
-    i++;
-  }
-
-  // Handle case when target is a string or something (possible in deep copy)
-  if ((typeof target === 'undefined' ? 'undefined' : _typeof(target)) !== 'object' && typeof target !== 'function') {
-    target = {};
-  }
-
-  // Extend indian-ocean itself if only one argument is passed
-  if (i === length) {
-    target = this;
-    i--;
-  }
-
-  for (; i < length; i++) {
-    // Only deal with non-null/undefined values
-    if ((options = arguments[i]) != null) {
-      // Extend the base object
-      for (name in options) {
-        src = target[name];
-        copy = options[name];
-
-        // Prevent never-ending loop
-        if (target === copy) {
-          continue;
-        }
-
-        // Recurse if we're merging plain objects or arrays
-        if (deep && copy && (typeof copy === 'undefined' ? 'undefined' : _typeof(copy)) === 'object' || (copyIsArray = Array.isArray(copy))) {
-          if (copyIsArray) {
-            copyIsArray = false;
-            clone = src && Array.isArray(src) ? src : [];
-          } else {
-            clone = src && (typeof src === 'undefined' ? 'undefined' : _typeof(src)) === 'object' ? src : {};
-          }
-
-          // Never move original objects, clone them
-          target[name] = extend(deep, clone, copy);
-
-          // Don't bring in undefined values
-        } else if (copy !== undefined) {
-          target[name] = copy;
-        }
-      }
-    }
-  }
-
-  // Return the modified object
-  return target;
-}
-
-/**
- * A more semantic convenience function. Delegates to {@link extend} and passes `true` as the first argument. Deep merge the contents of two or more objects together into the first object.
- *
- * @function deepExtend
- * @param {Object} destination The object to modify
- * @param {Object} source The object whose keys to take
- * @param {Object} [source2] Optional, You can add any number of objects as arguments.
- * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
- *
- * @example
- * var object1 = {
- *   apple: 0,
- *   banana: { weight: 52, price: 100 },
- *   cherry: 97
- * }
- * var object2 = {
- *   banana: { price: 200 },
- *   almond: 100
- * }
- * io.deepExtend(object1, object2)
- * console.log(object1)
- * //  {
- * //   apple: 0,
- * //   banana: {
- * //     weight: 52,
- * //     price: 200
- * //   },
- * //   cherry: 97,
- * //   almond: 100
- * // }
- *
- */
-function deepExtend() {
-  var args = Array.prototype.slice.call(arguments); // Make real array from arguments
-  args.unshift(true); // Add `true` as first arg.
-  extend.apply(this, args);
-}
-
 /* --------------------------------------------
  * Browser-implementations of NodeJS path module, adapted from Rich Harris, https://github.com/rollup/rollup/blob/master/browser/path.js
  */
@@ -5243,6 +4964,129 @@ function extMatchesStr(filePath, extension) {
   return ext === extension;
 }
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+
+
+
+
+var asyncGenerator = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type, value) {
+      switch (type) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
+
 // Our `readData` fns can take either a delimiter to parse a file, or a full blown parser
 // Determine what they passed in with this handy function
 function getParser(delimiterOrParser) {
@@ -5340,5 +5184,5 @@ function matches(filePath, matcher) {
 // export {default as writeData} from './src/writers/writeData'
 // export {default as writeDataSync} from './src/writers/writeDataSync'
 
-export { formatters, deepExtend, discernFileFormatter, discernFormat, discernParser, extend, extMatchesStr, getParser, matches, matchesRegExp, parsers };
+export { formatters, discernFileFormatter, discernFormat, discernParser, extMatchesStr, getParser, matches, matchesRegExp, parsers };
 //# sourceMappingURL=indian-ocean.browser.es6.js.map

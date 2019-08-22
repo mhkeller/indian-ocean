@@ -3517,162 +3517,6 @@ function convertDbfToData(inPath, outPath, opts_, cb) {
   });
 }
 
-/**
- * A port of jQuery's extend. Merge the contents of two or more objects together into the first object. Supports deep extending with `true` as the first argument.
- *
- * @function extend
- * @param {Boolean} [deepExtend] Optional, set to `true` to merge recursively.
- * @param {Object} destination The object to modify
- * @param {Object} source The object whose keys to take
- * @param {Object} [source2] Optional, You can add any number of objects as arguments.
- * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
- *
- * @example
- * var mergedObj = io.extend({}, {name: 'indian-ocean'}, {alias: 'io'})
- * console.log(mergedObj)
- * // {
- * //   name: 'indian-ocean',
- * //   alias: 'io'
- * // }
- *
- * var name = {name: 'indian-ocean'}
- * io.extend(name, {alias: 'io'})
- * console.log(name)
- * // {
- * //   name: 'indian-ocean',
- * //   alias: 'io'
- * // }
- *
- * @example
- * var object1 = {
- *   apple: 0,
- *   banana: { weight: 52, price: 100 },
- *   cherry: 97
- * }
- * var object2 = {
- *   banana: { price: 200 },
- *   almond: 100
- * }
- * io.extend(true, object1, object2)
- * console.log(object1)
- * //  {
- * //   apple: 0,
- * //   banana: {
- * //     weight: 52,
- * //     price: 200
- * //   },
- * //   cherry: 97,
- * //   almond: 100
- * // }
- *
- */
-function extend() {
-  var options;
-  var name;
-  var src;
-  var copy;
-  var copyIsArray;
-  var clone;
-  var target = arguments[0] || {};
-  var i = 1;
-  var length = arguments.length;
-  var deep = false;
-
-  // Handle a deep copy situation
-  if (typeof target === 'boolean') {
-    deep = target;
-
-    // Skip the boolean and the target
-    target = arguments[i] || {};
-    i++;
-  }
-
-  // Handle case when target is a string or something (possible in deep copy)
-  if ((typeof target === 'undefined' ? 'undefined' : _typeof(target)) !== 'object' && typeof target !== 'function') {
-    target = {};
-  }
-
-  // Extend indian-ocean itself if only one argument is passed
-  if (i === length) {
-    target = this;
-    i--;
-  }
-
-  for (; i < length; i++) {
-    // Only deal with non-null/undefined values
-    if ((options = arguments[i]) != null) {
-      // Extend the base object
-      for (name in options) {
-        src = target[name];
-        copy = options[name];
-
-        // Prevent never-ending loop
-        if (target === copy) {
-          continue;
-        }
-
-        // Recurse if we're merging plain objects or arrays
-        if (deep && copy && (typeof copy === 'undefined' ? 'undefined' : _typeof(copy)) === 'object' || (copyIsArray = Array.isArray(copy))) {
-          if (copyIsArray) {
-            copyIsArray = false;
-            clone = src && Array.isArray(src) ? src : [];
-          } else {
-            clone = src && (typeof src === 'undefined' ? 'undefined' : _typeof(src)) === 'object' ? src : {};
-          }
-
-          // Never move original objects, clone them
-          target[name] = extend(deep, clone, copy);
-
-          // Don't bring in undefined values
-        } else if (copy !== undefined) {
-          target[name] = copy;
-        }
-      }
-    }
-  }
-
-  // Return the modified object
-  return target;
-}
-
-/**
- * A more semantic convenience function. Delegates to {@link extend} and passes `true` as the first argument. Deep merge the contents of two or more objects together into the first object.
- *
- * @function deepExtend
- * @param {Object} destination The object to modify
- * @param {Object} source The object whose keys to take
- * @param {Object} [source2] Optional, You can add any number of objects as arguments.
- * @returns {Object} result The merged object. Note that the `destination` object will always be modified.
- *
- * @example
- * var object1 = {
- *   apple: 0,
- *   banana: { weight: 52, price: 100 },
- *   cherry: 97
- * }
- * var object2 = {
- *   banana: { price: 200 },
- *   almond: 100
- * }
- * io.deepExtend(object1, object2)
- * console.log(object1)
- * //  {
- * //   apple: 0,
- * //   banana: {
- * //     weight: 52,
- * //     price: 200
- * //   },
- * //   cherry: 97,
- * //   almond: 100
- * // }
- *
- */
-function deepExtend() {
-  var args = Array.prototype.slice.call(arguments); // Make real array from arguments
-  args.unshift(true); // Add `true` as first arg.
-  extend.apply(this, args);
-}
-
 /* istanbul ignore next */
 /**
  * Asynchronously test whether a file exists or not by using `fs.access` modified from https://github.com/nodejs/io.js/issues/1592#issuecomment-98392899.
@@ -4664,7 +4508,7 @@ function readTxtSync(filePath, opts_) {
 /* istanbul ignore next */
 /* istanbul ignore next */
 /**
- * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with {@link extend}. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
+ * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with `Object.assign`. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
  *
  * Supported formats:
  *
@@ -4713,7 +4557,7 @@ function appendData(outPath, data, opts_, cb) {
               if (Array.isArray(existingData)) {
                 data = existingData.concat(data);
               } else if ((typeof existingData === 'undefined' ? 'undefined' : _typeof(existingData)) === 'object') {
-                data = extend({}, existingData, data);
+                data = Object.assign({}, existingData, data);
               }
             }
             writeData(outPath, data, opts_, cb);
@@ -4813,7 +4657,7 @@ function appendDataSync(outPath, data, opts_) {
     if (Array.isArray(existingData)) {
       data = existingData.concat(data);
     } else if ((typeof existingData === 'undefined' ? 'undefined' : _typeof(existingData)) === 'object') {
-      data = extend({}, existingData, data);
+      data = Object.assign({}, existingData, data);
     }
   }
   writeDataSync(outPath, data, opts_);
@@ -4832,13 +4676,11 @@ exports.formatJson = json;
 exports.formatPsv = psv;
 exports.formatTsv = tsv$1;
 exports.formatTxt = txt;
-exports.deepExtend = deepExtend;
 exports.discernFileFormatter = discernFileFormatter;
 exports.discernFormat = discernFormat;
 exports.discernParser = discernParser;
 exports.exists = exists;
 exports.existsSync = existsSync;
-exports.extend = extend;
 exports.extMatchesStr = extMatchesStr;
 exports.getParser = getParser;
 exports.makeDirectories = makeDirectories;
