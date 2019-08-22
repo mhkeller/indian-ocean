@@ -3,7 +3,6 @@ import json from './json'
 import psv from './psv'
 import tsv from './tsv'
 import txt from './txt'
-import yaml from './yaml'
 import aml from './aml'
 import {formatsList} from '../config/equivalentFormats'
 

@@ -26,14 +26,14 @@ function testDataPath (name) {
 }
 
 function readAssertBasicValid (path, columns) {
-  var strFormats = ['json', 'geojson', 'topojson', 'yml', 'yaml']
+  var strFormats = ['json', 'geojson', 'topojson']
   var strings = strFormats.indexOf(io.discernFormat(path)) === -1
   var json = io.readDataSync(path)
   assertBasicValid(json, strings, columns)
 }
 
 function readAssertBasicValidObject (path, row) {
-  var strFormats = ['json', 'geojson', 'topojson', 'yml', 'yaml']
+  var strFormats = ['json', 'geojson', 'topojson']
   var strings = strFormats.indexOf(io.discernFormat(path)) === -1
   var json = io.readDataSync(path)
   assertBasicValidObject(json, strings, row)

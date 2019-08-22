@@ -2,8 +2,7 @@
  * Formats that should be treated similarly
  */
 export const formatsIndex = {
-  json: ['topojson', 'geojson'],
-  yaml: ['yml']
+  json: ['topojson', 'geojson']
 }
 
 export const formatsList = Object.keys(formatsIndex).map(key => {

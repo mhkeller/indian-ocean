@@ -18,7 +18,6 @@ Currently supports:
 * `psv`
 * `text`
 * `json`
-* `yaml`
 * `dbf`
 * `aml` - [ArchieML](http://archieml.org/)
 * Custom delimeters
