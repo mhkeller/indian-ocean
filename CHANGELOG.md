@@ -20,6 +20,8 @@ Adds XLSX file reading! Removes a few functions that weren't really ever used an
   * TODO
 * Remove double slashes on `readdirFilter` functions if input dir ends in a slash and `{ fullPath: true }`.
   * [440029a2265e94fb9b1ffc05a10b374392e2bf82](https://github.com/mhkeller/indian-ocean/commit/440029a2265e94fb9b1ffc05a10b374392e2bf82)
+* Update test command for getter travis testing
+  * [8e4b23d1d71b137780aa80dc56909ed98e43a2db](https://github.com/mhkeller/indian-ocean/commit/8e4b23d1d71b137780aa80dc56909ed98e43a2db)
 * File readers now strip BOM characters
   * [88ccb5a55bc9ab5ba40be5f8a86a266d11ff8a90](https://github.com/mhkeller/indian-ocean/commit/88ccb5a55bc9ab5ba40be5f8a86a266d11ff8a90)
   * [8bb2259d28dddd69bf95bc03806ffcb5dc7acac3](https://github.com/mhkeller/indian-ocean/commit/8bb2259d28dddd69bf95bc03806ffcb5dc7acac3)
