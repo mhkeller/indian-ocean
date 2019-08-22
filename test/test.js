@@ -119,18 +119,6 @@ describe('discernFormat()', function () {
     })
   })
 
-  describe('yaml', function () {
-    it('should properly discern yaml format', function () {
-      assert.equal(io.discernFormat(testDataPath('yaml/empty.yaml')), 'yaml')
-    })
-  })
-
-  describe('yml', function () {
-    it('should properly discern yml format', function () {
-      assert.equal(io.discernFormat(testDataPath('yml/empty.yml')), 'yml')
-    })
-  })
-
   describe('txt', function () {
     it('should properly discern txt format', function () {
       assert.equal(io.discernFormat(testDataPath('txt/empty.txt')), 'txt')
@@ -206,26 +194,6 @@ describe('discernParser()', function () {
 
     it('should be psv parser as method', function () {
       assert.equal(io.discernParser(testDataPath('psv/empty.psv')).toString(), io.parsePsv.toString())
-    })
-  })
-
-  describe('yaml', function () {
-    it('should be yaml parser', function () {
-      assert.equal(io.discernParser(testDataPath('yaml/empty.yaml')).toString(), io.parsers.yaml.toString())
-    })
-
-    it('should be yaml parser as method', function () {
-      assert.equal(io.discernParser(testDataPath('yaml/empty.yaml')).toString(), io.parseYaml.toString())
-    })
-  })
-
-  describe('yml', function () {
-    it('should be yml parser', function () {
-      assert.equal(io.discernParser(testDataPath('yml/empty.yml')).toString(), io.parsers.yml.toString())
-    })
-
-    it('should be yml parser as method', function () {
-      assert.equal(io.discernParser(testDataPath('yml/empty.yml')).toString(), io.parseYaml.toString())
     })
   })
 
@@ -325,26 +293,6 @@ describe('discernFileFormatter()', function () {
 
     it('should be psv formatter as method', function () {
       assert.equal(io.discernFileFormatter(testDataPath('psv/empty.psv')).toString(), io.formatPsv.toString())
-    })
-  })
-
-  describe('yaml', function () {
-    it('should be yaml formatter', function () {
-      assert.equal(io.discernFileFormatter(testDataPath('yaml/empty.yaml')).toString(), io.formatters.yaml.toString())
-    })
-
-    it('should be yaml formatter as method', function () {
-      assert.equal(io.discernFileFormatter(testDataPath('yaml/empty.yaml')).toString(), io.formatYaml.toString())
-    })
-  })
-
-  describe('yml', function () {
-    it('should be yml formatter', function () {
-      assert.equal(io.discernFileFormatter(testDataPath('yml/empty.yml')).toString(), io.formatters.yml.toString())
-    })
-
-    it('should be yml formatter as method', function () {
-      assert.equal(io.discernFileFormatter(testDataPath('yml/empty.yml')).toString(), io.formatYaml.toString())
     })
   })
 
@@ -827,64 +775,6 @@ describe('readers', function () {
       })
     })
 
-    describe('yaml', function () {
-      it('should match expected json', function () {
-        var json = io.readDataSync(testDataPath('yaml/basic.yaml'))
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
-      })
-    })
-
-    describe('yaml with map', function () {
-      it('should match expected json', function () {
-        var json = io.readDataSync(testDataPath('yaml/basic.yaml'), {
-          map: function (yamlFile) {
-            yamlFile.height = yamlFile.height * 2
-            return yamlFile
-          }
-        })
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
-      })
-    })
-
-    describe('yaml with map shorthand', function () {
-      it('should match expected json', function () {
-        var json = io.readDataSync(testDataPath('yaml/basic.yaml'), function (yamlFile) {
-          yamlFile.height = yamlFile.height * 2
-          return yamlFile
-        })
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
-      })
-    })
-
-    describe('yml', function () {
-      it('should match expected json', function () {
-        var json = io.readDataSync(testDataPath('yml/basic.yml'))
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
-      })
-    })
-
-    describe('yml with map', function () {
-      it('should match expected json', function () {
-        var json = io.readDataSync(testDataPath('yml/basic.yml'), {
-          map: function (yamlFile) {
-            yamlFile.height = yamlFile.height * 2
-            return yamlFile
-          }
-        })
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
-      })
-    })
-
-    describe('yml with map shorthand', function () {
-      it('should match expected json', function () {
-        var json = io.readDataSync(testDataPath('yml/basic.yml'), function (yamlFile) {
-          yamlFile.height = yamlFile.height * 2
-          return yamlFile
-        })
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
-      })
-    })
-
     describe('aml', function () {
       it('should match expected json', function () {
         var json = io.readDataSync(testDataPath('aml/basic.aml'))
@@ -1282,82 +1172,6 @@ describe('readers', function () {
         }, function (err, text) {
           assert.equal(err, null)
           assert(_.isEqual(text, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
-          done()
-        })
-      })
-    })
-
-    describe('yaml', function () {
-      it('should match expected json', function (done) {
-        io.readData(testDataPath('yaml/basic.yaml'), function (err, json) {
-          assert.equal(err, null)
-          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
-          done()
-        })
-      })
-    })
-
-    describe('yaml with map', function () {
-      it('should match expected json', function (done) {
-        io.readData(testDataPath('yaml/basic.yaml'), {
-          map: function (yamlFile) {
-            yamlFile.height = yamlFile.height * 2
-            return yamlFile
-          }
-        }, function (err, json) {
-          assert.equal(err, null)
-          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
-          done()
-        })
-      })
-    })
-
-    describe('yaml with map shorthand', function () {
-      it('should match expected json', function (done) {
-        io.readData(testDataPath('yaml/basic.yaml'), function (yamlFile) {
-          yamlFile.height = yamlFile.height * 2
-          return yamlFile
-        }, function (err, json) {
-          assert.equal(err, null)
-          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
-          done()
-        })
-      })
-    })
-
-    describe('yml', function () {
-      it('should match expected json', function (done) {
-        io.readData(testDataPath('yml/basic.yml'), function (err, json) {
-          assert.equal(err, null)
-          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
-          done()
-        })
-      })
-    })
-
-    describe('yml with map', function () {
-      it('should match expected json', function (done) {
-        io.readData(testDataPath('yml/basic.yml'), {
-          map: function (yamlFile) {
-            yamlFile.height = yamlFile.height * 2
-            return yamlFile
-          }
-        }, function (err, json) {
-          assert.equal(err, null)
-          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
-          done()
-        })
-      })
-    })
-
-    describe('yml with map shorthand', function () {
-      it('should match expected json', function (done) {
-        io.readData(testDataPath('yml/basic.yml'), function (yamlFile) {
-          yamlFile.height = yamlFile.height * 2
-          return yamlFile
-        }, function (err, json) {
-          assert.equal(err, null)
-          assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
           done()
         })
       })
@@ -2019,82 +1833,6 @@ describe('directReaders', function () {
           return str.replace(/carbon/g, 'diamonds')
         })
         assert(_.isEqual(txt, 'The diamonds in our apple pies billions upon billions cosmos. Extraplanetary Hypatia. Tendrils of gossamer clouds? Rogue stirred by starlight across the centuries cosmic ocean white dwarf billions upon billions the diamonds in our apple pies Tunguska event, kindling the energy hidden in matter a still more glorious dawn awaits birth how far away quasar, vastness is bearable only through love of brilliant syntheses light years cosmic fugue, the diamonds in our apple pies, astonishment hearts of the stars from which we spring inconspicuous motes of rock and gas realm of the galaxies how far away decipherment radio telescope a mote of dust suspended in a sunbeam gathered by gravity a very small stage in a vast cosmic arena a mote of dust suspended in a sunbeam.'))
-      })
-    })
-  })
-
-  describe('readYamlSync()', function () {
-    describe('empty yaml', function () {
-      it('should be empty object', function () {
-        var json = io.readYamlSync(testDataPath('yaml/empty.yaml'))
-        assert(_.isEmpty(json))
-        assert(_.isObject(json))
-      })
-    })
-
-    describe('basic yaml', function () {
-      it('should match expected json', function () {
-        var json = io.readYamlSync(testDataPath('yaml/basic.yaml'))
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
-      })
-    })
-
-    describe('basic yaml map', function () {
-      it('should match expected json', function () {
-        var json = io.readYamlSync(testDataPath('yaml/basic.yaml'), {
-          map: function (yamlFile) {
-            yamlFile.height = yamlFile.height * 2
-            return yamlFile
-          }
-        })
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
-      })
-    })
-
-    describe('basic yaml map shorthand', function () {
-      it('should match expected json', function () {
-        var json = io.readYamlSync(testDataPath('yaml/basic.yaml'), function (yamlFile) {
-          yamlFile.height = yamlFile.height * 2
-          return yamlFile
-        })
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
-      })
-    })
-
-    describe('empty yml', function () {
-      it('should be empty object', function () {
-        var json = io.readYamlSync(testDataPath('yml/empty.yml'))
-        assert(_.isEmpty(json))
-        assert(_.isObject(json))
-      })
-    })
-
-    describe('basic yml', function () {
-      it('should match expected json', function () {
-        var json = io.readYamlSync(testDataPath('yml/basic.yml'))
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":70}'))
-      })
-    })
-
-    describe('basic yml map', function () {
-      it('should match expected json', function () {
-        var json = io.readYamlSync(testDataPath('yml/basic.yml'), {
-          map: function (yamlFile) {
-            yamlFile.height = yamlFile.height * 2
-            return yamlFile
-          }
-        })
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
-      })
-    })
-
-    describe('basic yml map shorthand', function () {
-      it('should match expected json', function () {
-        var json = io.readYamlSync(testDataPath('yml/basic.yml'), function (yamlFile) {
-          yamlFile.height = yamlFile.height * 2
-          return yamlFile
-        })
-        assert(_.isEqual(JSON.stringify(json), '{"name":"jim","occupation":"land surveyor","height":140}'))
       })
     })
   })
