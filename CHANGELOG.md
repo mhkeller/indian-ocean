@@ -3,9 +3,9 @@ Changelog
 
 # 4.0.0
 
-> Not yet on npm
+> 2019-08-21
 
-Adds XLSX file reading! Removes a few functions that weren't really ever used and also strips BOM characters from CSVs. Adds `{ recursive: true }` to `readdirFilter` functions.
+Removes a few functions that weren't really ever used. Strips BOM characters from CSVs and fixes a bug with double slashes sometimes when using `readdirFilter` functions.
 
 * Remove YAML readers
   * [f0ca10e1b1f49662fbdd175c38016830a6e4f2c5](https://github.com/mhkeller/indian-ocean/commit/f0ca10e1b1f49662fbdd175c38016830a6e4f2c5)
@@ -16,13 +16,9 @@ Adds XLSX file reading! Removes a few functions that weren't really ever used an
 * Remove `{ detailed: true }` option from `readdirFilter` functions
   * [3ed95d28524dbaf5ec8fedf2ad0ab4776976ae26](https://github.com/mhkeller/indian-ocean/commit/3ed95d28524dbaf5ec8fedf2ad0ab4776976ae26)
   * [c9c130955a1fee4d5dc844eab0416e6b7a332d1d](https://github.com/mhkeller/indian-ocean/commit/c9c130955a1fee4d5dc844eab0416e6b7a332d1d)
-* Add `{ recursive: true }` optiont `readdirFilter` functions
-  * TODO
 * Remove `extend` and `deepExtend` functions
   * [47c06001e8a48cb60e0655380c5844ede329a23d](https://github.com/mhkeller/indian-ocean/commit/47c06001e8a48cb60e0655380c5844ede329a23d)
   * [91cbeff745722b216d3b56131a44a800ef1ea227](https://github.com/mhkeller/indian-ocean/commit/91cbeff745722b216d3b56131a44a800ef1ea227)
-* Support reading XLSX files
-  * TODO
 * Remove double slashes on `readdirFilter` functions if input dir ends in a slash and `{ fullPath: true }`.
   * [440029a2265e94fb9b1ffc05a10b374392e2bf82](https://github.com/mhkeller/indian-ocean/commit/440029a2265e94fb9b1ffc05a10b374392e2bf82)
 * Update test command for getter travis testing and travis-node versions
@@ -32,7 +28,6 @@ Adds XLSX file reading! Removes a few functions that weren't really ever used an
 * File readers now strip BOM characters
   * [88ccb5a55bc9ab5ba40be5f8a86a266d11ff8a90](https://github.com/mhkeller/indian-ocean/commit/88ccb5a55bc9ab5ba40be5f8a86a266d11ff8a90)
   * [8bb2259d28dddd69bf95bc03806ffcb5dc7acac3](https://github.com/mhkeller/indian-ocean/commit/8bb2259d28dddd69bf95bc03806ffcb5dc7acac3)
-
 
 # 3.1.0
 
