@@ -8,7 +8,10 @@ Changelog
 Adds XLSX file reading! Removes a few functions that weren't really ever used and also strips BOM characters from CSVs. Adds `{ recursive: true }` to `readdirFilter` functions.
 
 * Remove YAML readers
-  * TODO
+  * [f0ca10e1b1f49662fbdd175c38016830a6e4f2c5](https://github.com/mhkeller/indian-ocean/commit/f0ca10e1b1f49662fbdd175c38016830a6e4f2c5)
+  * [950280f50e0e4eaaa5f23fe56ea7c86714b2675c](https://github.com/mhkeller/indian-ocean/commit/950280f50e0e4eaaa5f23fe56ea7c86714b2675c)
+  * [17d0b203e14f6c25922ce897657fb2b2503dcd88](https://github.com/mhkeller/indian-ocean/commit/17d0b203e14f6c25922ce897657fb2b2503dcd88)
+  * [7a849ce97fd6b096b305609695f3c158a4d81196](https://github.com/mhkeller/indian-ocean/commit/7a849ce97fd6b096b305609695f3c158a4d81196)
 * Remove `{ detailed: true }` option from `readdirFilter` functions
   * [3ed95d28524dbaf5ec8fedf2ad0ab4776976ae26](https://github.com/mhkeller/indian-ocean/commit/3ed95d28524dbaf5ec8fedf2ad0ab4776976ae26)
   * [c9c130955a1fee4d5dc844eab0416e6b7a332d1d](https://github.com/mhkeller/indian-ocean/commit/c9c130955a1fee4d5dc844eab0416e6b7a332d1d)
