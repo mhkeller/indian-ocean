@@ -17,7 +17,6 @@ import omit from '../utils/omit'
  * * `.csv` Comma-separated
  * * `.tsv` Tab-separated
  * * `.psv` Pipe-separated
- * * `.yaml` or `.yml` Yaml
  *
  * *Note: Does not currently support .dbf files.*
  *

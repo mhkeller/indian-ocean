@@ -12,7 +12,6 @@ let parsers = {
   psv,
   tsv,
   txt,
-  yaml,
   aml
 }
 

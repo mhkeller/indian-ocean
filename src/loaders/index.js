@@ -11,7 +11,6 @@ let loaders = {
     tsv: file,
     txt: file,
     json: file,
-    yaml: file,
     dbf
   },
   sync: {
@@ -20,8 +19,7 @@ let loaders = {
     psv: fileSync,
     tsv: fileSync,
     txt: fileSync,
-    json: fileSync,
-    yaml: fileSync
+    json: fileSync
   }
 }
 

@@ -291,26 +291,6 @@
                 </li>
               
                 
-                <li class="function"><a
-                  href='#readYaml'
-                  class="">
-                  .readYaml
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li class="function"><a
-                  href='#readYamlSync'
-                  class="">
-                  .readYamlSync
-                  
-                </a>
-                
-                </li>
-              
-                
                 <li class="note"><a
                   href='#converters'
                   class="h5 black bold">
@@ -547,7 +527,7 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/readers/readData.js#L80-L113' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/readers/readData.js#L78-L111' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -561,7 +541,6 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
 <li><code>.csv</code> Comma-separated</li>
 <li><code>.tsv</code> Tab-separated</li>
 <li><code>.psv</code> Pipe-separated</li>
-<li><code>.yaml</code> or <code>.yml</code> Yaml file</li>
 <li><code>.aml</code> ArchieML</li>
 <li><code>.txt</code> Text file (a string)</li>
 <li><code>.dbf</code> Database format used for shapefiles</li>
@@ -662,17 +641,6 @@ io.writeDataSync(<span class="hljs-string">'path/to/save/output.json'</span>, js
 </span></td>
                 </tr>
               
-                <tr>
-                  <td class='break-word'><span class='code bold'>parserOptions.loadMethod</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-                  
-                    (default <code>&quot;safeLoad&quot;</code>)
-                  </td>
-                  <td class='break-word'><span>Used for for YAML files, otherwise ignored. See 
-<a href="#readYaml">readYaml</a>
- for details.
-</span></td>
-                </tr>
-              
             </tbody>
           </table>
           
@@ -767,7 +735,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/readers/readDataSync.js#L71-L103' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/readers/readDataSync.js#L69-L101' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -780,7 +748,6 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
 <li><code>.csv</code> Comma-separated</li>
 <li><code>.tsv</code> Tab-separated</li>
 <li><code>.psv</code> Pipe-separated</li>
-<li><code>.yaml</code> or <code>.yml</code> Yaml file</li>
 <li><code>.aml</code> ArchieML</li>
 <li><code>.txt</code> Text file (a string)</li>
 <li>other All others are read as a text file</li>
@@ -888,17 +855,6 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
 </span></td>
                 </tr>
               
-                <tr>
-                  <td class='break-word'><span class='code bold'>parserOptions.loadMethod</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-                  
-                    (default <code>&quot;safeLoad&quot;</code>)
-                  </td>
-                  <td class='break-word'><span>Used for for YAML files, otherwise ignored. See 
-<a href="#readYamlSync">readYamlSync</a>
- for details.
-</span></td>
-                </tr>
-              
             </tbody>
           </table>
           
@@ -977,7 +933,7 @@ io.readData(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/readers/readdirFilter.js#L30-L37' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/readers/readdirFilter.js#L30-L37' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1174,7 +1130,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/readers/readdirFilterSync.js#L31-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/readers/readdirFilterSync.js#L31-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1382,7 +1338,7 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/writers/writeData.js#L70-L100' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/writers/writeData.js#L64-L94' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1396,7 +1352,6 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
 <li><code>.csv</code> Comma-separated</li>
 <li><code>.tsv</code> Tab-separated</li>
 <li><code>.psv</code> Pipe-separated</li>
-<li><code>.yaml</code> Yaml file, also supports <code>.yml</code></li>
 <li><code>.dbf</code> Database file, commonly used in ESRI-shapefile format.</li>
 </ul>
 
@@ -1490,29 +1445,9 @@ io.readdirFilter(<span class="hljs-string">'path/to/files'</span>, {<span class=
                 <tr>
                   <td class='break-word'><span class='code bold'>options.indent</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
                   </td>
-                  <td class='break-word'><span>Used for JSON and YAML formats. Specifies indent level. Default for YAML is 
-<code>2</code>
-, 
+                  <td class='break-word'><span>Used for JSON format. Specifies indent level. Default is 
 <code>0</code>
- for JSON.
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>options.writeMethod</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-                  
-                    (default <code>&#39;safeDump&#39;</code>)
-                  </td>
-                  <td class='break-word'><span>Used for YAML formats. Can also be 
-<code>"dump"</code>
- to allow writing of RegExes and functions. The 
-<code>options</code>
- object will also pass anything onto 
-<code>js-yaml</code>
-. See its docs for other options. Example shown below with 
-<code>sortKeys</code>
-. 
-<a href="https://github.com/nodeca/js-yaml#safedump-object---options-">https://github.com/nodeca/js-yaml#safedump-object---options-</a>
+.
 </span></td>
                 </tr>
               
@@ -1563,10 +1498,6 @@ io.writeData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, flat
   <span class="hljs-built_in">console</span>.log(err)
 })
 
-io.writeData(<span class="hljs-string">'path/to/to/data.yaml'</span>, jsonData, {<span class="hljs-attr">writeMehod</span>: <span class="hljs-string">"dump"</span>, <span class="hljs-attr">sortKeys</span>: <span class="hljs-literal">true</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, dataString</span>) </span>{
-  <span class="hljs-built_in">console</span>.log(err)
-})
-
 io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, {<span class="hljs-attr">indent</span>: <span class="hljs-number">4</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, dataString</span>) </span>{
   <span class="hljs-built_in">console</span>.log(err)
 })
@@ -1613,7 +1544,7 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/writers/writeDataSync.js#L51-L65' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/writers/writeDataSync.js#L48-L62' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1721,29 +1652,9 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
                 <tr>
                   <td class='break-word'><span class='code bold'>options.indent</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>?</code>
                   </td>
-                  <td class='break-word'><span>Used for JSON and YAML formats. Specifies indent level. Default for YAML is 
-<code>2</code>
-, 
+                  <td class='break-word'><span>Used for JSON format. Specifies indent level. Default is 
 <code>0</code>
- for JSON.
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>options.writeMethod</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-                  
-                    (default <code>&#39;safeDump&#39;</code>)
-                  </td>
-                  <td class='break-word'><span>Used for YAML formats. Can also be 
-<code>"dump"</code>
- to allow writing of RegExes and functions. The 
-<code>options</code>
- object will also pass anything onto 
-<code>js-yaml</code>
-. See its docs for other options. Example shown below with 
-<code>sortKeys</code>
-. 
-<a href="https://github.com/nodeca/js-yaml#safedump-object---options-">https://github.com/nodeca/js-yaml#safedump-object---options-</a>
+.
 </span></td>
                 </tr>
               
@@ -1776,8 +1687,6 @@ io.writeData(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, 
       <pre class='p1 overflow-auto round fill-light'>io.writeDataSync(<span class="hljs-string">'path/to/data.json'</span>, jsonData)
 
 io.writeDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</span>, flatJsonData, {<span class="hljs-attr">makeDirs</span>: <span class="hljs-literal">true</span>})
-
-io.writeDataSync(<span class="hljs-string">'path/to/to/data.yaml'</span>, jsonData, {<span class="hljs-attr">writeMehod</span>: <span class="hljs-string">"dump"</span>, <span class="hljs-attr">sortKeys</span>: <span class="hljs-literal">true</span>})
 
 io.writeDataSync(<span class="hljs-string">'path/to/to/data.json'</span>, jsonData, {<span class="hljs-attr">indent</span>: <span class="hljs-number">4</span>})
 
@@ -1819,7 +1728,7 @@ io.writeDataSync(<span class="hljs-string">'path/to/to/data.json'</span>, jsonDa
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/writers/appendData.js#L39-L75' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/writers/appendData.js#L38-L74' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -1833,7 +1742,6 @@ io.writeDataSync(<span class="hljs-string">'path/to/to/data.json'</span>, jsonDa
 <li><code>.csv</code> Comma-separated</li>
 <li><code>.tsv</code> Tab-separated</li>
 <li><code>.psv</code> Pipe-separated</li>
-<li><code>.yaml</code> or <code>.yml</code> Yaml</li>
 </ul>
 <p><em>Note: Does not currently support .dbf files.</em></p>
 
@@ -1935,7 +1843,7 @@ io.appendData(<span class="hljs-string">'path/to/create/to/data.csv'</span>, fla
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/writers/appendDataSync.js#L25-L42' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/writers/appendDataSync.js#L25-L42' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2050,7 +1958,7 @@ io.appendDataSync(<span class="hljs-string">'path/to/create/to/data.csv'</span>,
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readAml.js#L25-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readAml.js#L25-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2151,7 +2059,7 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readAmlSync.js#L22-L28' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readAmlSync.js#L22-L28' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2245,7 +2153,7 @@ io.readAml(<span class="hljs-string">'path/to/data.aml'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readDbf.js#L26-L36' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readDbf.js#L26-L36' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2349,7 +2257,7 @@ io.readDbf(<span class="hljs-string">'path/to/data.csv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readCsv.js#L35-L43' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readCsv.js#L35-L43' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2462,7 +2370,7 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, {<span class="hl
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readCsvSync.js#L32-L38' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readCsvSync.js#L32-L38' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2570,7 +2478,7 @@ io.readCsv(<span class="hljs-string">'path/to/data.csv'</span>, {<span class="hl
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readJson.js#L70-L78' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readJson.js#L70-L78' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2759,7 +2667,7 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readJsonSync.js#L45-L51' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readJsonSync.js#L45-L51' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -2921,7 +2829,7 @@ io.readJson(<span class="hljs-string">'path/to/data.json'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readPsv.js#L26-L34' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readPsv.js#L26-L34' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3025,7 +2933,7 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readPsvSync.js#L23-L29' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readPsvSync.js#L23-L29' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3124,7 +3032,7 @@ io.readPsv(<span class="hljs-string">'path/to/data.psv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readTsv.js#L26-L34' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readTsv.js#L26-L34' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3228,7 +3136,7 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readTsvSync.js#L24-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readTsvSync.js#L24-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3326,7 +3234,7 @@ io.readTsv(<span class="hljs-string">'path/to/data.tsv'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readTxt.js#L23-L31' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readTxt.js#L23-L31' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3425,7 +3333,7 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readTxtSync.js#L21-L27' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/directReaders/readTxtSync.js#L21-L27' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -3510,311 +3418,6 @@ io.readTxt(<span class="hljs-string">'path/to/data.txt'</span>, <span class="hlj
           
         
           
-            <section class='p2 mb2 clearfix'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0 signature' id='readYaml'>
-      <a href="#readYaml">#</a> io.<span class="bold">readYaml</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)
-    </h3>
-    
-    
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readYaml.js#L39-L47' target='_blank' rel='noopener'>
-        <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
-      </a>
-    
-  </div>
-  
-
-  <p>Asynchronously read a yaml file. Returns an empty object if file is empty. <code>parseOptions</code> will pass any other optinos directl to js-yaml library. See its documentation for more detail <a href="https://github.com/nodeca/js-yaml">https://github.com/nodeca/js-yaml</a></p>
-
-
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    Input file path
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>parserOptions</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)</code>
-	    Optional map function or an object specifying the optional options below.
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>parserOptions.map</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
-                  </td>
-                  <td class='break-word'><span>Optional map function. Called once for each row (header row skipped). If your file is an array (it tests if first non-whitespace character is a 
-<code>[</code>
-), the callback has the signature 
-<code>(row, i)</code>
- and delegates to 
-<code>_.map</code>
-. Otherwise it's considered an object and the callback has the signature 
-<code>(value, key)</code>
- and delegates to 
-<code>_.mapObject</code>
-. See example below.
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>parserOptions.loadMethod</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-                  
-                    (default <code>&quot;safeLoad&quot;</code>)
-                  </td>
-                  <td class='break-word'><span>The js-yaml library allows you to specify a more liberal 
-<code>"load"</code>
- option which will accept RegExp and function values in your file.
-</span></td>
-                </tr>
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>callback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)</code>
-	    Has signature 
-<code>(err, data)</code>
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Can be `.yaml` or `.yml` extension</span>
-io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
-  <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// json data</span>
-})
-
-<span class="hljs-comment">// With map function shorthand on an object</span>
-io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">yamlFile</span>) </span>{
-  yamlFile.height = yamlFile.height * <span class="hljs-number">2</span>
-  <span class="hljs-keyword">return</span> yamlFile
-}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
-  <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// json data with `height` values doubled</span>
-})
-
-<span class="hljs-comment">// With map function on an object and load settings</span>
-io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
-  <span class="hljs-attr">loadMethod</span>: <span class="hljs-string">'load'</span>,
-  <span class="hljs-attr">map</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value, key</span>) </span>{
-    yamlFile.height = yamlFile.height * <span class="hljs-number">2</span>
-    <span class="hljs-keyword">return</span> yamlFile
-  }
-}, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err, data</span>) </span>{
-  <span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// json data with `height` values doubled</span>
-})</pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0 signature' id='readYamlSync'>
-      <a href="#readYamlSync">#</a> io.<span class="bold">readYamlSync</span>(filePath: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, parserOptions: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)
-    </h3>
-    
-    
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/directReaders/readYamlSync.js#L36-L42' target='_blank' rel='noopener'>
-        <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
-      </a>
-    
-  </div>
-  
-
-  <p>Synchronously read a yaml file. Returns an empty object if file is empty. <code>parseOptions</code> will pass any other optinos directl to js-yaml library. See its documentation for more detail <a href="https://github.com/nodeca/js-yaml">https://github.com/nodeca/js-yaml</a></p>
-
-
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>:
-        the contents of the file as a string
-
-      
-    
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>filePath</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
-	    Input file path
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>parserOptions</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)?)</code>
-	    Optional map function or an object specifying the optional options below.
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>parserOptions.map</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>?</code>
-                  </td>
-                  <td class='break-word'><span>Optional map function. Called once for each row (header row skipped). If your file is an array (it tests if first non-whitespace character is a 
-<code>[</code>
-), the callback has the signature 
-<code>(row, i)</code>
- and delegates to 
-<code>_.map</code>
-. Otherwise it's considered an object and the callback has the signature 
-<code>(value, key)</code>
- and delegates to 
-<code>_.mapObject</code>
-. See example below.
-</span></td>
-                </tr>
-              
-                <tr>
-                  <td class='break-word'><span class='code bold'>parserOptions.loadMethod</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
-                  
-                    (default <code>&quot;safeLoad&quot;</code>)
-                  </td>
-                  <td class='break-word'><span>The js-yaml library allows you to specify a more liberal 
-<code>"load"</code>
- method which will accept RegExp and function values in your file.
-</span></td>
-                </tr>
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Example</div>
-    
-      
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// Can be `.yaml` or `.yml` extension</span>
-<span class="hljs-keyword">var</span> data = io.readYamlSync(<span class="hljs-string">'path/to/data.yaml'</span>)
-<span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// json data</span>
-
-<span class="hljs-comment">// With map function</span>
-<span class="hljs-keyword">var</span> data = io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">yamlFile</span>) </span>{
-  yamlFile.height = yamlFile.height * <span class="hljs-number">2</span>
-  <span class="hljs-keyword">return</span> yamlFile
-})
-<span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// json data with `height` values doubled</span>
-
-<span class="hljs-comment">// With map function and load settings</span>
-<span class="hljs-keyword">var</span> data = io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
-  <span class="hljs-attr">loadMethod</span>: <span class="hljs-string">'load'</span>,
-  <span class="hljs-attr">map</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">yamlFile</span>) </span>{
-    yamlFile.height = yamlFile.height * <span class="hljs-number">2</span>
-    <span class="hljs-keyword">return</span> yamlFile
-  }
-})
-<span class="hljs-built_in">console</span>.log(data) <span class="hljs-comment">// json data with `height` values doubled</span></pre>
-    
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
             <div class='keyline-top-not px2'><section class='clearfix'>
 
   <h2 id='converters' class='mt0 mb0'>
@@ -3840,14 +3443,14 @@ io.readYaml(<span class="hljs-string">'path/to/data.yaml'</span>, {
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/converters/convertData.js#L22-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/converters/convertData.js#L22-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
   </div>
   
 
-  <p>Reads in data given a path ending in the file format with <a href="#readData">readData</a> and writes to file using <a href="#writeData">writeData</a>. A convenience function for converting files to more other formats. All formats can convert to all others except you can't convert object-only formats such as aml or yaml files that are not lists into tabular formats, which must be lists.</p>
+  <p>Reads in data given a path ending in the file format with <a href="#readData">readData</a> and writes to file using <a href="#writeData">writeData</a>. A convenience function for converting files to more other formats. All formats can convert to all others except as long as they are lists. For example, you can't convert an object-based aml file to a list format.</p>
 
 
   
@@ -3949,7 +3552,7 @@ io.convertData(<span class="hljs-string">'path/to/data.tsv'</span>, <span class=
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/converters/convertDbfToData.js#L22-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/converters/convertDbfToData.js#L22-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4073,7 +3676,7 @@ io.convertDbfToData(<span class="hljs-string">'path/to/data.dbf'</span>, <span c
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/deepExtend.js#L34-L38' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/deepExtend.js#L34-L38' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4190,7 +3793,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/discernFileFormatter.js#L15-L23' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/discernFileFormatter.js#L15-L23' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4269,7 +3872,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/discernFormat.js#L18-L25' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/discernFormat.js#L18-L25' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4352,7 +3955,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/discernParser.js#L22-L33' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/discernParser.js#L22-L33' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4472,7 +4075,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/exists.js#L17-L28' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/exists.js#L17-L28' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4554,7 +4157,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/existsSync.js#L15-L26' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/existsSync.js#L15-L26' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4633,7 +4236,7 @@ io.deepExtend(object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/extend.js#L50-L118' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/extend.js#L50-L118' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4777,7 +4380,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/extMatchesStr.js#L15-L19' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/extMatchesStr.js#L15-L19' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4865,7 +4468,7 @@ io.extend(<span class="hljs-literal">true</span>, object1, object2)
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/makeDirectories.js#L23-L27' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/makeDirectories.js#L23-L27' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -4952,7 +4555,7 @@ io.makeDirectories(<span class="hljs-string">'path/to/create/to/another-folder/'
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/makeDirectoriesSync.js#L19-L21' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/makeDirectoriesSync.js#L19-L21' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -5026,7 +4629,7 @@ io.makeDirectoriesSync(<span class="hljs-string">'path/to/create/to/another-fold
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/matches.js#L22-L30' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/matches.js#L22-L30' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     
@@ -5111,7 +4714,7 @@ io.makeDirectoriesSync(<span class="hljs-string">'path/to/create/to/another-fold
     </h3>
     
     
-      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/8cf10699a1afb09375182500050606c022b197c8/src/helpers/matchesRegExp.js#L16-L18' target='_blank' rel='noopener'>
+      <a class='github-source-link' href='https://github.com/mhkeller/indian-ocean/blob/950280f50e0e4eaaa5f23fe56ea7c86714b2675c/src/helpers/matchesRegExp.js#L16-L18' target='_blank' rel='noopener'>
         <span class='github-logo gray'></span> <span class='link-text'>source</span></a>
       </a>
     

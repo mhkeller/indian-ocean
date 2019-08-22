@@ -2171,7 +2171,6 @@ var parsers = {
   psv: parserPsv,
   tsv: parserTsv,
   txt: parserTxt,
-  yaml: yaml,
   aml: parserAml
 };
 
@@ -2435,7 +2434,6 @@ var loaders = {
     tsv: file,
     txt: file,
     json: file,
-    yaml: file,
     dbf: dbf
   },
   sync: {
@@ -2444,8 +2442,7 @@ var loaders = {
     psv: file$1,
     tsv: file$1,
     txt: file$1,
-    json: file$1,
-    yaml: file$1
+    json: file$1
   }
 };
 
@@ -2480,7 +2477,6 @@ function discernLoader(filePath) {
  * * `.csv` Comma-separated
  * * `.tsv` Tab-separated
  * * `.psv` Pipe-separated
- * * `.yaml` or `.yml` Yaml file
  * * `.aml` ArchieML
  * * `.txt` Text file (a string)
  * * `.dbf` Database format used for shapefiles
@@ -2493,7 +2489,6 @@ function discernLoader(filePath) {
  * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
  * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJson} for details.
  * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJson} for details.
- * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYaml} for details.
  * @param {Function} callback Has signature `(err, data)`
  *
  * @example
@@ -3348,7 +3343,6 @@ function warnIfEmpty(data, outPath, opts_) {
  * * `.csv` Comma-separated
  * * `.tsv` Tab-separated
  * * `.psv` Pipe-separated
- * * `.yaml` Yaml file, also supports `.yml`
  * * `.dbf` Database file, commonly used in ESRI-shapefile format.
  *
  * @function writeData
@@ -3358,8 +3352,7 @@ function warnIfEmpty(data, outPath, opts_) {
  * @param {Boolean} [options.makeDirectories=false] If `true`, create intermediate directories to your data file. Can also be `makeDirs` for short.
  * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
  * @param {Boolean} [options.verbose=true] Verbose logging output. Currently, the only logging output is a warning if you write an empty file. Set to `false` if don't want that.
- * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
- * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
+ * @param {Number} [options.indent] Used for JSON format. Specifies indent level. Default is `0`.
  * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
  * @param {Function} callback Has signature `(err, dataStr)`. `dataStr` is the data that was written out as a string
  *
@@ -3369,10 +3362,6 @@ function warnIfEmpty(data, outPath, opts_) {
  * })
  *
  * io.writeData('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true}, function (err, dataString) {
- *   console.log(err)
- * })
- *
- * io.writeData('path/to/to/data.yaml', jsonData, {writeMehod: "dump", sortKeys: true}, function (err, dataString) {
  *   console.log(err)
  * })
  *
@@ -3433,7 +3422,7 @@ function writeData(outPath, data, opts_, cb) {
 }
 
 /**
- * Reads in data given a path ending in the file format with {@link readData} and writes to file using {@link writeData}. A convenience function for converting files to more other formats. All formats can convert to all others except you can't convert object-only formats such as aml or yaml files that are not lists into tabular formats, which must be lists.
+ * Reads in data given a path ending in the file format with {@link readData} and writes to file using {@link writeData}. A convenience function for converting files to more other formats. All formats can convert to all others except as long as they are lists. For example, you can't convert an object-based aml file to a list format.
  *
  * @function convertData
  * @param {String} inFilePath Input file path
@@ -3831,7 +3820,6 @@ function matches(filePath, matcher) {
  * * `.csv` Comma-separated
  * * `.tsv` Tab-separated
  * * `.psv` Pipe-separated
- * * `.yaml` or `.yml` Yaml file
  * * `.aml` ArchieML
  * * `.txt` Text file (a string)
  * * other All others are read as a text file
@@ -3843,7 +3831,6 @@ function matches(filePath, matcher) {
  * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
  * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJsonSync} for details.
  * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJsonSync} for details.
- * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYamlSync} for details.
  * @returns {Object} the contents of the file as JSON
  *
  * @example
@@ -4685,7 +4672,6 @@ function readTxtSync(filePath, opts_) {
  * * `.csv` Comma-separated
  * * `.tsv` Tab-separated
  * * `.psv` Pipe-separated
- * * `.yaml` or `.yml` Yaml
  *
  * *Note: Does not currently support .dbf files.*
  *
@@ -4756,8 +4742,7 @@ function appendData(outPath, data, opts_, cb) {
  * @param {Boolean} [options.makeDirectories=false] If `true`, create intermediate directories to your data file. Can also be `makeDirs` for short.
  * @param {Function|Array} [options.replacer] Used for JSON formats. Function to filter your objects before writing or an array of whitelisted keys to keep. Examples below. See JSON.stringify docs for more info https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
  * @param {Boolean} [options.verbose=true] Verbose logging output. Currently, the only logging output is a warning if you write an empty file. Set to `false` if don't want that.
- * @param {Number} [options.indent] Used for JSON and YAML formats. Specifies indent level. Default for YAML is `2`, `0` for JSON.
- * @param {String} [options.writeMethod='safeDump'] Used for YAML formats. Can also be `"dump"` to allow writing of RegExes and functions. The `options` object will also pass anything onto `js-yaml`. See its docs for other options. Example shown below with `sortKeys`. https://github.com/nodeca/js-yaml#safedump-object---options-
+ * @param {Number} [options.indent] Used for JSON format. Specifies indent level. Default is `0`.
  * @param {Array} [options.columns] Used for tabular formats. Optionally specify a list of column names to use. Otherwise they are detected from the data. See `d3-dsv` for more detail: https://github.com/d3/d3-dsv/blob/master/README.md#dsv_format
  * @returns {String} The that was written as a string
  *
@@ -4765,8 +4750,6 @@ function appendData(outPath, data, opts_, cb) {
  * io.writeDataSync('path/to/data.json', jsonData)
  *
  * io.writeDataSync('path/to/create/to/data.csv', flatJsonData, {makeDirs: true})
- *
- * io.writeDataSync('path/to/to/data.yaml', jsonData, {writeMehod: "dump", sortKeys: true})
  *
  * io.writeDataSync('path/to/to/data.json', jsonData, {indent: 4})
  *

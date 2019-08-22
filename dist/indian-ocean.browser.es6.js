@@ -5186,7 +5186,6 @@ var parsers = {
   psv: psv$1,
   tsv: tsv$2,
   txt: txt$1,
-  yaml: yaml,
   aml: aml
 };
 

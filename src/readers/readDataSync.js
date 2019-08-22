@@ -12,7 +12,6 @@ import omit from '../utils/omit'
  * * `.csv` Comma-separated
  * * `.tsv` Tab-separated
  * * `.psv` Pipe-separated
- * * `.yaml` or `.yml` Yaml file
  * * `.aml` ArchieML
  * * `.txt` Text file (a string)
  * * other All others are read as a text file
@@ -24,7 +23,6 @@ import omit from '../utils/omit'
  * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
  * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJsonSync} for details.
  * @param {Function} [parserOptions.filename] Used for JSON files, otherwise ignored. See {@link readJsonSync} for details.
- * @param {String} [parserOptions.loadMethod="safeLoad"]  Used for for YAML files, otherwise ignored. See {@link readYamlSync} for details.
  * @returns {Object} the contents of the file as JSON
  *
  * @example
