@@ -1551,6 +1551,19 @@ describe('readers', function () {
       })
     })
 
+    describe('recursive csv', function () {
+      it('should match expected output', function () {
+        var dir = path.join(__dirname, 'data', 'recursive')
+        var files = io.readdirFilterSync(dir, { recursive: true, include: 'csv' })
+        assert.deepEqual(files, [
+          path.join(__dirname, 'data/recursive/csvs/csv.csv'),
+          path.join(__dirname, 'data/recursive/csvs/sample.csv'),
+          path.join(__dirname, 'data/recursive/other.csv'),
+          path.join(__dirname, 'data/recursive/sample.csv')
+        ])
+      })
+    })
+
     describe('get files only, skipDirectories', function () {
       it('should match expected output', function () {
         var dir = path.join(__dirname, 'data', 'mixed-dirs')
@@ -1558,6 +1571,7 @@ describe('readers', function () {
         assert(_.isEqual(JSON.stringify(files), '["data-0.csv","data-0.json","data-0.tsv","data-1.csv","data-1.json"]'))
       })
     })
+
     describe('get files only, skipDirs', function () {
       it('should match expected output', function () {
         var dir = path.join(__dirname, 'data', 'mixed-dirs')
