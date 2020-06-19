@@ -2538,7 +2538,7 @@ function file(filePath, parser, parserOptions, cb) {
     }
     var parsed;
     try {
-      data = stripBom(data);
+      data = stripBom(data).trim();
       if (typeof parser === 'function') {
         parsed = parser(data, parserOptions);
       } else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
@@ -2562,7 +2562,7 @@ function file$1(filePath, parser, parserOptions, cb) {
     data = '[]';
   }
 
-  data = stripBom(data);
+  data = stripBom(data).trim();
   var parsed;
   if (typeof parser === 'function') {
     parsed = parser(data, parserOptions);

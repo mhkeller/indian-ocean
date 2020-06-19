@@ -1,4 +1,4 @@
-// https://github.com/mhkeller/indian-ocean Version 4.0.0. Copyright 2019 Michael Keller.
+// https://github.com/mhkeller/indian-ocean Version 4.0.0. Copyright 2020 Michael Keller.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
