@@ -89,8 +89,40 @@ describe('csv with bom characters', function () {
       })
     })
   })
-
 })
+
+describe('csv with empty lines', function () {
+  describe('readDataSync()', function () {
+    it('should be read proper keys', function () {
+      var file = io.readDataSync(testDataPath('csv-multiline/basic-empty-lines.csv'))
+      assert.equal(file.length, 2);
+
+      assert.equal(file[0].name, 'jim')
+      assert.equal(file[0].occupation, 'land surveyor')
+      assert.equal(file[0].height, 70)
+      assert.equal(file[1].name, 'francis')
+      assert.equal(file[1].occupation, 'conductor')
+      assert.equal(file[1].height, 63)
+    })
+  })
+
+  describe('readData()', function () {
+    it('should be read proper keys', function (done) {
+      io.readData(testDataPath('csv-multiline/basic-empty-lines.csv'), (err, file) => {
+        assert.equal(file.length, 2);
+
+        assert.equal(file[0].name, 'jim')
+        assert.equal(file[0].occupation, 'land surveyor')
+        assert.equal(file[0].height, 70)
+        assert.equal(file[1].name, 'francis')
+        assert.equal(file[1].occupation, 'conductor')
+        assert.equal(file[1].height, 63)
+        done()
+      })
+    })
+  })
+})
+
 describe('discernFormat()', function () {
   describe('no extension', function () {
     it('should be false', function () {
@@ -353,7 +385,6 @@ describe('existsSync()', function () {
   })
 })
 
-// TODO, how would one test for an error in stat'ing the file?
 describe('exists()', function () {
   describe('exists', function () {
     it('should be true', function (done) {
