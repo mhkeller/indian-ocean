@@ -1,6 +1,14 @@
 Changelog
 =========
 
+# 4.0.2
+
+> 2021-03-17
+
+Security update to fix some security alerts. Moves the dbf fork off of GitHub and onto a scoped npm package at @mhkeller/dbf
+
+* [7ae3264e288ddf37c43f749c44fd7368bab63369](https://github.com/mhkeller/indian-ocean/commit/7ae3264e288ddf37c43f749c44fd7368bab63369)
+
 # 4.0.0
 
 > 2019-08-21
