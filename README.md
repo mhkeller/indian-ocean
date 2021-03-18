@@ -6,8 +6,7 @@ Indian Ocean
 
 A Node.js library for reading in and writing out data plus some other useful filesystem functions.
 
-Documentation
--------------
+## Documentation
 
 ### See the full [API docs](http://mhkeller.github.io/indian-ocean/docs/).
 
