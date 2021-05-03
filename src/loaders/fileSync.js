@@ -11,7 +11,10 @@ export default function file (filePath, parser, parserOptions, cb) {
     data = '[]'
   }
 
-  data = stripBom(data).trim()
+  data = stripBom(data)
+  if (parserOptions.trim === true) {
+    data = data.trim();
+  }
   var parsed
   if (typeof parser === 'function') {
     parsed = parser(data, parserOptions)

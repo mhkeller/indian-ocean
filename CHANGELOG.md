@@ -1,6 +1,12 @@
 Changelog
 =========
 
+# 5.0.0
+
+> 2021-05-03
+
+A small breaking change that trims whitespace off of file by default, configurable via the `trim` option.
+
 # 4.0.0
 
 > 2019-08-21
