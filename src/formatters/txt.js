@@ -1,3 +1,3 @@
-export default function (file) {
-  return file
+export default function txt(file) {
+	return file;
 }

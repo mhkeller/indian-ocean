@@ -1,5 +1,5 @@
-import readData from '../readers/readData'
-import parserJson from '../parsers/json'
+import readData from '../readers/readData';
+import parserJson from '../parsers/json';
 
 /**
  * Asynchronously read a JSON file. Returns an empty array if file is empty.
@@ -67,12 +67,12 @@ import parserJson from '../parsers/json'
  *   console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  * })
  */
-export default function readJson (filePath, opts_, cb) {
-  var parserOptions
-  if (typeof cb === 'undefined') {
-    cb = opts_
-  } else {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  readData(filePath, {parser: parserJson, parserOptions: parserOptions}, cb)
+export default function readJson(filePath, opts_, cb) {
+	let parserOptions;
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+	} else {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	readData(filePath, { parser: parserJson, parserOptions }, cb);
 }

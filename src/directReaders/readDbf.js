@@ -1,5 +1,5 @@
-import identity from '../utils/identity'
-import readData from '../readers/readData'
+import identity from '../utils/identity';
+import readData from '../readers/readData';
 
 /**
  * Asynchronously read a dbf file. Returns an empty array if file is empty.
@@ -23,14 +23,14 @@ import readData from '../readers/readData'
  *   console.log(data) // Converted json data
  * })
  */
-export default function readDbf (filePath, opts_, cb) {
-  var parserOptions = {
-    map: identity
-  }
-  if (typeof cb === 'undefined') {
-    cb = opts_
-  } else {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  readData(filePath, parserOptions, cb)
+export default function readDbf(filePath, opts_, cb) {
+	let parserOptions = {
+		map: identity
+	};
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+	} else {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	readData(filePath, parserOptions, cb);
 }

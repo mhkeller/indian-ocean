@@ -1,4 +1,4 @@
-import readdir from './readdir'
+import readdir from './readdir';
 
 /**
  * Asynchronously get a list of a directory's files and folders if certain critera are met.
@@ -27,11 +27,11 @@ import readdir from './readdir'
  * })
  *
  */
-export default function readdirFilter (dirPath, opts_, cb) {
-  if (typeof cb === 'undefined') {
-    cb = opts_
-    opts_ = undefined
-  }
+export default function readdirFilter(dirPath, opts_, cb) {
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+		opts_ = undefined;
+	}
 
-  readdir({async: true}, dirPath, opts_, cb)
+	readdir({ async: true }, dirPath, opts_, cb);
 }

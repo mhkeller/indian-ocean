@@ -1,5 +1,5 @@
-import readDataSync from '../readers/readDataSync'
-import parserPsv from '../parsers/psv'
+import readDataSync from '../readers/readDataSync';
+import parserPsv from '../parsers/psv';
 
 /**
  * Synchronously read a pipe-separated value file. Returns an empty array if file is empty.
@@ -20,10 +20,10 @@ import parserPsv from '../parsers/psv'
  * })
  * console.log(data) // Json data with casted values
  */
-export default function readPsvSync (filePath, opts_) {
-  var parserOptions
-  if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  return readDataSync(filePath, {parser: parserPsv, parserOptions: parserOptions})
+export default function readPsvSync(filePath, opts_) {
+	let parserOptions;
+	if (typeof opts_ !== 'undefined') {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	return readDataSync(filePath, { parser: parserPsv, parserOptions });
 }

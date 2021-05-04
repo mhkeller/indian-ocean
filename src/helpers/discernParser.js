@@ -1,7 +1,7 @@
 /* istanbul ignore next */
-import dsvFormat from 'd3-dsv/src/dsv'
-import discernFormat from './discernFormat'
-import parsers from '../parsers/index'
+import dsvFormat from 'd3-dsv/src/dsv';
+import discernFormat from './discernFormat';
+import parsers from '../parsers/index';
 
 /**
  * Given a `filePath` return a parser that can read that file as json. Parses as text if format not supported by a built-in parser. If given a delimiter string as the second argument, return a parser for that delimiter regardless of `filePath`. Used internally by {@link readData} and {@link readDataSync}.
@@ -19,15 +19,15 @@ import parsers from '../parsers/index'
  * var parser = io.discernParser('_', {delimiter: true})
  * var json = parser('name_price\nApple_120\nPear_300')
  */
-export default function discernParser (filePath, opts_) {
-  if (opts_ && opts_.delimiter === true) {
-    return dsvFormat(filePath).parse
-  }
-  var format = discernFormat(filePath)
-  var parser = parsers[format]
-  // If we don't have a parser for this format, return as text
-  if (typeof parser === 'undefined') {
-    parser = parsers['txt']
-  }
-  return parser
+export default function discernParser(filePath, opts_) {
+	if (opts_ && opts_.delimiter === true) {
+		return dsvFormat(filePath).parse;
+	}
+	const format = discernFormat(filePath);
+	let parser = parsers[format];
+	// If we don't have a parser for this format, return as text
+	if (typeof parser === 'undefined') {
+		parser = parsers.txt;
+	}
+	return parser;
 }

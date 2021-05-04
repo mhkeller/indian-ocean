@@ -1,5 +1,5 @@
-import readDataSync from '../readers/readDataSync'
-import parserCsv from '../parsers/csv'
+import readDataSync from '../readers/readDataSync';
+import parserCsv from '../parsers/csv';
 
 /**
  * Synchronously read a comma-separated value file. Returns an empty array if file is empty.
@@ -29,10 +29,10 @@ import parserCsv from '../parsers/csv'
  * }})
  * console.log(data) // Json data with casted values
  */
-export default function readCsvSync (filePath, opts_) {
-  var parserOptions
-  if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  return readDataSync(filePath, {parser: parserCsv, parserOptions: parserOptions})
+export default function readCsvSync(filePath, opts_) {
+	let parserOptions;
+	if (typeof opts_ !== 'undefined') {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	return readDataSync(filePath, { parser: parserCsv, parserOptions });
 }

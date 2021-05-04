@@ -1,9 +1,9 @@
 /* istanbul ignore next */
-import _ from 'underscore'
-import getParser from '../helpers/getParser'
-import discernLoader from '../helpers/discernLoader'
-import discernParser from '../helpers/discernParser'
-import omit from '../utils/omit'
+import _ from 'underscore';
+import getParser from '../helpers/getParser';
+import discernLoader from '../helpers/discernLoader';
+import discernParser from '../helpers/discernParser';
+import omit from '../utils/omit';
 
 /**
  * Asynchronously read data given a path ending in the file format.
@@ -75,37 +75,37 @@ import omit from '../utils/omit'
  *   console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  * })
  */
-export default function readData (filePath, opts_, cb_) {
-  var cb = arguments[arguments.length - 1]
-  var parser
-  var parserOptions
-  if (arguments.length === 3) {
-    if (opts_.parser) {
-      parser = getParser(opts_.parser)
-      opts_ = omit(opts_, ['parser'])
-      if (_.isEmpty(opts_)) {
-        opts_ = undefined
-      }
-    } else {
-      parser = discernParser(filePath)
-    }
+export default function readData(filePath, opts_, ...args) {
+	const cb = args[args.length - 1];
+	let parser;
+	let parserOptions;
+	if (args.length > 0) {
+		if (opts_.parser) {
+			parser = getParser(opts_.parser);
+			opts_ = omit(opts_, ['parser']);
+			if (_.isEmpty(opts_)) {
+				opts_ = undefined;
+			}
+		} else {
+			parser = discernParser(filePath);
+		}
 
-    if (opts_ && opts_.parserOptions) {
-      if (typeof opts_.parserOptions === 'function') {
-        parserOptions = {map: opts_.parserOptions}
-      } else {
-        parserOptions = opts_.parserOptions
-      }
-    } else if (opts_) {
-      if (typeof opts_ === 'function') {
-        parserOptions = {map: opts_}
-      } else {
-        parserOptions = opts_
-      }
-    }
-  } else {
-    parser = discernParser(filePath)
-  }
-  var loader = discernLoader(filePath)
-  loader(filePath, parser, parserOptions, cb)
+		if (opts_ && opts_.parserOptions) {
+			if (typeof opts_.parserOptions === 'function') {
+				parserOptions = { map: opts_.parserOptions };
+			} else {
+				parserOptions = opts_.parserOptions;
+			}
+		} else if (opts_) {
+			if (typeof opts_ === 'function') {
+				parserOptions = { map: opts_ };
+			} else {
+				parserOptions = opts_;
+			}
+		}
+	} else {
+		parser = discernParser(filePath);
+	}
+	const loader = discernLoader(filePath);
+	loader(filePath, parser, parserOptions, cb);
 }

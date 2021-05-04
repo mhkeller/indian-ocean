@@ -1,11 +1,11 @@
 /* istanbul ignore next */
-import fs from 'fs'
+import fs from 'fs';
 /* istanbul ignore next */
-import _ from 'underscore'
-import makeDirectories from '../helpers/makeDirectories'
-import readData from '../readers/readData'
-import writeData from './writeData'
-import omit from '../utils/omit'
+import _ from 'underscore';
+import makeDirectories from '../helpers/makeDirectories';
+import readData from '../readers/readData';
+import writeData from './writeData';
+import omit from '../utils/omit';
 
 /**
  * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with `Object.assign`. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
@@ -34,40 +34,40 @@ import omit from '../utils/omit'
  *   console.log(err)
  * })
  */
-export default function appendData (outPath, data, opts_, cb) {
-  if (typeof cb === 'undefined') {
-    cb = opts_
-  }
-  if (typeof opts_ === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
-    makeDirectories(outPath, proceed)
-  } else {
-    proceed()
-  }
-  function proceed (err) {
-    if (err) {
-      throw err
-    }
-    opts_ = omit(opts_, ['makeDirectories', 'makeDirs'])
-    // Run append file to delegate creating a new file if none exists
-    fs.appendFile(outPath, '', function (err) {
-      if (!err) {
-        readData(outPath, function (err, existingData) {
-          if (!err) {
-            if (!_.isEmpty(existingData)) {
-              if (Array.isArray(existingData)) {
-                data = existingData.concat(data)
-              } else if (typeof existingData === 'object') {
-                data = Object.assign({}, existingData, data)
-              }
-            }
-            writeData(outPath, data, opts_, cb)
-          } else {
-            cb(err)
-          }
-        })
-      } else {
-        cb(err)
-      }
-    })
-  }
+export default function appendData(outPath, data, opts_, cb) {
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+	}
+	if (typeof opts_ === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
+		makeDirectories(outPath, proceed);
+	} else {
+		proceed();
+	}
+	function proceed(err) {
+		if (err) {
+			throw err;
+		}
+		opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
+		// Run append file to delegate creating a new file if none exists
+		fs.appendFile(outPath, '', err2 => {
+			if (!err2) {
+				readData(outPath, (err3, existingData) => {
+					if (!err3) {
+						if (!_.isEmpty(existingData)) {
+							if (Array.isArray(existingData)) {
+								data = existingData.concat(data);
+							} else if (typeof existingData === 'object') {
+								data = { ...existingData, ...data };
+							}
+						}
+						writeData(outPath, data, opts_, cb);
+					} else {
+						cb(err3);
+					}
+				});
+			} else {
+				cb(err2);
+			}
+		});
+	}
 }

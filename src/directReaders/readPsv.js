@@ -1,5 +1,5 @@
-import readData from '../readers/readData'
-import parserPsv from '../parsers/psv'
+import readData from '../readers/readData';
+import parserPsv from '../parsers/psv';
 
 /**
  * Asynchronously read a pipe-separated value file. Returns an empty array if file is empty.
@@ -23,12 +23,12 @@ import parserPsv from '../parsers/psv'
  *   console.log(data) // Json data with casted values
  * })
  */
-export default function readPsv (filePath, opts_, cb) {
-  var parserOptions
-  if (typeof cb === 'undefined') {
-    cb = opts_
-  } else {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  readData(filePath, {parser: parserPsv, parserOptions: parserOptions}, cb)
+export default function readPsv(filePath, opts_, cb) {
+	let parserOptions;
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+	} else {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	readData(filePath, { parser: parserPsv, parserOptions }, cb);
 }

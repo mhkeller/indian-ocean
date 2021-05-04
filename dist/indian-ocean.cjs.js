@@ -2307,29 +2307,38 @@ var csvParse = csv.parse;
 var csvFormat = csv.format;
 
 /* istanbul ignore next */
-var parserCsv = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  return csvParse(str, parserOptions.map);
-};
+function parseCsv(str, parserOptions) {
+	parserOptions = parserOptions || {};
+	return csvParse(str, parserOptions.map);
+}
 
 var identity$1 = (function (d) {
   return d;
 });
 
 /* istanbul ignore next */
-var parserJson = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  // Do a naive test whether this is a string or an object
-  var mapFn = parserOptions.map ? str.trim().charAt(0) === '[' ? _.map : _.mapObject : identity$1;
-  var jsonParser = JSON.parse;
-  return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
-};
+function parseJson(str, parserOptions) {
+	parserOptions = parserOptions || {};
+	// Do a naive test whether this is a string or an object
+	var mapFn = void 0;
+	if (parserOptions.map) {
+		if (str.trim().charAt(0) === '[') {
+			mapFn = _.map;
+		} else {
+			mapFn = _.mapObject;
+		}
+	} else {
+		mapFn = identity$1;
+	}
+	var jsonParser = JSON.parse;
+	return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
+}
 
 /* istanbul ignore next */
-var parserPsv = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  return dsvFormat('|').parse(str, parserOptions.map);
-};
+function parsePsv(str, parserOptions) {
+	parserOptions = parserOptions || {};
+	return dsvFormat('|').parse(str, parserOptions.map);
+}
 
 var tsv = dsvFormat("\t");
 
@@ -2338,14 +2347,14 @@ var tsvParse = tsv.parse;
 var tsvFormat = tsv.format;
 
 /* istanbul ignore next */
-var parserTsv = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  return tsvParse(str, parserOptions.map);
-};
+function parseTsv(str, parserOptions) {
+	parserOptions = parserOptions || {};
+	return tsvParse(str, parserOptions.map);
+}
 
-var parserTxt = function (str, parserOptions) {
-  return parserOptions && typeof parserOptions.map === 'function' ? parserOptions.map(str) : str;
-};
+function parseTxt(str, parserOptions) {
+	return parserOptions && typeof parserOptions.map === 'function' ? parserOptions.map(str) : str;
+}
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -2679,12 +2688,12 @@ function omit$1(obj, blackList) {
 }
 
 /* istanbul ignore next */
-var parserAml = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  var map = parserOptions.map || identity$1;
-  var data = archieml.load(str, omit$1(parserOptions, ['map']));
-  return map(data);
-};
+function parseAml(str, parserOptions) {
+	parserOptions = parserOptions || {};
+	var map = parserOptions.map || identity$1;
+	var data = archieml.load(str, omit$1(parserOptions, ['map']));
+	return map(data);
+}
 
 /* --------------------------------------------
  * Formats that should be treated similarly
@@ -2698,18 +2707,18 @@ var formatsList = Object.keys(formatsIndex).map(function (key) {
 });
 
 var parsers = {
-  csv: parserCsv,
-  json: parserJson,
-  psv: parserPsv,
-  tsv: parserTsv,
-  txt: parserTxt,
-  aml: parserAml
+	csv: parseCsv,
+	json: parseJson,
+	psv: parsePsv,
+	tsv: parseTsv,
+	txt: parseTxt,
+	aml: parseAml
 };
 
 formatsList.forEach(function (format) {
-  format.equivalents.forEach(function (equivalent) {
-    parsers[equivalent] = parsers[format.name];
-  });
+	format.equivalents.forEach(function (equivalent) {
+		parsers[equivalent] = parsers[format.name];
+	});
 });
 
 /* istanbul ignore next */
@@ -2737,7 +2746,7 @@ function discernParser(filePath, opts_) {
   var parser = parsers[format];
   // If we don't have a parser for this format, return as text
   if (typeof parser === 'undefined') {
-    parser = parsers['txt'];
+    parser = parsers.txt;
   }
   return parser;
 }
@@ -2868,13 +2877,13 @@ var asyncGenerator = function () {
 // Our `readData` fns can take either a delimiter to parse a file, or a full blown parser
 // Determine what they passed in with this handy function
 function getParser(delimiterOrParser) {
-  var parser;
-  if (typeof delimiterOrParser === 'string') {
-    parser = discernParser(delimiterOrParser, { delimiter: true });
-  } else if (typeof delimiterOrParser === 'function' || (typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object') {
-    parser = delimiterOrParser;
-  }
-  return parser;
+	var parser = void 0;
+	if (typeof delimiterOrParser === 'string') {
+		parser = discernParser(delimiterOrParser, { delimiter: true });
+	} else if (typeof delimiterOrParser === 'function' || (typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object') {
+		parser = delimiterOrParser;
+	}
+	return parser;
 }
 
 // from https://github.com/sindresorhus/strip-bom/blob/d5696fdc9eeb6cc8d97e390cf1de7558f74debd5/index.js#L3
@@ -2891,118 +2900,120 @@ function stripBom(string) {
 
 /* istanbul ignore next */
 function file(filePath, parser, parserOptions, cb) {
-  fs.readFile(filePath, 'utf8', function (err, data) {
-    var fileFormat = discernFormat(filePath);
-    if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
-      data = '[]';
-    }
-    if (err) {
-      cb(err);
-      return false;
-    }
-    var parsed;
-    try {
-      data = stripBom(data);
-      if (!parserOptions || parserOptions.trim !== false) {
-        data = data.trim();
-      }
-      if (typeof parser === 'function') {
-        parsed = parser(data, parserOptions);
-      } else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
-        parsed = parser.parse(data, parserOptions);
-      } else {
-        parsed = 'Your specified parser is not properly formatted. It must either be a function or have a `parse` method.';
-      }
-    } catch (err) {
-      cb(err);
-      return;
-    }
-    cb(null, parsed);
-  });
+	// eslint-disable-next-line consistent-return
+	fs.readFile(filePath, 'utf8', function (err, data) {
+		var fileFormat = discernFormat(filePath);
+		if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
+			data = '[]';
+		}
+		if (err) {
+			cb(err);
+			return false;
+		}
+		var parsed = void 0;
+		try {
+			data = stripBom(data);
+			if (!parserOptions || parserOptions.trim !== false) {
+				data = data.trim();
+			}
+			if (typeof parser === 'function') {
+				parsed = parser(data, parserOptions);
+			} else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
+				parsed = parser.parse(data, parserOptions);
+			} else {
+				parsed = 'Your specified parser is not properly formatted. It must either be a function or have a `parse` method.';
+			}
+		} catch (err2) {
+			cb(err2);
+			return null;
+		}
+		cb(null, parsed);
+	});
 }
 
 /* istanbul ignore next */
-function file$1(filePath, parser, parserOptions, cb) {
-  var data = fs.readFileSync(filePath, 'utf8');
-  var fileFormat = discernFormat(filePath);
-  if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
-    data = '[]';
-  }
+function file$1(filePath, parser, parserOptions) {
+	var data = fs.readFileSync(filePath, 'utf8');
+	var fileFormat = discernFormat(filePath);
+	if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
+		data = '[]';
+	}
 
-  data = stripBom(data);
-  if (!parserOptions || parserOptions.trim === true) {
-    data = data.trim();
-  }
-  var parsed;
-  if (typeof parser === 'function') {
-    parsed = parser(data, parserOptions);
-  } else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
-    parsed = parser.parse(data, parserOptions);
-  } else {
-    return new Error('Your specified parser is not properly formatted. It must either be a function or have a `parse` method.');
-  }
+	data = stripBom(data);
+	if (!parserOptions || parserOptions.trim === true) {
+		data = data.trim();
+	}
+	var parsed = void 0;
+	if (typeof parser === 'function') {
+		parsed = parser(data, parserOptions);
+	} else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
+		parsed = parser.parse(data, parserOptions);
+	} else {
+		return new Error('Your specified parser is not properly formatted. It must either be a function or have a `parse` method.');
+	}
 
-  return parsed;
+	return parsed;
 }
 
 /* istanbul ignore next */
 var shapefile = require('shapefile');
+
 function dbf(filePath, parser, parserOptions, cb) {
-  var values = [];
-  parserOptions = parserOptions || {};
-  var map = parserOptions.map || identity$1;
-  var i = 0;
-  shapefile.openDbf(filePath).then(function (source) {
-    return source.read().then(function log(result) {
-      i++;
-      if (result.done) return cb(null, values);
-      values.push(map(result.value, i));
-      return source.read().then(log);
-    });
-  }).catch(function (error) {
-    return cb(error.stack);
-  });
+	var values = [];
+	parserOptions = parserOptions || {};
+	var map = parserOptions.map || identity$1;
+	var i = 0;
+	shapefile.openDbf(filePath).then(function (source) {
+		return source.read().then(function log(result) {
+			i += 1;
+			if (result.done) return cb(null, values);
+			values.push(map(result.value, i));
+			return source.read().then(log);
+		});
+	}).catch(function (error) {
+		return cb(error.stack);
+	});
 }
 
 var loaders = {
-  async: {
-    aml: file,
-    csv: file,
-    psv: file,
-    tsv: file,
-    txt: file,
-    json: file,
-    dbf: dbf
-  },
-  sync: {
-    aml: file$1,
-    csv: file$1,
-    psv: file$1,
-    tsv: file$1,
-    txt: file$1,
-    json: file$1
-  }
+	async: {
+		aml: file,
+		csv: file,
+		psv: file,
+		tsv: file,
+		txt: file,
+		json: file,
+		dbf: dbf
+	},
+	sync: {
+		aml: file$1,
+		csv: file$1,
+		psv: file$1,
+		tsv: file$1,
+		txt: file$1,
+		json: file$1
+	}
 };
 
 formatsList.forEach(function (format) {
-  format.equivalents.forEach(function (equivalent) {
-    Object.keys(loaders).forEach(function (key) {
-      loaders[key][equivalent] = loaders[key][format.name];
-    });
-  });
+	format.equivalents.forEach(function (equivalent) {
+		Object.keys(loaders).forEach(function (key) {
+			loaders[key][equivalent] = loaders[key][format.name];
+		});
+	});
 });
 
 function discernLoader(filePath) {
-  var opts_ = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	var opts_ = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-  var which = opts_.sync === true ? 'sync' : 'async';
-  var format = discernFormat(filePath);
-  var loader = loaders[which][format];
-  // If we don't have a loader for this format, read in as a normal file
-  if (typeof loader === 'undefined') {
-    loader = loaders[which]['txt'];
-  }
-  return loader;
+	var which = opts_.sync === true ? 'sync' : 'async';
+	var format = discernFormat(filePath);
+	var loader = loaders[which][format];
+	// If we don't have a loader for this format, read in as a normal file
+	if (typeof loader === 'undefined') {
+		loader = loaders[which].txt;
+	}
+	return loader;
 }
 
 /* istanbul ignore next */
@@ -3076,11 +3087,13 @@ function discernLoader(filePath) {
  *   console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  * })
  */
-function readData(filePath, opts_, cb_) {
-  var cb = arguments[arguments.length - 1];
-  var parser;
-  var parserOptions;
-  if (arguments.length === 3) {
+function readData(filePath, opts_) {
+  var _ref;
+
+  var cb = (_ref = (arguments.length <= 2 ? 0 : arguments.length - 2) - 1 + 2, arguments.length <= _ref ? undefined : arguments[_ref]);
+  var parser = void 0;
+  var parserOptions = void 0;
+  if ((arguments.length <= 2 ? 0 : arguments.length - 2) > 0) {
     if (opts_.parser) {
       parser = getParser(opts_.parser);
       opts_ = omit$1(opts_, ['parser']);
@@ -3400,46 +3413,49 @@ var parseError = function (format) {
 };
 
 /* istanbul ignore next */
-var csv$1 = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  file = formattingPreflight(file, 'csv');
-  try {
-    return csvFormat(file, writeOptions.columns);
-  } catch (err) {
-    parseError('csv');
-  }
-};
+function csv$1(file, writeOptions) {
+	writeOptions = writeOptions || {};
+	file = formattingPreflight(file, 'csv');
+	try {
+		return csvFormat(file, writeOptions.columns);
+	} catch (err) {
+		parseError('csv');
+		return null;
+	}
+}
 
 var json = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  return JSON.stringify(file, writeOptions.replacer, writeOptions.indent);
+	writeOptions = writeOptions || {};
+	return JSON.stringify(file, writeOptions.replacer, writeOptions.indent);
 };
 
 /* istanbul ignore next */
-var psv = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  file = formattingPreflight(file, 'psv');
-  try {
-    return dsvFormat('|').format(file, writeOptions.columns);
-  } catch (err) {
-    parseError('psv');
-  }
-};
+function psv(file, writeOptions) {
+	writeOptions = writeOptions || {};
+	file = formattingPreflight(file, 'psv');
+	try {
+		return dsvFormat('|').format(file, writeOptions.columns);
+	} catch (err) {
+		parseError('psv');
+		return null;
+	}
+}
 
 /* istanbul ignore next */
-var tsv$1 = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  file = formattingPreflight(file, 'tsv');
-  try {
-    return tsvFormat(file, writeOptions.columns);
-  } catch (err) {
-    parseError('tsv');
-  }
-};
+function tsv$1(file, writeOptions) {
+	writeOptions = writeOptions || {};
+	file = formattingPreflight(file, 'tsv');
+	try {
+		return tsvFormat(file, writeOptions.columns);
+	} catch (err) {
+		parseError('tsv');
+		return null;
+	}
+}
 
-var txt = function (file) {
-  return file;
-};
+function txt(file) {
+	return file;
+}
 
 var fieldsize = {
     // string
@@ -3681,33 +3697,32 @@ var index$13 = {
 };
 
 /* istanbul ignore next */
-var dbf$1 = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  function toBuffer(ab) {
-    var buffer = new Buffer(ab.byteLength);
-    var view = new Uint8Array(ab);
-    for (var i = 0; i < buffer.length; ++i) {
-      buffer[i] = view[i];
-    }
-    return buffer;
-  }
-  var buf = index$13.structure(file);
-  return toBuffer(buf.buffer);
+var dbf$1 = function (file) {
+	function toBuffer(ab) {
+		var buffer = new Buffer(ab.byteLength);
+		var view = new Uint8Array(ab);
+		for (var i = 0; i < buffer.length; i += 1) {
+			buffer[i] = view[i];
+		}
+		return buffer;
+	}
+	var buf = index$13.structure(file);
+	return toBuffer(buf.buffer);
 };
 
 var formatters = {
-  csv: csv$1,
-  json: json,
-  psv: psv,
-  tsv: tsv$1,
-  txt: txt,
-  dbf: dbf$1
+	csv: csv$1,
+	json: json,
+	psv: psv,
+	tsv: tsv$1,
+	txt: txt,
+	dbf: dbf$1
 };
 
 formatsList.forEach(function (format) {
-  format.equivalents.forEach(function (equivalent) {
-    formatters[equivalent] = formatters[format.name];
-  });
+	format.equivalents.forEach(function (equivalent) {
+		formatters[equivalent] = formatters[format.name];
+	});
 });
 
 /**
@@ -3726,7 +3741,7 @@ function discernFileFormatter(filePath) {
   var formatter = formatters[format];
   // If we don't have a parser for this format, return as text
   if (typeof formatter === 'undefined') {
-    formatter = formatters['txt'];
+    formatter = formatters.txt;
   }
   return formatter;
 }
@@ -4072,14 +4087,14 @@ function convertDbfToData(inPath, outPath, opts_, cb) {
  */
 function exists(filePath, cb) {
   fs.access(filePath, function (err) {
-    var exists;
+    var doesExist = void 0;
     if (err && err.code === 'ENOENT') {
-      exists = false;
+      doesExist = false;
       err = null;
     } else if (!err) {
-      exists = true;
+      doesExist = true;
     }
-    cb(err, exists);
+    cb(err, doesExist);
   });
 }
 
@@ -4188,11 +4203,10 @@ function isRegExp$1(obj) {
 function matches(filePath, matcher) {
   if (typeof matcher === 'string') {
     return extMatchesStr(filePath, matcher);
-  } else if (isRegExp$1(matcher)) {
+  }if (isRegExp$1(matcher)) {
     return matchesRegExp(filePath, matcher);
-  } else {
-    throw new Error('Matcher argument must be String or Regular Expression');
   }
+  throw new Error('Matcher argument must be String or Regular Expression');
 }
 
 /* istanbul ignore next */
@@ -4417,131 +4431,131 @@ function queue(concurrency) {
 /* istanbul ignore next */
 /* istanbul ignore next */
 function readdir(modeInfo, dirPath, opts_, cb) {
-  opts_ = opts_ || {};
-  var isAsync = modeInfo.async;
+	opts_ = opts_ || {};
+	var isAsync = modeInfo.async;
 
-  // Convert to array if a string
-  opts_.include = strToArray(opts_.include);
-  opts_.exclude = strToArray(opts_.exclude);
+	// Convert to array if a string
+	opts_.include = strToArray(opts_.include);
+	opts_.exclude = strToArray(opts_.exclude);
 
-  if (opts_.skipHidden === true) {
-    var regex = /^\./;
-    if (Array.isArray(opts_.exclude)) {
-      opts_.exclude.push(regex);
-    } else {
-      opts_.exclude = [regex];
-    }
-  }
+	if (opts_.skipHidden === true) {
+		var regex = /^\./;
+		if (Array.isArray(opts_.exclude)) {
+			opts_.exclude.push(regex);
+		} else {
+			opts_.exclude = [regex];
+		}
+	}
 
-  // Set defaults if not provided
-  opts_.includeMatchAll = opts_.includeMatchAll ? 'every' : 'some';
-  opts_.excludeMatchAll = opts_.excludeMatchAll ? 'every' : 'some';
+	// Set defaults if not provided
+	opts_.includeMatchAll = opts_.includeMatchAll ? 'every' : 'some';
+	opts_.excludeMatchAll = opts_.excludeMatchAll ? 'every' : 'some';
 
-  if (isAsync === true) {
-    fs.readdir(dirPath, function (err, files) {
-      if (err) {
-        throw err;
-      }
-      filter(files, cb);
-    });
-  } else {
-    return filterSync(fs.readdirSync(dirPath));
-  }
+	if (isAsync === true) {
+		fs.readdir(dirPath, function (err, files) {
+			if (err) {
+				throw err;
+			}
+			filter(files, cb);
+		});
+	} else {
+		return filterSync(fs.readdirSync(dirPath));
+	}
 
-  function strToArray(val) {
-    if (val && !Array.isArray(val)) {
-      val = [val];
-    }
-    return val;
-  }
+	function strToArray(val) {
+		if (val && !Array.isArray(val)) {
+			val = [val];
+		}
+		return val;
+	}
 
-  function filterByType(file, cb) {
-    // We need the full path so convert it if it isn't already
-    var filePath = opts_.fullPath ? file : joinPath(dirPath, file);
+	function filterByType(file, cb) {
+		// We need the full path so convert it if it isn't already
+		var filePath = opts_.fullPath ? file : joinPath(dirPath, file);
 
-    if (isAsync === true) {
-      fs.stat(filePath, function (err, stats) {
-        var filtered = getFiltered(stats.isDirectory());
-        cb(err, filtered);
-      });
-    } else {
-      return getFiltered(fs.statSync(filePath).isDirectory());
-    }
+		if (isAsync === true) {
+			fs.stat(filePath, function (err, stats) {
+				var filtered = getFiltered(stats.isDirectory());
+				cb(err, filtered);
+			});
+		} else {
+			return getFiltered(fs.statSync(filePath).isDirectory());
+		}
 
-    function getFiltered(isDir) {
-      // Keep the two names for legacy reasons
-      if (opts_.skipDirectories === true || opts_.skipDirs === true) {
-        if (isDir) {
-          return false;
-        }
-      }
-      if (opts_.skipFiles === true) {
-        if (!isDir) {
-          return false;
-        }
-      }
-      return file;
-    }
-  }
+		function getFiltered(isDir) {
+			// Keep the two names for legacy reasons
+			if (opts_.skipDirectories === true || opts_.skipDirs === true) {
+				if (isDir) {
+					return false;
+				}
+			}
+			if (opts_.skipFiles === true) {
+				if (!isDir) {
+					return false;
+				}
+			}
+			return file;
+		}
+	}
 
-  function filterByMatchers(files) {
-    var filtered = files.filter(function (fileName) {
-      var isExcluded;
-      var isIncluded;
+	function filterByMatchers(files) {
+		var filtered = files.filter(function (fileName) {
+			var isExcluded = void 0;
+			var isIncluded = void 0;
 
-      // Don't include if matches exclusion matcher
-      if (opts_.exclude) {
-        isExcluded = opts_.exclude[opts_.excludeMatchAll](function (matcher) {
-          return matches(fileName, matcher);
-        });
-        if (isExcluded === true) {
-          return false;
-        }
-      }
+			// Don't include if matches exclusion matcher
+			if (opts_.exclude) {
+				isExcluded = opts_.exclude[opts_.excludeMatchAll](function (matcher) {
+					return matches(fileName, matcher);
+				});
+				if (isExcluded === true) {
+					return false;
+				}
+			}
 
-      // Include if matches inclusion matcher, exclude if it doesn't
-      if (opts_.include) {
-        isIncluded = opts_.include[opts_.includeMatchAll](function (matcher) {
-          return matches(fileName, matcher);
-        });
-        return isIncluded;
-      }
+			// Include if matches inclusion matcher, exclude if it doesn't
+			if (opts_.include) {
+				isIncluded = opts_.include[opts_.includeMatchAll](function (matcher) {
+					return matches(fileName, matcher);
+				});
+				return isIncluded;
+			}
 
-      // Return true if it makes it to here
-      return true;
-    });
+			// Return true if it makes it to here
+			return true;
+		});
 
-    // Prefix with the full path if that's what we asked for
-    if (opts_.fullPath === true) {
-      return filtered.map(function (fileName) {
-        return joinPath(dirPath, fileName);
-      });
-    }
+		// Prefix with the full path if that's what we asked for
+		if (opts_.fullPath === true) {
+			return filtered.map(function (fileName) {
+				return joinPath(dirPath, fileName);
+			});
+		}
 
-    return filtered;
-  }
+		return filtered;
+	}
 
-  function filterSync(files) {
-    var filtered = filterByMatchers(files);
+	function filterSync(files) {
+		var filtered = filterByMatchers(files);
 
-    return filtered.map(function (file) {
-      return filterByType(file);
-    }).filter(identity$1);
-  }
+		return filtered.map(function (file) {
+			return filterByType(file);
+		}).filter(identity$1);
+	}
 
-  function filter(files, cb) {
-    var filterQ = queue();
+	function filter(files, cb2) {
+		var filterQ = queue();
 
-    var filtered = filterByMatchers(files);
+		var filtered = filterByMatchers(files);
 
-    filtered.forEach(function (fileName) {
-      filterQ.defer(filterByType, fileName);
-    });
+		filtered.forEach(function (fileName) {
+			filterQ.defer(filterByType, fileName);
+		});
 
-    filterQ.awaitAll(function (err, namesOfType) {
-      cb(err, namesOfType.filter(identity$1));
-    });
-  }
+		filterQ.awaitAll(function (err, namesOfType) {
+			cb2(err, namesOfType.filter(identity$1));
+		});
+	}
 }
 
 /**
@@ -4634,13 +4648,13 @@ function readdirFilterSync(dirPath, opts_) {
  * })
  */
 function readAml(filePath, opts_, cb) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  readData(filePath, { parser: parserAml, parserOptions: parserOptions }, cb);
+  readData(filePath, { parser: parseAml, parserOptions: parserOptions }, cb);
 }
 
 /**
@@ -4662,11 +4676,11 @@ function readAml(filePath, opts_, cb) {
  * console.log(data) // json data with height multiplied by 2
  */
 function readAmlSync(filePath, opts_) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof opts_ !== 'undefined') {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  return readDataSync(filePath, { parser: parserAml, parserOptions: parserOptions });
+  return readDataSync(filePath, { parser: parseAml, parserOptions: parserOptions });
 }
 
 /**
@@ -4701,13 +4715,13 @@ function readAmlSync(filePath, opts_) {
  * })
  */
 function readCsv(filePath, opts_, cb) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  readData(filePath, { parser: parserCsv, parserOptions: parserOptions }, cb);
+  readData(filePath, { parser: parseCsv, parserOptions: parserOptions }, cb);
 }
 
 /**
@@ -4739,11 +4753,11 @@ function readCsv(filePath, opts_, cb) {
  * console.log(data) // Json data with casted values
  */
 function readCsvSync(filePath, opts_) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof opts_ !== 'undefined') {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  return readDataSync(filePath, { parser: parserCsv, parserOptions: parserOptions });
+  return readDataSync(filePath, { parser: parseCsv, parserOptions: parserOptions });
 }
 
 /**
@@ -4813,13 +4827,13 @@ function readCsvSync(filePath, opts_) {
  * })
  */
 function readJson(filePath, opts_, cb) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  readData(filePath, { parser: parserJson, parserOptions: parserOptions }, cb);
+  readData(filePath, { parser: parseJson, parserOptions: parserOptions }, cb);
 }
 
 /**
@@ -4864,11 +4878,11 @@ function readJson(filePath, opts_, cb) {
  * console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  */
 function readJsonSync(filePath, opts_) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof opts_ !== 'undefined') {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  return readDataSync(filePath, { parser: parserJson, parserOptions: parserOptions });
+  return readDataSync(filePath, { parser: parseJson, parserOptions: parserOptions });
 }
 
 /**
@@ -4894,13 +4908,13 @@ function readJsonSync(filePath, opts_) {
  * })
  */
 function readPsv(filePath, opts_, cb) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  readData(filePath, { parser: parserPsv, parserOptions: parserOptions }, cb);
+  readData(filePath, { parser: parsePsv, parserOptions: parserOptions }, cb);
 }
 
 /**
@@ -4923,11 +4937,11 @@ function readPsv(filePath, opts_, cb) {
  * console.log(data) // Json data with casted values
  */
 function readPsvSync(filePath, opts_) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof opts_ !== 'undefined') {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  return readDataSync(filePath, { parser: parserPsv, parserOptions: parserOptions });
+  return readDataSync(filePath, { parser: parsePsv, parserOptions: parserOptions });
 }
 
 /**
@@ -4953,13 +4967,13 @@ function readPsvSync(filePath, opts_) {
  * })
  */
 function readTsv(filePath, opts_, cb) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  readData(filePath, { parser: parserTsv, parserOptions: parserOptions }, cb);
+  readData(filePath, { parser: parseTsv, parserOptions: parserOptions }, cb);
 }
 
 /**
@@ -4983,11 +4997,11 @@ function readTsv(filePath, opts_, cb) {
  * console.log(data) // Json data with casted values
  */
 function readTsvSync(filePath, opts_) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof opts_ !== 'undefined') {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  return readDataSync(filePath, { parser: parserTsv, parserOptions: parserOptions });
+  return readDataSync(filePath, { parser: parseTsv, parserOptions: parserOptions });
 }
 
 /**
@@ -5010,13 +5024,13 @@ function readTsvSync(filePath, opts_) {
  * })
  */
 function readTxt(filePath, opts_, cb) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  readData(filePath, { parser: parserTxt, parserOptions: parserOptions }, cb);
+  readData(filePath, { parser: parseTxt, parserOptions: parserOptions }, cb);
 }
 
 /**
@@ -5037,11 +5051,11 @@ function readTxt(filePath, opts_, cb) {
  * console.log(data) // string data with values replaced
  */
 function readTxtSync(filePath, opts_) {
-  var parserOptions;
+  var parserOptions = void 0;
   if (typeof opts_ !== 'undefined') {
     parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
   }
-  return readDataSync(filePath, { parser: parserTxt, parserOptions: parserOptions });
+  return readDataSync(filePath, { parser: parseTxt, parserOptions: parserOptions });
 }
 
 /* istanbul ignore next */
@@ -5227,12 +5241,12 @@ exports.makeDirectoriesSync = makeDirectoriesSync;
 exports.matches = matches;
 exports.matchesRegExp = matchesRegExp;
 exports.parsers = parsers;
-exports.parseAml = parserAml;
-exports.parseCsv = parserCsv;
-exports.parseJson = parserJson;
-exports.parsePsv = parserPsv;
-exports.parseTsv = parserTsv;
-exports.parseTxt = parserTxt;
+exports.parseAml = parseAml;
+exports.parseCsv = parseCsv;
+exports.parseJson = parseJson;
+exports.parsePsv = parsePsv;
+exports.parseTsv = parseTsv;
+exports.parseTxt = parseTxt;
 exports.readData = readData;
 exports.readDataSync = readDataSync;
 exports.readdirFilter = readdirFilter;

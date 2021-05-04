@@ -1,4 +1,4 @@
-import readdir from './readdir'
+import readdir from './readdir';
 
 /**
  * Syncronous version of {@link readdirFilter}. Get a list of a directory's files and folders if certain critera are met.
@@ -28,6 +28,6 @@ import readdir from './readdir'
  * console.log(files) // ['path/to/files/data-0.json', 'path/to/files/data-1.json']
  *
  */
-export default function readdirFilterSync (dirPath, opts_) {
-  return readdir({async: false}, dirPath, opts_)
+export default function readdirFilterSync(dirPath, opts_) {
+	return readdir({ async: false }, dirPath, opts_);
 }

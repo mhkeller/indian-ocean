@@ -1,5 +1,5 @@
-import readDataSync from '../readers/readDataSync'
-import parserJson from '../parsers/json'
+import readDataSync from '../readers/readDataSync';
+import parserJson from '../parsers/json';
 
 /**
  * Synchronously read a JSON file. Returns an empty array if file is empty.
@@ -42,10 +42,10 @@ import parserJson from '../parsers/json'
  *
  * console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  */
-export default function readJsonSync (filePath, opts_) {
-  var parserOptions
-  if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  return readDataSync(filePath, {parser: parserJson, parserOptions: parserOptions})
+export default function readJsonSync(filePath, opts_) {
+	let parserOptions;
+	if (typeof opts_ !== 'undefined') {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	return readDataSync(filePath, { parser: parserJson, parserOptions });
 }

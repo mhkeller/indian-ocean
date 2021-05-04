@@ -1,5 +1,5 @@
-import readData from '../readers/readData'
-import parserCsv from '../parsers/csv'
+import readData from '../readers/readData';
+import parserCsv from '../parsers/csv';
 
 /**
  * Asynchronously read a comma-separated value file. Returns an empty array if file is empty.
@@ -32,12 +32,12 @@ import parserCsv from '../parsers/csv'
  *   console.log(data) // Converted json data
  * })
  */
-export default function readCsv (filePath, opts_, cb) {
-  var parserOptions
-  if (typeof cb === 'undefined') {
-    cb = opts_
-  } else {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  readData(filePath, {parser: parserCsv, parserOptions: parserOptions}, cb)
+export default function readCsv(filePath, opts_, cb) {
+	let parserOptions;
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+	} else {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	readData(filePath, { parser: parserCsv, parserOptions }, cb);
 }

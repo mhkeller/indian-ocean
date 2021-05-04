@@ -1,5 +1,5 @@
-import readData from '../readers/readData'
-import parserTxt from '../parsers/txt'
+import readData from '../readers/readData';
+import parserTxt from '../parsers/txt';
 
 /**
  * Asynchronously read a text file. Returns an empty string if file is empty.
@@ -20,12 +20,12 @@ import parserTxt from '../parsers/txt'
  *   console.log(data) // string data with values replaced
  * })
  */
-export default function readTxt (filePath, opts_, cb) {
-  var parserOptions
-  if (typeof cb === 'undefined') {
-    cb = opts_
-  } else {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  readData(filePath, {parser: parserTxt, parserOptions: parserOptions}, cb)
+export default function readTxt(filePath, opts_, cb) {
+	let parserOptions;
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+	} else {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	readData(filePath, { parser: parserTxt, parserOptions }, cb);
 }

@@ -1,5 +1,5 @@
 /* istanbul ignore next */
-import fs from 'fs'
+import fs from 'fs';
 
 /**
  * Asynchronously test whether a file exists or not by using `fs.access` modified from https://github.com/nodejs/io.js/issues/1592#issuecomment-98392899.
@@ -14,15 +14,15 @@ import fs from 'fs'
  * })
  *
  */
-export default function exists (filePath, cb) {
-  fs.access(filePath, function (err) {
-    var exists
-    if (err && err.code === 'ENOENT') {
-      exists = false
-      err = null
-    } else if (!err) {
-      exists = true
-    }
-    cb(err, exists)
-  })
+export default function exists(filePath, cb) {
+	fs.access(filePath, err => {
+		let doesExist;
+		if (err && err.code === 'ENOENT') {
+			doesExist = false;
+			err = null;
+		} else if (!err) {
+			doesExist = true;
+		}
+		cb(err, doesExist);
+	});
 }

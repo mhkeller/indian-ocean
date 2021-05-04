@@ -1,10 +1,10 @@
 /* istanbul ignore next */
-import fs from 'fs'
+import fs from 'fs';
 /* istanbul ignore next */
-import discernFileFormatter from '../helpers/discernFileFormatter'
-import makeDirectories from '../helpers/makeDirectories'
-import omit from '../utils/omit'
-import warnIfEmpty from '../utils/warnIfEmpty'
+import discernFileFormatter from '../helpers/discernFileFormatter';
+import makeDirectories from '../helpers/makeDirectories';
+import omit from '../utils/omit';
+import warnIfEmpty from '../utils/warnIfEmpty';
 
 /**
  * Write the data object, inferring the file format from the file ending specified in `fileName`.
@@ -61,34 +61,34 @@ import warnIfEmpty from '../utils/warnIfEmpty'
  *   console.log(err)
  * })
  */
-export default function writeData (outPath, data, opts_, cb) {
-  if (typeof cb === 'undefined') {
-    cb = opts_
-    opts_ = undefined
-  }
-  warnIfEmpty(data, outPath, opts_)
+export default function writeData(outPath, data, opts_, cb) {
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+		opts_ = undefined;
+	}
+	warnIfEmpty(data, outPath, opts_);
 
-  if (typeof opts_ === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
-    makeDirectories(outPath, proceed)
-  } else {
-    proceed()
-  }
+	if (typeof opts_ === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
+		makeDirectories(outPath, proceed);
+	} else {
+		proceed();
+	}
 
-  function proceed (err) {
-    if (err) {
-      throw err
-    }
+	function proceed(err) {
+		if (err) {
+			throw err;
+		}
 
-    opts_ = omit(opts_, ['makeDirectories', 'makeDirs'])
-    var writeOptions
-    if (typeof opts_ !== 'function') {
-      writeOptions = opts_
-    }
+		opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
+		let writeOptions;
+		if (typeof opts_ !== 'function') {
+			writeOptions = opts_;
+		}
 
-    var fileFormatter = discernFileFormatter(outPath)
-    var formattedData = fileFormatter(data, writeOptions)
-    fs.writeFile(outPath, formattedData, function (err) {
-      cb(err, formattedData)
-    })
-  }
+		const fileFormatter = discernFileFormatter(outPath);
+		const formattedData = fileFormatter(data, writeOptions);
+		fs.writeFile(outPath, formattedData, err2 => {
+			cb(err2, formattedData);
+		});
+	}
 }

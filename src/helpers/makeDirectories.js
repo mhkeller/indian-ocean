@@ -1,6 +1,6 @@
 /* istanbul ignore next */
-import mkdirp from 'mkdirp'
-import {dirname} from '../utils/path'
+import mkdirp from 'mkdirp';
+import { dirname } from '../utils/path';
 
 /**
  * Asynchronously create directories along a given file path. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module. If the last element in your file path is also a folder, it must end in `/` or else it will be interpreted as a file and not created.
@@ -20,8 +20,8 @@ import {dirname} from '../utils/path'
  * })
  *
  */
-export default function makeDirectories (outPath, cb) {
-  mkdirp(dirname(outPath), function (err) {
-    cb(err)
-  })
+export default function makeDirectories(outPath, cb) {
+	mkdirp(dirname(outPath), err => {
+		cb(err);
+	});
 }

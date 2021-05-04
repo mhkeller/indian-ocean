@@ -1,11 +1,11 @@
 /* istanbul ignore next */
-import fs from 'fs'
+import fs from 'fs';
 /* istanbul ignore next */
-import _ from 'underscore'
-import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
-import readDataSync from '../readers/readDataSync'
-import writeDataSync from './writeDataSync'
-import omit from '../utils/omit'
+import _ from 'underscore';
+import makeDirectoriesSync from '../helpers/makeDirectoriesSync';
+import readDataSync from '../readers/readDataSync';
+import writeDataSync from './writeDataSync';
+import omit from '../utils/omit';
 
 /**
  * Synchronous version of {@link writers#appendData}. See that function for supported formats
@@ -21,21 +21,21 @@ import omit from '../utils/omit'
  *
  * io.appendDataSync('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true})
  */
-export default function appendDataSync (outPath, data, opts_) {
-  // Run append file to delegate creating a new file if none exists
-  if (opts_ && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
-    makeDirectoriesSync(outPath)
-  }
-  opts_ = omit(opts_, ['makeDirectories', 'makeDirs'])
-  fs.appendFileSync(outPath, '')
-  var existingData = readDataSync(outPath)
-  if (!_.isEmpty(existingData)) {
-    if (Array.isArray(existingData)) {
-      data = existingData.concat(data)
-    } else if (typeof existingData === 'object') {
-      data = Object.assign({}, existingData, data)
-    }
-  }
-  writeDataSync(outPath, data, opts_)
-  return data
+export default function appendDataSync(outPath, data, opts_) {
+	// Run append file to delegate creating a new file if none exists
+	if (opts_ && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
+		makeDirectoriesSync(outPath);
+	}
+	opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
+	fs.appendFileSync(outPath, '');
+	const existingData = readDataSync(outPath);
+	if (!_.isEmpty(existingData)) {
+		if (Array.isArray(existingData)) {
+			data = existingData.concat(data);
+		} else if (typeof existingData === 'object') {
+			data = { ...existingData, ...data };
+		}
+	}
+	writeDataSync(outPath, data, opts_);
+	return data;
 }

@@ -688,31 +688,33 @@ var parseError = function (format) {
 };
 
 /* istanbul ignore next */
-var csv = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  file = formattingPreflight(file, 'csv');
-  try {
-    return csvFormat(file, writeOptions.columns);
-  } catch (err) {
-    parseError('csv');
-  }
-};
+function csv(file, writeOptions) {
+	writeOptions = writeOptions || {};
+	file = formattingPreflight(file, 'csv');
+	try {
+		return csvFormat(file, writeOptions.columns);
+	} catch (err) {
+		parseError('csv');
+		return null;
+	}
+}
 
 var json = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  return JSON.stringify(file, writeOptions.replacer, writeOptions.indent);
+	writeOptions = writeOptions || {};
+	return JSON.stringify(file, writeOptions.replacer, writeOptions.indent);
 };
 
 /* istanbul ignore next */
-var psv = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  file = formattingPreflight(file, 'psv');
-  try {
-    return dsvFormat('|').format(file, writeOptions.columns);
-  } catch (err) {
-    parseError('psv');
-  }
-};
+function psv(file, writeOptions) {
+	writeOptions = writeOptions || {};
+	file = formattingPreflight(file, 'psv');
+	try {
+		return dsvFormat('|').format(file, writeOptions.columns);
+	} catch (err) {
+		parseError('psv');
+		return null;
+	}
+}
 
 var tsv$1 = dsvFormat("\t");
 
@@ -721,19 +723,20 @@ var tsvParse = tsv$1.parse;
 var tsvFormat = tsv$1.format;
 
 /* istanbul ignore next */
-var tsv = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  file = formattingPreflight(file, 'tsv');
-  try {
-    return tsvFormat(file, writeOptions.columns);
-  } catch (err) {
-    parseError('tsv');
-  }
-};
+function tsv(file, writeOptions) {
+	writeOptions = writeOptions || {};
+	file = formattingPreflight(file, 'tsv');
+	try {
+		return tsvFormat(file, writeOptions.columns);
+	} catch (err) {
+		parseError('tsv');
+		return null;
+	}
+}
 
-var txt = function (file) {
-  return file;
-};
+function txt(file) {
+	return file;
+}
 
 var lookup = [];
 var revLookup = [];
@@ -2895,18 +2898,17 @@ var index$13 = {
 };
 
 /* istanbul ignore next */
-var dbf = function (file, writeOptions) {
-  writeOptions = writeOptions || {};
-  function toBuffer(ab) {
-    var buffer = new Buffer(ab.byteLength);
-    var view = new Uint8Array(ab);
-    for (var i = 0; i < buffer.length; ++i) {
-      buffer[i] = view[i];
-    }
-    return buffer;
-  }
-  var buf = index$13.structure(file);
-  return toBuffer(buf.buffer);
+var dbf = function (file) {
+	function toBuffer(ab) {
+		var buffer = new Buffer(ab.byteLength);
+		var view = new Uint8Array(ab);
+		for (var i = 0; i < buffer.length; i += 1) {
+			buffer[i] = view[i];
+		}
+		return buffer;
+	}
+	var buf = index$13.structure(file);
+	return toBuffer(buf.buffer);
 };
 
 /* --------------------------------------------
@@ -2921,18 +2923,18 @@ var formatsList = Object.keys(formatsIndex).map(function (key) {
 });
 
 var formatters = {
-  csv: csv,
-  json: json,
-  psv: psv,
-  tsv: tsv,
-  txt: txt,
-  dbf: dbf
+	csv: csv,
+	json: json,
+	psv: psv,
+	tsv: tsv,
+	txt: txt,
+	dbf: dbf
 };
 
 formatsList.forEach(function (format) {
-  format.equivalents.forEach(function (equivalent) {
-    formatters[equivalent] = formatters[format.name];
-  });
+	format.equivalents.forEach(function (equivalent) {
+		formatters[equivalent] = formatters[format.name];
+	});
 });
 
 /* --------------------------------------------
@@ -2998,16 +3000,16 @@ function discernFileFormatter(filePath) {
   var formatter = formatters[format];
   // If we don't have a parser for this format, return as text
   if (typeof formatter === 'undefined') {
-    formatter = formatters['txt'];
+    formatter = formatters.txt;
   }
   return formatter;
 }
 
 /* istanbul ignore next */
-var csv$2 = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  return csvParse(str, parserOptions.map);
-};
+function parseCsv(str, parserOptions) {
+	parserOptions = parserOptions || {};
+	return csvParse(str, parserOptions.map);
+}
 
 // Current version.
 var VERSION = '1.13.1';
@@ -5080,29 +5082,38 @@ var identity$1 = (function (d) {
 });
 
 /* istanbul ignore next */
-var json$1 = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  // Do a naive test whether this is a string or an object
-  var mapFn = parserOptions.map ? str.trim().charAt(0) === '[' ? _.map : _.mapObject : identity$1;
-  var jsonParser = JSON.parse;
-  return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
-};
+function parseJson(str, parserOptions) {
+	parserOptions = parserOptions || {};
+	// Do a naive test whether this is a string or an object
+	var mapFn = void 0;
+	if (parserOptions.map) {
+		if (str.trim().charAt(0) === '[') {
+			mapFn = _.map;
+		} else {
+			mapFn = _.mapObject;
+		}
+	} else {
+		mapFn = identity$1;
+	}
+	var jsonParser = JSON.parse;
+	return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
+}
 
 /* istanbul ignore next */
-var psv$1 = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  return dsvFormat('|').parse(str, parserOptions.map);
-};
+function parsePsv(str, parserOptions) {
+	parserOptions = parserOptions || {};
+	return dsvFormat('|').parse(str, parserOptions.map);
+}
 
 /* istanbul ignore next */
-var tsv$2 = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  return tsvParse(str, parserOptions.map);
-};
+function parseTsv(str, parserOptions) {
+	parserOptions = parserOptions || {};
+	return tsvParse(str, parserOptions.map);
+}
 
-var txt$1 = function (str, parserOptions) {
-  return parserOptions && typeof parserOptions.map === 'function' ? parserOptions.map(str) : str;
-};
+function parseTxt(str, parserOptions) {
+	return parserOptions && typeof parserOptions.map === 'function' ? parserOptions.map(str) : str;
+}
 
 var archieml = createCommonjsModule(function (module, exports) {
   // Structure inspired by John Resig's HTML parser
@@ -5426,26 +5437,26 @@ function omit$1(obj, blackList) {
 }
 
 /* istanbul ignore next */
-var aml = function (str, parserOptions) {
-  parserOptions = parserOptions || {};
-  var map = parserOptions.map || identity$1;
-  var data = archieml.load(str, omit$1(parserOptions, ['map']));
-  return map(data);
-};
+function parseAml(str, parserOptions) {
+	parserOptions = parserOptions || {};
+	var map = parserOptions.map || identity$1;
+	var data = archieml.load(str, omit$1(parserOptions, ['map']));
+	return map(data);
+}
 
 var parsers = {
-  csv: csv$2,
-  json: json$1,
-  psv: psv$1,
-  tsv: tsv$2,
-  txt: txt$1,
-  aml: aml
+	csv: parseCsv,
+	json: parseJson,
+	psv: parsePsv,
+	tsv: parseTsv,
+	txt: parseTxt,
+	aml: parseAml
 };
 
 formatsList.forEach(function (format) {
-  format.equivalents.forEach(function (equivalent) {
-    parsers[equivalent] = parsers[format.name];
-  });
+	format.equivalents.forEach(function (equivalent) {
+		parsers[equivalent] = parsers[format.name];
+	});
 });
 
 /* istanbul ignore next */
@@ -5473,7 +5484,7 @@ function discernParser(filePath, opts_) {
   var parser = parsers[format];
   // If we don't have a parser for this format, return as text
   if (typeof parser === 'undefined') {
-    parser = parsers['txt'];
+    parser = parsers.txt;
   }
   return parser;
 }
@@ -5622,13 +5633,13 @@ var asyncGenerator = function () {
 // Our `readData` fns can take either a delimiter to parse a file, or a full blown parser
 // Determine what they passed in with this handy function
 function getParser(delimiterOrParser) {
-  var parser;
-  if (typeof delimiterOrParser === 'string') {
-    parser = discernParser(delimiterOrParser, { delimiter: true });
-  } else if (typeof delimiterOrParser === 'function' || (typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object') {
-    parser = delimiterOrParser;
-  }
-  return parser;
+	var parser = void 0;
+	if (typeof delimiterOrParser === 'string') {
+		parser = discernParser(delimiterOrParser, { delimiter: true });
+	} else if (typeof delimiterOrParser === 'function' || (typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object') {
+		parser = delimiterOrParser;
+	}
+	return parser;
 }
 
 /**
@@ -5674,11 +5685,10 @@ function isRegExp$1(obj) {
 function matches(filePath, matcher) {
   if (typeof matcher === 'string') {
     return extMatchesStr(filePath, matcher);
-  } else if (isRegExp$1(matcher)) {
+  }if (isRegExp$1(matcher)) {
     return matchesRegExp(filePath, matcher);
-  } else {
-    throw new Error('Matcher argument must be String or Regular Expression');
   }
+  throw new Error('Matcher argument must be String or Regular Expression');
 }
 
 // converters

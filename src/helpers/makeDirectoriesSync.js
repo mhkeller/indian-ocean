@@ -1,6 +1,6 @@
 /* istanbul ignore next */
-import mkdirp from 'mkdirp'
-import {dirname} from '../utils/path'
+import mkdirp from 'mkdirp';
+import { dirname } from '../utils/path';
 
 /**
  * Synchronous version of {@link makeDirectories}. Delegates to [mkdirp](http://npmjs.org/package/mkdirp) module.
@@ -16,6 +16,6 @@ import {dirname} from '../utils/path'
  * io.makeDirectoriesSync('path/to/create/to/another-folder/')
  *
  */
-export default function makeDirectoriesSync (outPath) {
-  mkdirp.sync(dirname(outPath))
+export default function makeDirectoriesSync(outPath) {
+	mkdirp.sync(dirname(outPath));
 }

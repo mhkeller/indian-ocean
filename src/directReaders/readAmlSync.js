@@ -1,5 +1,5 @@
-import readDataSync from '../readers/readDataSync'
-import parserAml from '../parsers/aml'
+import readDataSync from '../readers/readDataSync';
+import parserAml from '../parsers/aml';
 
 /**
  * Synchronously read an ArchieML file. Returns an empty object if file is empty.
@@ -19,10 +19,10 @@ import parserAml from '../parsers/aml'
  * })
  * console.log(data) // json data with height multiplied by 2
  */
-export default function readAmlSync (filePath, opts_) {
-  var parserOptions
-  if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  return readDataSync(filePath, {parser: parserAml, parserOptions: parserOptions})
+export default function readAmlSync(filePath, opts_) {
+	let parserOptions;
+	if (typeof opts_ !== 'undefined') {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	return readDataSync(filePath, { parser: parserAml, parserOptions });
 }

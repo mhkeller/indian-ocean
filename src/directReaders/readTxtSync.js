@@ -1,5 +1,5 @@
-import readDataSync from '../readers/readDataSync'
-import parserTxt from '../parsers/txt'
+import readDataSync from '../readers/readDataSync';
+import parserTxt from '../parsers/txt';
 
 /**
  * Synchronously read a text file. Returns an empty string if file is empty.
@@ -18,10 +18,10 @@ import parserTxt from '../parsers/txt'
  * })
  * console.log(data) // string data with values replaced
  */
-export default function readTxtSync (filePath, opts_) {
-  var parserOptions
-  if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  return readDataSync(filePath, {parser: parserTxt, parserOptions: parserOptions})
+export default function readTxtSync(filePath, opts_) {
+	let parserOptions;
+	if (typeof opts_ !== 'undefined') {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	return readDataSync(filePath, { parser: parserTxt, parserOptions });
 }

@@ -1,4 +1,4 @@
-import {extname} from '../utils/path'
+import { extname } from '../utils/path';
 
 /**
  * Given a `filePath` return the file's extension. Used internally by {@link discernParser} and {@link discernFileFormatter}. Returns `false` for files without an extension, including dotfiles
@@ -15,11 +15,11 @@ import {extname} from '../utils/path'
  * var format = io.discernFormat('path/to/.dotfile')
  * console.log(format) // false
  */
-export default function discernFormat (filePath) {
-  var ext = extname(filePath)
-  if (ext === '') return false
+export default function discernFormat(filePath) {
+	const ext = extname(filePath);
+	if (ext === '') return false;
 
-  // Chop '.' off extension returned by extname
-  var formatName = ext.slice(1)
-  return formatName
+	// Chop '.' off extension returned by extname
+	const formatName = ext.slice(1);
+	return formatName;
 }

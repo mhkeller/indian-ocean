@@ -1,10 +1,10 @@
 /* istanbul ignore next */
-import fs from 'fs'
+import fs from 'fs';
 /* istanbul ignore next */
-import discernFileFormatter from '../helpers/discernFileFormatter'
-import makeDirectoriesSync from '../helpers/makeDirectoriesSync'
-import omit from '../utils/omit'
-import warnIfEmpty from '../utils/warnIfEmpty'
+import discernFileFormatter from '../helpers/discernFileFormatter';
+import makeDirectoriesSync from '../helpers/makeDirectoriesSync';
+import omit from '../utils/omit';
+import warnIfEmpty from '../utils/warnIfEmpty';
 
 /**
  * Syncronous version of {@link writers#writeData}
@@ -45,18 +45,18 @@ import warnIfEmpty from '../utils/warnIfEmpty'
  *   replacer: ['name', 'occupation'] // Only keep "name" and "occupation" values
  * })
  */
-export default function writeDataSync (outPath, data, opts_) {
-  warnIfEmpty(data, outPath, opts_)
-  var writeOptions
-  if (typeof opts_ === 'object') {
-    if (opts_.makeDirectories === true || opts_.makeDirs === true) {
-      makeDirectoriesSync(outPath)
-    }
-    writeOptions = opts_
-  }
-  opts_ = omit(opts_, ['makeDirectories', 'makeDirs'])
-  var fileFormatter = discernFileFormatter(outPath)
-  var formattedData = fileFormatter(data, writeOptions)
-  fs.writeFileSync(outPath, formattedData)
-  return formattedData
+export default function writeDataSync(outPath, data, opts_) {
+	warnIfEmpty(data, outPath, opts_);
+	let writeOptions;
+	if (typeof opts_ === 'object') {
+		if (opts_.makeDirectories === true || opts_.makeDirs === true) {
+			makeDirectoriesSync(outPath);
+		}
+		writeOptions = opts_;
+	}
+	opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
+	const fileFormatter = discernFileFormatter(outPath);
+	const formattedData = fileFormatter(data, writeOptions);
+	fs.writeFileSync(outPath, formattedData);
+	return formattedData;
 }

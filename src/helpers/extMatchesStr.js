@@ -1,4 +1,4 @@
-import {extname} from '../utils/path'
+import { extname } from '../utils/path';
 
 /**
  * Test whether a file name has the given extension
@@ -12,8 +12,8 @@ import {extname} from '../utils/path'
  * var matches = io.extMatchesStr('path/to/data.tsv', 'tsv')
  * console.log(matches) // `true`
  */
-export default function extMatchesStr (filePath, extension) {
-  // Chop '.' off extension returned by extname
-  var ext = extname(filePath).slice(1)
-  return ext === extension
+export default function extMatchesStr(filePath, extension) {
+	// Chop '.' off extension returned by extname
+	const ext = extname(filePath).slice(1);
+	return ext === extension;
 }

@@ -1,5 +1,5 @@
-import readDataSync from '../readers/readDataSync'
-import parserTsv from '../parsers/tsv'
+import readDataSync from '../readers/readDataSync';
+import parserTsv from '../parsers/tsv';
 
 /**
  * Synchronously read a tab-separated value file. Returns an empty array if file is empty.
@@ -21,10 +21,10 @@ import parserTsv from '../parsers/tsv'
  * })
  * console.log(data) // Json data with casted values
  */
-export default function readTsvSync (filePath, opts_) {
-  var parserOptions
-  if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  return readDataSync(filePath, {parser: parserTsv, parserOptions: parserOptions})
+export default function readTsvSync(filePath, opts_) {
+	let parserOptions;
+	if (typeof opts_ !== 'undefined') {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	return readDataSync(filePath, { parser: parserTsv, parserOptions });
 }

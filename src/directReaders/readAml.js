@@ -1,5 +1,5 @@
-import readData from '../readers/readData'
-import parserAml from '../parsers/aml'
+import readData from '../readers/readData';
+import parserAml from '../parsers/aml';
 
 /**
  * Asynchronously read an ArchieMl file. Returns an empty object if file is empty.
@@ -22,12 +22,12 @@ import parserAml from '../parsers/aml'
  *   console.log(data) // json data with height multiplied by 2
  * })
  */
-export default function readAml (filePath, opts_, cb) {
-  var parserOptions
-  if (typeof cb === 'undefined') {
-    cb = opts_
-  } else {
-    parserOptions = typeof opts_ === 'function' ? {map: opts_} : opts_
-  }
-  readData(filePath, {parser: parserAml, parserOptions: parserOptions}, cb)
+export default function readAml(filePath, opts_, cb) {
+	let parserOptions;
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+	} else {
+		parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+	}
+	readData(filePath, { parser: parserAml, parserOptions }, cb);
 }

@@ -1,5 +1,5 @@
-import readDbf from '../directReaders/readDbf'
-import writeData from '../writers/writeData'
+import readDbf from '../directReaders/readDbf';
+import writeData from '../writers/writeData';
 
 /**
  * Reads in a dbf file with {@link readData} and write to file using {@link writeData}. A convenience function for converting DBFs to more useable formats. Formerly known as `writeDbfToData` and is aliased for legacy support.
@@ -19,15 +19,15 @@ import writeData from '../writers/writeData'
  *   console.log(err)
  * })
  */
-export default function convertDbfToData (inPath, outPath, opts_, cb) {
-  if (typeof cb === 'undefined') {
-    cb = opts_
-  }
-  readDbf(inPath, function (error, jsonData) {
-    if (error) {
-      cb(error)
-    } else {
-      writeData(outPath, jsonData, opts_, cb)
-    }
-  })
+export default function convertDbfToData(inPath, outPath, opts_, cb) {
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+	}
+	readDbf(inPath, (error, jsonData) => {
+		if (error) {
+			cb(error);
+		} else {
+			writeData(outPath, jsonData, opts_, cb);
+		}
+	});
 }

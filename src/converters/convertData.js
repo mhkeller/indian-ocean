@@ -1,5 +1,5 @@
-import readData from '../readers/readData'
-import writeData from '../writers/writeData'
+import readData from '../readers/readData';
+import writeData from '../writers/writeData';
 
 /**
  * Reads in data given a path ending in the file format with {@link readData} and writes to file using {@link writeData}. A convenience function for converting files to more other formats. All formats can convert to all others except as long as they are lists. For example, you can't convert an object-based aml file to a list format.
@@ -19,15 +19,15 @@ import writeData from '../writers/writeData'
  *   console.log(err)
  * })
  */
-export default function convertData (inPath, outPath, opts_, cb) {
-  if (typeof cb === 'undefined') {
-    cb = opts_
-  }
-  readData(inPath, function (error, jsonData) {
-    if (error) {
-      cb(error)
-    } else {
-      writeData(outPath, jsonData, opts_, cb)
-    }
-  })
+export default function convertData(inPath, outPath, opts_, cb) {
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+	}
+	readData(inPath, (error, jsonData) => {
+		if (error) {
+			cb(error);
+		} else {
+			writeData(outPath, jsonData, opts_, cb);
+		}
+	});
 }
