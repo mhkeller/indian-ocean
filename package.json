@@ -15,7 +15,7 @@
     "build": "rm -rf dist && mkdir dist && npm run build:node && npm run build:browser",
     "dev": "rm -rf dist && mkdir dist && rollup --config rollup.config.node.js -w",
     "start": "npm run build && npm test",
-    "test": "npm run build && standard --fix src/**/*.js && rm -rf test/tmp-* && mocha",
+    "test": "npm run build && rm -rf test/tmp-* && mocha test/*.js",
     "coverage": "nyc --reporter=lcov mocha"
   },
   "repository": {
@@ -68,6 +68,9 @@
     "d3-queue": "^3.0.3",
     "dbf": "mhkeller/dbf#ed96ad16fc6ed7f3161319c31c996b7046f4809b",
     "documentation": "^5.3.1",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
     "github-slugger": "^1.2.0",
     "glob": "^7.1.2",
     "http-server": "^0.11.1",
@@ -85,7 +88,6 @@
     "rollup-plugin-node-resolve": "^2.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-watch": "^3.2.2",
-    "standard": "^8.3.0",
     "uglify-js": "^2.4.11",
     "underscore": "^1.8.3"
   }

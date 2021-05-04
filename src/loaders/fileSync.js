@@ -12,8 +12,8 @@ export default function file (filePath, parser, parserOptions, cb) {
   }
 
   data = stripBom(data)
-  if (parserOptions.trim === true) {
-    data = data.trim();
+  if (!parserOptions || parserOptions.trim === true) {
+    data = data.trim()
   }
   var parsed
   if (typeof parser === 'function') {

@@ -1,0 +1,4 @@
+module.exports = [
+	{ name: 'jim', occupation: 'land surveyor', height: 70 },
+	{ name: 'francis', occupation: 'conductor', height: 63 }
+];

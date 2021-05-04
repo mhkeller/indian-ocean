@@ -2538,7 +2538,10 @@ function file(filePath, parser, parserOptions, cb) {
     }
     var parsed;
     try {
-      data = stripBom(data).trim();
+      data = stripBom(data);
+      if (!parserOptions || parserOptions.trim !== false) {
+        data = data.trim();
+      }
       if (typeof parser === 'function') {
         parsed = parser(data, parserOptions);
       } else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
@@ -2562,7 +2565,10 @@ function file$1(filePath, parser, parserOptions, cb) {
     data = '[]';
   }
 
-  data = stripBom(data).trim();
+  data = stripBom(data);
+  if (!parserOptions || parserOptions.trim === true) {
+    data = data.trim();
+  }
   var parsed;
   if (typeof parser === 'function') {
     parsed = parser(data, parserOptions);
