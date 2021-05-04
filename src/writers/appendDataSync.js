@@ -33,7 +33,8 @@ export default function appendDataSync(outPath, data, opts_) {
 		if (Array.isArray(existingData)) {
 			data = existingData.concat(data);
 		} else if (typeof existingData === 'object') {
-			data = { ...existingData, ...data };
+			// eslint-disable-next-line prefer-object-spread
+			data = Object.assign({}, existingData, data);
 		}
 	}
 	writeDataSync(outPath, data, opts_);

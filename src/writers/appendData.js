@@ -57,12 +57,13 @@ export default function appendData(outPath, data, opts_, cb) {
 							if (Array.isArray(existingData)) {
 								data = existingData.concat(data);
 							} else if (typeof existingData === 'object') {
-								data = { ...existingData, ...data };
+								// eslint-disable-next-line prefer-object-spread
+								data = Object.assign({}, existingData, data);
 							}
 						}
 						writeData(outPath, data, opts_, cb);
 					} else {
-						cb(err3);
+						cb(err);
 					}
 				});
 			} else {

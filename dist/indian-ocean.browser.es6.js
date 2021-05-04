@@ -668,24 +668,25 @@ index.stripColor = stripColor;
 index.supportsColor = supportsColor_1;
 
 /* istanbul ignore next */
-var notListError = function (format) {
-  throw new Error(index.red('[indian-ocean] You passed in an object but converting to ' + index.bold(format) + ' requires a list of objects.') + index.cyan('\nIf you would like to write a one-row csv, put your object in a list like so: `' + index.bold('[data]') + '`\n'));
-};
+function notListError(format) {
+	throw new Error(index.red('[indian-ocean] You passed in an object but converting to ' + index.bold(format) + ' requires a list of objects.') + index.cyan('\nIf you would like to write a one-row csv, put your object in a list like so: `' + index.bold('[data]') + '`\n'));
+}
 
 // Some shared data integrity checks for formatters
 function formattingPreflight(file, format) {
-  if (file === '') {
-    return [];
-  } else if (!Array.isArray(file)) {
-    notListError(format);
-  }
-  return file;
+	if (file === '') {
+		return [];
+	}
+	if (!Array.isArray(file)) {
+		notListError(format);
+	}
+	return file;
 }
 
 /* istanbul ignore next */
-var parseError = function (format) {
-  throw new Error(index.red('[indian-ocean] Error converting your data to ' + index.bold(format) + '.') + '\n\n' + index.cyan('Your data most likely contains objects or lists. Object values can only be strings for this format. Please convert before writing to file.\n'));
-};
+function parseError(format) {
+	throw new Error(index.red('[indian-ocean] Error converting your data to ' + index.bold(format) + '.') + '\n\n' + index.cyan('Your data most likely contains objects or lists. Object values can only be strings for this format. Please convert before writing to file.\n'));
+}
 
 /* istanbul ignore next */
 function csv(file, writeOptions) {
@@ -2944,13 +2945,13 @@ formatsList.forEach(function (format) {
 var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^/]+?|)(\.[^./]*|))(?:[/]*)$/;
 
 function posixSplitPath(filename) {
-  var out = splitPathRe.exec(filename);
-  out.shift();
-  return out;
+	var out = splitPathRe.exec(filename);
+	out.shift();
+	return out;
 }
 
 function extname(filename) {
-  return posixSplitPath(filename)[3];
+	return posixSplitPath(filename)[3];
 }
 
 
@@ -5427,13 +5428,13 @@ var archieml = createCommonjsModule(function (module, exports) {
 
 // Return a copy of the object, filtered to omit the blacklisted array of keys.
 function omit$1(obj, blackList) {
-  var newObj = {};
-  Object.keys(obj || {}).forEach(function (key) {
-    if (blackList.indexOf(key) === -1) {
-      newObj[key] = obj[key];
-    }
-  });
-  return newObj;
+	var newObj = {};
+	Object.keys(obj || {}).forEach(function (key) {
+		if (blackList.indexOf(key) === -1) {
+			newObj[key] = obj[key];
+		}
+	});
+	return newObj;
 }
 
 /* istanbul ignore next */
@@ -5662,7 +5663,7 @@ function matchesRegExp(filePath, regEx) {
 }
 
 function isRegExp$1(obj) {
-  return Object.prototype.toString.call(obj) === '[object RegExp]';
+	return Object.prototype.toString.call(obj) === '[object RegExp]';
 }
 
 /**

@@ -22,6 +22,7 @@ import omit from '../utils/omit';
  * @function readData
  * @param {String} filePath Input file path
  * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @param {String|Function|Object} [parserOptions.parser] This can be a string that is the file's delimiter, a function that returns JSON, or, for convenience, can also be a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function. See `parsers` in library source for examples.
  * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
  * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJson} for details.

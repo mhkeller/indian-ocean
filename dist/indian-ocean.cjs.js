@@ -2245,23 +2245,23 @@ var dsvFormat = function (delimiter) {
 var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^/]+?|)(\.[^./]*|))(?:[/]*)$/;
 
 function posixSplitPath(filename) {
-  var out = splitPathRe.exec(filename);
-  out.shift();
-  return out;
+	var out = splitPathRe.exec(filename);
+	out.shift();
+	return out;
 }
 
 function extname(filename) {
-  return posixSplitPath(filename)[3];
+	return posixSplitPath(filename)[3];
 }
 
 function dirname(path$$1) {
-  var match = /(\/|\\)[^/\\]*$/.exec(path$$1);
-  if (!match) return '.';
+	var match = /(\/|\\)[^/\\]*$/.exec(path$$1);
+	if (!match) return '.';
 
-  var dir = path$$1.slice(0, -match[0].length);
+	var dir = path$$1.slice(0, -match[0].length);
 
-  // If `dir` is the empty string, we're at root.
-  return dir || '/';
+	// If `dir` is the empty string, we're at root.
+	return dir || '/';
 }
 
 /* --------------------------------------------
@@ -2269,11 +2269,14 @@ function dirname(path$$1) {
  * to avoid a double slash scenario
  */
 function joinPath() {
-  var args = Array.prototype.slice.call(arguments);
-  return args.map(function (d, i) {
-    if (i === args.length - 1) return d;
-    return d.replace(/\/$/, '');
-  }).join('/'); // TODO, windows
+	for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+		args[_key] = arguments[_key];
+	}
+
+	return args.map(function (d, i) {
+		if (i === args.length - 1) return d;
+		return d.replace(/\/$/, '');
+	}).join('/'); // TODO, windows
 }
 
 /**
@@ -2678,13 +2681,13 @@ var archieml = createCommonjsModule(function (module, exports) {
 
 // Return a copy of the object, filtered to omit the blacklisted array of keys.
 function omit$1(obj, blackList) {
-  var newObj = {};
-  Object.keys(obj || {}).forEach(function (key) {
-    if (blackList.indexOf(key) === -1) {
-      newObj[key] = obj[key];
-    }
-  });
-  return newObj;
+	var newObj = {};
+	Object.keys(obj || {}).forEach(function (key) {
+		if (blackList.indexOf(key) === -1) {
+			newObj[key] = obj[key];
+		}
+	});
+	return newObj;
 }
 
 /* istanbul ignore next */
@@ -2889,13 +2892,13 @@ function getParser(delimiterOrParser) {
 // from https://github.com/sindresorhus/strip-bom/blob/d5696fdc9eeb6cc8d97e390cf1de7558f74debd5/index.js#L3
 
 function stripBom(string) {
-  // Catches EFBBBF (UTF-8 BOM) because the buffer-to-string
-  // conversion translates it to FEFF (UTF-16 BOM)
-  if (string.charCodeAt(0) === 0xFEFF) {
-    return string.slice(1);
-  }
+	// Catches EFBBBF (UTF-8 BOM) because the buffer-to-string
+	// conversion translates it to FEFF (UTF-16 BOM)
+	if (string.charCodeAt(0) === 0xFEFF) {
+		return string.slice(1);
+	}
 
-  return string;
+	return string;
 }
 
 /* istanbul ignore next */
@@ -3393,24 +3396,25 @@ index.stripColor = stripColor;
 index.supportsColor = supportsColor_1;
 
 /* istanbul ignore next */
-var notListError = function (format) {
-  throw new Error(index.red('[indian-ocean] You passed in an object but converting to ' + index.bold(format) + ' requires a list of objects.') + index.cyan('\nIf you would like to write a one-row csv, put your object in a list like so: `' + index.bold('[data]') + '`\n'));
-};
+function notListError(format) {
+	throw new Error(index.red('[indian-ocean] You passed in an object but converting to ' + index.bold(format) + ' requires a list of objects.') + index.cyan('\nIf you would like to write a one-row csv, put your object in a list like so: `' + index.bold('[data]') + '`\n'));
+}
 
 // Some shared data integrity checks for formatters
 function formattingPreflight(file, format) {
-  if (file === '') {
-    return [];
-  } else if (!Array.isArray(file)) {
-    notListError(format);
-  }
-  return file;
+	if (file === '') {
+		return [];
+	}
+	if (!Array.isArray(file)) {
+		notListError(format);
+	}
+	return file;
 }
 
 /* istanbul ignore next */
-var parseError = function (format) {
-  throw new Error(index.red('[indian-ocean] Error converting your data to ' + index.bold(format) + '.') + '\n\n' + index.cyan('Your data most likely contains objects or lists. Object values can only be strings for this format. Please convert before writing to file.\n'));
-};
+function parseError(format) {
+	throw new Error(index.red('[indian-ocean] Error converting your data to ' + index.bold(format) + '.') + '\n\n' + index.cyan('Your data most likely contains objects or lists. Object values can only be strings for this format. Please convert before writing to file.\n'));
+}
 
 /* istanbul ignore next */
 function csv$1(file, writeOptions) {
@@ -3867,23 +3871,23 @@ function makeDirectories(outPath, cb) {
 }
 
 /* istanbul ignore next */
-var warn = function (msg) {
-  console.log(index.gray('[indian-ocean]') + ' ' + index.yellow('Warning:', msg));
-};
+function warn(msg) {
+	console.log(index.gray('[indian-ocean]') + ' ' + index.yellow('Warning:', msg));
+}
 
 function warnIfEmpty(data, outPath, opts_) {
-  if (!opts_ || opts_ && opts_.verbose !== false) {
-    if (!data || _.isEmpty(data)) {
-      var msg = 'You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty ';
-      if (!data) {
-        msg += 'file';
-      } else if (_.isEmpty(data)) {
-        msg += Array.isArray(data) === true ? 'array' : 'object';
-      }
-      msg += '...';
-      warn(msg);
-    }
-  }
+	if (!opts_ || opts_ && opts_.verbose !== false) {
+		if (!data || _.isEmpty(data)) {
+			var msg = 'You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty ';
+			if (!data) {
+				msg += 'file';
+			} else if (_.isEmpty(data)) {
+				msg += Array.isArray(data) === true ? 'array' : 'object';
+			}
+			msg += '...';
+			warn(msg);
+		}
+	}
 }
 
 /* istanbul ignore next */
@@ -3962,15 +3966,15 @@ function writeData(outPath, data, opts_, cb) {
     }
 
     opts_ = omit$1(opts_, ['makeDirectories', 'makeDirs']);
-    var writeOptions;
+    var writeOptions = void 0;
     if (typeof opts_ !== 'function') {
       writeOptions = opts_;
     }
 
     var fileFormatter = discernFileFormatter(outPath);
     var formattedData = fileFormatter(data, writeOptions);
-    fs.writeFile(outPath, formattedData, function (err) {
-      cb(err, formattedData);
+    fs.writeFile(outPath, formattedData, function (err2) {
+      cb(err2, formattedData);
     });
   }
 }
@@ -4113,13 +4117,12 @@ function exists(filePath, cb) {
 function existsSync(filePath) {
   if (fs.existsSync) {
     return fs.existsSync(filePath);
-  } else {
-    try {
-      fs.accessSync(filePath);
-      return true;
-    } catch (ex) {
-      return false;
-    }
+  }
+  try {
+    fs.accessSync(filePath);
+    return true;
+  } catch (ex) {
+    return false;
   }
 }
 
@@ -4180,7 +4183,7 @@ function matchesRegExp(filePath, regEx) {
 }
 
 function isRegExp$1(obj) {
-  return Object.prototype.toString.call(obj) === '[object RegExp]';
+	return Object.prototype.toString.call(obj) === '[object RegExp]';
 }
 
 /**
@@ -4272,8 +4275,8 @@ function matches(filePath, matcher) {
  * console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  */
 function readDataSync(filePath, opts_) {
-  var parser;
-  var parserOptions;
+  var parser = void 0;
+  var parserOptions = void 0;
   if (arguments.length === 2) {
     if (opts_.parser) {
       parser = getParser(opts_.parser);
@@ -5088,41 +5091,42 @@ function readTxtSync(filePath, opts_) {
  * })
  */
 function appendData(outPath, data, opts_, cb) {
-  if (typeof cb === 'undefined') {
-    cb = opts_;
-  }
-  if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
-    makeDirectories(outPath, proceed);
-  } else {
-    proceed();
-  }
-  function proceed(err) {
-    if (err) {
-      throw err;
-    }
-    opts_ = omit$1(opts_, ['makeDirectories', 'makeDirs']);
-    // Run append file to delegate creating a new file if none exists
-    fs.appendFile(outPath, '', function (err) {
-      if (!err) {
-        readData(outPath, function (err, existingData) {
-          if (!err) {
-            if (!_.isEmpty(existingData)) {
-              if (Array.isArray(existingData)) {
-                data = existingData.concat(data);
-              } else if ((typeof existingData === 'undefined' ? 'undefined' : _typeof(existingData)) === 'object') {
-                data = Object.assign({}, existingData, data);
-              }
-            }
-            writeData(outPath, data, opts_, cb);
-          } else {
-            cb(err);
-          }
-        });
-      } else {
-        cb(err);
-      }
-    });
-  }
+	if (typeof cb === 'undefined') {
+		cb = opts_;
+	}
+	if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
+		makeDirectories(outPath, proceed);
+	} else {
+		proceed();
+	}
+	function proceed(err) {
+		if (err) {
+			throw err;
+		}
+		opts_ = omit$1(opts_, ['makeDirectories', 'makeDirs']);
+		// Run append file to delegate creating a new file if none exists
+		fs.appendFile(outPath, '', function (err2) {
+			if (!err2) {
+				readData(outPath, function (err3, existingData) {
+					if (!err3) {
+						if (!_.isEmpty(existingData)) {
+							if (Array.isArray(existingData)) {
+								data = existingData.concat(data);
+							} else if ((typeof existingData === 'undefined' ? 'undefined' : _typeof(existingData)) === 'object') {
+								// eslint-disable-next-line prefer-object-spread
+								data = Object.assign({}, existingData, data);
+							}
+						}
+						writeData(outPath, data, opts_, cb);
+					} else {
+						cb(err);
+					}
+				});
+			} else {
+				cb(err2);
+			}
+		});
+	}
 }
 
 /* istanbul ignore next */
@@ -5168,7 +5172,7 @@ function appendData(outPath, data, opts_, cb) {
  */
 function writeDataSync(outPath, data, opts_) {
   warnIfEmpty(data, outPath, opts_);
-  var writeOptions;
+  var writeOptions = void 0;
   if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object') {
     if (opts_.makeDirectories === true || opts_.makeDirs === true) {
       makeDirectoriesSync(outPath);
@@ -5199,22 +5203,23 @@ function writeDataSync(outPath, data, opts_) {
  * io.appendDataSync('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true})
  */
 function appendDataSync(outPath, data, opts_) {
-  // Run append file to delegate creating a new file if none exists
-  if (opts_ && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
-    makeDirectoriesSync(outPath);
-  }
-  opts_ = omit$1(opts_, ['makeDirectories', 'makeDirs']);
-  fs.appendFileSync(outPath, '');
-  var existingData = readDataSync(outPath);
-  if (!_.isEmpty(existingData)) {
-    if (Array.isArray(existingData)) {
-      data = existingData.concat(data);
-    } else if ((typeof existingData === 'undefined' ? 'undefined' : _typeof(existingData)) === 'object') {
-      data = Object.assign({}, existingData, data);
-    }
-  }
-  writeDataSync(outPath, data, opts_);
-  return data;
+	// Run append file to delegate creating a new file if none exists
+	if (opts_ && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
+		makeDirectoriesSync(outPath);
+	}
+	opts_ = omit$1(opts_, ['makeDirectories', 'makeDirs']);
+	fs.appendFileSync(outPath, '');
+	var existingData = readDataSync(outPath);
+	if (!_.isEmpty(existingData)) {
+		if (Array.isArray(existingData)) {
+			data = existingData.concat(data);
+		} else if ((typeof existingData === 'undefined' ? 'undefined' : _typeof(existingData)) === 'object') {
+			// eslint-disable-next-line prefer-object-spread
+			data = Object.assign({}, existingData, data);
+		}
+	}
+	writeDataSync(outPath, data, opts_);
+	return data;
 }
 
 // converters
