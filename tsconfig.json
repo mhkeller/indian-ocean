@@ -1,0 +1,15 @@
+{
+  "include": [
+    "src/**/*.js"
+  ],
+  "compilerOptions": {
+    "declaration": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "allowJs": true,
+    "lib": [
+      "es2015",
+      "es2016"
+    ]
+  }
+}
