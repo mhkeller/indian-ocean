@@ -1,5 +1,5 @@
 /* istanbul ignore next */
-import dbf from 'dbf'
+import dbf from '@mhkeller/dbf'
 
 export default function (file, writeOptions) {
   writeOptions = writeOptions || {}
