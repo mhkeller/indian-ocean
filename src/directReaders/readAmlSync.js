@@ -6,7 +6,9 @@ import parserAml from '../parsers/aml';
  *
  * @function readAmlSync
  * @param {String} filePath Input file path
- * @param {Function} [map] Optional map function. Takes the parsed file (usually an object) and must return the modified file. See example below.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @returns {Object} The parsed file
  *
  * @example
