@@ -24,16 +24,46 @@ describe('readDataSync()', () => {
 	});
 
 	describe('csv with empty lines', () => {
-		it('should be read proper keys', () => {
-			const file = io.readDataSync(testDataPath('csv-multiline/basic-empty-lines.csv'));
-			assert.equal(file.length, 2);
+		describe('no options', () => {
+			it('should be read proper keys', () => {
+				const file = io.readDataSync(testDataPath('csv-multiline/basic-empty-lines.csv'));
+				assert.equal(file.length, 2);
 
-			assert.equal(file[0].name, 'jim');
-			assert.equal(file[0].occupation, 'land surveyor');
-			assert.equal(file[0].height, 70);
-			assert.equal(file[1].name, 'francis');
-			assert.equal(file[1].occupation, 'conductor');
-			assert.equal(file[1].height, 63);
+				assert.equal(file[0].name, 'jim');
+				assert.equal(file[0].occupation, 'land surveyor');
+				assert.equal(file[0].height, 70);
+				assert.equal(file[1].name, 'francis');
+				assert.equal(file[1].occupation, 'conductor');
+				assert.equal(file[1].height, 63);
+			});
+		});
+
+		describe('trim: true', () => {
+			it('should be read proper keys', () => {
+				const file = io.readDataSync(testDataPath('csv-multiline/basic-empty-lines.csv'), { trim: true });
+				assert.equal(file.length, 2);
+
+				assert.equal(file[0].name, 'jim');
+				assert.equal(file[0].occupation, 'land surveyor');
+				assert.equal(file[0].height, 70);
+				assert.equal(file[1].name, 'francis');
+				assert.equal(file[1].occupation, 'conductor');
+				assert.equal(file[1].height, 63);
+			});
+		});
+
+		describe('trim: false', () => {
+			it('should be read proper keys', () => {
+				const file = io.readDataSync(testDataPath('csv-multiline/basic-empty-lines.csv'), { trim: false });
+				assert.equal(file.length, 8);
+
+				assert.equal(file[0].name, 'jim');
+				assert.equal(file[0].occupation, 'land surveyor');
+				assert.equal(file[0].height, 70);
+				assert.equal(file[1].name, 'francis');
+				assert.equal(file[1].occupation, 'conductor');
+				assert.equal(file[1].height, 63);
+			});
 		});
 	});
 

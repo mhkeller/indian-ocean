@@ -26,17 +26,51 @@ describe('readData()', () => {
 	});
 
 	describe('csv with empty lines', () => {
-		it('should be read proper keys', done => {
-			io.readData(testDataPath('csv-multiline/basic-empty-lines.csv'), (err, file) => {
-				assert.equal(file.length, 2);
+		describe('no options', () => {
+			it('should be read proper keys', done => {
+				io.readData(testDataPath('csv-multiline/basic-empty-lines.csv'), (err, file) => {
+					assert.equal(file.length, 2);
 
-				assert.equal(file[0].name, 'jim');
-				assert.equal(file[0].occupation, 'land surveyor');
-				assert.equal(file[0].height, 70);
-				assert.equal(file[1].name, 'francis');
-				assert.equal(file[1].occupation, 'conductor');
-				assert.equal(file[1].height, 63);
-				done();
+					assert.equal(file[0].name, 'jim');
+					assert.equal(file[0].occupation, 'land surveyor');
+					assert.equal(file[0].height, 70);
+					assert.equal(file[1].name, 'francis');
+					assert.equal(file[1].occupation, 'conductor');
+					assert.equal(file[1].height, 63);
+					done();
+				});
+			});
+		});
+
+		describe('trim: true', () => {
+			it('should be read proper keys', done => {
+				io.readData(testDataPath('csv-multiline/basic-empty-lines.csv'), { trim: true }, (err, file) => {
+					assert.equal(file.length, 2);
+
+					assert.equal(file[0].name, 'jim');
+					assert.equal(file[0].occupation, 'land surveyor');
+					assert.equal(file[0].height, 70);
+					assert.equal(file[1].name, 'francis');
+					assert.equal(file[1].occupation, 'conductor');
+					assert.equal(file[1].height, 63);
+					done();
+				});
+			});
+		});
+
+		describe('trim: false', () => {
+			it('should be read proper keys', done => {
+				io.readData(testDataPath('csv-multiline/basic-empty-lines.csv'), { trim: false }, (err, file) => {
+					assert.equal(file.length, 8);
+
+					assert.equal(file[0].name, 'jim');
+					assert.equal(file[0].occupation, 'land surveyor');
+					assert.equal(file[0].height, 70);
+					assert.equal(file[1].name, 'francis');
+					assert.equal(file[1].occupation, 'conductor');
+					assert.equal(file[1].height, 63);
+					done();
+				});
 			});
 		});
 	});
