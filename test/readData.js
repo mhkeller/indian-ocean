@@ -68,7 +68,7 @@ describe('readData()', () => {
 
 		it('should match expected json', done => {
 			io.readData(testDataPath('json/basic.json'), {
-				map(row, i) {
+				map(row) {
 					row.height *= 2;
 					return row;
 				}
@@ -93,7 +93,7 @@ describe('readData()', () => {
 	describe('json object with map', () => {
 		it('should match expected json', done => {
 			io.readData(testDataPath('json-object/basic.json'), {
-				map(value, key) {
+				map(value) {
 					if (typeof value === 'number') {
 						return value * 2;
 					}
@@ -143,7 +143,7 @@ describe('readData()', () => {
 
 	describe('json with map shorthand', () => {
 		it('should match expected json', done => {
-			io.readData(testDataPath('json/basic.json'), (row, i) => {
+			io.readData(testDataPath('json/basic.json'), row => {
 				row.height *= 2;
 				return row;
 			}, (err, json) => {
@@ -156,7 +156,7 @@ describe('readData()', () => {
 
 	describe('json object with map shorthand', () => {
 		it('should match expected json', done => {
-			io.readData(testDataPath('json-object/basic.json'), (value, key) => {
+			io.readData(testDataPath('json-object/basic.json'), value => {
 				if (typeof value === 'number') {
 					return value * 2;
 				}
@@ -182,7 +182,7 @@ describe('readData()', () => {
 	describe('csv with map', () => {
 		it('should match expected json', done => {
 			io.readData(testDataPath('csv/basic.csv'), {
-				map(row, i, columns) {
+				map(row) {
 					row.height = +row.height;
 					return row;
 				}
@@ -196,7 +196,7 @@ describe('readData()', () => {
 
 	describe('csv with map shorthand', () => {
 		it('should match expected json', done => {
-			io.readData(testDataPath('csv/basic.csv'), (row, i, columns) => {
+			io.readData(testDataPath('csv/basic.csv'), row => {
 				row.height = +row.height;
 				return row;
 			}, (err, json) => {
@@ -220,7 +220,7 @@ describe('readData()', () => {
 	describe('psv with map', () => {
 		it('should match expected json', done => {
 			io.readData(testDataPath('psv/basic.psv'), {
-				map(row, i, columns) {
+				map(row) {
 					row.height = +row.height;
 					return row;
 				}
@@ -234,7 +234,7 @@ describe('readData()', () => {
 
 	describe('psv with map shorthand', () => {
 		it('should match expected json', done => {
-			io.readData(testDataPath('psv/basic.psv'), (row, i, columns) => {
+			io.readData(testDataPath('psv/basic.psv'), row => {
 				row.height = +row.height;
 				return row;
 			}, (err, json) => {
@@ -258,7 +258,7 @@ describe('readData()', () => {
 	describe('tsv with map', () => {
 		it('should match expected json', done => {
 			io.readData(testDataPath('tsv/basic.tsv'), {
-				map(row, i, columns) {
+				map(row) {
 					row.height = +row.height;
 					return row;
 				}
@@ -272,7 +272,7 @@ describe('readData()', () => {
 
 	describe('tsv with map shorthand', () => {
 		it('should match expected json', done => {
-			io.readData(testDataPath('tsv/basic.tsv'), (row, i, columns) => {
+			io.readData(testDataPath('tsv/basic.tsv'), row => {
 				row.height = +row.height;
 				return row;
 			}, (err, json) => {
@@ -396,7 +396,7 @@ describe('readData()', () => {
 	describe('dbf', () => {
 		describe('empty', () => {
 			it('should be empty array', done => {
-				io.readData(testDataPath('dbf/empty.dbf'), (err, json) => {
+				io.readData(testDataPath('dbf/empty.dbf'), err => {
 					assert.equal(err.split('\n')[0], 'TypeError: Cannot read property \'buffer\' of null');
 					done();
 				});
@@ -416,7 +416,7 @@ describe('readData()', () => {
 		describe('basic map', () => {
 			it('should match expected json', done => {
 				io.readData(testDataPath('dbf/basic.dbf'), {
-					map(row, i) {
+					map(row) {
 						row.bar *= 2;
 						return row;
 					}
@@ -430,7 +430,7 @@ describe('readData()', () => {
 
 		describe('basic map shorthand', () => {
 			it('should match expected json', done => {
-				io.readData(testDataPath('dbf/basic.dbf'), (row, i) => {
+				io.readData(testDataPath('dbf/basic.dbf'), row => {
 					row.bar *= 2;
 					return row;
 				}, (err, json) => {
@@ -458,7 +458,7 @@ describe('readData()', () => {
 				parser(str, parserOptions) {
 					return dsv.dsvFormat('_').parse(str, parserOptions.map);
 				},
-				map(row, i) {
+				map(row) {
 					row.height *= 2;
 					return row;
 				}

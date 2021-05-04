@@ -10,7 +10,7 @@ const assert = chai.assert;
 describe('readDbf()', () => {
 	describe('empty', () => {
 		it('should be empty array', done => {
-			io.readDbf(testDataPath('dbf/empty.dbf'), (err, json) => {
+			io.readDbf(testDataPath('dbf/empty.dbf'), err => {
 				assert.equal(err.split('\n')[0], 'TypeError: Cannot read property \'buffer\' of null');
 				done();
 			});
@@ -30,7 +30,7 @@ describe('readDbf()', () => {
 	describe('basic map', () => {
 		it('should match expected json', done => {
 			io.readDbf(testDataPath('dbf/basic.dbf'), {
-				map(row, i) {
+				map(row) {
 					row.bar *= 2;
 					return row;
 				}
@@ -44,7 +44,7 @@ describe('readDbf()', () => {
 
 	describe('basic map shorthand', () => {
 		it('should match expected json', done => {
-			io.readDbf(testDataPath('dbf/basic.dbf'), (row, i) => {
+			io.readDbf(testDataPath('dbf/basic.dbf'), row => {
 				row.bar *= 2;
 				return row;
 			}, (err, json) => {

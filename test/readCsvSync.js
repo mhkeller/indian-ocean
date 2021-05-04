@@ -25,7 +25,7 @@ describe('readCsvSync()', () => {
 	describe('basic map', () => {
 		it('should match expected json', () => {
 			const json = io.readCsvSync(testDataPath('csv/basic.csv'), {
-				map(row, i, columns) {
+				map(row) {
 					row.height = +row.height;
 					return row;
 				}
@@ -36,7 +36,7 @@ describe('readCsvSync()', () => {
 
 	describe('basic map shorthand', () => {
 		it('should match expected json', () => {
-			const json = io.readCsvSync(testDataPath('csv/basic.csv'), (row, i, columns) => {
+			const json = io.readCsvSync(testDataPath('csv/basic.csv'), row => {
 				row.height = +row.height;
 				return row;
 			});

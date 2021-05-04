@@ -25,7 +25,7 @@ describe('readPsvSync()', () => {
 	describe('basic map', () => {
 		it('should match expected json', () => {
 			const json = io.readPsvSync(testDataPath('psv/basic.psv'), {
-				map(row, i, columns) {
+				map(row) {
 					row.height = +row.height;
 					return row;
 				}
@@ -36,7 +36,7 @@ describe('readPsvSync()', () => {
 
 	describe('basic map shorthand', () => {
 		it('should match expected json', () => {
-			const json = io.readPsvSync(testDataPath('psv/basic.psv'), (row, i, columns) => {
+			const json = io.readPsvSync(testDataPath('psv/basic.psv'), row => {
 				row.height = +row.height;
 				return row;
 			});

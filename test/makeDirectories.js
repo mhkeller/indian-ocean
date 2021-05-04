@@ -14,8 +14,8 @@ describe('makeDirectories()', () => {
 			assert.equal(err, null);
 			filePath.pop();
 			assert.equal(io.existsSync(filePath.join(path.sep)), true);
-			rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-				assert.equal(err, null);
+			rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+				assert.equal(err2, null);
 				done();
 			});
 		});

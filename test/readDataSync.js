@@ -47,7 +47,7 @@ describe('readDataSync()', () => {
 	describe('json with map', () => {
 		it('should match expected json', () => {
 			const json = io.readDataSync(testDataPath('json/basic.json'), {
-				map(row, i) {
+				map(row) {
 					row.height *= 2;
 					return row;
 				}
@@ -59,7 +59,7 @@ describe('readDataSync()', () => {
 	describe('json with map', () => {
 		it('should match expected geojson', () => {
 			const json = io.readDataSync(testDataPath('geojson/basic.geojson'), {
-				map(row, i) {
+				map(row) {
 					row.height *= 2;
 					return row;
 				}
@@ -71,7 +71,7 @@ describe('readDataSync()', () => {
 	describe('json with map', () => {
 		it('should match expected topojson', () => {
 			const json = io.readDataSync(testDataPath('topojson/basic.topojson'), {
-				map(row, i) {
+				map(row) {
 					row.height *= 2;
 					return row;
 				}
@@ -90,7 +90,7 @@ describe('readDataSync()', () => {
 	describe('json object with map', () => {
 		it('should match expected json', () => {
 			const json = io.readDataSync(testDataPath('json-object/basic.json'), {
-				map(value, key) {
+				map(value) {
 					if (typeof value === 'number') {
 						return value * 2;
 					}
@@ -131,7 +131,7 @@ describe('readDataSync()', () => {
 
 	describe('json with map shorthand', () => {
 		it('should match expected json', () => {
-			const json = io.readDataSync(testDataPath('json/basic.json'), (row, i) => {
+			const json = io.readDataSync(testDataPath('json/basic.json'), row => {
 				row.height *= 2;
 				return row;
 			});
@@ -141,7 +141,7 @@ describe('readDataSync()', () => {
 
 	describe('json object with map shorthand', () => {
 		it('should match expected json', () => {
-			const json = io.readDataSync(testDataPath('json-object/basic.json'), (value, key) => {
+			const json = io.readDataSync(testDataPath('json-object/basic.json'), value => {
 				if (typeof value === 'number') {
 					return value * 2;
 				}
@@ -161,7 +161,7 @@ describe('readDataSync()', () => {
 	describe('csv with map', () => {
 		it('should match expected json', () => {
 			const json = io.readDataSync(testDataPath('csv/basic.csv'), {
-				map(row, i, columns) {
+				map(row) {
 					row.height = +row.height;
 					return row;
 				}
@@ -172,7 +172,7 @@ describe('readDataSync()', () => {
 
 	describe('csv with map shorthand', () => {
 		it('should match expected json', () => {
-			const json = io.readDataSync(testDataPath('csv/basic.csv'), (row, i, columns) => {
+			const json = io.readDataSync(testDataPath('csv/basic.csv'), row => {
 				row.height = +row.height;
 				return row;
 			});
@@ -190,7 +190,7 @@ describe('readDataSync()', () => {
 	describe('psv with map', () => {
 		it('should match expected json', () => {
 			const json = io.readDataSync(testDataPath('psv/basic.psv'), {
-				map(row, i, columns) {
+				map(row) {
 					row.height = +row.height;
 					return row;
 				}
@@ -201,7 +201,7 @@ describe('readDataSync()', () => {
 
 	describe('psv with map shorthand', () => {
 		it('should match expected json', () => {
-			const json = io.readDataSync(testDataPath('psv/basic.psv'), (row, i, columns) => {
+			const json = io.readDataSync(testDataPath('psv/basic.psv'), row => {
 				row.height = +row.height;
 				return row;
 			});
@@ -219,7 +219,7 @@ describe('readDataSync()', () => {
 	describe('tsv with map', () => {
 		it('should match expected json', () => {
 			const json = io.readDataSync(testDataPath('tsv/basic.tsv'), {
-				map(row, i, columns) {
+				map(row) {
 					row.height = +row.height;
 					return row;
 				}
@@ -230,7 +230,7 @@ describe('readDataSync()', () => {
 
 	describe('tsv with map shorthand', () => {
 		it('should match expected json', () => {
-			const json = io.readDataSync(testDataPath('tsv/basic.tsv'), (row, i, columns) => {
+			const json = io.readDataSync(testDataPath('tsv/basic.tsv'), row => {
 				row.height = +row.height;
 				return row;
 			});
@@ -341,7 +341,7 @@ describe('readDataSync()', () => {
 				parser(str, parserOptions) {
 					return dsv.dsvFormat('_').parse(str, parserOptions.map);
 				},
-				map(row, i, columns) {
+				map(row) {
 					row.height *= 2;
 					return row;
 				}

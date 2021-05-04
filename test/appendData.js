@@ -21,8 +21,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), [testData[1]], err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -36,8 +36,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), [testData[1]], err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -51,8 +51,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), [testData[1]], err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -66,8 +66,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), [testData[1]], err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -81,8 +81,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), [testData[1]], err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -96,8 +96,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), [testData[1]], err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -110,8 +110,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), testData, { makeDirectories: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -124,8 +124,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), testData, { makeDirectories: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -138,8 +138,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), testData, { makeDirectories: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -152,8 +152,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), testData, { makeDirs: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -166,8 +166,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), testData, { makeDirectories: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -180,8 +180,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), testData, { makeDirectories: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -195,8 +195,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), testData[1], err => {
 				assert.equal(err, null);
 				readAssertBasicValidObject(filePath.join(path.sep), 1);
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -209,8 +209,8 @@ describe('appendData()', () => {
 			io.appendData(filePath.join(path.sep), testData[1], { makeDirectories: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValidObject(filePath.join(path.sep), 1);
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});

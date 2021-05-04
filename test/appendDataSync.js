@@ -1,11 +1,11 @@
 /* global describe, it */
-const io = require('../dist/indian-ocean.cjs.js');
 const chai = require('chai');
 const path = require('path');
 
 const assert = chai.assert;
 const rimraf = require('rimraf');
 
+const io = require('../dist/indian-ocean.cjs.js');
 const testData = require('./data/testData.js');
 
 const {

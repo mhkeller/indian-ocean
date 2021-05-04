@@ -19,8 +19,8 @@ describe('convertDbfToData()', () => {
 				assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 				const json = io.readDataSync(filePath.join(path.sep));
 				assert(_.isEqual(JSON.stringify(json), result));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -36,8 +36,8 @@ describe('convertDbfToData()', () => {
 				assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 				const json = io.readDataSync(filePath.join(path.sep));
 				assert(_.isEqual(JSON.stringify(json), result));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -53,8 +53,8 @@ describe('convertDbfToData()', () => {
 				assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 				const json = io.readDataSync(filePath.join(path.sep));
 				assert(_.isEqual(JSON.stringify(json), result));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -70,8 +70,8 @@ describe('convertDbfToData()', () => {
 				assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 				const json = io.readDataSync(filePath.join(path.sep));
 				assert(_.isEqual(JSON.stringify(json), result));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});

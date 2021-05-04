@@ -1,5 +1,4 @@
 /* global describe, it */
-const path = require('path');
 const chai = require('chai');
 const _ = require('underscore');
 
@@ -34,7 +33,7 @@ describe('readJson()', () => {
 	describe('basic map', () => {
 		it('should match expected json', done => {
 			io.readJson(testDataPath('json/basic.json'), {
-				map(row, i) {
+				map(row) {
 					row.height *= 2;
 					return row;
 				}
@@ -48,7 +47,7 @@ describe('readJson()', () => {
 
 	describe('basic map shorthand', () => {
 		it('should match expected json', done => {
-			io.readJson(testDataPath('json/basic.json'), (row, i) => {
+			io.readJson(testDataPath('json/basic.json'), row => {
 				row.height *= 2;
 				return row;
 			}, (err, json) => {
@@ -61,7 +60,7 @@ describe('readJson()', () => {
 
 	describe('invalid', () => {
 		it('should raise an error', done => {
-			io.readJson(testDataPath('json/invalid.json'), (err, json) => {
+			io.readJson(testDataPath('json/invalid.json'), err => {
 				assert.equal(err.message.indexOf('Unexpected token w') > -1, true);
 				done();
 			});

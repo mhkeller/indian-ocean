@@ -1,6 +1,5 @@
 /* global describe, it */
 const chai = require('chai');
-const _ = require('underscore');
 
 const io = require('../dist/indian-ocean.cjs.js');
 const testDataPath = require('./utils/testDataPath');
@@ -33,7 +32,7 @@ describe('readPsv()', () => {
 	describe('basic map', () => {
 		it('should match expected json', done => {
 			io.readPsv(testDataPath('psv/basic.psv'), {
-				map(row, i, columns) {
+				map(row) {
 					row.height = +row.height;
 					return row;
 				}
@@ -47,7 +46,7 @@ describe('readPsv()', () => {
 
 	describe('basic map shorthand', () => {
 		it('should match expected json', done => {
-			io.readPsv(testDataPath('psv/basic.psv'), (row, i, columns) => {
+			io.readPsv(testDataPath('psv/basic.psv'), row => {
 				row.height = +row.height;
 				return row;
 			}, (err, json) => {

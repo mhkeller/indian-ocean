@@ -4,3 +4,4 @@ documentation.yml
 .travis.yml
 rollup.config*
 .eslintrc
+.vscode/

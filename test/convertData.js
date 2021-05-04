@@ -21,8 +21,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -38,8 +38,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -55,8 +55,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -72,8 +72,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -85,14 +85,14 @@ describe('convertData()', () => {
 		describe('dbf', () => {
 			it('should convert to format', done => {
 				const filePath = ['test', 'tmp-convert-csv-to-data-dbf', 'data.dbf'];
-				io.convertData(testDataPath('csv/basic.csv'), filePath.join(path.sep), { makeDirectories: true }, (err, dataStr) => {
+				io.convertData(testDataPath('csv/basic.csv'), filePath.join(path.sep), { makeDirectories: true }, err => {
 					assert.equal(err, null);
 					const result = '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]';
-					io.readData(filePath.join(path.sep), (err, json) => {
-						assert.equal(err, null);
+					io.readData(filePath.join(path.sep), (err2, json) => {
+						assert.equal(err2, null);
 						assert(_.isEqual(JSON.stringify(json), result));
-						rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-							assert.equal(err, null);
+						rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err3 => {
+							assert.equal(err3, null);
 							done();
 						});
 					});
@@ -109,8 +109,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -126,8 +126,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -143,8 +143,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -162,8 +162,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -179,8 +179,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -196,8 +196,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -207,14 +207,14 @@ describe('convertData()', () => {
 		describe('dbf', () => {
 			it('should convert to format', done => {
 				const filePath = ['test', 'tmp-convert-json-to-data-dbf', 'data.dbf'];
-				io.convertData(testDataPath('json/basic.json'), filePath.join(path.sep), { makeDirectories: true }, (err, dataStr) => {
+				io.convertData(testDataPath('json/basic.json'), filePath.join(path.sep), { makeDirectories: true }, err => {
 					assert.equal(err, null);
 					const result = '[{"name":"jim","occupation":"land surveyor","height":70},{"name":"francis","occupation":"conductor","height":63}]';
-					io.readData(filePath.join(path.sep), (err, json) => {
-						assert.equal(err, null);
+					io.readData(filePath.join(path.sep), (err2, json) => {
+						assert.equal(err2, null);
 						assert(_.isEqual(JSON.stringify(json), result));
-						rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-							assert.equal(err, null);
+						rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err3 => {
+							assert.equal(err3, null);
 							done();
 						});
 					});
@@ -233,8 +233,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -246,11 +246,11 @@ describe('convertData()', () => {
 				const filePath = ['test', 'tmp-convert-psv-to-data-dbf', 'data.dbf'];
 				io.convertData(testDataPath('psv/basic.psv'), filePath.join(path.sep), { makeDirectories: true }, err => {
 					assert.equal(err, null);
-					io.readData(filePath.join(path.sep), (err, json) => {
-						assert.equal(err, null);
+					io.readData(filePath.join(path.sep), (err2, json) => {
+						assert.equal(err2, null);
 						assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'));
-						rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-							assert.equal(err, null);
+						rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err3 => {
+							assert.equal(err3, null);
 							done();
 						});
 					});
@@ -267,8 +267,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -284,8 +284,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -303,8 +303,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -320,8 +320,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -333,11 +333,11 @@ describe('convertData()', () => {
 				const filePath = ['test', 'tmp-convert-tsv-to-data-dbf', 'data.dbf'];
 				io.convertData(testDataPath('tsv/basic.tsv'), filePath.join(path.sep), { makeDirectories: true }, err => {
 					assert.equal(err, null);
-					io.readData(filePath.join(path.sep), (err, json) => {
-						assert.equal(err, null);
+					io.readData(filePath.join(path.sep), (err2, json) => {
+						assert.equal(err2, null);
 						assert(_.isEqual(JSON.stringify(json), '[{"name":"jim","occupation":"land surveyor","height":"70"},{"name":"francis","occupation":"conductor","height":"63"}]'));
-						rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-							assert.equal(err, null);
+						rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err3 => {
+							assert.equal(err3, null);
 							done();
 						});
 					});
@@ -354,8 +354,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});
@@ -373,8 +373,8 @@ describe('convertData()', () => {
 					assert(_.isEqual(JSON.stringify(io.discernParser(filePath[filePath.length - 1])(dataStr)), result));
 					const json = io.readDataSync(filePath.join(path.sep));
 					assert(_.isEqual(JSON.stringify(json), result));
-					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-						assert.equal(err, null);
+					rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+						assert.equal(err2, null);
 						done();
 					});
 				});

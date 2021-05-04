@@ -32,7 +32,7 @@ describe('readCsv()', () => {
 	describe('basic map', () => {
 		it('should match expected json', done => {
 			io.readCsv(testDataPath('csv/basic.csv'), {
-				map(row, i, columns) {
+				map(row) {
 					row.height = +row.height;
 					return row;
 				}
@@ -46,7 +46,7 @@ describe('readCsv()', () => {
 
 	describe('basic map shorthand', () => {
 		it('should match expected json', done => {
-			io.readCsv(testDataPath('csv/basic.csv'), (row, i, columns) => {
+			io.readCsv(testDataPath('csv/basic.csv'), row => {
 				row.height = +row.height;
 				return row;
 			}, (err, json) => {

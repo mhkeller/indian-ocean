@@ -40,7 +40,7 @@ describe('readJsonSync()', () => {
 	describe('basic map', () => {
 		it('should use map', () => {
 			const json = io.readJsonSync(testDataPath('json/basic.json'), {
-				map(row, i) {
+				map(row) {
 					row.height *= 2;
 					return row;
 				}
@@ -49,7 +49,7 @@ describe('readJsonSync()', () => {
 		});
 
 		it('should use map', () => {
-			const json = io.readJsonSync(testDataPath('json/basic.json'), (row, i) => {
+			const json = io.readJsonSync(testDataPath('json/basic.json'), row => {
 				row.height *= 2;
 				return row;
 			});

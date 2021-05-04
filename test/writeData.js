@@ -10,7 +10,6 @@ const testData = require('./data/testData.js');
 
 const { readAssertBasicValid } = require('./assertions/index.js');
 
-
 const assert = chai.assert;
 
 describe('writeData()', () => {
@@ -20,8 +19,8 @@ describe('writeData()', () => {
 			io.writeData(filePath.join(path.sep), testData, { makeDirs: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -42,8 +41,8 @@ describe('writeData()', () => {
 				assert.equal(err, null);
 				assert.equal(dataString, '[{"height":70},{"height":63}]');
 				assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), dataString);
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -58,8 +57,8 @@ describe('writeData()', () => {
 				assert.equal(err, null);
 				assert.equal(dataString, '[{"height":70},{"height":63}]');
 				assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), dataString);
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -74,8 +73,8 @@ describe('writeData()', () => {
 				assert.equal(err, null);
 				assert.equal(dataString, '[\n  {\n    "name": "jim",\n    "occupation": "land surveyor",\n    "height": 70\n  },\n  {\n    "name": "francis",\n    "occupation": "conductor",\n    "height": 63\n  }\n]');
 				assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), dataString);
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -86,8 +85,8 @@ describe('writeData()', () => {
 			io.writeData(filePath.join(path.sep), testData, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -100,8 +99,8 @@ describe('writeData()', () => {
 			io.writeData(filePath.join(path.sep), testData, { makeDirs: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -114,8 +113,8 @@ describe('writeData()', () => {
 			io.writeData(filePath.join(path.sep), testData, { makeDirs: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -132,8 +131,8 @@ describe('writeData()', () => {
 				assert.equal(err, null);
 				assert.equal(dataString, '[\n  {\n    "name": "jim",\n    "occupation": "land surveyor",\n    "height": 70\n  },\n  {\n    "name": "francis",\n    "occupation": "conductor",\n    "height": 63\n  }\n]');
 				assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), dataString);
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -150,8 +149,8 @@ describe('writeData()', () => {
 				assert.equal(err, null);
 				assert.equal(dataString, '[\n  {\n    "name": "jim",\n    "occupation": "land surveyor",\n    "height": 70\n  },\n  {\n    "name": "francis",\n    "occupation": "conductor",\n    "height": 63\n  }\n]');
 				assert.equal(fs.readFileSync(filePath.join(path.sep), 'utf-8'), dataString);
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -164,8 +163,8 @@ describe('writeData()', () => {
 			io.writeData(filePath.join(path.sep), testData, { makeDirs: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -178,8 +177,8 @@ describe('writeData()', () => {
 			io.writeData(filePath.join(path.sep), testData, { makeDirs: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});
@@ -192,8 +191,8 @@ describe('writeData()', () => {
 			io.writeData(filePath.join(path.sep), testData, { makeDirs: true }, err => {
 				assert.equal(err, null);
 				readAssertBasicValid(filePath.join(path.sep));
-				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err => {
-					assert.equal(err, null);
+				rimraf(filePath.slice(0, 2).join(path.sep), { glob: false }, err2 => {
+					assert.equal(err2, null);
 					done();
 				});
 			});

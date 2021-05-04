@@ -25,7 +25,7 @@ describe('readTsvSync()', () => {
 	describe('basic map', () => {
 		it('should match expected json', () => {
 			const json = io.readTsvSync(testDataPath('tsv/basic.tsv'), {
-				map(row, i, columns) {
+				map(row) {
 					row.height = +row.height;
 					return row;
 				}
@@ -36,7 +36,7 @@ describe('readTsvSync()', () => {
 
 	describe('basic map shorthand', () => {
 		it('should match expected json', () => {
-			const json = io.readTsvSync(testDataPath('tsv/basic.tsv'), (row, i, columns) => {
+			const json = io.readTsvSync(testDataPath('tsv/basic.tsv'), row => {
 				row.height = +row.height;
 				return row;
 			});
