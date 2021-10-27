@@ -76,11 +76,11 @@ import omit from '../utils/omit';
  *   console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  * })
  */
-export default function readData(filePath, opts_, ...args) {
-	const cb = args[args.length - 1];
+export default function readData(filePath, opts_, cb_) {
+	const cb = arguments[arguments.length - 1];
 	let parser;
 	let parserOptions;
-	if (args.length > 0) {
+	if (arguments.length > 0) {
 		if (opts_.parser) {
 			parser = getParser(opts_.parser);
 			opts_ = omit(opts_, ['parser']);

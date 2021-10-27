@@ -44,15 +44,21 @@ export default function appendData(outPath, data, opts_, cb) {
 		proceed();
 	}
 	function proceed(err) {
+    console.log('a');
 		if (err) {
 			throw err;
 		}
 		opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
 		// Run append file to delegate creating a new file if none exists
+    console.log('b');
 		fs.appendFile(outPath, '', err2 => {
+      console.log('c');
 			if (!err2) {
+        console.log('d');
 				readData(outPath, (err3, existingData) => {
+          console.log('f');
 					if (!err3) {
+            console.log('g');
 						if (!_.isEmpty(existingData)) {
 							if (Array.isArray(existingData)) {
 								data = existingData.concat(data);
@@ -63,10 +69,12 @@ export default function appendData(outPath, data, opts_, cb) {
 						}
 						writeData(outPath, data, opts_, cb);
 					} else {
-						cb(err);
+            console.log('h');
+						cb(err3);
 					}
 				});
 			} else {
+        console.log('e');
 				cb(err2);
 			}
 		});

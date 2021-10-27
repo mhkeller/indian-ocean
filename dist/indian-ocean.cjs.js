@@ -3023,14 +3023,12 @@ function discernLoader(filePath) {
  * })
  */
 
-function readData(filePath, opts_) {
-  var _ref;
-
-  var cb = (_ref = (arguments.length <= 2 ? 0 : arguments.length - 2) - 1 + 2, _ref < 2 || arguments.length <= _ref ? undefined : arguments[_ref]);
+function readData(filePath, opts_, cb_) {
+  var cb = arguments[arguments.length - 1];
   var parser;
   var parserOptions;
 
-  if ((arguments.length <= 2 ? 0 : arguments.length - 2) > 0) {
+  if (arguments.length > 0) {
     if (opts_.parser) {
       parser = getParser(opts_.parser);
       opts_ = omit(opts_, ['parser']);
@@ -5194,16 +5192,26 @@ function appendData(outPath, data, opts_, cb) {
   }
 
   function proceed(err) {
+    console.log('a');
+
     if (err) {
       throw err;
     }
 
     opts_ = omit(opts_, ['makeDirectories', 'makeDirs']); // Run append file to delegate creating a new file if none exists
 
+    console.log('b');
     fs__default['default'].appendFile(outPath, '', function (err2) {
+      console.log('c');
+
       if (!err2) {
+        console.log('d');
         readData(outPath, function (err3, existingData) {
+          console.log('f');
+
           if (!err3) {
+            console.log('g');
+
             if (!_.isEmpty(existingData)) {
               if (Array.isArray(existingData)) {
                 data = existingData.concat(data);
@@ -5215,10 +5223,12 @@ function appendData(outPath, data, opts_, cb) {
 
             writeData(outPath, data, opts_, cb);
           } else {
-            cb(err);
+            console.log('h');
+            cb(err3);
           }
         });
       } else {
+        console.log('e');
         cb(err2);
       }
     });
