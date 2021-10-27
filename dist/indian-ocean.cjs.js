@@ -2373,9 +2373,9 @@ function parseCsv(str, parserOptions) {
   return csvParse(str, parserOptions.map);
 }
 
-var identity = (function (d) {
+function identity(d) {
   return d;
-});
+}
 
 /* istanbul ignore next */
 function parseJson(str, parserOptions) {
@@ -3028,7 +3028,7 @@ function readData(filePath, opts_, cb_) {
   var parser;
   var parserOptions;
 
-  if (arguments.length > 0) {
+  if (arguments.length === 3) {
     if (opts_.parser) {
       parser = getParser(opts_.parser);
       opts_ = omit(opts_, ['parser']);
@@ -5192,26 +5192,16 @@ function appendData(outPath, data, opts_, cb) {
   }
 
   function proceed(err) {
-    console.log('a');
-
     if (err) {
       throw err;
     }
 
     opts_ = omit(opts_, ['makeDirectories', 'makeDirs']); // Run append file to delegate creating a new file if none exists
 
-    console.log('b');
     fs__default['default'].appendFile(outPath, '', function (err2) {
-      console.log('c');
-
       if (!err2) {
-        console.log('d');
         readData(outPath, function (err3, existingData) {
-          console.log('f');
-
           if (!err3) {
-            console.log('g');
-
             if (!_.isEmpty(existingData)) {
               if (Array.isArray(existingData)) {
                 data = existingData.concat(data);
@@ -5223,12 +5213,10 @@ function appendData(outPath, data, opts_, cb) {
 
             writeData(outPath, data, opts_, cb);
           } else {
-            console.log('h');
             cb(err3);
           }
         });
       } else {
-        console.log('e');
         cb(err2);
       }
     });

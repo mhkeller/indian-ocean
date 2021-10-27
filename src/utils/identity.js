@@ -1,1 +1,1 @@
-export default d => d;
+export default function identity(d) { return d; }

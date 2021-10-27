@@ -80,7 +80,7 @@ export default function readData(filePath, opts_, cb_) {
 	const cb = arguments[arguments.length - 1];
 	let parser;
 	let parserOptions;
-	if (arguments.length > 0) {
+	if (arguments.length === 3) {
 		if (opts_.parser) {
 			parser = getParser(opts_.parser);
 			opts_ = omit(opts_, ['parser']);
