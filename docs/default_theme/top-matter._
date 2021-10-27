@@ -6,8 +6,6 @@
     <a href="https://npmjs.org/package/indian-ocean" target="_blank"><img alt="NPM version" src="https://img.shields.io/npm/v/indian-ocean.svg?style=flat-square"></a>
 
     <a href="https://www.npmjs.com/package/indian-ocean" target="_blank"><img alt="NPM downloads" src="https://img.shields.io/npm/dm/indian-ocean.svg?style=flat-square"></a>
-
-    <a href="https://github.com/feross/standard" target="_blank"><img alt="js-standard-style" src="https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square"></a>
   </p>
   <p class="sub-hed">A NodeJS library for reading and writing data based on the file's extension. Also includes some handy file system utilities. Supports csv, tsv, json, dbf as well as custom formats and delimiters.</p>
   <pre class="p1 round fill-light">npm install --save indian-ocean</pre>

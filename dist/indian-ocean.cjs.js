@@ -2,50 +2,47 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+var fs = require('fs');
+var path = require('path');
 
-var fs = _interopDefault(require('fs'));
-var path = _interopDefault(require('path'));
+function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+
+var fs__default = /*#__PURE__*/_interopDefaultLegacy(fs);
+var path__default = /*#__PURE__*/_interopDefaultLegacy(path);
 
 // Current version.
-var VERSION = '1.13.1';
-
-// Establish the root object, `window` (`self`) in the browser, `global`
+var VERSION = '1.13.1'; // Establish the root object, `window` (`self`) in the browser, `global`
 // on the server, or `this` in some virtual machines. We use `self`
 // instead of `window` for `WebWorker` support.
-var root = typeof self == 'object' && self.self === self && self || typeof global == 'object' && global.global === global && global || Function('return this')() || {};
 
-// Save bytes in the minified (but not gzipped) version:
-var ArrayProto = Array.prototype;
-var ObjProto = Object.prototype;
-var SymbolProto = typeof Symbol !== 'undefined' ? Symbol.prototype : null;
+var root = typeof self == 'object' && self.self === self && self || typeof global == 'object' && global.global === global && global || Function('return this')() || {}; // Save bytes in the minified (but not gzipped) version:
 
-// Create quick reference variables for speed access to core prototypes.
-var push = ArrayProto.push;
-var slice = ArrayProto.slice;
-var toString = ObjProto.toString;
-var hasOwnProperty = ObjProto.hasOwnProperty;
+var ArrayProto = Array.prototype,
+    ObjProto = Object.prototype;
+var SymbolProto = typeof Symbol !== 'undefined' ? Symbol.prototype : null; // Create quick reference variables for speed access to core prototypes.
 
-// Modern feature detection.
-var supportsArrayBuffer = typeof ArrayBuffer !== 'undefined';
-var supportsDataView = typeof DataView !== 'undefined';
+var push = ArrayProto.push,
+    slice$1 = ArrayProto.slice,
+    toString = ObjProto.toString,
+    hasOwnProperty = ObjProto.hasOwnProperty; // Modern feature detection.
 
-// All **ECMAScript 5+** native function implementations that we hope to use
+var supportsArrayBuffer = typeof ArrayBuffer !== 'undefined',
+    supportsDataView = typeof DataView !== 'undefined'; // All **ECMAScript 5+** native function implementations that we hope to use
 // are declared here.
-var nativeIsArray = Array.isArray;
-var nativeKeys = Object.keys;
-var nativeCreate = Object.create;
-var nativeIsView = supportsArrayBuffer && ArrayBuffer.isView;
 
-// Create references to these builtin functions because we override them.
-var _isNaN = isNaN;
-var _isFinite = isFinite;
+var nativeIsArray = Array.isArray,
+    nativeKeys = Object.keys,
+    nativeCreate = Object.create,
+    nativeIsView = supportsArrayBuffer && ArrayBuffer.isView; // Create references to these builtin functions because we override them.
 
-// Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
-var hasEnumBug = !{ toString: null }.propertyIsEnumerable('toString');
-var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString', 'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
+var _isNaN = isNaN,
+    _isFinite = isFinite; // Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
 
-// The largest integer that can be represented exactly.
+var hasEnumBug = !{
+  toString: null
+}.propertyIsEnumerable('toString');
+var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString', 'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString']; // The largest integer that can be represented exactly.
+
 var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
 
 // Some functions take a variable number of arguments, or a few expected
@@ -59,21 +56,28 @@ function restArguments(func, startIndex) {
     var length = Math.max(arguments.length - startIndex, 0),
         rest = Array(length),
         index = 0;
+
     for (; index < length; index++) {
       rest[index] = arguments[index + startIndex];
     }
+
     switch (startIndex) {
       case 0:
         return func.call(this, rest);
+
       case 1:
         return func.call(this, arguments[0], rest);
+
       case 2:
         return func.call(this, arguments[0], arguments[1], rest);
     }
+
     var args = Array(startIndex + 1);
+
     for (index = 0; index < startIndex; index++) {
       args[index] = arguments[index];
     }
+
     args[startIndex] = rest;
     return func.apply(this, args);
   };
@@ -95,7 +99,6 @@ function isUndefined(obj) {
   return obj === void 0;
 }
 
-// Is a given value a boolean?
 function isBoolean(obj) {
   return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
 }
@@ -105,7 +108,6 @@ function isElement(obj) {
   return !!(obj && obj.nodeType === 1);
 }
 
-// Internal function for creating a `toString`-based type tester.
 function tagTester(name) {
   var tag = '[object ' + name + ']';
   return function (obj) {
@@ -119,7 +121,7 @@ var isNumber = tagTester('Number');
 
 var isDate = tagTester('Date');
 
-var isRegExp = tagTester('RegExp');
+var isRegExp$1 = tagTester('RegExp');
 
 var isError = tagTester('Error');
 
@@ -127,11 +129,11 @@ var isSymbol = tagTester('Symbol');
 
 var isArrayBuffer = tagTester('ArrayBuffer');
 
-var isFunction = tagTester('Function');
-
-// Optimize `isFunction` if appropriate. Work around some `typeof` bugs in old
+var isFunction = tagTester('Function'); // Optimize `isFunction` if appropriate. Work around some `typeof` bugs in old
 // v8, IE 11 (#1621), Safari 8 (#1929), and PhantomJS (#2236).
+
 var nodelist = root.document && root.document.childNodes;
+
 if (typeof /./ != 'function' && typeof Int8Array != 'object' && typeof nodelist != 'function') {
   isFunction = function (obj) {
     return typeof obj == 'function' || false;
@@ -142,51 +144,46 @@ var isFunction$1 = isFunction;
 
 var hasObjectTag = tagTester('Object');
 
-// In IE 10 - Edge 13, `DataView` has string tag `'[object Object]'`.
 // In IE 11, the most common among them, this problem also applies to
 // `Map`, `WeakMap` and `Set`.
-var hasStringTagBug = supportsDataView && hasObjectTag(new DataView(new ArrayBuffer(8)));
-var isIE11 = typeof Map !== 'undefined' && hasObjectTag(new Map());
 
-var isDataView = tagTester('DataView');
+var hasStringTagBug = supportsDataView && hasObjectTag(new DataView(new ArrayBuffer(8))),
+    isIE11 = typeof Map !== 'undefined' && hasObjectTag(new Map());
 
-// In IE 10 - Edge 13, we need a different heuristic
+var isDataView = tagTester('DataView'); // In IE 10 - Edge 13, we need a different heuristic
 // to determine whether an object is a `DataView`.
+
 function ie10IsDataView(obj) {
   return obj != null && isFunction$1(obj.getInt8) && isArrayBuffer(obj.buffer);
 }
 
 var isDataView$1 = hasStringTagBug ? ie10IsDataView : isDataView;
 
-// Is a given value an array?
 // Delegates to ECMA5's native `Array.isArray`.
+
 var isArray = nativeIsArray || tagTester('Array');
 
-// Internal function to check whether `key` is an own property name of `obj`.
-function has(obj, key) {
+function has$1(obj, key) {
   return obj != null && hasOwnProperty.call(obj, key);
 }
 
-var isArguments = tagTester('Arguments');
-
-// Define a fallback version of the method in browsers (ahem, IE < 9), where
+var isArguments = tagTester('Arguments'); // Define a fallback version of the method in browsers (ahem, IE < 9), where
 // there isn't any inspectable "Arguments" type.
+
 (function () {
   if (!isArguments(arguments)) {
     isArguments = function (obj) {
-      return has(obj, 'callee');
+      return has$1(obj, 'callee');
     };
   }
 })();
 
 var isArguments$1 = isArguments;
 
-// Is a given object a finite number?
 function isFinite$1(obj) {
   return !isSymbol(obj) && _isFinite(obj) && !isNaN(parseFloat(obj));
 }
 
-// Is the given value `NaN`?
 function isNaN$1(obj) {
   return isNumber(obj) && _isNaN(obj);
 }
@@ -198,7 +195,6 @@ function constant(value) {
   };
 }
 
-// Common internal logic for `isArrayLike` and `isBufferLike`.
 function createSizePropertyCheck(getSizeProperty) {
   return function (collection) {
     var sizeProperty = getSizeProperty(collection);
@@ -213,15 +209,14 @@ function shallowProperty(key) {
   };
 }
 
-// Internal helper to obtain the `byteLength` property of an object.
 var getByteLength = shallowProperty('byteLength');
 
-// Internal helper to determine whether we should spend extensive checks against
 // `ArrayBuffer` et al.
+
 var isBufferLike = createSizePropertyCheck(getByteLength);
 
-// Is a given value a typed array?
 var typedArrayPattern = /\[object ((I|Ui)nt(8|16|32)|Float(32|64)|Uint8Clamped|Big(I|Ui)nt64)Array\]/;
+
 function isTypedArray(obj) {
   // `ArrayBuffer.isView` is the most future-proof, so use it when available.
   // Otherwise, fall back on the above regular expression.
@@ -230,16 +225,17 @@ function isTypedArray(obj) {
 
 var isTypedArray$1 = supportsArrayBuffer ? isTypedArray : constant(false);
 
-// Internal helper to obtain the `length` property of an object.
 var getLength = shallowProperty('length');
 
-// Internal helper to create a simple lookup structure.
 // `collectNonEnumProps` used to depend on `_.contains`, but this led to
 // circular imports. `emulatedSet` is a one-off solution that only works for
 // arrays of strings.
+
 function emulatedSet(keys) {
   var hash = {};
+
   for (var l = keys.length, i = 0; i < l; ++i) hash[keys[i]] = true;
+
   return {
     contains: function (key) {
       return hash[key];
@@ -249,148 +245,153 @@ function emulatedSet(keys) {
       return keys.push(key);
     }
   };
-}
-
-// Internal helper. Checks `keys` for the presence of keys in IE < 9 that won't
+} // Internal helper. Checks `keys` for the presence of keys in IE < 9 that won't
 // be iterated by `for key in ...` and thus missed. Extends `keys` in place if
 // needed.
+
+
 function collectNonEnumProps(obj, keys) {
   keys = emulatedSet(keys);
   var nonEnumIdx = nonEnumerableProps.length;
   var constructor = obj.constructor;
-  var proto = isFunction$1(constructor) && constructor.prototype || ObjProto;
+  var proto = isFunction$1(constructor) && constructor.prototype || ObjProto; // Constructor is a special case.
 
-  // Constructor is a special case.
   var prop = 'constructor';
-  if (has(obj, prop) && !keys.contains(prop)) keys.push(prop);
+  if (has$1(obj, prop) && !keys.contains(prop)) keys.push(prop);
 
   while (nonEnumIdx--) {
     prop = nonEnumerableProps[nonEnumIdx];
+
     if (prop in obj && obj[prop] !== proto[prop] && !keys.contains(prop)) {
       keys.push(prop);
     }
   }
 }
 
-// Retrieve the names of an object's own properties.
 // Delegates to **ECMAScript 5**'s native `Object.keys`.
+
 function keys(obj) {
   if (!isObject(obj)) return [];
   if (nativeKeys) return nativeKeys(obj);
   var keys = [];
-  for (var key in obj) if (has(obj, key)) keys.push(key);
-  // Ahem, IE < 9.
+
+  for (var key in obj) if (has$1(obj, key)) keys.push(key); // Ahem, IE < 9.
+
+
   if (hasEnumBug) collectNonEnumProps(obj, keys);
   return keys;
 }
 
-// Is a given array, string, or object empty?
 // An "empty" object has no enumerable own-properties.
+
 function isEmpty(obj) {
-  if (obj == null) return true;
-  // Skip the more expensive `toString`-based type checks if `obj` has no
+  if (obj == null) return true; // Skip the more expensive `toString`-based type checks if `obj` has no
   // `.length`.
+
   var length = getLength(obj);
   if (typeof length == 'number' && (isArray(obj) || isString(obj) || isArguments$1(obj))) return length === 0;
   return getLength(keys(obj)) === 0;
 }
 
-// Returns whether an object has a given set of `key:value` pairs.
 function isMatch(object, attrs) {
   var _keys = keys(attrs),
       length = _keys.length;
+
   if (object == null) return !length;
   var obj = Object(object);
+
   for (var i = 0; i < length; i++) {
     var key = _keys[i];
     if (attrs[key] !== obj[key] || !(key in obj)) return false;
   }
+
   return true;
 }
 
-// If Underscore is called as a function, it returns a wrapped object that can
 // be used OO-style. This wrapper holds altered versions of all functions added
 // through `_.mixin`. Wrapped objects may be chained.
-function _$2(obj) {
-  if (obj instanceof _$2) return obj;
-  if (!(this instanceof _$2)) return new _$2(obj);
+
+function _$1(obj) {
+  if (obj instanceof _$1) return obj;
+  if (!(this instanceof _$1)) return new _$1(obj);
   this._wrapped = obj;
 }
+_$1.VERSION = VERSION; // Extracts the result from a wrapped and chained object.
 
-_$2.VERSION = VERSION;
-
-// Extracts the result from a wrapped and chained object.
-_$2.prototype.value = function () {
+_$1.prototype.value = function () {
   return this._wrapped;
-};
-
-// Provide unwrapping proxies for some methods used in engine operations
+}; // Provide unwrapping proxies for some methods used in engine operations
 // such as arithmetic and JSON stringification.
-_$2.prototype.valueOf = _$2.prototype.toJSON = _$2.prototype.value;
 
-_$2.prototype.toString = function () {
+
+_$1.prototype.valueOf = _$1.prototype.toJSON = _$1.prototype.value;
+
+_$1.prototype.toString = function () {
   return String(this._wrapped);
 };
 
-// Internal function to wrap or shallow-copy an ArrayBuffer,
 // typed array or DataView to a new view, reusing the buffer.
+
 function toBufferView(bufferSource) {
   return new Uint8Array(bufferSource.buffer || bufferSource, bufferSource.byteOffset || 0, getByteLength(bufferSource));
 }
 
-// We use this string twice, so give it a name for minification.
-var tagDataView = '[object DataView]';
+var tagDataView = '[object DataView]'; // Internal recursive comparison function for `_.isEqual`.
 
-// Internal recursive comparison function for `_.isEqual`.
 function eq(a, b, aStack, bStack) {
   // Identical objects are equal. `0 === -0`, but they aren't identical.
   // See the [Harmony `egal` proposal](https://wiki.ecmascript.org/doku.php?id=harmony:egal).
-  if (a === b) return a !== 0 || 1 / a === 1 / b;
-  // `null` or `undefined` only equal to itself (strict comparison).
-  if (a == null || b == null) return false;
-  // `NaN`s are equivalent, but non-reflexive.
-  if (a !== a) return b !== b;
-  // Exhaust primitive checks
+  if (a === b) return a !== 0 || 1 / a === 1 / b; // `null` or `undefined` only equal to itself (strict comparison).
+
+  if (a == null || b == null) return false; // `NaN`s are equivalent, but non-reflexive.
+
+  if (a !== a) return b !== b; // Exhaust primitive checks
+
   var type = typeof a;
   if (type !== 'function' && type !== 'object' && typeof b != 'object') return false;
   return deepEq(a, b, aStack, bStack);
-}
+} // Internal recursive comparison function for `_.isEqual`.
 
-// Internal recursive comparison function for `_.isEqual`.
+
 function deepEq(a, b, aStack, bStack) {
   // Unwrap any wrapped objects.
-  if (a instanceof _$2) a = a._wrapped;
-  if (b instanceof _$2) b = b._wrapped;
-  // Compare `[[Class]]` names.
+  if (a instanceof _$1) a = a._wrapped;
+  if (b instanceof _$1) b = b._wrapped; // Compare `[[Class]]` names.
+
   var className = toString.call(a);
-  if (className !== toString.call(b)) return false;
-  // Work around a bug in IE 10 - Edge 13.
+  if (className !== toString.call(b)) return false; // Work around a bug in IE 10 - Edge 13.
+
   if (hasStringTagBug && className == '[object Object]' && isDataView$1(a)) {
     if (!isDataView$1(b)) return false;
     className = tagDataView;
   }
+
   switch (className) {
     // These types are compared by value.
-    case '[object RegExp]':
-    // RegExps are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
+    case '[object RegExp]': // RegExps are coerced to strings for comparison (Note: '' + /a/i === '/a/i')
+
     case '[object String]':
       // Primitives and their corresponding object wrappers are equivalent; thus, `"5"` is
       // equivalent to `new String("5")`.
       return '' + a === '' + b;
+
     case '[object Number]':
       // `NaN`s are equivalent, but non-reflexive.
       // Object(NaN) is equivalent to NaN.
-      if (+a !== +a) return +b !== +b;
-      // An `egal` comparison is performed for other numeric values.
+      if (+a !== +a) return +b !== +b; // An `egal` comparison is performed for other numeric values.
+
       return +a === 0 ? 1 / +a === 1 / b : +a === +b;
+
     case '[object Date]':
     case '[object Boolean]':
       // Coerce dates and booleans to numeric primitive values. Dates are compared by their
       // millisecond representations. Note that invalid dates with millisecond representations
       // of `NaN` are not equivalent.
       return +a === +b;
+
     case '[object Symbol]':
       return SymbolProto.valueOf.call(a) === SymbolProto.valueOf.call(b);
+
     case '[object ArrayBuffer]':
     case tagDataView:
       // Coerce to typed array so we can fall through.
@@ -398,47 +399,49 @@ function deepEq(a, b, aStack, bStack) {
   }
 
   var areArrays = className === '[object Array]';
+
   if (!areArrays && isTypedArray$1(a)) {
     var byteLength = getByteLength(a);
     if (byteLength !== getByteLength(b)) return false;
     if (a.buffer === b.buffer && a.byteOffset === b.byteOffset) return true;
     areArrays = true;
   }
-  if (!areArrays) {
-    if (typeof a != 'object' || typeof b != 'object') return false;
 
-    // Objects with different constructors are not equivalent, but `Object`s or `Array`s
+  if (!areArrays) {
+    if (typeof a != 'object' || typeof b != 'object') return false; // Objects with different constructors are not equivalent, but `Object`s or `Array`s
     // from different frames are.
+
     var aCtor = a.constructor,
         bCtor = b.constructor;
+
     if (aCtor !== bCtor && !(isFunction$1(aCtor) && aCtor instanceof aCtor && isFunction$1(bCtor) && bCtor instanceof bCtor) && 'constructor' in a && 'constructor' in b) {
       return false;
     }
-  }
-  // Assume equality for cyclic structures. The algorithm for detecting cyclic
+  } // Assume equality for cyclic structures. The algorithm for detecting cyclic
   // structures is adapted from ES 5.1 section 15.12.3, abstract operation `JO`.
-
   // Initializing stack of traversed objects.
   // It's done here since we only need them for objects and arrays comparison.
+
+
   aStack = aStack || [];
   bStack = bStack || [];
   var length = aStack.length;
+
   while (length--) {
     // Linear search. Performance is inversely proportional to the number of
     // unique nested structures.
     if (aStack[length] === a) return bStack[length] === b;
-  }
+  } // Add the first object to the stack of traversed objects.
 
-  // Add the first object to the stack of traversed objects.
+
   aStack.push(a);
-  bStack.push(b);
+  bStack.push(b); // Recursively compare objects and arrays.
 
-  // Recursively compare objects and arrays.
   if (areArrays) {
     // Compare array lengths to determine if a deep comparison is necessary.
     length = a.length;
-    if (length !== b.length) return false;
-    // Deep compare the contents, ignoring non-numeric properties.
+    if (length !== b.length) return false; // Deep compare the contents, ignoring non-numeric properties.
+
     while (length--) {
       if (!eq(a[length], b[length], aStack, bStack)) return false;
     }
@@ -446,69 +449,73 @@ function deepEq(a, b, aStack, bStack) {
     // Deep compare objects.
     var _keys = keys(a),
         key;
-    length = _keys.length;
-    // Ensure that both objects contain the same number of properties before comparing deep equality.
+
+    length = _keys.length; // Ensure that both objects contain the same number of properties before comparing deep equality.
+
     if (keys(b).length !== length) return false;
+
     while (length--) {
       // Deep compare each member
       key = _keys[length];
-      if (!(has(b, key) && eq(a[key], b[key], aStack, bStack))) return false;
+      if (!(has$1(b, key) && eq(a[key], b[key], aStack, bStack))) return false;
     }
-  }
-  // Remove the first object from the stack of traversed objects.
+  } // Remove the first object from the stack of traversed objects.
+
+
   aStack.pop();
   bStack.pop();
   return true;
-}
+} // Perform a deep comparison to check if two objects are equal.
 
-// Perform a deep comparison to check if two objects are equal.
+
 function isEqual(a, b) {
   return eq(a, b);
 }
 
-// Retrieve all the enumerable property names of an object.
 function allKeys(obj) {
   if (!isObject(obj)) return [];
   var keys = [];
-  for (var key in obj) keys.push(key);
-  // Ahem, IE < 9.
+
+  for (var key in obj) keys.push(key); // Ahem, IE < 9.
+
+
   if (hasEnumBug) collectNonEnumProps(obj, keys);
   return keys;
 }
 
-// Since the regular `Object.prototype.toString` type tests don't work for
 // some types in IE 11, we use a fingerprinting heuristic instead, based
 // on the methods. It's not great, but it's the best we got.
 // The fingerprint method lists are defined below.
+
 function ie11fingerprint(methods) {
   var length = getLength(methods);
   return function (obj) {
-    if (obj == null) return false;
-    // `Map`, `WeakMap` and `Set` have no enumerable keys.
+    if (obj == null) return false; // `Map`, `WeakMap` and `Set` have no enumerable keys.
+
     var keys = allKeys(obj);
     if (getLength(keys)) return false;
+
     for (var i = 0; i < length; i++) {
       if (!isFunction$1(obj[methods[i]])) return false;
-    }
-    // If we are testing against `WeakMap`, we need to ensure that
+    } // If we are testing against `WeakMap`, we need to ensure that
     // `obj` doesn't have a `forEach` method in order to distinguish
     // it from a regular `Map`.
+
+
     return methods !== weakMapMethods || !isFunction$1(obj[forEachName]);
   };
-}
-
-// In the interest of compact minification, we write
+} // In the interest of compact minification, we write
 // each string in the fingerprints only once.
-var forEachName = 'forEach';
-var hasName = 'has';
-var commonInit = ['clear', 'delete'];
-var mapTail = ['get', hasName, 'set'];
 
-// `Map`, `WeakMap` and `Set` each have slightly different
+var forEachName = 'forEach',
+    hasName = 'has',
+    commonInit = ['clear', 'delete'],
+    mapTail = ['get', hasName, 'set']; // `Map`, `WeakMap` and `Set` each have slightly different
 // combinations of the above sublists.
-var mapMethods = commonInit.concat(forEachName, mapTail);
-var weakMapMethods = commonInit.concat(mapTail);
-var setMethods = ['add'].concat(commonInit, forEachName, hasName);
+
+var mapMethods = commonInit.concat(forEachName, mapTail),
+    weakMapMethods = commonInit.concat(mapTail),
+    setMethods = ['add'].concat(commonInit, forEachName, hasName);
 
 var isMap = isIE11 ? ie11fingerprint(mapMethods) : tagTester('Map');
 
@@ -518,45 +525,53 @@ var isSet = isIE11 ? ie11fingerprint(setMethods) : tagTester('Set');
 
 var isWeakSet = tagTester('WeakSet');
 
-// Retrieve the values of an object's properties.
 function values(obj) {
   var _keys = keys(obj);
+
   var length = _keys.length;
   var values = Array(length);
+
   for (var i = 0; i < length; i++) {
     values[i] = obj[_keys[i]];
   }
+
   return values;
 }
 
-// Convert an object into a list of `[key, value]` pairs.
 // The opposite of `_.object` with one argument.
+
 function pairs(obj) {
   var _keys = keys(obj);
+
   var length = _keys.length;
   var pairs = Array(length);
+
   for (var i = 0; i < length; i++) {
     pairs[i] = [_keys[i], obj[_keys[i]]];
   }
+
   return pairs;
 }
 
-// Invert the keys and values of an object. The values must be serializable.
 function invert(obj) {
   var result = {};
+
   var _keys = keys(obj);
+
   for (var i = 0, length = _keys.length; i < length; i++) {
     result[obj[_keys[i]]] = _keys[i];
   }
+
   return result;
 }
 
-// Return a sorted list of the function names available on the object.
 function functions(obj) {
   var names = [];
+
   for (var key in obj) {
     if (isFunction$1(obj[key])) names.push(key);
   }
+
   return names.sort();
 }
 
@@ -566,36 +581,36 @@ function createAssigner(keysFunc, defaults) {
     var length = arguments.length;
     if (defaults) obj = Object(obj);
     if (length < 2 || obj == null) return obj;
+
     for (var index = 1; index < length; index++) {
       var source = arguments[index],
           keys = keysFunc(source),
           l = keys.length;
+
       for (var i = 0; i < l; i++) {
         var key = keys[i];
         if (!defaults || obj[key] === void 0) obj[key] = source[key];
       }
     }
+
     return obj;
   };
 }
 
-// Extend a given object with all the properties in passed-in object(s).
 var extend = createAssigner(allKeys);
 
-// Assigns a given object with all the own properties in the passed-in
 // object(s).
 // (https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
+
 var extendOwn = createAssigner(keys);
 
-// Fill in a given object with default properties.
 var defaults = createAssigner(allKeys, true);
 
-// Create a naked function reference for surrogate-prototype-swapping.
 function ctor() {
   return function () {};
-}
+} // An internal function for creating a new object that inherits from another.
 
-// An internal function for creating a new object that inherits from another.
+
 function baseCreate(prototype) {
   if (!isObject(prototype)) return {};
   if (nativeCreate) return nativeCreate(prototype);
@@ -606,16 +621,15 @@ function baseCreate(prototype) {
   return result;
 }
 
-// Creates an object that inherits from the given prototype object.
 // If additional properties are provided then they will be added to the
 // created object.
+
 function create(prototype, props) {
   var result = baseCreate(prototype);
   if (props) extendOwn(result, props);
   return result;
 }
 
-// Create a (shallow-cloned) duplicate of an object.
 function clone(obj) {
   if (!isObject(obj)) return obj;
   return isArray(obj) ? obj.slice() : extend({}, obj);
@@ -629,59 +643,63 @@ function tap(obj, interceptor) {
   return obj;
 }
 
-// Normalize a (deep) property `path` to array.
 // Like `_.iteratee`, this function can be customized.
-function toPath$1(path$$1) {
-  return isArray(path$$1) ? path$$1 : [path$$1];
-}
-_$2.toPath = toPath$1;
 
-// Internal wrapper for `_.toPath` to enable minification.
+function toPath$1(path) {
+  return isArray(path) ? path : [path];
+}
+_$1.toPath = toPath$1;
+
 // Similar to `cb` for `_.iteratee`.
-function toPath(path$$1) {
-  return _$2.toPath(path$$1);
+
+function toPath(path) {
+  return _$1.toPath(path);
 }
 
 // Internal function to obtain a nested property in `obj` along `path`.
-function deepGet(obj, path$$1) {
-  var length = path$$1.length;
+function deepGet(obj, path) {
+  var length = path.length;
+
   for (var i = 0; i < length; i++) {
     if (obj == null) return void 0;
-    obj = obj[path$$1[i]];
+    obj = obj[path[i]];
   }
+
   return length ? obj : void 0;
 }
 
-// Get the value of the (deep) property on `path` from `object`.
 // If any property in `path` does not exist or if the value is
 // `undefined`, return `defaultValue` instead.
 // The `path` is normalized through `_.toPath`.
-function get(object, path$$1, defaultValue) {
-  var value = deepGet(object, toPath(path$$1));
+
+function get(object, path, defaultValue) {
+  var value = deepGet(object, toPath(path));
   return isUndefined(value) ? defaultValue : value;
 }
 
-// Shortcut function for checking if an object has a given property directly on
 // itself (in other words, not on a prototype). Unlike the internal `has`
 // function, this public version can also traverse nested properties.
-function has$1(obj, path$$1) {
-  path$$1 = toPath(path$$1);
-  var length = path$$1.length;
+
+function has(obj, path) {
+  path = toPath(path);
+  var length = path.length;
+
   for (var i = 0; i < length; i++) {
-    var key = path$$1[i];
-    if (!has(obj, key)) return false;
+    var key = path[i];
+    if (!has$1(obj, key)) return false;
     obj = obj[key];
   }
+
   return !!length;
 }
 
 // Keep the identity function around for default iteratees.
-function identity(value) {
+function identity$1(value) {
   return value;
 }
 
-// Returns a predicate for checking whether an object has a given set of
 // `key:value` pairs.
+
 function matcher(attrs) {
   attrs = extendOwn({}, attrs);
   return function (obj) {
@@ -689,12 +707,12 @@ function matcher(attrs) {
   };
 }
 
-// Creates a function that, when passed an object, will traverse that object’s
 // properties down the given `path`, specified as an array of keys or indices.
-function property(path$$1) {
-  path$$1 = toPath(path$$1);
+
+function property(path) {
+  path = toPath(path);
   return function (obj) {
-    return deepGet(obj, path$$1);
+    return deepGet(obj, path);
   };
 }
 
@@ -703,81 +721,88 @@ function property(path$$1) {
 // functions.
 function optimizeCb(func, context, argCount) {
   if (context === void 0) return func;
+
   switch (argCount == null ? 3 : argCount) {
     case 1:
       return function (value) {
         return func.call(context, value);
       };
     // The 2-argument case is omitted because we’re not using it.
+
     case 3:
       return function (value, index, collection) {
         return func.call(context, value, index, collection);
       };
+
     case 4:
       return function (accumulator, value, index, collection) {
         return func.call(context, accumulator, value, index, collection);
       };
   }
+
   return function () {
     return func.apply(context, arguments);
   };
 }
 
-// An internal function to generate callbacks that can be applied to each
 // element in a collection, returning the desired result — either `_.identity`,
 // an arbitrary callback, a property matcher, or a property accessor.
+
 function baseIteratee(value, context, argCount) {
-  if (value == null) return identity;
+  if (value == null) return identity$1;
   if (isFunction$1(value)) return optimizeCb(value, context, argCount);
   if (isObject(value) && !isArray(value)) return matcher(value);
   return property(value);
 }
 
-// External wrapper for our callback generator. Users may customize
 // `_.iteratee` if they want additional predicate/iteratee shorthand styles.
 // This abstraction hides the internal-only `argCount` argument.
+
 function iteratee(value, context) {
   return baseIteratee(value, context, Infinity);
 }
-_$2.iteratee = iteratee;
+_$1.iteratee = iteratee;
 
-// The function we call internally to generate a callback. It invokes
 // `_.iteratee` if overridden, otherwise `baseIteratee`.
+
 function cb(value, context, argCount) {
-  if (_$2.iteratee !== iteratee) return _$2.iteratee(value, context);
+  if (_$1.iteratee !== iteratee) return _$1.iteratee(value, context);
   return baseIteratee(value, context, argCount);
 }
 
-// Returns the results of applying the `iteratee` to each element of `obj`.
 // In contrast to `_.map` it returns an object.
+
 function mapObject(obj, iteratee, context) {
   iteratee = cb(iteratee, context);
+
   var _keys = keys(obj),
       length = _keys.length,
       results = {};
+
   for (var index = 0; index < length; index++) {
     var currentKey = _keys[index];
     results[currentKey] = iteratee(obj[currentKey], currentKey, obj);
   }
+
   return results;
 }
 
 // Predicate-generating function. Often useful outside of Underscore.
 function noop() {}
 
-// Generates a function for a given object that returns a given property.
 function propertyOf(obj) {
   if (obj == null) return noop;
-  return function (path$$1) {
-    return get(obj, path$$1);
+  return function (path) {
+    return get(obj, path);
   };
 }
 
-// Run a function **n** times.
 function times(n, iteratee, context) {
   var accum = Array(Math.max(0, n));
   iteratee = optimizeCb(iteratee, context, 1);
+
   for (var i = 0; i < n; i++) accum[i] = iteratee(i);
+
   return accum;
 }
 
@@ -787,6 +812,7 @@ function random(min, max) {
     max = min;
     min = 0;
   }
+
   return min + Math.floor(Math.random() * (max - min + 1));
 }
 
@@ -795,13 +821,14 @@ var now = Date.now || function () {
   return new Date().getTime();
 };
 
-// Internal helper to generate functions for escaping and unescaping strings
 // to/from HTML interpolation.
+
 function createEscaper(map) {
   var escaper = function (match) {
     return map[match];
-  };
-  // Regexes for identifying a key that needs to be escaped.
+  }; // Regexes for identifying a key that needs to be escaped.
+
+
   var source = '(?:' + keys(map).join('|') + ')';
   var testRegexp = RegExp(source);
   var replaceRegexp = RegExp(source, 'g');
@@ -821,30 +848,26 @@ var escapeMap = {
   '`': '&#x60;'
 };
 
-// Function for escaping strings to HTML interpolation.
 var _escape = createEscaper(escapeMap);
 
-// Internal list of HTML entities for unescaping.
 var unescapeMap = invert(escapeMap);
 
-// Function for unescaping strings from HTML interpolation.
 var _unescape = createEscaper(unescapeMap);
 
-// By default, Underscore uses ERB-style template delimiters. Change the
 // following template settings to use alternative delimiters.
-var templateSettings = _$2.templateSettings = {
+
+var templateSettings = _$1.templateSettings = {
   evaluate: /<%([\s\S]+?)%>/g,
   interpolate: /<%=([\s\S]+?)%>/g,
   escape: /<%-([\s\S]+?)%>/g
 };
 
-// When customizing `_.templateSettings`, if you don't want to define an
 // interpolation, evaluation or escaping regex, we need one that is
 // guaranteed not to match.
-var noMatch = /(.)^/;
 
-// Certain characters need to be escaped so that they can be put into a
+var noMatch = /(.)^/; // Certain characters need to be escaped so that they can be put into a
 // string literal.
+
 var escapes = {
   "'": "'",
   '\\': '\\',
@@ -853,32 +876,28 @@ var escapes = {
   '\u2028': 'u2028',
   '\u2029': 'u2029'
 };
-
 var escapeRegExp = /\\|'|\r|\n|\u2028|\u2029/g;
 
 function escapeChar(match) {
   return '\\' + escapes[match];
-}
-
-// In order to prevent third-party code injection through
+} // In order to prevent third-party code injection through
 // `_.templateSettings.variable`, we test it against the following regular
 // expression. It is intentionally a bit more liberal than just matching valid
 // identifiers, but still prevents possible loopholes through defaults or
 // destructuring assignment.
-var bareIdentifier = /^\s*(\w|\$)+\s*$/;
 
-// JavaScript micro-templating, similar to John Resig's implementation.
+
+var bareIdentifier = /^\s*(\w|\$)+\s*$/; // JavaScript micro-templating, similar to John Resig's implementation.
 // Underscore templating handles arbitrary delimiters, preserves whitespace,
 // and correctly escapes quotes within interpolated code.
 // NB: `oldSettings` only exists for backwards compatibility.
+
 function template(text, settings, oldSettings) {
   if (!settings && oldSettings) settings = oldSettings;
-  settings = defaults({}, settings, _$2.templateSettings);
+  settings = defaults({}, settings, _$1.templateSettings); // Combine delimiters into one regular expression via alternation.
 
-  // Combine delimiters into one regular expression via alternation.
-  var matcher = RegExp([(settings.escape || noMatch).source, (settings.interpolate || noMatch).source, (settings.evaluate || noMatch).source].join('|') + '|$', 'g');
+  var matcher = RegExp([(settings.escape || noMatch).source, (settings.interpolate || noMatch).source, (settings.evaluate || noMatch).source].join('|') + '|$', 'g'); // Compile the template source, escaping string literals appropriately.
 
-  // Compile the template source, escaping string literals appropriately.
   var index = 0;
   var source = "__p+='";
   text.replace(matcher, function (match, escape, interpolate, evaluate, offset) {
@@ -891,14 +910,14 @@ function template(text, settings, oldSettings) {
       source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
     } else if (evaluate) {
       source += "';\n" + evaluate + "\n__p+='";
-    }
+    } // Adobe VMs need the match returned to produce the correct offset.
 
-    // Adobe VMs need the match returned to produce the correct offset.
+
     return match;
   });
   source += "';\n";
-
   var argument = settings.variable;
+
   if (argument) {
     // Insure against third-party code injection. (CVE-2021-23358)
     if (!bareIdentifier.test(argument)) throw new Error('variable is not a bare identifier: ' + argument);
@@ -909,8 +928,8 @@ function template(text, settings, oldSettings) {
   }
 
   source = "var __t,__p='',__j=Array.prototype.join," + "print=function(){__p+=__j.call(arguments,'');};\n" + source + 'return __p;\n';
-
   var render;
+
   try {
     render = new Function(argument, '_', source);
   } catch (e) {
@@ -919,32 +938,36 @@ function template(text, settings, oldSettings) {
   }
 
   var template = function (data) {
-    return render.call(this, data, _$2);
-  };
+    return render.call(this, data, _$1);
+  }; // Provide the compiled source as a convenience for precompilation.
 
-  // Provide the compiled source as a convenience for precompilation.
+
   template.source = 'function(' + argument + '){\n' + source + '}';
-
   return template;
 }
 
-// Traverses the children of `obj` along `path`. If a child is a function, it
 // is invoked with its parent as context. Returns the value of the final
 // child, or `fallback` if any child is undefined.
-function result(obj, path$$1, fallback) {
-  path$$1 = toPath(path$$1);
-  var length = path$$1.length;
+
+function result(obj, path, fallback) {
+  path = toPath(path);
+  var length = path.length;
+
   if (!length) {
     return isFunction$1(fallback) ? fallback.call(obj) : fallback;
   }
+
   for (var i = 0; i < length; i++) {
-    var prop = obj == null ? void 0 : obj[path$$1[i]];
+    var prop = obj == null ? void 0 : obj[path[i]];
+
     if (prop === void 0) {
       prop = fallback;
       i = length; // Ensure we don't continue iterating.
     }
+
     obj = isFunction$1(prop) ? prop.call(obj) : prop;
   }
+
   return obj;
 }
 
@@ -956,16 +979,16 @@ function uniqueId(prefix) {
   return prefix ? prefix + id : id;
 }
 
-// Start chaining a wrapped Underscore object.
 function chain(obj) {
-  var instance = _$2(obj);
+  var instance = _$1(obj);
+
   instance._chain = true;
   return instance;
 }
 
-// Internal function to execute `sourceFunc` bound to `context` with optional
 // `args`. Determines whether to execute a function as a constructor or as a
 // normal function.
+
 function executeBound(sourceFunc, boundFunc, context, callingContext, args) {
   if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
   var self = baseCreate(sourceFunc.prototype);
@@ -974,29 +997,33 @@ function executeBound(sourceFunc, boundFunc, context, callingContext, args) {
   return self;
 }
 
-// Partially apply a function by creating a version that has had some of its
 // arguments pre-filled, without changing its dynamic `this` context. `_` acts
 // as a placeholder by default, allowing any combination of arguments to be
 // pre-filled. Set `_.partial.placeholder` for a custom placeholder argument.
+
 var partial = restArguments(function (func, boundArgs) {
   var placeholder = partial.placeholder;
+
   var bound = function () {
     var position = 0,
         length = boundArgs.length;
     var args = Array(length);
+
     for (var i = 0; i < length; i++) {
       args[i] = boundArgs[i] === placeholder ? arguments[position++] : boundArgs[i];
     }
+
     while (position < arguments.length) args.push(arguments[position++]);
+
     return executeBound(func, bound, this, this, args);
   };
+
   return bound;
 });
+partial.placeholder = _$1;
 
-partial.placeholder = _$2;
-
-// Create a function bound to a given object (assigning `this`, and arguments,
 // optionally).
+
 var bind = restArguments(function (func, context, args) {
   if (!isFunction$1(func)) throw new TypeError('Bind must be called on a function');
   var bound = restArguments(function (callArgs) {
@@ -1005,83 +1032,90 @@ var bind = restArguments(function (func, context, args) {
   return bound;
 });
 
-// Internal helper for collection methods to determine whether a collection
 // should be iterated as an array or as an object.
 // Related: https://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
 // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
+
 var isArrayLike = createSizePropertyCheck(getLength);
 
-// Internal implementation of a recursive `flatten` function.
-function flatten(input, depth, strict, output) {
+function flatten$1(input, depth, strict, output) {
   output = output || [];
+
   if (!depth && depth !== 0) {
     depth = Infinity;
   } else if (depth <= 0) {
     return output.concat(input);
   }
+
   var idx = output.length;
+
   for (var i = 0, length = getLength(input); i < length; i++) {
     var value = input[i];
+
     if (isArrayLike(value) && (isArray(value) || isArguments$1(value))) {
       // Flatten current level of array or arguments object.
       if (depth > 1) {
-        flatten(value, depth - 1, strict, output);
+        flatten$1(value, depth - 1, strict, output);
         idx = output.length;
       } else {
         var j = 0,
             len = value.length;
+
         while (j < len) output[idx++] = value[j++];
       }
     } else if (!strict) {
       output[idx++] = value;
     }
   }
+
   return output;
 }
 
-// Bind a number of an object's methods to that object. Remaining arguments
 // are the method names to be bound. Useful for ensuring that all callbacks
 // defined on an object belong to it.
+
 var bindAll = restArguments(function (obj, keys) {
-  keys = flatten(keys, false, false);
+  keys = flatten$1(keys, false, false);
   var index = keys.length;
   if (index < 1) throw new Error('bindAll must be passed function names');
+
   while (index--) {
     var key = keys[index];
     obj[key] = bind(obj[key], obj);
   }
+
   return obj;
 });
 
-// Memoize an expensive function by storing its results.
 function memoize(func, hasher) {
   var memoize = function (key) {
     var cache = memoize.cache;
     var address = '' + (hasher ? hasher.apply(this, arguments) : key);
-    if (!has(cache, address)) cache[address] = func.apply(this, arguments);
+    if (!has$1(cache, address)) cache[address] = func.apply(this, arguments);
     return cache[address];
   };
+
   memoize.cache = {};
   return memoize;
 }
 
-// Delays a function for the given number of milliseconds, and then calls
 // it with the arguments supplied.
+
 var delay = restArguments(function (func, wait, args) {
   return setTimeout(function () {
     return func.apply(null, args);
   }, wait);
 });
 
-// Defers a function, scheduling it to run after the current call stack has
 // cleared.
-var defer = partial(delay, _$2, 1);
 
-// Returns a function, that, when invoked, will only be triggered at most once
+var defer = partial(delay, _$1, 1);
+
 // during a given window of time. Normally, the throttled function will run
 // as much as it can, without ever going more than once per `wait` duration;
 // but if you'd like to disable the execution on the leading edge, pass
 // `{leading: false}`. To disable execution on the trailing edge, ditto.
+
 function throttle(func, wait, options) {
   var timeout, context, args, result;
   var previous = 0;
@@ -1096,21 +1130,25 @@ function throttle(func, wait, options) {
 
   var throttled = function () {
     var _now = now();
+
     if (!previous && options.leading === false) previous = _now;
     var remaining = wait - (_now - previous);
     context = this;
     args = arguments;
+
     if (remaining <= 0 || remaining > wait) {
       if (timeout) {
         clearTimeout(timeout);
         timeout = null;
       }
+
       previous = _now;
       result = func.apply(context, args);
       if (!timeout) context = args = null;
     } else if (!timeout && options.trailing !== false) {
       timeout = setTimeout(later, remaining);
     }
+
     return result;
   };
 
@@ -1123,21 +1161,22 @@ function throttle(func, wait, options) {
   return throttled;
 }
 
-// When a sequence of calls of the returned function ends, the argument
 // function is triggered. The end of a sequence is defined by the `wait`
 // parameter. If `immediate` is passed, the argument function will be
 // triggered at the beginning of the sequence instead of at the end.
+
 function debounce(func, wait, immediate) {
   var timeout, previous, args, result, context;
 
   var later = function () {
     var passed = now() - previous;
+
     if (wait > passed) {
       timeout = setTimeout(later, wait - passed);
     } else {
       timeout = null;
-      if (!immediate) result = func.apply(context, args);
-      // This check is needed because `func` can recursively invoke `debounced`.
+      if (!immediate) result = func.apply(context, args); // This check is needed because `func` can recursively invoke `debounced`.
+
       if (!timeout) args = context = null;
     }
   };
@@ -1146,10 +1185,12 @@ function debounce(func, wait, immediate) {
     context = this;
     args = _args;
     previous = now();
+
     if (!timeout) {
       timeout = setTimeout(later, wait);
       if (immediate) result = func.apply(context, args);
     }
+
     return result;
   });
 
@@ -1161,9 +1202,9 @@ function debounce(func, wait, immediate) {
   return debounced;
 }
 
-// Returns the first function passed as an argument to the second,
 // allowing you to adjust arguments, run code before and after, and
 // conditionally execute the original function.
+
 function wrap(func, wrapper) {
   return partial(wrapper, func);
 }
@@ -1183,7 +1224,9 @@ function compose() {
   return function () {
     var i = start;
     var result = args[start].apply(this, arguments);
+
     while (i--) result = args[i].call(this, result);
+
     return result;
   };
 }
@@ -1205,64 +1248,67 @@ function before(times, func) {
     if (--times > 0) {
       memo = func.apply(this, arguments);
     }
+
     if (times <= 1) func = null;
     return memo;
   };
 }
 
-// Returns a function that will be executed at most one time, no matter how
 // often you call it. Useful for lazy initialization.
+
 var once = partial(before, 2);
 
-// Returns the first key on an object that passes a truth test.
 function findKey(obj, predicate, context) {
   predicate = cb(predicate, context);
+
   var _keys = keys(obj),
       key;
+
   for (var i = 0, length = _keys.length; i < length; i++) {
     key = _keys[i];
     if (predicate(obj[key], key, obj)) return key;
   }
 }
 
-// Internal function to generate `_.findIndex` and `_.findLastIndex`.
 function createPredicateIndexFinder(dir) {
   return function (array, predicate, context) {
     predicate = cb(predicate, context);
     var length = getLength(array);
     var index = dir > 0 ? 0 : length - 1;
+
     for (; index >= 0 && index < length; index += dir) {
       if (predicate(array[index], index, array)) return index;
     }
+
     return -1;
   };
 }
 
-// Returns the first index on an array-like that passes a truth test.
 var findIndex = createPredicateIndexFinder(1);
 
-// Returns the last index on an array-like that passes a truth test.
 var findLastIndex = createPredicateIndexFinder(-1);
 
-// Use a comparator function to figure out the smallest index at which
 // an object should be inserted so as to maintain order. Uses binary search.
+
 function sortedIndex(array, obj, iteratee, context) {
   iteratee = cb(iteratee, context, 1);
   var value = iteratee(obj);
   var low = 0,
       high = getLength(array);
+
   while (low < high) {
     var mid = Math.floor((low + high) / 2);
     if (iteratee(array[mid]) < value) low = mid + 1;else high = mid;
   }
+
   return low;
 }
 
-// Internal function to generate the `_.indexOf` and `_.lastIndexOf` functions.
 function createIndexFinder(dir, predicateFind, sortedIndex) {
   return function (array, item, idx) {
     var i = 0,
         length = getLength(array);
+
     if (typeof idx == 'number') {
       if (dir > 0) {
         i = idx >= 0 ? idx : Math.max(idx + length, i);
@@ -1273,74 +1319,80 @@ function createIndexFinder(dir, predicateFind, sortedIndex) {
       idx = sortedIndex(array, item);
       return array[idx] === item ? idx : -1;
     }
+
     if (item !== item) {
-      idx = predicateFind(slice.call(array, i, length), isNaN$1);
+      idx = predicateFind(slice$1.call(array, i, length), isNaN$1);
       return idx >= 0 ? idx + i : -1;
     }
+
     for (idx = dir > 0 ? i : length - 1; idx >= 0 && idx < length; idx += dir) {
       if (array[idx] === item) return idx;
     }
+
     return -1;
   };
 }
 
-// Return the position of the first occurrence of an item in an array,
 // or -1 if the item is not included in the array.
 // If the array is large and already in sort order, pass `true`
 // for **isSorted** to use binary search.
+
 var indexOf = createIndexFinder(1, findIndex, sortedIndex);
 
-// Return the position of the last occurrence of an item in an array,
 // or -1 if the item is not included in the array.
+
 var lastIndexOf = createIndexFinder(-1, findLastIndex);
 
-// Return the first value which passes a truth test.
 function find(obj, predicate, context) {
   var keyFinder = isArrayLike(obj) ? findIndex : findKey;
   var key = keyFinder(obj, predicate, context);
   if (key !== void 0 && key !== -1) return obj[key];
 }
 
-// Convenience version of a common use case of `_.find`: getting the first
 // object containing specific `key:value` pairs.
+
 function findWhere(obj, attrs) {
   return find(obj, matcher(attrs));
 }
 
-// The cornerstone for collection functions, an `each`
 // implementation, aka `forEach`.
 // Handles raw objects in addition to array-likes. Treats all
 // sparse array-likes as if they were dense.
+
 function each(obj, iteratee, context) {
   iteratee = optimizeCb(iteratee, context);
   var i, length;
+
   if (isArrayLike(obj)) {
     for (i = 0, length = obj.length; i < length; i++) {
       iteratee(obj[i], i, obj);
     }
   } else {
     var _keys = keys(obj);
+
     for (i = 0, length = _keys.length; i < length; i++) {
       iteratee(obj[_keys[i]], _keys[i], obj);
     }
   }
+
   return obj;
 }
 
-// Return the results of applying the iteratee to each element.
 function map(obj, iteratee, context) {
   iteratee = cb(iteratee, context);
+
   var _keys = !isArrayLike(obj) && keys(obj),
       length = (_keys || obj).length,
       results = Array(length);
+
   for (var index = 0; index < length; index++) {
     var currentKey = _keys ? _keys[index] : index;
     results[index] = iteratee(obj[currentKey], currentKey, obj);
   }
+
   return results;
 }
 
-// Internal helper to create a reducing function, iterating left or right.
 function createReduce(dir) {
   // Wrap code that reassigns argument variables in a separate function than
   // the one that accesses `arguments.length` to avoid a perf hit. (#1991)
@@ -1348,14 +1400,17 @@ function createReduce(dir) {
     var _keys = !isArrayLike(obj) && keys(obj),
         length = (_keys || obj).length,
         index = dir > 0 ? 0 : length - 1;
+
     if (!initial) {
       memo = obj[_keys ? _keys[index] : index];
       index += dir;
     }
+
     for (; index >= 0 && index < length; index += dir) {
       var currentKey = _keys ? _keys[index] : index;
       memo = iteratee(memo, obj[currentKey], currentKey, obj);
     }
+
     return memo;
   };
 
@@ -1365,14 +1420,12 @@ function createReduce(dir) {
   };
 }
 
-// **Reduce** builds up a single result from a list of values, aka `inject`,
 // or `foldl`.
+
 var reduce = createReduce(1);
 
-// The right-associative version of reduce, also known as `foldr`.
 var reduceRight = createReduce(-1);
 
-// Return all the elements that pass a truth test.
 function filter(obj, predicate, context) {
   var results = [];
   predicate = cb(predicate, context);
@@ -1382,86 +1435,93 @@ function filter(obj, predicate, context) {
   return results;
 }
 
-// Return all the elements for which a truth test fails.
 function reject(obj, predicate, context) {
   return filter(obj, negate(cb(predicate)), context);
 }
 
-// Determine whether all of the elements pass a truth test.
 function every(obj, predicate, context) {
   predicate = cb(predicate, context);
+
   var _keys = !isArrayLike(obj) && keys(obj),
       length = (_keys || obj).length;
+
   for (var index = 0; index < length; index++) {
     var currentKey = _keys ? _keys[index] : index;
     if (!predicate(obj[currentKey], currentKey, obj)) return false;
   }
+
   return true;
 }
 
-// Determine if at least one element in the object passes a truth test.
 function some(obj, predicate, context) {
   predicate = cb(predicate, context);
+
   var _keys = !isArrayLike(obj) && keys(obj),
       length = (_keys || obj).length;
+
   for (var index = 0; index < length; index++) {
     var currentKey = _keys ? _keys[index] : index;
     if (predicate(obj[currentKey], currentKey, obj)) return true;
   }
+
   return false;
 }
 
-// Determine if the array or object contains a given item (using `===`).
 function contains(obj, item, fromIndex, guard) {
   if (!isArrayLike(obj)) obj = values(obj);
   if (typeof fromIndex != 'number' || guard) fromIndex = 0;
   return indexOf(obj, item, fromIndex) >= 0;
 }
 
-// Invoke a method (with arguments) on every item in a collection.
-var invoke = restArguments(function (obj, path$$1, args) {
+var invoke = restArguments(function (obj, path, args) {
   var contextPath, func;
-  if (isFunction$1(path$$1)) {
-    func = path$$1;
+
+  if (isFunction$1(path)) {
+    func = path;
   } else {
-    path$$1 = toPath(path$$1);
-    contextPath = path$$1.slice(0, -1);
-    path$$1 = path$$1[path$$1.length - 1];
+    path = toPath(path);
+    contextPath = path.slice(0, -1);
+    path = path[path.length - 1];
   }
+
   return map(obj, function (context) {
     var method = func;
+
     if (!method) {
       if (contextPath && contextPath.length) {
         context = deepGet(context, contextPath);
       }
+
       if (context == null) return void 0;
-      method = context[path$$1];
+      method = context[path];
     }
+
     return method == null ? method : method.apply(context, args);
   });
 });
 
-// Convenience version of a common use case of `_.map`: fetching a property.
 function pluck(obj, key) {
   return map(obj, property(key));
 }
 
-// Convenience version of a common use case of `_.filter`: selecting only
 // objects containing specific `key:value` pairs.
+
 function where(obj, attrs) {
   return filter(obj, matcher(attrs));
 }
 
-// Return the maximum element (or element-based computation).
 function max(obj, iteratee, context) {
   var result = -Infinity,
       lastComputed = -Infinity,
       value,
       computed;
+
   if (iteratee == null || typeof iteratee == 'number' && typeof obj[0] != 'object' && obj != null) {
     obj = isArrayLike(obj) ? obj : values(obj);
+
     for (var i = 0, length = obj.length; i < length; i++) {
       value = obj[i];
+
       if (value != null && value > result) {
         result = value;
       }
@@ -1470,25 +1530,29 @@ function max(obj, iteratee, context) {
     iteratee = cb(iteratee, context);
     each(obj, function (v, index, list) {
       computed = iteratee(v, index, list);
+
       if (computed > lastComputed || computed === -Infinity && result === -Infinity) {
         result = v;
         lastComputed = computed;
       }
     });
   }
+
   return result;
 }
 
-// Return the minimum element (or element-based computation).
 function min(obj, iteratee, context) {
   var result = Infinity,
       lastComputed = Infinity,
       value,
       computed;
+
   if (iteratee == null || typeof iteratee == 'number' && typeof obj[0] != 'object' && obj != null) {
     obj = isArrayLike(obj) ? obj : values(obj);
+
     for (var i = 0, length = obj.length; i < length; i++) {
       value = obj[i];
+
       if (value != null && value < result) {
         result = value;
       }
@@ -1497,43 +1561,46 @@ function min(obj, iteratee, context) {
     iteratee = cb(iteratee, context);
     each(obj, function (v, index, list) {
       computed = iteratee(v, index, list);
+
       if (computed < lastComputed || computed === Infinity && result === Infinity) {
         result = v;
         lastComputed = computed;
       }
     });
   }
+
   return result;
 }
 
-// Sample **n** random values from a collection using the modern version of the
 // [Fisher-Yates shuffle](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle).
 // If **n** is not specified, returns a single random element.
 // The internal `guard` argument allows it to work with `_.map`.
+
 function sample(obj, n, guard) {
   if (n == null || guard) {
     if (!isArrayLike(obj)) obj = values(obj);
     return obj[random(obj.length - 1)];
   }
+
   var sample = isArrayLike(obj) ? clone(obj) : values(obj);
   var length = getLength(sample);
   n = Math.max(Math.min(n, length), 0);
   var last = length - 1;
+
   for (var index = 0; index < n; index++) {
     var rand = random(index, last);
     var temp = sample[index];
     sample[index] = sample[rand];
     sample[rand] = temp;
   }
+
   return sample.slice(0, n);
 }
 
-// Shuffle a collection.
 function shuffle(obj) {
   return sample(obj, Infinity);
 }
 
-// Sort the object's values by a criterion produced by an iteratee.
 function sortBy(obj, iteratee, context) {
   var index = 0;
   iteratee = cb(iteratee, context);
@@ -1546,15 +1613,16 @@ function sortBy(obj, iteratee, context) {
   }).sort(function (left, right) {
     var a = left.criteria;
     var b = right.criteria;
+
     if (a !== b) {
       if (a > b || a === void 0) return 1;
       if (a < b || b === void 0) return -1;
     }
+
     return left.index - right.index;
   }), 'value');
 }
 
-// An internal function used for aggregate "group by" operations.
 function group(behavior, partition) {
   return function (obj, iteratee, context) {
     var result = partition ? [[], []] : {};
@@ -1567,45 +1635,45 @@ function group(behavior, partition) {
   };
 }
 
-// Groups the object's values by a criterion. Pass either a string attribute
 // to group by, or a function that returns the criterion.
+
 var groupBy = group(function (result, value, key) {
-  if (has(result, key)) result[key].push(value);else result[key] = [value];
+  if (has$1(result, key)) result[key].push(value);else result[key] = [value];
 });
 
-// Indexes the object's values by a criterion, similar to `_.groupBy`, but for
 // when you know that your index values will be unique.
+
 var indexBy = group(function (result, value, key) {
   result[key] = value;
 });
 
-// Counts instances of an object that group by a certain criterion. Pass
 // either a string attribute to count by, or a function that returns the
 // criterion.
+
 var countBy = group(function (result, value, key) {
-  if (has(result, key)) result[key]++;else result[key] = 1;
+  if (has$1(result, key)) result[key]++;else result[key] = 1;
 });
 
-// Split a collection into two arrays: one whose elements all pass the given
 // truth test, and one whose elements all do not pass the truth test.
+
 var partition = group(function (result, value, pass) {
   result[pass ? 0 : 1].push(value);
 }, true);
 
-// Safely create a real, live array from anything iterable.
 var reStrSymbol = /[^\ud800-\udfff]|[\ud800-\udbff][\udc00-\udfff]|[\ud800-\udfff]/g;
 function toArray(obj) {
   if (!obj) return [];
-  if (isArray(obj)) return slice.call(obj);
+  if (isArray(obj)) return slice$1.call(obj);
+
   if (isString(obj)) {
     // Keep surrogate pair characters together.
     return obj.match(reStrSymbol);
   }
-  if (isArrayLike(obj)) return map(obj, identity);
+
+  if (isArrayLike(obj)) return map(obj, identity$1);
   return values(obj);
 }
 
-// Return the number of elements in a collection.
 function size(obj) {
   if (obj == null) return 0;
   return isArrayLike(obj) ? obj.length : keys(obj).length;
@@ -1617,115 +1685,120 @@ function keyInObj(value, key, obj) {
   return key in obj;
 }
 
-// Return a copy of the object only containing the allowed properties.
 var pick = restArguments(function (obj, keys) {
   var result = {},
       iteratee = keys[0];
   if (obj == null) return result;
+
   if (isFunction$1(iteratee)) {
     if (keys.length > 1) iteratee = optimizeCb(iteratee, keys[1]);
     keys = allKeys(obj);
   } else {
     iteratee = keyInObj;
-    keys = flatten(keys, false, false);
+    keys = flatten$1(keys, false, false);
     obj = Object(obj);
   }
+
   for (var i = 0, length = keys.length; i < length; i++) {
     var key = keys[i];
     var value = obj[key];
     if (iteratee(value, key, obj)) result[key] = value;
   }
+
   return result;
 });
 
-// Return a copy of the object without the disallowed properties.
-var omit = restArguments(function (obj, keys) {
+var omit$1 = restArguments(function (obj, keys) {
   var iteratee = keys[0],
       context;
+
   if (isFunction$1(iteratee)) {
     iteratee = negate(iteratee);
     if (keys.length > 1) context = keys[1];
   } else {
-    keys = map(flatten(keys, false, false), String);
+    keys = map(flatten$1(keys, false, false), String);
+
     iteratee = function (value, key) {
       return !contains(keys, key);
     };
   }
+
   return pick(obj, iteratee, context);
 });
 
-// Returns everything but the last entry of the array. Especially useful on
 // the arguments object. Passing **n** will return all the values in
 // the array, excluding the last N.
+
 function initial(array, n, guard) {
-  return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
+  return slice$1.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
 }
 
-// Get the first element of an array. Passing **n** will return the first N
 // values in the array. The **guard** check allows it to work with `_.map`.
+
 function first(array, n, guard) {
   if (array == null || array.length < 1) return n == null || guard ? void 0 : [];
   if (n == null || guard) return array[0];
   return initial(array, array.length - n);
 }
 
-// Returns everything but the first entry of the `array`. Especially useful on
 // the `arguments` object. Passing an **n** will return the rest N values in the
 // `array`.
+
 function rest(array, n, guard) {
-  return slice.call(array, n == null || guard ? 1 : n);
+  return slice$1.call(array, n == null || guard ? 1 : n);
 }
 
-// Get the last element of an array. Passing **n** will return the last N
 // values in the array.
+
 function last(array, n, guard) {
   if (array == null || array.length < 1) return n == null || guard ? void 0 : [];
   if (n == null || guard) return array[array.length - 1];
   return rest(array, Math.max(0, array.length - n));
 }
 
-// Trim out all falsy values from an array.
 function compact(array) {
   return filter(array, Boolean);
 }
 
-// Flatten out an array, either recursively (by default), or up to `depth`.
 // Passing `true` or `false` as `depth` means `1` or `Infinity`, respectively.
-function flatten$1(array, depth) {
-  return flatten(array, depth, false);
+
+function flatten(array, depth) {
+  return flatten$1(array, depth, false);
 }
 
-// Take the difference between one array and a number of other arrays.
 // Only the elements present in just the first array will remain.
+
 var difference = restArguments(function (array, rest) {
-  rest = flatten(rest, true, true);
+  rest = flatten$1(rest, true, true);
   return filter(array, function (value) {
     return !contains(rest, value);
   });
 });
 
-// Return a version of the array that does not contain the specified value(s).
 var without = restArguments(function (array, otherArrays) {
   return difference(array, otherArrays);
 });
 
-// Produce a duplicate-free version of the array. If the array has already
 // been sorted, you have the option of using a faster algorithm.
 // The faster algorithm will not work with an iteratee if the iteratee
 // is not a one-to-one function, so providing an iteratee will disable
 // the faster algorithm.
+
 function uniq(array, isSorted, iteratee, context) {
   if (!isBoolean(isSorted)) {
     context = iteratee;
     iteratee = isSorted;
     isSorted = false;
   }
+
   if (iteratee != null) iteratee = cb(iteratee, context);
   var result = [];
   var seen = [];
+
   for (var i = 0, length = getLength(array); i < length; i++) {
     var value = array[i],
         computed = iteratee ? iteratee(value, i, array) : value;
+
     if (isSorted && !iteratee) {
       if (!i || seen !== computed) result.push(value);
       seen = computed;
@@ -1738,34 +1811,39 @@ function uniq(array, isSorted, iteratee, context) {
       result.push(value);
     }
   }
+
   return result;
 }
 
-// Produce an array that contains the union: each distinct element from all of
 // the passed-in arrays.
+
 var union = restArguments(function (arrays) {
-  return uniq(flatten(arrays, true, true));
+  return uniq(flatten$1(arrays, true, true));
 });
 
-// Produce an array that contains every item shared between all the
 // passed-in arrays.
+
 function intersection(array) {
   var result = [];
   var argsLength = arguments.length;
+
   for (var i = 0, length = getLength(array); i < length; i++) {
     var item = array[i];
     if (contains(result, item)) continue;
     var j;
+
     for (j = 1; j < argsLength; j++) {
       if (!contains(arguments[j], item)) break;
     }
+
     if (j === argsLength) result.push(item);
   }
+
   return result;
 }
 
-// Complement of zip. Unzip accepts an array of arrays and groups
 // each array's elements on shared indices.
+
 function unzip(array) {
   var length = array && max(array, getLength).length || 0;
   var result = Array(length);
@@ -1773,18 +1851,20 @@ function unzip(array) {
   for (var index = 0; index < length; index++) {
     result[index] = pluck(array, index);
   }
+
   return result;
 }
 
-// Zip together multiple lists into a single array -- elements that share
 // an index go together.
+
 var zip = restArguments(unzip);
 
-// Converts lists into objects. Pass either a single array of `[key, value]`
 // pairs, or two parallel arrays of the same length -- one of keys, and one of
 // the corresponding values. Passing by pairs is the reverse of `_.pairs`.
+
 function object(list, values) {
   var result = {};
+
   for (var i = 0, length = getLength(list); i < length; i++) {
     if (values) {
       result[list[i]] = values[i];
@@ -1792,6 +1872,7 @@ function object(list, values) {
       result[list[i][0]] = list[i][1];
     }
   }
+
   return result;
 }
 
@@ -1803,6 +1884,7 @@ function range(start, stop, step) {
     stop = start || 0;
     start = 0;
   }
+
   if (!step) {
     step = stop < start ? -1 : 1;
   }
@@ -1817,56 +1899,60 @@ function range(start, stop, step) {
   return range;
 }
 
-// Chunk a single array into multiple arrays, each containing `count` or fewer
 // items.
+
 function chunk(array, count) {
   if (count == null || count < 1) return [];
   var result = [];
   var i = 0,
       length = array.length;
+
   while (i < length) {
-    result.push(slice.call(array, i, i += count));
+    result.push(slice$1.call(array, i, i += count));
   }
+
   return result;
 }
 
-// Helper function to continue chaining intermediate results.
 function chainResult(instance, obj) {
-  return instance._chain ? _$2(obj).chain() : obj;
+  return instance._chain ? _$1(obj).chain() : obj;
 }
 
-// Add your own custom functions to the Underscore object.
 function mixin(obj) {
   each(functions(obj), function (name) {
-    var func = _$2[name] = obj[name];
-    _$2.prototype[name] = function () {
+    var func = _$1[name] = obj[name];
+
+    _$1.prototype[name] = function () {
       var args = [this._wrapped];
       push.apply(args, arguments);
-      return chainResult(this, func.apply(_$2, args));
+      return chainResult(this, func.apply(_$1, args));
     };
   });
-  return _$2;
+  return _$1;
 }
 
-// Add all mutator `Array` functions to the wrapper.
 each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function (name) {
   var method = ArrayProto[name];
-  _$2.prototype[name] = function () {
+
+  _$1.prototype[name] = function () {
     var obj = this._wrapped;
+
     if (obj != null) {
       method.apply(obj, arguments);
+
       if ((name === 'shift' || name === 'splice') && obj.length === 0) {
         delete obj[0];
       }
     }
+
     return chainResult(this, obj);
   };
-});
+}); // Add all accessor `Array` functions to the wrapper.
 
-// Add all accessor `Array` functions to the wrapper.
 each(['concat', 'join', 'slice'], function (name) {
   var method = ArrayProto[name];
-  _$2.prototype[name] = function () {
+
+  _$1.prototype[name] = function () {
     var obj = this._wrapped;
     if (obj != null) obj = method.apply(obj, arguments);
     return chainResult(this, obj);
@@ -1874,210 +1960,185 @@ each(['concat', 'join', 'slice'], function (name) {
 });
 
 // Named Exports
-// =============
 
-//     Underscore.js 1.13.1
-//     https://underscorejs.org
-//     (c) 2009-2021 Jeremy Ashkenas, Julian Gonggrijp, and DocumentCloud and Investigative Reporters & Editors
-//     Underscore may be freely distributed under the MIT license.
-
-// Baseline setup.
-
-
-var allExports = Object.freeze({
-	VERSION: VERSION,
-	restArguments: restArguments,
-	isObject: isObject,
-	isNull: isNull,
-	isUndefined: isUndefined,
-	isBoolean: isBoolean,
-	isElement: isElement,
-	isString: isString,
-	isNumber: isNumber,
-	isDate: isDate,
-	isRegExp: isRegExp,
-	isError: isError,
-	isSymbol: isSymbol,
-	isArrayBuffer: isArrayBuffer,
-	isDataView: isDataView$1,
-	isArray: isArray,
-	isFunction: isFunction$1,
-	isArguments: isArguments$1,
-	isFinite: isFinite$1,
-	isNaN: isNaN$1,
-	isTypedArray: isTypedArray$1,
-	isEmpty: isEmpty,
-	isMatch: isMatch,
-	isEqual: isEqual,
-	isMap: isMap,
-	isWeakMap: isWeakMap,
-	isSet: isSet,
-	isWeakSet: isWeakSet,
-	keys: keys,
-	allKeys: allKeys,
-	values: values,
-	pairs: pairs,
-	invert: invert,
-	functions: functions,
-	methods: functions,
-	extend: extend,
-	extendOwn: extendOwn,
-	assign: extendOwn,
-	defaults: defaults,
-	create: create,
-	clone: clone,
-	tap: tap,
-	get: get,
-	has: has$1,
-	mapObject: mapObject,
-	identity: identity,
-	constant: constant,
-	noop: noop,
-	toPath: toPath$1,
-	property: property,
-	propertyOf: propertyOf,
-	matcher: matcher,
-	matches: matcher,
-	times: times,
-	random: random,
-	now: now,
-	escape: _escape,
-	unescape: _unescape,
-	templateSettings: templateSettings,
-	template: template,
-	result: result,
-	uniqueId: uniqueId,
-	chain: chain,
-	iteratee: iteratee,
-	partial: partial,
-	bind: bind,
-	bindAll: bindAll,
-	memoize: memoize,
-	delay: delay,
-	defer: defer,
-	throttle: throttle,
-	debounce: debounce,
-	wrap: wrap,
-	negate: negate,
-	compose: compose,
-	after: after,
-	before: before,
-	once: once,
-	findKey: findKey,
-	findIndex: findIndex,
-	findLastIndex: findLastIndex,
-	sortedIndex: sortedIndex,
-	indexOf: indexOf,
-	lastIndexOf: lastIndexOf,
-	find: find,
-	detect: find,
-	findWhere: findWhere,
-	each: each,
-	forEach: each,
-	map: map,
-	collect: map,
-	reduce: reduce,
-	foldl: reduce,
-	inject: reduce,
-	reduceRight: reduceRight,
-	foldr: reduceRight,
-	filter: filter,
-	select: filter,
-	reject: reject,
-	every: every,
-	all: every,
-	some: some,
-	any: some,
-	contains: contains,
-	includes: contains,
-	include: contains,
-	invoke: invoke,
-	pluck: pluck,
-	where: where,
-	max: max,
-	min: min,
-	shuffle: shuffle,
-	sample: sample,
-	sortBy: sortBy,
-	groupBy: groupBy,
-	indexBy: indexBy,
-	countBy: countBy,
-	partition: partition,
-	toArray: toArray,
-	size: size,
-	pick: pick,
-	omit: omit,
-	first: first,
-	head: first,
-	take: first,
-	initial: initial,
-	last: last,
-	rest: rest,
-	tail: rest,
-	drop: rest,
-	compact: compact,
-	flatten: flatten$1,
-	without: without,
-	uniq: uniq,
-	unique: uniq,
-	union: union,
-	intersection: intersection,
-	difference: difference,
-	unzip: unzip,
-	transpose: unzip,
-	zip: zip,
-	object: object,
-	range: range,
-	chunk: chunk,
-	mixin: mixin,
-	default: _$2
+var allExports = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  VERSION: VERSION,
+  restArguments: restArguments,
+  isObject: isObject,
+  isNull: isNull,
+  isUndefined: isUndefined,
+  isBoolean: isBoolean,
+  isElement: isElement,
+  isString: isString,
+  isNumber: isNumber,
+  isDate: isDate,
+  isRegExp: isRegExp$1,
+  isError: isError,
+  isSymbol: isSymbol,
+  isArrayBuffer: isArrayBuffer,
+  isDataView: isDataView$1,
+  isArray: isArray,
+  isFunction: isFunction$1,
+  isArguments: isArguments$1,
+  isFinite: isFinite$1,
+  isNaN: isNaN$1,
+  isTypedArray: isTypedArray$1,
+  isEmpty: isEmpty,
+  isMatch: isMatch,
+  isEqual: isEqual,
+  isMap: isMap,
+  isWeakMap: isWeakMap,
+  isSet: isSet,
+  isWeakSet: isWeakSet,
+  keys: keys,
+  allKeys: allKeys,
+  values: values,
+  pairs: pairs,
+  invert: invert,
+  functions: functions,
+  methods: functions,
+  extend: extend,
+  extendOwn: extendOwn,
+  assign: extendOwn,
+  defaults: defaults,
+  create: create,
+  clone: clone,
+  tap: tap,
+  get: get,
+  has: has,
+  mapObject: mapObject,
+  identity: identity$1,
+  constant: constant,
+  noop: noop,
+  toPath: toPath$1,
+  property: property,
+  propertyOf: propertyOf,
+  matcher: matcher,
+  matches: matcher,
+  times: times,
+  random: random,
+  now: now,
+  escape: _escape,
+  unescape: _unescape,
+  templateSettings: templateSettings,
+  template: template,
+  result: result,
+  uniqueId: uniqueId,
+  chain: chain,
+  iteratee: iteratee,
+  partial: partial,
+  bind: bind,
+  bindAll: bindAll,
+  memoize: memoize,
+  delay: delay,
+  defer: defer,
+  throttle: throttle,
+  debounce: debounce,
+  wrap: wrap,
+  negate: negate,
+  compose: compose,
+  after: after,
+  before: before,
+  once: once,
+  findKey: findKey,
+  findIndex: findIndex,
+  findLastIndex: findLastIndex,
+  sortedIndex: sortedIndex,
+  indexOf: indexOf,
+  lastIndexOf: lastIndexOf,
+  find: find,
+  detect: find,
+  findWhere: findWhere,
+  each: each,
+  forEach: each,
+  map: map,
+  collect: map,
+  reduce: reduce,
+  foldl: reduce,
+  inject: reduce,
+  reduceRight: reduceRight,
+  foldr: reduceRight,
+  filter: filter,
+  select: filter,
+  reject: reject,
+  every: every,
+  all: every,
+  some: some,
+  any: some,
+  contains: contains,
+  includes: contains,
+  include: contains,
+  invoke: invoke,
+  pluck: pluck,
+  where: where,
+  max: max,
+  min: min,
+  shuffle: shuffle,
+  sample: sample,
+  sortBy: sortBy,
+  groupBy: groupBy,
+  indexBy: indexBy,
+  countBy: countBy,
+  partition: partition,
+  toArray: toArray,
+  size: size,
+  pick: pick,
+  omit: omit$1,
+  first: first,
+  head: first,
+  take: first,
+  initial: initial,
+  last: last,
+  rest: rest,
+  tail: rest,
+  drop: rest,
+  compact: compact,
+  flatten: flatten,
+  without: without,
+  uniq: uniq,
+  unique: uniq,
+  union: union,
+  intersection: intersection,
+  difference: difference,
+  unzip: unzip,
+  transpose: unzip,
+  zip: zip,
+  object: object,
+  range: range,
+  chunk: chunk,
+  mixin: mixin,
+  'default': _$1
 });
 
 // Default Export
-// ==============
-// In this module, we mix our bundled exports into the `_` object and export
-// the result. This is analogous to setting `module.exports = _` in CommonJS.
-// Hence, this module is also the entry point of our UMD bundle and the package
-// entry point for CommonJS and AMD users. In other words, this is (the source
-// of) the module you are interfacing with when you do any of the following:
-//
-// ```js
-// // CommonJS
-// var _ = require('underscore');
-//
-// // AMD
-// define(['underscore'], function(_) {...});
-//
-// // UMD in the browser
-// // _ is available as a global variable
-// ```
-// Add all of the Underscore functions to the wrapper object.
-var _ = mixin(allExports);
-// Legacy Node.js API.
-_._ = _;
 
-// ESM Exports
-// ===========
-// This module is the package entry point for ES module users. In other words,
-// it is the module they are interfacing with when they import from the whole
-// package instead of from a submodule, like this:
-//
-// ```js
-// import { map } from 'underscore';
-// ```
-//
-// The difference with `./index-default`, which is the package entry point for
-// CommonJS, AMD and UMD users, is purely technical. In ES modules, named and
-// default exports are considered to be siblings, so when you have a default
-// export, its properties are not automatically available as named exports. For
-// this reason, we re-export the named exports in addition to providing the same
-// default export as in `./index-default`.
+var _ = mixin(allExports); // Legacy Node.js API.
 
-var EOL = {};
-var EOF = {};
-var QUOTE = 34;
-var NEWLINE = 10;
-var RETURN = 13;
+
+_._ = _; // Export the Underscore API.
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    _typeof = function (obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function (obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+var EOL = {},
+    EOF = {},
+    QUOTE = 34,
+    NEWLINE = 10,
+    RETURN = 13;
 
 function objectConverter(columns) {
   return new Function("d", "return {" + columns.map(function (name, i) {
@@ -2090,13 +2151,12 @@ function customConverter(columns, f) {
   return function (row, i) {
     return f(object(row), i, columns);
   };
-}
+} // Compute unique columns in order of discovery.
 
-// Compute unique columns in order of discovery.
+
 function inferColumns(rows) {
   var columnSet = Object.create(null),
       columns = [];
-
   rows.forEach(function (row) {
     for (var column in row) {
       if (!(column in columnSet)) {
@@ -2104,7 +2164,6 @@ function inferColumns(rows) {
       }
     }
   });
-
   return columns;
 }
 
@@ -2123,10 +2182,10 @@ function formatDate(date) {
       minutes = date.getUTCMinutes(),
       seconds = date.getUTCSeconds(),
       milliseconds = date.getUTCMilliseconds();
-  return isNaN(date) ? "Invalid Date" : formatYear(date.getUTCFullYear(), 4) + "-" + pad(date.getUTCMonth() + 1, 2) + "-" + pad(date.getUTCDate(), 2) + (milliseconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "." + pad(milliseconds, 3) + "Z" : seconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "Z" : minutes || hours ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + "Z" : "");
+  return isNaN(date) ? "Invalid Date" : formatYear(date.getUTCFullYear()) + "-" + pad(date.getUTCMonth() + 1, 2) + "-" + pad(date.getUTCDate(), 2) + (milliseconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "." + pad(milliseconds, 3) + "Z" : seconds ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + ":" + pad(seconds, 2) + "Z" : minutes || hours ? "T" + pad(hours, 2) + ":" + pad(minutes, 2) + "Z" : "");
 }
 
-var dsvFormat = function (delimiter) {
+function dsvFormat (delimiter) {
   var reFormat = new RegExp("[\"" + delimiter + "\n\r]"),
       DELIMITER = delimiter.charCodeAt(0);
 
@@ -2154,42 +2213,47 @@ var dsvFormat = function (delimiter) {
     eof = N <= 0,
         // current token followed by EOF?
     eol = false; // current token followed by EOL?
-
     // Strip the trailing newline.
+
     if (text.charCodeAt(N - 1) === NEWLINE) --N;
     if (text.charCodeAt(N - 1) === RETURN) --N;
 
     function token() {
       if (eof) return EOF;
-      if (eol) return eol = false, EOL;
+      if (eol) return eol = false, EOL; // Unescape quotes.
 
-      // Unescape quotes.
       var i,
           j = I,
           c;
+
       if (text.charCodeAt(j) === QUOTE) {
         while (I++ < N && text.charCodeAt(I) !== QUOTE || text.charCodeAt(++I) === QUOTE);
+
         if ((i = I) >= N) eof = true;else if ((c = text.charCodeAt(I++)) === NEWLINE) eol = true;else if (c === RETURN) {
-          eol = true;if (text.charCodeAt(I) === NEWLINE) ++I;
+          eol = true;
+          if (text.charCodeAt(I) === NEWLINE) ++I;
         }
         return text.slice(j + 1, i - 1).replace(/""/g, "\"");
-      }
+      } // Find next delimiter or newline.
 
-      // Find next delimiter or newline.
+
       while (I < N) {
         if ((c = text.charCodeAt(i = I++)) === NEWLINE) eol = true;else if (c === RETURN) {
-          eol = true;if (text.charCodeAt(I) === NEWLINE) ++I;
+          eol = true;
+          if (text.charCodeAt(I) === NEWLINE) ++I;
         } else if (c !== DELIMITER) continue;
         return text.slice(j, i);
-      }
+      } // Return last token before EOF.
 
-      // Return last token before EOF.
+
       return eof = true, text.slice(j, N);
     }
 
     while ((t = token()) !== EOF) {
       var row = [];
+
       while (t !== EOL && t !== EOF) row.push(t), t = token();
+
       if (f && (row = f(row, n++)) == null) continue;
       rows.push(row);
     }
@@ -2236,47 +2300,43 @@ var dsvFormat = function (delimiter) {
     formatRow: formatRow,
     formatValue: formatValue
   };
-};
+}
 
 /* --------------------------------------------
  * Browser-implementations of NodeJS path module, adapted from Rich Harris, https://github.com/rollup/rollup/blob/master/browser/path.js
  */
-
 var splitPathRe = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^/]+?|)(\.[^./]*|))(?:[/]*)$/;
 
 function posixSplitPath(filename) {
-	var out = splitPathRe.exec(filename);
-	out.shift();
-	return out;
+  var out = splitPathRe.exec(filename);
+  out.shift();
+  return out;
 }
 
 function extname(filename) {
-	return posixSplitPath(filename)[3];
+  return posixSplitPath(filename)[3];
 }
+function dirname(path) {
+  var match = /(\/|\\)[^/\\]*$/.exec(path);
+  if (!match) return '.';
+  var dir = path.slice(0, -match[0].length); // If `dir` is the empty string, we're at root.
 
-function dirname(path$$1) {
-	var match = /(\/|\\)[^/\\]*$/.exec(path$$1);
-	if (!match) return '.';
-
-	var dir = path$$1.slice(0, -match[0].length);
-
-	// If `dir` is the empty string, we're at root.
-	return dir || '/';
+  return dir || '/';
 }
-
 /* --------------------------------------------
  * Join a path with a slash, removing any stub entries that end in a slash
  * to avoid a double slash scenario
  */
-function joinPath() {
-	for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-		args[_key] = arguments[_key];
-	}
 
-	return args.map(function (d, i) {
-		if (i === args.length - 1) return d;
-		return d.replace(/\/$/, '');
-	}).join('/'); // TODO, windows
+function joinPath() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return args.map(function (d, i) {
+    if (i === args.length - 1) return d;
+    return d.replace(/\/$/, '');
+  }).join('/'); // TODO, windows
 }
 
 /**
@@ -2294,102 +2354,91 @@ function joinPath() {
  * var format = io.discernFormat('path/to/.dotfile')
  * console.log(format) // false
  */
+
 function discernFormat(filePath) {
   var ext = extname(filePath);
-  if (ext === '') return false;
+  if (ext === '') return false; // Chop '.' off extension returned by extname
 
-  // Chop '.' off extension returned by extname
   var formatName = ext.slice(1);
   return formatName;
 }
 
-var csv = dsvFormat(",");
-
-var csvParse = csv.parse;
-
-var csvFormat = csv.format;
+var csv$1 = dsvFormat(",");
+var csvParse = csv$1.parse;
+var csvFormat = csv$1.format;
 
 /* istanbul ignore next */
 function parseCsv(str, parserOptions) {
-	parserOptions = parserOptions || {};
-	return csvParse(str, parserOptions.map);
+  parserOptions = parserOptions || {};
+  return csvParse(str, parserOptions.map);
 }
 
-var identity$1 = (function (d) {
+var identity = (function (d) {
   return d;
 });
 
 /* istanbul ignore next */
 function parseJson(str, parserOptions) {
-	parserOptions = parserOptions || {};
-	// Do a naive test whether this is a string or an object
-	var mapFn = void 0;
-	if (parserOptions.map) {
-		if (str.trim().charAt(0) === '[') {
-			mapFn = _.map;
-		} else {
-			mapFn = _.mapObject;
-		}
-	} else {
-		mapFn = identity$1;
-	}
-	var jsonParser = JSON.parse;
-	return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
+  parserOptions = parserOptions || {}; // Do a naive test whether this is a string or an object
+
+  var mapFn;
+
+  if (parserOptions.map) {
+    if (str.trim().charAt(0) === '[') {
+      mapFn = _.map;
+    } else {
+      mapFn = _.mapObject;
+    }
+  } else {
+    mapFn = identity;
+  }
+
+  var jsonParser = JSON.parse;
+  return mapFn(jsonParser(str, parserOptions.reviver, parserOptions.filename), parserOptions.map);
 }
 
 /* istanbul ignore next */
 function parsePsv(str, parserOptions) {
-	parserOptions = parserOptions || {};
-	return dsvFormat('|').parse(str, parserOptions.map);
+  parserOptions = parserOptions || {};
+  return dsvFormat('|').parse(str, parserOptions.map);
 }
 
-var tsv = dsvFormat("\t");
-
-var tsvParse = tsv.parse;
-
-var tsvFormat = tsv.format;
+var tsv$1 = dsvFormat("\t");
+var tsvParse = tsv$1.parse;
+var tsvFormat = tsv$1.format;
 
 /* istanbul ignore next */
 function parseTsv(str, parserOptions) {
-	parserOptions = parserOptions || {};
-	return tsvParse(str, parserOptions.map);
+  parserOptions = parserOptions || {};
+  return tsvParse(str, parserOptions.map);
 }
 
 function parseTxt(str, parserOptions) {
-	return parserOptions && typeof parserOptions.map === 'function' ? parserOptions.map(str) : str;
+  return parserOptions && typeof parserOptions.map === 'function' ? parserOptions.map(str) : str;
 }
 
-var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
-
-
-
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
 }
 
 var archieml = createCommonjsModule(function (module, exports) {
   // Structure inspired by John Resig's HTML parser
   // http://ejohn.org/blog/pure-javascript-html-parser/
-
   (function () {
-    'use strict';
-
-    // The load function takes a string of text as its only argument.
     // It then proceeds to match the text to one of several regular expressions
     // which match patterns for different types of commands in AML.
 
     function load(input, options) {
       var whitespacePattern = '\\u0000\\u0009\\u000A\\u000B\\u000C\\u000D\\u0020\\u00A0\\u2000\\u2001\\u2002\\u2003\\u2004\\u2005\\u2006\\u2007\\u2008\\u2009\\u200A\\u200B\\u2028\\u2029\\u202F\\u205F\\u3000\\uFEFF';
       var slugBlacklist = whitespacePattern + '\\u005B\\u005C\\u005D\\u007B\\u007D\\u003A';
-
       var nextLine = new RegExp('.*((\r|\n)+)');
       var startKey = new RegExp('^\\s*([^' + slugBlacklist + ']+)[ \t\r]*:[ \t\r]*(.*(?:\n|\r|$))');
       var commandKey = new RegExp('^\\s*:[ \t\r]*(endskip|ignore|skip|end).*?(\n|\r|$)', 'i');
       var arrayElement = new RegExp('^\\s*\\*[ \t\r]*(.*(?:\n|\r|$))');
       var scopePattern = new RegExp('^\\s*(\\[|\\{)[ \t\r]*([\+\.]*)[ \t\r]*([^' + slugBlacklist + ']*)[ \t\r]*(?:\\]|\\}).*?(\n|\r|$)');
-
       var data = {},
           scope = data,
           stack = [],
@@ -2398,7 +2447,6 @@ var archieml = createCommonjsModule(function (module, exports) {
           bufferKey = null,
           bufferString = '',
           isSkipping = false;
-
       var options = options || {};
       if (options.comments !== true) options.comments = false;
 
@@ -2409,23 +2457,18 @@ var archieml = createCommonjsModule(function (module, exports) {
 
         if (commandKey.exec(input)) {
           match = commandKey.exec(input);
-
           parseCommandKey(match[1].toLowerCase());
         } else if (!isSkipping && startKey.exec(input) && (!stackScope || stackScope.arrayType !== 'simple')) {
           match = startKey.exec(input);
-
           parseStartKey(match[1], match[2] || '');
         } else if (!isSkipping && arrayElement.exec(input) && stackScope && stackScope.array && stackScope.arrayType !== 'complex' && stackScope.arrayType !== 'freeform' && stackScope.flags.indexOf('+') < 0) {
           match = arrayElement.exec(input);
-
           parseArrayElement(match[1]);
         } else if (!isSkipping && scopePattern.exec(input)) {
           match = scopePattern.exec(input);
-
           parseScope(match[1], match[2], match[3]);
         } else if (nextLine.exec(input)) {
           match = nextLine.exec(input);
-
           parseText(match[0]);
         } else {
           // End of document reached
@@ -2434,47 +2477,45 @@ var archieml = createCommonjsModule(function (module, exports) {
         }
 
         if (match) input = input.substring(match[0].length);
-      }
-
-      // The following parse functions add to the global `data` object and update
+      } // The following parse functions add to the global `data` object and update
       // scoping variables to keep track of what we're parsing.
+
 
       function parseStartKey(key, restOfLine) {
         // When a new key is encountered, the rest of the line is immediately added as
         // its value, by calling `flushBuffer`.
         flushBuffer();
-
         incrementArrayElement(key);
-
         if (stackScope && stackScope.flags.indexOf('+') > -1) key = 'value';
-
         bufferKey = key;
         bufferString = restOfLine;
-
-        flushBufferInto(key, { replace: true });
+        flushBufferInto(key, {
+          replace: true
+        });
       }
 
       function parseArrayElement(value) {
         flushBuffer();
-
         stackScope.arrayType = stackScope.arrayType || 'simple';
-
         stackScope.array.push('');
         bufferKey = stackScope.array;
         bufferString = value;
-        flushBufferInto(stackScope.array, { replace: true });
+        flushBufferInto(stackScope.array, {
+          replace: true
+        });
       }
 
       function parseCommandKey(command) {
         // if isSkipping, don't parse any command unless :endskip
-
         if (isSkipping && !(command === "endskip" || command === "ignore")) return flushBuffer();
 
         switch (command) {
           case "end":
             // When we get to an end key, save whatever was in the buffer to the last
             // active key.
-            if (bufferKey) flushBufferInto(bufferKey, { replace: false });
+            if (bufferKey) flushBufferInto(bufferKey, {
+              replace: false
+            });
             return;
 
           case "ignore":
@@ -2506,42 +2547,38 @@ var archieml = createCommonjsModule(function (module, exports) {
         flushBuffer();
 
         if (scopeKey == '') {
-
           // Move up a level
           var lastStackItem = stack.pop();
           scope = (lastStackItem ? lastStackItem.scope : data) || data;
           stackScope = stack[stack.length - 1];
         } else if (scopeType === '[' || scopeType === '{') {
           var nesting = false;
-          var keyScope = data;
+          var keyScope = data; // If the flags include ".", drill down into the appropriate scope.
 
-          // If the flags include ".", drill down into the appropriate scope.
           if (flags.indexOf('.') > -1) {
-            incrementArrayElement(scopeKey, flags);
+            incrementArrayElement(scopeKey);
             nesting = true;
-            if (stackScope) keyScope = scope;
-
-            // Otherwise, make sure we reset to the global scope
+            if (stackScope) keyScope = scope; // Otherwise, make sure we reset to the global scope
           } else {
             scope = data;
             stack = [];
-          }
-
-          // Within freeforms, the `type` of nested objects and arrays is taken
+          } // Within freeforms, the `type` of nested objects and arrays is taken
           // verbatim from the `keyScope`.
-          if (stackScope && stackScope.flags.indexOf('+') > -1) {
-            var parsedScopeKey = scopeKey;
 
-            // Outside of freeforms, dot-notation interpreted as nested data.
+
+          if (stackScope && stackScope.flags.indexOf('+') > -1) {
+            var parsedScopeKey = scopeKey; // Outside of freeforms, dot-notation interpreted as nested data.
           } else {
             var keyBits = scopeKey.split('.');
+
             for (var i = 0; i < keyBits.length - 1; i++) {
               keyScope = keyScope[keyBits[i]] = keyScope[keyBits[i]] || {};
             }
-            var parsedScopeKey = keyBits[keyBits.length - 1];
-          }
 
-          // Content of nested scopes within a freeform should be stored under "value."
+            var parsedScopeKey = keyBits[keyBits.length - 1];
+          } // Content of nested scopes within a freeform should be stored under "value."
+
+
           if (stackScope && stackScope.flags.indexOf('+') > -1 && flags.indexOf('.') > -1) {
             if (scopeType === '[') parsedScopeKey = 'value';else if (scopeType === '{') scope = scope.value = {};
           }
@@ -2553,14 +2590,17 @@ var archieml = createCommonjsModule(function (module, exports) {
             flags: flags,
             scope: scope
           };
+
           if (scopeType == '[') {
             stackScopeItem.array = keyScope[parsedScopeKey] = [];
             if (flags.indexOf('+') > -1) stackScopeItem.arrayType = 'freeform';
+
             if (nesting) {
               stack.push(stackScopeItem);
             } else {
               stack = [stackScopeItem];
             }
+
             stackScope = stack[stack.length - 1];
           } else if (scopeType == '{') {
             if (nesting) {
@@ -2569,6 +2609,7 @@ var archieml = createCommonjsModule(function (module, exports) {
               scope = keyScope[parsedScopeKey] = typeof keyScope[parsedScopeKey] === 'object' ? keyScope[parsedScopeKey] : {};
               stack = [stackScopeItem];
             }
+
             stackScope = stack[stack.length - 1];
           }
         }
@@ -2576,7 +2617,10 @@ var archieml = createCommonjsModule(function (module, exports) {
 
       function parseText(text) {
         if (stackScope && stackScope.flags.indexOf('+') > -1 && text.match(/[^\n\r\s]/)) {
-          stackScope.array.push({ "type": "text", "value": text.replace(/(^\s*)|(\s*$)/g, '') });
+          stackScope.array.push({
+            "type": "text",
+            "value": text.replace(/(^\s*)|(\s*$)/g, '')
+          });
         } else {
           bufferString += input.substring(0, text.length);
         }
@@ -2586,14 +2630,13 @@ var archieml = createCommonjsModule(function (module, exports) {
         // Special handling for arrays. If this is the start of the array, remember
         // which key was encountered first. If this is a duplicate encounter of
         // that key, start a new object.
-
         if (stackScope && stackScope.array) {
           // If we're within a simple array, ignore
           stackScope.arrayType = stackScope.arrayType || 'complex';
-          if (stackScope.arrayType === 'simple') return;
+          if (stackScope.arrayType === 'simple') return; // arrayFirstKey may be either another key, or null
 
-          // arrayFirstKey may be either another key, or null
           if (stackScope.arrayFirstKey === null || stackScope.arrayFirstKey === key) stackScope.array.push(scope = {});
+
           if (stackScope.flags.indexOf('+') > -1) {
             scope.type = key;
           } else {
@@ -2605,6 +2648,7 @@ var archieml = createCommonjsModule(function (module, exports) {
       function formatValue(value, type) {
         if (options.comments) {
           value = value.replace(/(?:^\\)?\[[^\[\]\n\r]*\](?!\])/mg, ""); // remove comments
+
           value = value.replace(/\[\[([^\[\]\n\r]*)\]\]/g, "[$1]"); // [[]] => []
         }
 
@@ -2641,7 +2685,6 @@ var archieml = createCommonjsModule(function (module, exports) {
         if (typeof key === 'object') {
           // key is an array
           if (options.replace) key[key.length - 1] = '';
-
           key[key.length - 1] += value.replace(new RegExp('\\s*$'), '');
         } else {
           var keyBits = key.split('.');
@@ -2653,7 +2696,6 @@ var archieml = createCommonjsModule(function (module, exports) {
           }
 
           if (options.replace) bufferScope[keyBits[keyBits.length - 1]] = '';
-
           bufferScope[keyBits[keyBits.length - 1]] += value.replace(new RegExp('\\s*$'), '');
         }
       }
@@ -2661,41 +2703,37 @@ var archieml = createCommonjsModule(function (module, exports) {
       flushBuffer();
       return data;
     }
-
-    var archieml = { load: load };
+    var archieml = {
+      load: load
+    };
 
     {
-      if ('object' !== 'undefined' && module.exports) {
+      if (module.exports) {
         exports = module.exports = archieml;
       }
-      exports.archieml = archieml;
-    }
 
-    if (typeof undefined === 'function' && undefined.amd) {
-      undefined('archieml', [], function () {
-        return archieml;
-      });
+      exports.archieml = archieml;
     }
   }).call(commonjsGlobal);
 });
 
 // Return a copy of the object, filtered to omit the blacklisted array of keys.
-function omit$1(obj, blackList) {
-	var newObj = {};
-	Object.keys(obj || {}).forEach(function (key) {
-		if (blackList.indexOf(key) === -1) {
-			newObj[key] = obj[key];
-		}
-	});
-	return newObj;
+function omit(obj, blackList) {
+  var newObj = {};
+  Object.keys(obj || {}).forEach(function (key) {
+    if (blackList.indexOf(key) === -1) {
+      newObj[key] = obj[key];
+    }
+  });
+  return newObj;
 }
 
 /* istanbul ignore next */
 function parseAml(str, parserOptions) {
-	parserOptions = parserOptions || {};
-	var map = parserOptions.map || identity$1;
-	var data = archieml.load(str, omit$1(parserOptions, ['map']));
-	return map(data);
+  parserOptions = parserOptions || {};
+  var map = parserOptions.map || identity;
+  var data = archieml.load(str, omit(parserOptions, ['map']));
+  return map(data);
 }
 
 /* --------------------------------------------
@@ -2704,24 +2742,25 @@ function parseAml(str, parserOptions) {
 var formatsIndex = {
   json: ['topojson', 'geojson']
 };
-
 var formatsList = Object.keys(formatsIndex).map(function (key) {
-  return { name: key, equivalents: formatsIndex[key] };
+  return {
+    name: key,
+    equivalents: formatsIndex[key]
+  };
 });
 
 var parsers = {
-	csv: parseCsv,
-	json: parseJson,
-	psv: parsePsv,
-	tsv: parseTsv,
-	txt: parseTxt,
-	aml: parseAml
+  csv: parseCsv,
+  json: parseJson,
+  psv: parsePsv,
+  tsv: parseTsv,
+  txt: parseTxt,
+  aml: parseAml
 };
-
 formatsList.forEach(function (format) {
-	format.equivalents.forEach(function (equivalent) {
-		parsers[equivalent] = parsers[format.name];
-	});
+  format.equivalents.forEach(function (equivalent) {
+    parsers[equivalent] = parsers[format.name];
+  });
 });
 
 /* istanbul ignore next */
@@ -2741,282 +2780,174 @@ formatsList.forEach(function (format) {
  * var parser = io.discernParser('_', {delimiter: true})
  * var json = parser('name_price\nApple_120\nPear_300')
  */
+
 function discernParser(filePath, opts_) {
   if (opts_ && opts_.delimiter === true) {
     return dsvFormat(filePath).parse;
   }
+
   var format = discernFormat(filePath);
-  var parser = parsers[format];
-  // If we don't have a parser for this format, return as text
+  var parser = parsers[format]; // If we don't have a parser for this format, return as text
+
   if (typeof parser === 'undefined') {
     parser = parsers.txt;
   }
+
   return parser;
 }
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-
-
-
-
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
-
-  function AsyncGenerator(gen) {
-    var front, back;
-
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
-
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
-
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
-
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-// Our `readData` fns can take either a delimiter to parse a file, or a full blown parser
 // Determine what they passed in with this handy function
+
 function getParser(delimiterOrParser) {
-	var parser = void 0;
-	if (typeof delimiterOrParser === 'string') {
-		parser = discernParser(delimiterOrParser, { delimiter: true });
-	} else if (typeof delimiterOrParser === 'function' || (typeof delimiterOrParser === 'undefined' ? 'undefined' : _typeof(delimiterOrParser)) === 'object') {
-		parser = delimiterOrParser;
-	}
-	return parser;
+  var parser;
+
+  if (typeof delimiterOrParser === 'string') {
+    parser = discernParser(delimiterOrParser, {
+      delimiter: true
+    });
+  } else if (typeof delimiterOrParser === 'function' || _typeof(delimiterOrParser) === 'object') {
+    parser = delimiterOrParser;
+  }
+
+  return parser;
 }
 
 // from https://github.com/sindresorhus/strip-bom/blob/d5696fdc9eeb6cc8d97e390cf1de7558f74debd5/index.js#L3
-
 function stripBom(string) {
-	// Catches EFBBBF (UTF-8 BOM) because the buffer-to-string
-	// conversion translates it to FEFF (UTF-16 BOM)
-	if (string.charCodeAt(0) === 0xFEFF) {
-		return string.slice(1);
-	}
+  // Catches EFBBBF (UTF-8 BOM) because the buffer-to-string
+  // conversion translates it to FEFF (UTF-16 BOM)
+  if (string.charCodeAt(0) === 0xFEFF) {
+    return string.slice(1);
+  }
 
-	return string;
+  return string;
+}
+
+function file$1(filePath, parser, parserOptions, cb) {
+  // eslint-disable-next-line consistent-return
+  fs__default['default'].readFile(filePath, 'utf8', function (err, data) {
+    var fileFormat = discernFormat(filePath);
+
+    if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
+      data = '[]';
+    }
+
+    if (err) {
+      cb(err);
+      return false;
+    }
+
+    var parsed;
+
+    try {
+      data = stripBom(data);
+
+      if (!parserOptions || parserOptions.trim !== false) {
+        data = data.trim();
+      }
+
+      if (typeof parser === 'function') {
+        parsed = parser(data, parserOptions);
+      } else if (_typeof(parser) === 'object' && typeof parser.parse === 'function') {
+        parsed = parser.parse(data, parserOptions);
+      } else {
+        parsed = 'Your specified parser is not properly formatted. It must either be a function or have a `parse` method.';
+      }
+    } catch (err2) {
+      cb(err2);
+      return null;
+    }
+
+    cb(null, parsed);
+  });
+}
+
+function file(filePath, parser, parserOptions) {
+  var data = fs__default['default'].readFileSync(filePath, 'utf8');
+  var fileFormat = discernFormat(filePath);
+
+  if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
+    data = '[]';
+  }
+
+  data = stripBom(data);
+
+  if (!parserOptions || parserOptions.trim === true) {
+    data = data.trim();
+  }
+
+  var parsed;
+
+  if (typeof parser === 'function') {
+    parsed = parser(data, parserOptions);
+  } else if (_typeof(parser) === 'object' && typeof parser.parse === 'function') {
+    parsed = parser.parse(data, parserOptions);
+  } else {
+    return new Error('Your specified parser is not properly formatted. It must either be a function or have a `parse` method.');
+  }
+
+  return parsed;
 }
 
 /* istanbul ignore next */
-function file(filePath, parser, parserOptions, cb) {
-	// eslint-disable-next-line consistent-return
-	fs.readFile(filePath, 'utf8', function (err, data) {
-		var fileFormat = discernFormat(filePath);
-		if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
-			data = '[]';
-		}
-		if (err) {
-			cb(err);
-			return false;
-		}
-		var parsed = void 0;
-		try {
-			data = stripBom(data);
-			if (!parserOptions || parserOptions.trim !== false) {
-				data = data.trim();
-			}
-			if (typeof parser === 'function') {
-				parsed = parser(data, parserOptions);
-			} else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
-				parsed = parser.parse(data, parserOptions);
-			} else {
-				parsed = 'Your specified parser is not properly formatted. It must either be a function or have a `parse` method.';
-			}
-		} catch (err2) {
-			cb(err2);
-			return null;
-		}
-		cb(null, parsed);
-	});
-}
 
-/* istanbul ignore next */
-function file$1(filePath, parser, parserOptions) {
-	var data = fs.readFileSync(filePath, 'utf8');
-	var fileFormat = discernFormat(filePath);
-	if ((fileFormat === 'json' || formatsIndex.json.indexOf(fileFormat) > -1) && data === '') {
-		data = '[]';
-	}
-
-	data = stripBom(data);
-	if (!parserOptions || parserOptions.trim === true) {
-		data = data.trim();
-	}
-	var parsed = void 0;
-	if (typeof parser === 'function') {
-		parsed = parser(data, parserOptions);
-	} else if ((typeof parser === 'undefined' ? 'undefined' : _typeof(parser)) === 'object' && typeof parser.parse === 'function') {
-		parsed = parser.parse(data, parserOptions);
-	} else {
-		return new Error('Your specified parser is not properly formatted. It must either be a function or have a `parse` method.');
-	}
-
-	return parsed;
-}
-
-/* istanbul ignore next */
 var shapefile = require('shapefile');
 
-function dbf(filePath, parser, parserOptions, cb) {
-	var values = [];
-	parserOptions = parserOptions || {};
-	var map = parserOptions.map || identity$1;
-	var i = 0;
-	shapefile.openDbf(filePath).then(function (source) {
-		return source.read().then(function log(result) {
-			i += 1;
-			if (result.done) return cb(null, values);
-			values.push(map(result.value, i));
-			return source.read().then(log);
-		});
-	}).catch(function (error) {
-		return cb(error.stack);
-	});
+function dbf$2(filePath, parser, parserOptions, cb) {
+  var values = [];
+  parserOptions = parserOptions || {};
+  var map = parserOptions.map || identity;
+  var i = 0;
+  shapefile.openDbf(filePath).then(function (source) {
+    return source.read().then(function log(result) {
+      i += 1;
+      if (result.done) return cb(null, values);
+      values.push(map(result.value, i));
+      return source.read().then(log);
+    });
+  })["catch"](function (error) {
+    return cb(error.stack);
+  });
 }
 
 var loaders = {
-	async: {
-		aml: file,
-		csv: file,
-		psv: file,
-		tsv: file,
-		txt: file,
-		json: file,
-		dbf: dbf
-	},
-	sync: {
-		aml: file$1,
-		csv: file$1,
-		psv: file$1,
-		tsv: file$1,
-		txt: file$1,
-		json: file$1
-	}
+  async: {
+    aml: file$1,
+    csv: file$1,
+    psv: file$1,
+    tsv: file$1,
+    txt: file$1,
+    json: file$1,
+    dbf: dbf$2
+  },
+  sync: {
+    aml: file,
+    csv: file,
+    psv: file,
+    tsv: file,
+    txt: file,
+    json: file
+  }
 };
-
 formatsList.forEach(function (format) {
-	format.equivalents.forEach(function (equivalent) {
-		Object.keys(loaders).forEach(function (key) {
-			loaders[key][equivalent] = loaders[key][format.name];
-		});
-	});
+  format.equivalents.forEach(function (equivalent) {
+    Object.keys(loaders).forEach(function (key) {
+      loaders[key][equivalent] = loaders[key][format.name];
+    });
+  });
 });
 
 function discernLoader(filePath) {
-	var opts_ = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var opts_ = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var which = opts_.sync === true ? 'sync' : 'async';
+  var format = discernFormat(filePath);
+  var loader = loaders[which][format]; // If we don't have a loader for this format, read in as a normal file
 
-	var which = opts_.sync === true ? 'sync' : 'async';
-	var format = discernFormat(filePath);
-	var loader = loaders[which][format];
-	// If we don't have a loader for this format, read in as a normal file
-	if (typeof loader === 'undefined') {
-		loader = loaders[which].txt;
-	}
-	return loader;
+  if (typeof loader === 'undefined') {
+    loader = loaders[which].txt;
+  }
+
+  return loader;
 }
 
 /* istanbul ignore next */
@@ -3037,6 +2968,7 @@ function discernLoader(filePath) {
  * @function readData
  * @param {String} filePath Input file path
  * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @param {String|Function|Object} [parserOptions.parser] This can be a string that is the file's delimiter, a function that returns JSON, or, for convenience, can also be a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function. See `parsers` in library source for examples.
  * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
  * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJson} for details.
@@ -3090,16 +3022,19 @@ function discernLoader(filePath) {
  *   console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  * })
  */
+
 function readData(filePath, opts_) {
   var _ref;
 
-  var cb = (_ref = (arguments.length <= 2 ? 0 : arguments.length - 2) - 1 + 2, arguments.length <= _ref ? undefined : arguments[_ref]);
-  var parser = void 0;
-  var parserOptions = void 0;
+  var cb = (_ref = (arguments.length <= 2 ? 0 : arguments.length - 2) - 1 + 2, _ref < 2 || arguments.length <= _ref ? undefined : arguments[_ref]);
+  var parser;
+  var parserOptions;
+
   if ((arguments.length <= 2 ? 0 : arguments.length - 2) > 0) {
     if (opts_.parser) {
       parser = getParser(opts_.parser);
-      opts_ = omit$1(opts_, ['parser']);
+      opts_ = omit(opts_, ['parser']);
+
       if (_.isEmpty(opts_)) {
         opts_ = undefined;
       }
@@ -3109,13 +3044,17 @@ function readData(filePath, opts_) {
 
     if (opts_ && opts_.parserOptions) {
       if (typeof opts_.parserOptions === 'function') {
-        parserOptions = { map: opts_.parserOptions };
+        parserOptions = {
+          map: opts_.parserOptions
+        };
       } else {
         parserOptions = opts_.parserOptions;
       }
     } else if (opts_) {
       if (typeof opts_ === 'function') {
-        parserOptions = { map: opts_ };
+        parserOptions = {
+          map: opts_
+        };
       } else {
         parserOptions = opts_;
       }
@@ -3123,359 +3062,334 @@ function readData(filePath, opts_) {
   } else {
     parser = discernParser(filePath);
   }
+
   var loader = discernLoader(filePath);
   loader(filePath, parser, parserOptions, cb);
 }
 
-'use strict';
-
 var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
 
-var index$1 = function (str) {
-	if (typeof str !== 'string') {
-		throw new TypeError('Expected a string');
-	}
+var escapeStringRegexp = function (str) {
+  if (typeof str !== 'string') {
+    throw new TypeError('Expected a string');
+  }
 
-	return str.replace(matchOperatorsRe, '\\$&');
+  return str.replace(matchOperatorsRe, '\\$&');
 };
 
-var index$3 = createCommonjsModule(function (module) {
-	'use strict';
+var ansiStyles = createCommonjsModule(function (module) {
 
-	function assembleStyles() {
-		var styles = {
-			modifiers: {
-				reset: [0, 0],
-				bold: [1, 22], // 21 isn't widely supported and 22 does the same thing
-				dim: [2, 22],
-				italic: [3, 23],
-				underline: [4, 24],
-				inverse: [7, 27],
-				hidden: [8, 28],
-				strikethrough: [9, 29]
-			},
-			colors: {
-				black: [30, 39],
-				red: [31, 39],
-				green: [32, 39],
-				yellow: [33, 39],
-				blue: [34, 39],
-				magenta: [35, 39],
-				cyan: [36, 39],
-				white: [37, 39],
-				gray: [90, 39]
-			},
-			bgColors: {
-				bgBlack: [40, 49],
-				bgRed: [41, 49],
-				bgGreen: [42, 49],
-				bgYellow: [43, 49],
-				bgBlue: [44, 49],
-				bgMagenta: [45, 49],
-				bgCyan: [46, 49],
-				bgWhite: [47, 49]
-			}
-		};
+  function assembleStyles() {
+    var styles = {
+      modifiers: {
+        reset: [0, 0],
+        bold: [1, 22],
+        // 21 isn't widely supported and 22 does the same thing
+        dim: [2, 22],
+        italic: [3, 23],
+        underline: [4, 24],
+        inverse: [7, 27],
+        hidden: [8, 28],
+        strikethrough: [9, 29]
+      },
+      colors: {
+        black: [30, 39],
+        red: [31, 39],
+        green: [32, 39],
+        yellow: [33, 39],
+        blue: [34, 39],
+        magenta: [35, 39],
+        cyan: [36, 39],
+        white: [37, 39],
+        gray: [90, 39]
+      },
+      bgColors: {
+        bgBlack: [40, 49],
+        bgRed: [41, 49],
+        bgGreen: [42, 49],
+        bgYellow: [43, 49],
+        bgBlue: [44, 49],
+        bgMagenta: [45, 49],
+        bgCyan: [46, 49],
+        bgWhite: [47, 49]
+      }
+    }; // fix humans
 
-		// fix humans
-		styles.colors.grey = styles.colors.gray;
+    styles.colors.grey = styles.colors.gray;
+    Object.keys(styles).forEach(function (groupName) {
+      var group = styles[groupName];
+      Object.keys(group).forEach(function (styleName) {
+        var style = group[styleName];
+        styles[styleName] = group[styleName] = {
+          open: '\u001b[' + style[0] + 'm',
+          close: '\u001b[' + style[1] + 'm'
+        };
+      });
+      Object.defineProperty(styles, groupName, {
+        value: group,
+        enumerable: false
+      });
+    });
+    return styles;
+  }
 
-		Object.keys(styles).forEach(function (groupName) {
-			var group = styles[groupName];
-
-			Object.keys(group).forEach(function (styleName) {
-				var style = group[styleName];
-
-				styles[styleName] = group[styleName] = {
-					open: '\u001b[' + style[0] + 'm',
-					close: '\u001b[' + style[1] + 'm'
-				};
-			});
-
-			Object.defineProperty(styles, groupName, {
-				value: group,
-				enumerable: false
-			});
-		});
-
-		return styles;
-	}
-
-	Object.defineProperty(module, 'exports', {
-		enumerable: true,
-		get: assembleStyles
-	});
+  Object.defineProperty(module, 'exports', {
+    enumerable: true,
+    get: assembleStyles
+  });
 });
 
-'use strict';
-
-var index$7 = function () {
-	return (/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g
-	);
+var ansiRegex$1 = function () {
+  return /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-PRZcf-nqry=><]/g;
 };
 
-'use strict';
-var ansiRegex = index$7();
+var ansiRegex = ansiRegex$1();
 
-var index$5 = function (str) {
-	return typeof str === 'string' ? str.replace(ansiRegex, '') : str;
+var stripAnsi = function (str) {
+  return typeof str === 'string' ? str.replace(ansiRegex, '') : str;
 };
 
-'use strict';
-var ansiRegex$1 = index$7;
 var re = new RegExp(ansiRegex$1().source); // remove the `g` flag
-var index$9 = re.test.bind(re);
 
-'use strict';
+var hasAnsi = re.test.bind(re);
 
 var argv = process.argv;
-
 var terminator = argv.indexOf('--');
+
 var hasFlag = function (flag) {
-	flag = '--' + flag;
-	var pos = argv.indexOf(flag);
-	return pos !== -1 && (terminator !== -1 ? pos < terminator : true);
+  flag = '--' + flag;
+  var pos = argv.indexOf(flag);
+  return pos !== -1 && (terminator !== -1 ? pos < terminator : true);
 };
 
-var index$11 = function () {
-	if ('FORCE_COLOR' in process.env) {
-		return true;
-	}
+var supportsColor = function () {
+  if ('FORCE_COLOR' in process.env) {
+    return true;
+  }
 
-	if (hasFlag('no-color') || hasFlag('no-colors') || hasFlag('color=false')) {
-		return false;
-	}
+  if (hasFlag('no-color') || hasFlag('no-colors') || hasFlag('color=false')) {
+    return false;
+  }
 
-	if (hasFlag('color') || hasFlag('colors') || hasFlag('color=true') || hasFlag('color=always')) {
-		return true;
-	}
+  if (hasFlag('color') || hasFlag('colors') || hasFlag('color=true') || hasFlag('color=always')) {
+    return true;
+  }
 
-	if (process.stdout && !process.stdout.isTTY) {
-		return false;
-	}
+  if (process.stdout && !process.stdout.isTTY) {
+    return false;
+  }
 
-	if (process.platform === 'win32') {
-		return true;
-	}
+  if (process.platform === 'win32') {
+    return true;
+  }
 
-	if ('COLORTERM' in process.env) {
-		return true;
-	}
+  if ('COLORTERM' in process.env) {
+    return true;
+  }
 
-	if (process.env.TERM === 'dumb') {
-		return false;
-	}
+  if (process.env.TERM === 'dumb') {
+    return false;
+  }
 
-	if (/^screen|^xterm|^vt100|color|ansi|cygwin|linux/i.test(process.env.TERM)) {
-		return true;
-	}
+  if (/^screen|^xterm|^vt100|color|ansi|cygwin|linux/i.test(process.env.TERM)) {
+    return true;
+  }
 
-	return false;
+  return false;
 }();
 
-'use strict';
-var escapeStringRegexp = index$1;
-var ansiStyles = index$3;
-var stripAnsi = index$5;
-var hasAnsi = index$9;
-var supportsColor = index$11;
 var defineProps = Object.defineProperties;
 var isSimpleWindowsTerm = process.platform === 'win32' && !/^xterm/i.test(process.env.TERM);
 
 function Chalk(options) {
-	// detect mode if not set manually
-	this.enabled = !options || options.enabled === undefined ? supportsColor : options.enabled;
-}
+  // detect mode if not set manually
+  this.enabled = !options || options.enabled === undefined ? supportsColor : options.enabled;
+} // use bright blue on Windows as the normal blue color is illegible
 
-// use bright blue on Windows as the normal blue color is illegible
+
 if (isSimpleWindowsTerm) {
-	ansiStyles.blue.open = '\u001b[94m';
+  ansiStyles.blue.open = '\u001b[94m';
 }
 
 var styles = function () {
-	var ret = {};
-
-	Object.keys(ansiStyles).forEach(function (key) {
-		ansiStyles[key].closeRe = new RegExp(escapeStringRegexp(ansiStyles[key].close), 'g');
-
-		ret[key] = {
-			get: function () {
-				return build.call(this, this._styles.concat(key));
-			}
-		};
-	});
-
-	return ret;
+  var ret = {};
+  Object.keys(ansiStyles).forEach(function (key) {
+    ansiStyles[key].closeRe = new RegExp(escapeStringRegexp(ansiStyles[key].close), 'g');
+    ret[key] = {
+      get: function () {
+        return build.call(this, this._styles.concat(key));
+      }
+    };
+  });
+  return ret;
 }();
 
 var proto = defineProps(function chalk() {}, styles);
 
 function build(_styles) {
-	var builder = function () {
-		return applyStyle.apply(builder, arguments);
-	};
+  var builder = function () {
+    return applyStyle.apply(builder, arguments);
+  };
 
-	builder._styles = _styles;
-	builder.enabled = this.enabled;
-	// __proto__ is used because we must return a function, but there is
-	// no way to create a function with a different prototype.
-	/* eslint-disable no-proto */
-	builder.__proto__ = proto;
+  builder._styles = _styles;
+  builder.enabled = this.enabled; // __proto__ is used because we must return a function, but there is
+  // no way to create a function with a different prototype.
 
-	return builder;
+  /* eslint-disable no-proto */
+
+  builder.__proto__ = proto;
+  return builder;
 }
 
 function applyStyle() {
-	// support varags, but simply cast to string in case there's only one arg
-	var args = arguments;
-	var argsLen = args.length;
-	var str = argsLen !== 0 && String(arguments[0]);
+  // support varags, but simply cast to string in case there's only one arg
+  var args = arguments;
+  var argsLen = args.length;
+  var str = argsLen !== 0 && String(arguments[0]);
 
-	if (argsLen > 1) {
-		// don't slice `arguments`, it prevents v8 optimizations
-		for (var a = 1; a < argsLen; a++) {
-			str += ' ' + args[a];
-		}
-	}
+  if (argsLen > 1) {
+    // don't slice `arguments`, it prevents v8 optimizations
+    for (var a = 1; a < argsLen; a++) {
+      str += ' ' + args[a];
+    }
+  }
 
-	if (!this.enabled || !str) {
-		return str;
-	}
+  if (!this.enabled || !str) {
+    return str;
+  }
 
-	var nestedStyles = this._styles;
-	var i = nestedStyles.length;
+  var nestedStyles = this._styles;
+  var i = nestedStyles.length; // Turns out that on Windows dimmed gray text becomes invisible in cmd.exe,
+  // see https://github.com/chalk/chalk/issues/58
+  // If we're on Windows and we're dealing with a gray color, temporarily make 'dim' a noop.
 
-	// Turns out that on Windows dimmed gray text becomes invisible in cmd.exe,
-	// see https://github.com/chalk/chalk/issues/58
-	// If we're on Windows and we're dealing with a gray color, temporarily make 'dim' a noop.
-	var originalDim = ansiStyles.dim.open;
-	if (isSimpleWindowsTerm && (nestedStyles.indexOf('gray') !== -1 || nestedStyles.indexOf('grey') !== -1)) {
-		ansiStyles.dim.open = '';
-	}
+  var originalDim = ansiStyles.dim.open;
 
-	while (i--) {
-		var code = ansiStyles[nestedStyles[i]];
+  if (isSimpleWindowsTerm && (nestedStyles.indexOf('gray') !== -1 || nestedStyles.indexOf('grey') !== -1)) {
+    ansiStyles.dim.open = '';
+  }
 
-		// Replace any instances already present with a re-opening code
-		// otherwise only the part of the string until said closing code
-		// will be colored, and the rest will simply be 'plain'.
-		str = code.open + str.replace(code.closeRe, code.open) + code.close;
-	}
+  while (i--) {
+    var code = ansiStyles[nestedStyles[i]]; // Replace any instances already present with a re-opening code
+    // otherwise only the part of the string until said closing code
+    // will be colored, and the rest will simply be 'plain'.
 
-	// Reset the original 'dim' if we changed it to work around the Windows dimmed gray issue.
-	ansiStyles.dim.open = originalDim;
+    str = code.open + str.replace(code.closeRe, code.open) + code.close;
+  } // Reset the original 'dim' if we changed it to work around the Windows dimmed gray issue.
 
-	return str;
+
+  ansiStyles.dim.open = originalDim;
+  return str;
 }
 
 function init() {
-	var ret = {};
-
-	Object.keys(styles).forEach(function (name) {
-		ret[name] = {
-			get: function () {
-				return build.call(this, [name]);
-			}
-		};
-	});
-
-	return ret;
+  var ret = {};
+  Object.keys(styles).forEach(function (name) {
+    ret[name] = {
+      get: function () {
+        return build.call(this, [name]);
+      }
+    };
+  });
+  return ret;
 }
 
 defineProps(Chalk.prototype, init());
-
-var index = new Chalk();
+var chalk = new Chalk();
 var styles_1 = ansiStyles;
 var hasColor = hasAnsi;
 var stripColor = stripAnsi;
 var supportsColor_1 = supportsColor;
-
-index.styles = styles_1;
-index.hasColor = hasColor;
-index.stripColor = stripColor;
-index.supportsColor = supportsColor_1;
+chalk.styles = styles_1;
+chalk.hasColor = hasColor;
+chalk.stripColor = stripColor;
+chalk.supportsColor = supportsColor_1;
 
 /* istanbul ignore next */
 function notListError(format) {
-	throw new Error(index.red('[indian-ocean] You passed in an object but converting to ' + index.bold(format) + ' requires a list of objects.') + index.cyan('\nIf you would like to write a one-row csv, put your object in a list like so: `' + index.bold('[data]') + '`\n'));
+  throw new Error(chalk.red("[indian-ocean] You passed in an object but converting to ".concat(chalk.bold(format), " requires a list of objects.")) + chalk.cyan("\nIf you would like to write a one-row csv, put your object in a list like so: `".concat(chalk.bold('[data]'), "`\n")));
 }
 
-// Some shared data integrity checks for formatters
 function formattingPreflight(file, format) {
-	if (file === '') {
-		return [];
-	}
-	if (!Array.isArray(file)) {
-		notListError(format);
-	}
-	return file;
+  if (file === '') {
+    return [];
+  }
+
+  if (!Array.isArray(file)) {
+    notListError(format);
+  }
+
+  return file;
 }
 
 /* istanbul ignore next */
 function parseError(format) {
-	throw new Error(index.red('[indian-ocean] Error converting your data to ' + index.bold(format) + '.') + '\n\n' + index.cyan('Your data most likely contains objects or lists. Object values can only be strings for this format. Please convert before writing to file.\n'));
+  throw new Error("".concat(chalk.red("[indian-ocean] Error converting your data to ".concat(chalk.bold(format), ".")), "\n\n").concat(chalk.cyan('Your data most likely contains objects or lists. Object values can only be strings for this format. Please convert before writing to file.\n')));
 }
 
 /* istanbul ignore next */
-function csv$1(file, writeOptions) {
-	writeOptions = writeOptions || {};
-	file = formattingPreflight(file, 'csv');
-	try {
-		return csvFormat(file, writeOptions.columns);
-	} catch (err) {
-		parseError('csv');
-		return null;
-	}
+function csv(file, writeOptions) {
+  writeOptions = writeOptions || {};
+  file = formattingPreflight(file, 'csv');
+
+  try {
+    return csvFormat(file, writeOptions.columns);
+  } catch (err) {
+    parseError('csv');
+    return null;
+  }
 }
 
-var json = function (file, writeOptions) {
-	writeOptions = writeOptions || {};
-	return JSON.stringify(file, writeOptions.replacer, writeOptions.indent);
-};
+function json (file, writeOptions) {
+  writeOptions = writeOptions || {};
+  return JSON.stringify(file, writeOptions.replacer, writeOptions.indent);
+}
 
 /* istanbul ignore next */
 function psv(file, writeOptions) {
-	writeOptions = writeOptions || {};
-	file = formattingPreflight(file, 'psv');
-	try {
-		return dsvFormat('|').format(file, writeOptions.columns);
-	} catch (err) {
-		parseError('psv');
-		return null;
-	}
+  writeOptions = writeOptions || {};
+  file = formattingPreflight(file, 'psv');
+
+  try {
+    return dsvFormat('|').format(file, writeOptions.columns);
+  } catch (err) {
+    parseError('psv');
+    return null;
+  }
 }
 
 /* istanbul ignore next */
-function tsv$1(file, writeOptions) {
-	writeOptions = writeOptions || {};
-	file = formattingPreflight(file, 'tsv');
-	try {
-		return tsvFormat(file, writeOptions.columns);
-	} catch (err) {
-		parseError('tsv');
-		return null;
-	}
+function tsv(file, writeOptions) {
+  writeOptions = writeOptions || {};
+  file = formattingPreflight(file, 'tsv');
+
+  try {
+    return tsvFormat(file, writeOptions.columns);
+  } catch (err) {
+    parseError('tsv');
+    return null;
+  }
 }
 
 function txt(file) {
-	return file;
+  return file;
 }
 
 var fieldsize = {
-    // string
-    C: 254,
-    // boolean
-    L: 1,
-    // date
-    D: 8,
-    // number
-    N: 18,
-    // number
-    M: 18,
-    // number, float
-    F: 18,
-    // number
-    B: 8
+  // string
+  C: 254,
+  // boolean
+  L: 1,
+  // date
+  D: 8,
+  // number
+  N: 18,
+  // number
+  M: 18,
+  // number, float
+  F: 18,
+  // number
+  B: 8
 };
 
 /**
@@ -3487,21 +3401,25 @@ var fieldsize = {
 var lpad = function lpad(str, len, char) {
   while (str.length < len) {
     str = char + str;
-  }return str;
-};
+  }
 
+  return str;
+};
 /**
  * @param {string} str
  * @param {number} len
  * @param {string} char
  * @returns {string}
  */
+
+
 var rpad = function rpad(str, len, char) {
   while (str.length < len) {
     str = str + char;
-  }return str;
-};
+  }
 
+  return str;
+};
 /**
  * @param {object} view
  * @param {number} fieldLength
@@ -3509,224 +3427,221 @@ var rpad = function rpad(str, len, char) {
  * @param {number} offset
  * @returns {number}
  */
+
+
 var writeField = function writeField(view, fieldLength, str, offset) {
   for (var i = 0; i < fieldLength; i++) {
-    view.setUint8(offset, str.charCodeAt(i));offset++;
+    view.setUint8(offset, str.charCodeAt(i));
+    offset++;
   }
+
   return offset;
 };
 
-var lib$1 = {
+var lib = {
   lpad: lpad,
   rpad: rpad,
   writeField: writeField
 };
 
-var fieldSize$1 = fieldsize;
-
 var types = {
-    string: 'C',
-    number: 'N',
-    boolean: 'L',
-    // type to use if all values of a field are null
-    null: 'C'
+  string: 'C',
+  number: 'N',
+  boolean: 'L',
+  // type to use if all values of a field are null
+  null: 'C'
 };
-
 var multi_1 = multi;
 var bytesPer_1 = bytesPer;
 var obj_1 = obj;
 
 function multi(features) {
-    var fields = {};
-    features.forEach(collect);
-    function collect(f) {
-        inherit(fields, f);
-    }
-    return obj(fields);
-}
+  var fields = {};
+  features.forEach(collect);
 
+  function collect(f) {
+    inherit(fields, f);
+  }
+
+  return obj(fields);
+}
 /**
  * @param {Object} a
  * @param {Object} b
  * @returns {Object}
  */
+
+
 function inherit(a, b) {
-    for (var i in b) {
-        var isDef = typeof b[i] !== 'undefined' && b[i] !== null;
-        if (typeof a[i] === 'undefined' || isDef) {
-            a[i] = b[i];
-        }
+  for (var i in b) {
+    var isDef = typeof b[i] !== 'undefined' && b[i] !== null;
+
+    if (typeof a[i] === 'undefined' || isDef) {
+      a[i] = b[i];
     }
-    return a;
+  }
+
+  return a;
 }
 
 function obj(_) {
-    var fields = {},
-        o = [];
-    for (var p in _) fields[p] = _[p] === null ? 'null' : typeof _[p];
-    for (var n in fields) {
-        var t = types[fields[n]];
-        if (t) {
-            o.push({
-                name: n,
-                type: t,
-                size: fieldSize$1[t]
-            });
-        }
-    }
-    return o;
-}
+  var fields = {},
+      o = [];
 
+  for (var p in _) fields[p] = _[p] === null ? 'null' : typeof _[p];
+
+  for (var n in fields) {
+    var t = types[fields[n]];
+
+    if (t) {
+      o.push({
+        name: n,
+        type: t,
+        size: fieldsize[t]
+      });
+    }
+  }
+
+  return o;
+}
 /**
  * @param {Array} fields
  * @returns {Array}
  */
+
+
 function bytesPer(fields) {
-    // deleted flag
-    return fields.reduce(function (memo, f) {
-        return memo + f.size;
-    }, 1);
+  // deleted flag
+  return fields.reduce(function (memo, f) {
+    return memo + f.size;
+  }, 1);
 }
 
-var fields$1 = {
-    multi: multi_1,
-    bytesPer: bytesPer_1,
-    obj: obj_1
+var fields = {
+  multi: multi_1,
+  bytesPer: bytesPer_1,
+  obj: obj_1
 };
-
-var lib = lib$1;
-var fields = fields$1;
 
 /**
  * @param {Array} data
  * @param {Array} meta
  * @returns {Object} view
  */
+
 var structure$1 = function structure(data, meta) {
+  var field_meta = meta || fields.multi(data),
+      fieldDescLength = 32 * field_meta.length + 1,
+      bytesPerRecord = fields.bytesPer(field_meta),
+      // deleted flag
+  buffer = new ArrayBuffer( // field header
+  fieldDescLength + // header
+  32 + // contents
+  bytesPerRecord * data.length + // EOF marker
+  1),
+      now = new Date(),
+      view = new DataView(buffer); // version number - dBase III
 
-    var field_meta = meta || fields.multi(data),
-        fieldDescLength = 32 * field_meta.length + 1,
-        bytesPerRecord = fields.bytesPer(field_meta),
-        // deleted flag
-    buffer = new ArrayBuffer(
-    // field header
-    fieldDescLength +
-    // header
-    32 +
-    // contents
-    bytesPerRecord * data.length +
-    // EOF marker
-    1),
-        now = new Date(),
-        view = new DataView(buffer);
+  view.setUint8(0, 0x03); // date of last update
 
-    // version number - dBase III
-    view.setUint8(0, 0x03);
-    // date of last update
-    view.setUint8(1, now.getFullYear() - 1900);
-    view.setUint8(2, now.getMonth() + 1);
-    view.setUint8(3, now.getDate());
-    // number of records
-    view.setUint32(4, data.length, true);
+  view.setUint8(1, now.getFullYear() - 1900);
+  view.setUint8(2, now.getMonth() + 1);
+  view.setUint8(3, now.getDate()); // number of records
 
-    // length of header
-    var headerLength = fieldDescLength + 32;
-    view.setUint16(8, headerLength, true);
-    // length of each record
-    view.setUint16(10, bytesPerRecord, true);
+  view.setUint32(4, data.length, true); // length of header
 
-    // Terminator
-    view.setInt8(32 + fieldDescLength - 1, 0x0D);
+  var headerLength = fieldDescLength + 32;
+  view.setUint16(8, headerLength, true); // length of each record
 
-    field_meta.forEach(function (f, i) {
-        // field name
-        f.name.split('').slice(0, 10).forEach(function (c, x) {
-            view.setInt8(32 + i * 32 + x, c.charCodeAt(0));
-        });
-        // field type
-        view.setInt8(32 + i * 32 + 11, f.type.charCodeAt(0));
-        // field length
-        view.setInt8(32 + i * 32 + 16, f.size);
-        if (f.type == 'N') view.setInt8(32 + i * 32 + 17, 3);
+  view.setUint16(10, bytesPerRecord, true); // Terminator
+
+  view.setInt8(32 + fieldDescLength - 1, 0x0D);
+  field_meta.forEach(function (f, i) {
+    // field name
+    f.name.split('').slice(0, 10).forEach(function (c, x) {
+      view.setInt8(32 + i * 32 + x, c.charCodeAt(0));
+    }); // field type
+
+    view.setInt8(32 + i * 32 + 11, f.type.charCodeAt(0)); // field length
+
+    view.setInt8(32 + i * 32 + 16, f.size);
+    if (f.type == 'N') view.setInt8(32 + i * 32 + 17, 3);
+  });
+  var offset = fieldDescLength + 32;
+  data.forEach(function (row, num) {
+    // delete flag: this is not deleted
+    view.setUint8(offset, 32);
+    offset++;
+    field_meta.forEach(function (f) {
+      var val = row[f.name];
+      if (val === null || typeof val === 'undefined') val = '';
+
+      switch (f.type) {
+        // boolean
+        case 'L':
+          view.setUint8(offset, val ? 84 : 70);
+          offset++;
+          break;
+        // date
+
+        case 'D':
+          offset = lib.writeField(view, 8, lib.lpad(val.toString(), 8, ' '), offset);
+          break;
+        // number
+
+        case 'N':
+          offset = lib.writeField(view, f.size, lib.lpad(val.toString(), f.size, ' ').substr(0, 18), offset);
+          break;
+        // string
+
+        case 'C':
+          offset = lib.writeField(view, f.size, lib.rpad(val.toString(), f.size, ' '), offset);
+          break;
+
+        default:
+          throw new Error('Unknown field type');
+      }
     });
+  }); // EOF flag
 
-    var offset = fieldDescLength + 32;
-
-    data.forEach(function (row, num) {
-        // delete flag: this is not deleted
-        view.setUint8(offset, 32);
-        offset++;
-        field_meta.forEach(function (f) {
-            var val = row[f.name];
-            if (val === null || typeof val === 'undefined') val = '';
-
-            switch (f.type) {
-                // boolean
-                case 'L':
-                    view.setUint8(offset, val ? 84 : 70);
-                    offset++;
-                    break;
-
-                // date
-                case 'D':
-                    offset = lib.writeField(view, 8, lib.lpad(val.toString(), 8, ' '), offset);
-                    break;
-
-                // number
-                case 'N':
-                    offset = lib.writeField(view, f.size, lib.lpad(val.toString(), f.size, ' ').substr(0, 18), offset);
-                    break;
-
-                // string
-                case 'C':
-                    offset = lib.writeField(view, f.size, lib.rpad(val.toString(), f.size, ' '), offset);
-                    break;
-
-                default:
-                    throw new Error('Unknown field type');
-            }
-        });
-    });
-
-    // EOF flag
-    view.setUint8(offset, 0x1A);
-
-    return view;
+  view.setUint8(offset, 0x1A);
+  return view;
 };
 
 var structure = structure$1;
-
-var index$13 = {
-	structure: structure
+var dbf$1 = {
+  structure: structure
 };
 
 /* istanbul ignore next */
-var dbf$1 = function (file) {
-	function toBuffer(ab) {
-		var buffer = new Buffer(ab.byteLength);
-		var view = new Uint8Array(ab);
-		for (var i = 0; i < buffer.length; i += 1) {
-			buffer[i] = view[i];
-		}
-		return buffer;
-	}
-	var buf = index$13.structure(file);
-	return toBuffer(buf.buffer);
-};
+function dbf (file) {
+  function toBuffer(ab) {
+    var buffer = new Buffer(ab.byteLength);
+    var view = new Uint8Array(ab);
+
+    for (var i = 0; i < buffer.length; i += 1) {
+      buffer[i] = view[i];
+    }
+
+    return buffer;
+  }
+
+  var buf = dbf$1.structure(file);
+  return toBuffer(buf.buffer);
+}
 
 var formatters = {
-	csv: csv$1,
-	json: json,
-	psv: psv,
-	tsv: tsv$1,
-	txt: txt,
-	dbf: dbf$1
+  csv: csv,
+  json: json,
+  psv: psv,
+  tsv: tsv,
+  txt: txt,
+  dbf: dbf
 };
-
 formatsList.forEach(function (format) {
-	format.equivalents.forEach(function (equivalent) {
-		formatters[equivalent] = formatters[format.name];
-	});
+  format.equivalents.forEach(function (equivalent) {
+    formatters[equivalent] = formatters[format.name];
+  });
 });
 
 /**
@@ -3740,109 +3655,117 @@ formatsList.forEach(function (format) {
  * var formatter = io.discernFileFormatter('path/to/data.tsv')
  * var csv = formatter(json)
  */
+
 function discernFileFormatter(filePath) {
   var format = discernFormat(filePath);
-  var formatter = formatters[format];
-  // If we don't have a parser for this format, return as text
+  var formatter = formatters[format]; // If we don't have a parser for this format, return as text
+
   if (typeof formatter === 'undefined') {
     formatter = formatters.txt;
   }
+
   return formatter;
 }
 
-var path$1 = path;
-var fs$1 = fs;
 var _0777 = parseInt('0777', 8);
 
-var index$14 = mkdirP.mkdirp = mkdirP.mkdirP = mkdirP;
+var mkdirp = mkdirP.mkdirp = mkdirP.mkdirP = mkdirP;
 
 function mkdirP(p, opts, f, made) {
-    if (typeof opts === 'function') {
-        f = opts;
-        opts = {};
-    } else if (!opts || typeof opts !== 'object') {
-        opts = { mode: opts };
+  if (typeof opts === 'function') {
+    f = opts;
+    opts = {};
+  } else if (!opts || typeof opts !== 'object') {
+    opts = {
+      mode: opts
+    };
+  }
+
+  var mode = opts.mode;
+  var xfs = opts.fs || fs__default['default'];
+
+  if (mode === undefined) {
+    mode = _0777;
+  }
+
+  if (!made) made = null;
+
+  var cb = f || function () {};
+
+  p = path__default['default'].resolve(p);
+  xfs.mkdir(p, mode, function (er) {
+    if (!er) {
+      made = made || p;
+      return cb(null, made);
     }
 
-    var mode = opts.mode;
-    var xfs = opts.fs || fs$1;
+    switch (er.code) {
+      case 'ENOENT':
+        if (path__default['default'].dirname(p) === p) return cb(er);
+        mkdirP(path__default['default'].dirname(p), opts, function (er, made) {
+          if (er) cb(er, made);else mkdirP(p, opts, cb, made);
+        });
+        break;
+      // In the case of any other error, just see if there's a dir
+      // there already.  If so, then hooray!  If not, then something
+      // is borked.
 
-    if (mode === undefined) {
-        mode = _0777;
+      default:
+        xfs.stat(p, function (er2, stat) {
+          // if the stat fails, then that's super weird.
+          // let the original error be the failure reason.
+          if (er2 || !stat.isDirectory()) cb(er, made);else cb(null, made);
+        });
+        break;
     }
-    if (!made) made = null;
-
-    var cb = f || function () {};
-    p = path$1.resolve(p);
-
-    xfs.mkdir(p, mode, function (er) {
-        if (!er) {
-            made = made || p;
-            return cb(null, made);
-        }
-        switch (er.code) {
-            case 'ENOENT':
-                if (path$1.dirname(p) === p) return cb(er);
-                mkdirP(path$1.dirname(p), opts, function (er, made) {
-                    if (er) cb(er, made);else mkdirP(p, opts, cb, made);
-                });
-                break;
-
-            // In the case of any other error, just see if there's a dir
-            // there already.  If so, then hooray!  If not, then something
-            // is borked.
-            default:
-                xfs.stat(p, function (er2, stat) {
-                    // if the stat fails, then that's super weird.
-                    // let the original error be the failure reason.
-                    if (er2 || !stat.isDirectory()) cb(er, made);else cb(null, made);
-                });
-                break;
-        }
-    });
+  });
 }
 
 mkdirP.sync = function sync(p, opts, made) {
-    if (!opts || typeof opts !== 'object') {
-        opts = { mode: opts };
-    }
+  if (!opts || typeof opts !== 'object') {
+    opts = {
+      mode: opts
+    };
+  }
 
-    var mode = opts.mode;
-    var xfs = opts.fs || fs$1;
+  var mode = opts.mode;
+  var xfs = opts.fs || fs__default['default'];
 
-    if (mode === undefined) {
-        mode = _0777;
-    }
-    if (!made) made = null;
+  if (mode === undefined) {
+    mode = _0777;
+  }
 
-    p = path$1.resolve(p);
+  if (!made) made = null;
+  p = path__default['default'].resolve(p);
 
-    try {
-        xfs.mkdirSync(p, mode);
-        made = made || p;
-    } catch (err0) {
-        switch (err0.code) {
-            case 'ENOENT':
-                made = sync(path$1.dirname(p), opts, made);
-                sync(p, opts, made);
-                break;
+  try {
+    xfs.mkdirSync(p, mode);
+    made = made || p;
+  } catch (err0) {
+    switch (err0.code) {
+      case 'ENOENT':
+        made = sync(path__default['default'].dirname(p), opts, made);
+        sync(p, opts, made);
+        break;
+      // In the case of any other error, just see if there's a dir
+      // there already.  If so, then hooray!  If not, then something
+      // is borked.
 
-            // In the case of any other error, just see if there's a dir
-            // there already.  If so, then hooray!  If not, then something
-            // is borked.
-            default:
-                var stat;
-                try {
-                    stat = xfs.statSync(p);
-                } catch (err1) {
-                    throw err0;
-                }
-                if (!stat.isDirectory()) throw err0;
-                break;
+      default:
+        var stat;
+
+        try {
+          stat = xfs.statSync(p);
+        } catch (err1) {
+          throw err0;
         }
-    }
 
-    return made;
+        if (!stat.isDirectory()) throw err0;
+        break;
+    }
+  }
+
+  return made;
 };
 
 /* istanbul ignore next */
@@ -3864,34 +3787,35 @@ mkdirP.sync = function sync(p, opts, made) {
  * })
  *
  */
+
 function makeDirectories(outPath, cb) {
-  index$14(dirname(outPath), function (err) {
+  mkdirp(dirname(outPath), function (err) {
     cb(err);
   });
 }
 
 /* istanbul ignore next */
 function warn(msg) {
-	console.log(index.gray('[indian-ocean]') + ' ' + index.yellow('Warning:', msg));
+  console.log("".concat(chalk.gray('[indian-ocean]'), " ").concat(chalk.yellow('Warning:', msg)));
 }
 
 function warnIfEmpty(data, outPath, opts_) {
-	if (!opts_ || opts_ && opts_.verbose !== false) {
-		if (!data || _.isEmpty(data)) {
-			var msg = 'You didn\'t pass any data to write for file: `' + outPath + '`. Writing out an empty ';
-			if (!data) {
-				msg += 'file';
-			} else if (_.isEmpty(data)) {
-				msg += Array.isArray(data) === true ? 'array' : 'object';
-			}
-			msg += '...';
-			warn(msg);
-		}
-	}
+  if (!opts_ || opts_ && opts_.verbose !== false) {
+    if (!data || _.isEmpty(data)) {
+      var msg = "You didn't pass any data to write for file: `".concat(outPath, "`. Writing out an empty ");
+
+      if (!data) {
+        msg += 'file';
+      } else if (_.isEmpty(data)) {
+        msg += Array.isArray(data) === true ? 'array' : 'object';
+      }
+
+      msg += '...';
+      warn(msg);
+    }
+  }
 }
 
-/* istanbul ignore next */
-/* istanbul ignore next */
 /**
  * Write the data object, inferring the file format from the file ending specified in `fileName`.
  *
@@ -3947,14 +3871,16 @@ function warnIfEmpty(data, outPath, opts_) {
  *   console.log(err)
  * })
  */
+
 function writeData(outPath, data, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_;
     opts_ = undefined;
   }
+
   warnIfEmpty(data, outPath, opts_);
 
-  if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
+  if (_typeof(opts_) === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
     makeDirectories(outPath, proceed);
   } else {
     proceed();
@@ -3965,15 +3891,16 @@ function writeData(outPath, data, opts_, cb) {
       throw err;
     }
 
-    opts_ = omit$1(opts_, ['makeDirectories', 'makeDirs']);
-    var writeOptions = void 0;
+    opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
+    var writeOptions;
+
     if (typeof opts_ !== 'function') {
       writeOptions = opts_;
     }
 
     var fileFormatter = discernFileFormatter(outPath);
     var formattedData = fileFormatter(data, writeOptions);
-    fs.writeFile(outPath, formattedData, function (err2) {
+    fs__default['default'].writeFile(outPath, formattedData, function (err2) {
       cb(err2, formattedData);
     });
   }
@@ -3997,10 +3924,12 @@ function writeData(outPath, data, opts_, cb) {
  *   console.log(err)
  * })
  */
+
 function convertData(inPath, outPath, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_;
   }
+
   readData(inPath, function (error, jsonData) {
     if (error) {
       cb(error);
@@ -4015,7 +3944,9 @@ function convertData(inPath, outPath, opts_, cb) {
  *
  * @function readDbf
  * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @param {Function} callback Has signature `(err, data)`
  *
  * @example
@@ -4032,15 +3963,20 @@ function convertData(inPath, outPath, opts_, cb) {
  *   console.log(data) // Converted json data
  * })
  */
+
 function readDbf(filePath, opts_, cb) {
   var parserOptions = {
-    map: identity$1
+    map: identity
   };
+
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
+
   readData(filePath, parserOptions, cb);
 }
 
@@ -4062,10 +3998,12 @@ function readDbf(filePath, opts_, cb) {
  *   console.log(err)
  * })
  */
+
 function convertDbfToData(inPath, outPath, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_;
   }
+
   readDbf(inPath, function (error, jsonData) {
     if (error) {
       cb(error);
@@ -4089,15 +4027,18 @@ function convertDbfToData(inPath, outPath, opts_, cb) {
  * })
  *
  */
+
 function exists(filePath, cb) {
-  fs.access(filePath, function (err) {
-    var doesExist = void 0;
+  fs__default['default'].access(filePath, function (err) {
+    var doesExist;
+
     if (err && err.code === 'ENOENT') {
       doesExist = false;
       err = null;
     } else if (!err) {
       doesExist = true;
     }
+
     cb(err, doesExist);
   });
 }
@@ -4114,12 +4055,14 @@ function exists(filePath, cb) {
  * var exists = io.existsSync('path/to/data.tsv')
  * console.log(exists) // `true` if file exists, `false` if not.
  */
+
 function existsSync(filePath) {
-  if (fs.existsSync) {
-    return fs.existsSync(filePath);
+  if (fs__default['default'].existsSync) {
+    return fs__default['default'].existsSync(filePath);
   }
+
   try {
-    fs.accessSync(filePath);
+    fs__default['default'].accessSync(filePath);
     return true;
   } catch (ex) {
     return false;
@@ -4138,6 +4081,7 @@ function existsSync(filePath) {
  * var matches = io.extMatchesStr('path/to/data.tsv', 'tsv')
  * console.log(matches) // `true`
  */
+
 function extMatchesStr(filePath, extension) {
   // Chop '.' off extension returned by extname
   var ext = extname(filePath).slice(1);
@@ -4159,8 +4103,9 @@ function extMatchesStr(filePath, extension) {
  * io.makeDirectoriesSync('path/to/create/to/another-folder/')
  *
  */
+
 function makeDirectoriesSync(outPath) {
-  index$14.sync(dirname(outPath));
+  mkdirp.sync(dirname(outPath));
 }
 
 /**
@@ -4182,8 +4127,8 @@ function matchesRegExp(filePath, regEx) {
   return regEx.test(filePath);
 }
 
-function isRegExp$1(obj) {
-	return Object.prototype.toString.call(obj) === '[object RegExp]';
+function isRegExp(obj) {
+  return Object.prototype.toString.call(obj) === '[object RegExp]';
 }
 
 /**
@@ -4203,12 +4148,16 @@ function isRegExp$1(obj) {
  * var matches = io.matches('file/with/no-extention', '') // Nb. Dot files are treated as files with no extention
  * console.log(matches) // `true`
  */
+
 function matches(filePath, matcher) {
   if (typeof matcher === 'string') {
     return extMatchesStr(filePath, matcher);
-  }if (isRegExp$1(matcher)) {
+  }
+
+  if (isRegExp(matcher)) {
     return matchesRegExp(filePath, matcher);
   }
+
   throw new Error('Matcher argument must be String or Regular Expression');
 }
 
@@ -4227,6 +4176,7 @@ function matches(filePath, matcher) {
  * @function readDataSync
  * @param {String} filePath Input file path
  * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @param {String|Function|Object} [parserOptions.parser] This can be a string that is the file's delimiter, a function that returns JSON, or, for convenience, can also be a dsv object such as `dsv.dsv('_')` or any object that has a `parse` method that's a function. See `parsers` in library source for examples.
  * @param {Function} [parserOptions.map] Transformation function. See {@link directReaders} for format-specific function signature. In brief, tabular formats get passed a `(row, i, columns)` and must return the modified row. Text or AML formats are passed the full document and must return the modified document. JSON arrays are mapped like tabular documents with `(row, i)` and return the modified row. JSON objects are mapped with Underscore's `_.mapObject` with `(value, key)` and return the modified value.
  * @param {Function} [parserOptions.reviver] Used for JSON files, otherwise ignored. See {@link readJsonSync} for details.
@@ -4274,13 +4224,16 @@ function matches(filePath, matcher) {
  * })
  * console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  */
+
 function readDataSync(filePath, opts_) {
-  var parser = void 0;
-  var parserOptions = void 0;
+  var parser;
+  var parserOptions;
+
   if (arguments.length === 2) {
     if (opts_.parser) {
       parser = getParser(opts_.parser);
-      opts_ = omit$1(opts_, ['parser']);
+      opts_ = omit(opts_, ['parser']);
+
       if (_.isEmpty(opts_)) {
         opts_ = undefined;
       }
@@ -4290,13 +4243,17 @@ function readDataSync(filePath, opts_) {
 
     if (opts_ && opts_.parserOptions) {
       if (typeof opts_.parserOptions === 'function') {
-        parserOptions = { map: opts_.parserOptions };
+        parserOptions = {
+          map: opts_.parserOptions
+        };
       } else {
         parserOptions = opts_.parserOptions;
       }
     } else if (opts_) {
       if (typeof opts_ === 'function') {
-        parserOptions = { map: opts_ };
+        parserOptions = {
+          map: opts_
+        };
       } else {
         parserOptions = opts_;
       }
@@ -4304,11 +4261,14 @@ function readDataSync(filePath, opts_) {
   } else {
     parser = discernParser(filePath);
   }
-  var loader = discernLoader(filePath, { sync: true });
+
+  var loader = discernLoader(filePath, {
+    sync: true
+  });
   return loader(filePath, parser, parserOptions);
 }
 
-var slice$1 = [].slice;
+var slice = [].slice;
 
 var noabort = {};
 
@@ -4326,7 +4286,7 @@ Queue.prototype = queue.prototype = {
     if (typeof callback !== "function") throw new Error("invalid callback");
     if (this._call) throw new Error("defer after await");
     if (this._error != null) return this;
-    var t = slice$1.call(arguments, 1);
+    var t = slice.call(arguments, 1);
     t.push(callback);
     ++this._waiting, this._tasks.push(t);
     poke(this);
@@ -4339,9 +4299,11 @@ Queue.prototype = queue.prototype = {
   await: function (callback) {
     if (typeof callback !== "function") throw new Error("invalid callback");
     if (this._call) throw new Error("multiple await");
+
     this._call = function (error, results) {
       callback.apply(null, [error].concat(results));
     };
+
     maybeNotify(this);
     return this;
   },
@@ -4376,6 +4338,7 @@ function start(q) {
     --q._waiting, ++q._active;
     t = c.apply(null, t);
     if (!q._tasks[i]) continue; // task finished synchronously
+
     q._tasks[i] = t || noabort;
   }
 }
@@ -4383,9 +4346,11 @@ function start(q) {
 function end(q, i) {
   return function (e, r) {
     if (!q._tasks[i]) return; // ignore multiple callbacks
+
     --q._active, ++q._ended;
     q._tasks[i] = null;
     if (q._error != null) return; // ignore secondary errors
+
     if (e != null) {
       abort(q, e);
     } else {
@@ -4399,21 +4364,27 @@ function abort(q, e) {
   var i = q._tasks.length,
       t;
   q._error = e; // ignore active callbacks
+
   q._data = undefined; // allow gc
+
   q._waiting = NaN; // prevent starting
 
   while (--i >= 0) {
     if (t = q._tasks[i]) {
       q._tasks[i] = null;
+
       if (t.abort) {
         try {
           t.abort();
-        } catch (e) {/* ignore */}
+        } catch (e) {
+          /* ignore */
+        }
       }
     }
   }
 
   q._active = NaN; // allow notification
+
   maybeNotify(q);
 }
 
@@ -4421,6 +4392,7 @@ function maybeNotify(q) {
   if (!q._active && q._call) {
     var d = q._data;
     q._data = undefined; // allow gc
+
     q._call(q._error, d);
   }
 }
@@ -4431,134 +4403,131 @@ function queue(concurrency) {
 }
 
 // Used internally by `readdir` functions to make more DRY
-/* istanbul ignore next */
-/* istanbul ignore next */
 function readdir(modeInfo, dirPath, opts_, cb) {
-	opts_ = opts_ || {};
-	var isAsync = modeInfo.async;
+  opts_ = opts_ || {};
+  var isAsync = modeInfo.async; // Convert to array if a string
 
-	// Convert to array if a string
-	opts_.include = strToArray(opts_.include);
-	opts_.exclude = strToArray(opts_.exclude);
+  opts_.include = strToArray(opts_.include);
+  opts_.exclude = strToArray(opts_.exclude);
 
-	if (opts_.skipHidden === true) {
-		var regex = /^\./;
-		if (Array.isArray(opts_.exclude)) {
-			opts_.exclude.push(regex);
-		} else {
-			opts_.exclude = [regex];
-		}
-	}
+  if (opts_.skipHidden === true) {
+    var regex = /^\./;
 
-	// Set defaults if not provided
-	opts_.includeMatchAll = opts_.includeMatchAll ? 'every' : 'some';
-	opts_.excludeMatchAll = opts_.excludeMatchAll ? 'every' : 'some';
+    if (Array.isArray(opts_.exclude)) {
+      opts_.exclude.push(regex);
+    } else {
+      opts_.exclude = [regex];
+    }
+  } // Set defaults if not provided
 
-	if (isAsync === true) {
-		fs.readdir(dirPath, function (err, files) {
-			if (err) {
-				throw err;
-			}
-			filter(files, cb);
-		});
-	} else {
-		return filterSync(fs.readdirSync(dirPath));
-	}
 
-	function strToArray(val) {
-		if (val && !Array.isArray(val)) {
-			val = [val];
-		}
-		return val;
-	}
+  opts_.includeMatchAll = opts_.includeMatchAll ? 'every' : 'some';
+  opts_.excludeMatchAll = opts_.excludeMatchAll ? 'every' : 'some';
 
-	function filterByType(file, cb) {
-		// We need the full path so convert it if it isn't already
-		var filePath = opts_.fullPath ? file : joinPath(dirPath, file);
+  if (isAsync === true) {
+    fs__default['default'].readdir(dirPath, function (err, files) {
+      if (err) {
+        throw err;
+      }
 
-		if (isAsync === true) {
-			fs.stat(filePath, function (err, stats) {
-				var filtered = getFiltered(stats.isDirectory());
-				cb(err, filtered);
-			});
-		} else {
-			return getFiltered(fs.statSync(filePath).isDirectory());
-		}
+      filter(files, cb);
+    });
+  } else {
+    return filterSync(fs__default['default'].readdirSync(dirPath));
+  }
 
-		function getFiltered(isDir) {
-			// Keep the two names for legacy reasons
-			if (opts_.skipDirectories === true || opts_.skipDirs === true) {
-				if (isDir) {
-					return false;
-				}
-			}
-			if (opts_.skipFiles === true) {
-				if (!isDir) {
-					return false;
-				}
-			}
-			return file;
-		}
-	}
+  function strToArray(val) {
+    if (val && !Array.isArray(val)) {
+      val = [val];
+    }
 
-	function filterByMatchers(files) {
-		var filtered = files.filter(function (fileName) {
-			var isExcluded = void 0;
-			var isIncluded = void 0;
+    return val;
+  }
 
-			// Don't include if matches exclusion matcher
-			if (opts_.exclude) {
-				isExcluded = opts_.exclude[opts_.excludeMatchAll](function (matcher) {
-					return matches(fileName, matcher);
-				});
-				if (isExcluded === true) {
-					return false;
-				}
-			}
+  function filterByType(file, cb) {
+    // We need the full path so convert it if it isn't already
+    var filePath = opts_.fullPath ? file : joinPath(dirPath, file);
 
-			// Include if matches inclusion matcher, exclude if it doesn't
-			if (opts_.include) {
-				isIncluded = opts_.include[opts_.includeMatchAll](function (matcher) {
-					return matches(fileName, matcher);
-				});
-				return isIncluded;
-			}
+    if (isAsync === true) {
+      fs__default['default'].stat(filePath, function (err, stats) {
+        var filtered = getFiltered(stats.isDirectory());
+        cb(err, filtered);
+      });
+    } else {
+      return getFiltered(fs__default['default'].statSync(filePath).isDirectory());
+    }
 
-			// Return true if it makes it to here
-			return true;
-		});
+    function getFiltered(isDir) {
+      // Keep the two names for legacy reasons
+      if (opts_.skipDirectories === true || opts_.skipDirs === true) {
+        if (isDir) {
+          return false;
+        }
+      }
 
-		// Prefix with the full path if that's what we asked for
-		if (opts_.fullPath === true) {
-			return filtered.map(function (fileName) {
-				return joinPath(dirPath, fileName);
-			});
-		}
+      if (opts_.skipFiles === true) {
+        if (!isDir) {
+          return false;
+        }
+      }
 
-		return filtered;
-	}
+      return file;
+    }
+  }
 
-	function filterSync(files) {
-		var filtered = filterByMatchers(files);
+  function filterByMatchers(files) {
+    var filtered = files.filter(function (fileName) {
+      var isExcluded;
+      var isIncluded; // Don't include if matches exclusion matcher
 
-		return filtered.map(function (file) {
-			return filterByType(file);
-		}).filter(identity$1);
-	}
+      if (opts_.exclude) {
+        isExcluded = opts_.exclude[opts_.excludeMatchAll](function (matcher) {
+          return matches(fileName, matcher);
+        });
 
-	function filter(files, cb2) {
-		var filterQ = queue();
+        if (isExcluded === true) {
+          return false;
+        }
+      } // Include if matches inclusion matcher, exclude if it doesn't
 
-		var filtered = filterByMatchers(files);
 
-		filtered.forEach(function (fileName) {
-			filterQ.defer(filterByType, fileName);
-		});
+      if (opts_.include) {
+        isIncluded = opts_.include[opts_.includeMatchAll](function (matcher) {
+          return matches(fileName, matcher);
+        });
+        return isIncluded;
+      } // Return true if it makes it to here
 
-		filterQ.awaitAll(function (err, namesOfType) {
-			cb2(err, namesOfType.filter(identity$1));
-		});
-	}
+
+      return true;
+    }); // Prefix with the full path if that's what we asked for
+
+    if (opts_.fullPath === true) {
+      return filtered.map(function (fileName) {
+        return joinPath(dirPath, fileName);
+      });
+    }
+
+    return filtered;
+  }
+
+  function filterSync(files) {
+    var filtered = filterByMatchers(files);
+    return filtered.map(function (file) {
+      return filterByType(file);
+    }).filter(identity);
+  }
+
+  function filter(files, cb2) {
+    var filterQ = queue();
+    var filtered = filterByMatchers(files);
+    filtered.forEach(function (fileName) {
+      filterQ.defer(filterByType, fileName);
+    });
+    filterQ.awaitAll(function (err, namesOfType) {
+      cb2(err, namesOfType.filter(identity));
+    });
+  }
 }
 
 /**
@@ -4588,13 +4557,16 @@ function readdir(modeInfo, dirPath, opts_, cb) {
  * })
  *
  */
+
 function readdirFilter(dirPath, opts_, cb) {
   if (typeof cb === 'undefined') {
     cb = opts_;
     opts_ = undefined;
   }
 
-  readdir({ async: true }, dirPath, opts_, cb);
+  readdir({
+    async: true
+  }, dirPath, opts_, cb);
 }
 
 /**
@@ -4625,8 +4597,11 @@ function readdirFilter(dirPath, opts_, cb) {
  * console.log(files) // ['path/to/files/data-0.json', 'path/to/files/data-1.json']
  *
  */
+
 function readdirFilterSync(dirPath, opts_) {
-  return readdir({ async: false }, dirPath, opts_);
+  return readdir({
+    async: false
+  }, dirPath, opts_);
 }
 
 /**
@@ -4634,7 +4609,9 @@ function readdirFilterSync(dirPath, opts_) {
  *
  * @function readAml
  * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Takes the parsed file (usually an object) and must return the modified file. See example below.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @param {Function} callback Has signature `(err, data)`
  *
  * @example
@@ -4650,14 +4627,22 @@ function readdirFilterSync(dirPath, opts_) {
  *   console.log(data) // json data with height multiplied by 2
  * })
  */
+
 function readAml(filePath, opts_, cb) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  readData(filePath, { parser: parseAml, parserOptions: parserOptions }, cb);
+
+  readData(filePath, {
+    parser: parseAml,
+    parserOptions: parserOptions
+  }, cb);
 }
 
 /**
@@ -4665,7 +4650,9 @@ function readAml(filePath, opts_, cb) {
  *
  * @function readAmlSync
  * @param {String} filePath Input file path
- * @param {Function} [map] Optional map function. Takes the parsed file (usually an object) and must return the modified file. See example below.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @returns {Object} The parsed file
  *
  * @example
@@ -4678,12 +4665,20 @@ function readAml(filePath, opts_, cb) {
  * })
  * console.log(data) // json data with height multiplied by 2
  */
+
 function readAmlSync(filePath, opts_) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  return readDataSync(filePath, { parser: parseAml, parserOptions: parserOptions });
+
+  return readDataSync(filePath, {
+    parser: parseAml,
+    parserOptions: parserOptions
+  });
 }
 
 /**
@@ -4691,7 +4686,9 @@ function readAmlSync(filePath, opts_) {
  *
  * @function readCsv
  * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @param {Function} callback Has signature `(err, data)`
  *
  * @example
@@ -4717,14 +4714,22 @@ function readAmlSync(filePath, opts_) {
  *   console.log(data) // Converted json data
  * })
  */
+
 function readCsv(filePath, opts_, cb) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  readData(filePath, { parser: parseCsv, parserOptions: parserOptions }, cb);
+
+  readData(filePath, {
+    parser: parseCsv,
+    parserOptions: parserOptions
+  }, cb);
 }
 
 /**
@@ -4732,7 +4737,9 @@ function readCsv(filePath, opts_, cb) {
  *
  * @function readCsvSync
  * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @returns {Array} the contents of the file as JSON
  *
  * @example
@@ -4755,12 +4762,20 @@ function readCsv(filePath, opts_, cb) {
  * }})
  * console.log(data) // Json data with casted values
  */
+
 function readCsvSync(filePath, opts_) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  return readDataSync(filePath, { parser: parseCsv, parserOptions: parserOptions });
+
+  return readDataSync(filePath, {
+    parser: parseCsv,
+    parserOptions: parserOptions
+  });
 }
 
 /**
@@ -4770,6 +4785,7 @@ function readCsvSync(filePath, opts_) {
  * @param {String} filePath Input file path
  * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
  * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @param {String} [parserOptions.filename] File name displayed in the error message.
  * @param {Function} [parserOptions.reviver] A function that prescribes how the value originally produced by parsing is mapped before being returned. See JSON.parse docs for more: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
  * @param {Function} callback Has signature `(err, data)`
@@ -4829,14 +4845,22 @@ function readCsvSync(filePath, opts_) {
  *   console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  * })
  */
+
 function readJson(filePath, opts_, cb) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  readData(filePath, { parser: parseJson, parserOptions: parserOptions }, cb);
+
+  readData(filePath, {
+    parser: parseJson,
+    parserOptions: parserOptions
+  }, cb);
 }
 
 /**
@@ -4846,6 +4870,7 @@ function readJson(filePath, opts_, cb) {
  * @param {String} filePath Input file path
  * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
  * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @param {String} [parserOptions.filename] File name displayed in the error message.
  * @param {Function} [parserOptions.reviver] A function that prescribes how the value originally produced by parsing is mapped before being returned. See JSON.parse docs for more: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
  * @returns {Array|Object} The contents of the file as JSON
@@ -4880,12 +4905,20 @@ function readJson(filePath, opts_, cb) {
  *
  * console.log(data) // Json data with any number values multiplied by two and errors reported with `fileName`
  */
+
 function readJsonSync(filePath, opts_) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  return readDataSync(filePath, { parser: parseJson, parserOptions: parserOptions });
+
+  return readDataSync(filePath, {
+    parser: parseJson,
+    parserOptions: parserOptions
+  });
 }
 
 /**
@@ -4893,7 +4926,9 @@ function readJsonSync(filePath, opts_) {
  *
  * @function readPsv
  * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @param {Function} callback Has signature `(err, data)`
  *
  * @example
@@ -4910,14 +4945,22 @@ function readJsonSync(filePath, opts_) {
  *   console.log(data) // Json data with casted values
  * })
  */
+
 function readPsv(filePath, opts_, cb) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  readData(filePath, { parser: parsePsv, parserOptions: parserOptions }, cb);
+
+  readData(filePath, {
+    parser: parsePsv,
+    parserOptions: parserOptions
+  }, cb);
 }
 
 /**
@@ -4925,7 +4968,9 @@ function readPsv(filePath, opts_, cb) {
  *
  * @function readPsvSync
  * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @returns {Array} The contents of the file as JSON
  *
  * @example
@@ -4939,12 +4984,20 @@ function readPsv(filePath, opts_, cb) {
  * })
  * console.log(data) // Json data with casted values
  */
+
 function readPsvSync(filePath, opts_) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  return readDataSync(filePath, { parser: parsePsv, parserOptions: parserOptions });
+
+  return readDataSync(filePath, {
+    parser: parsePsv,
+    parserOptions: parserOptions
+  });
 }
 
 /**
@@ -4952,7 +5005,9 @@ function readPsvSync(filePath, opts_) {
  *
  * @function readTsv
  * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Called once for each row with the signature `(row, i)` and must return the transformed row. See example below or d3-dsv documentation for details.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @param {Function} callback Has signature `(err, data)`
  *
  * @example
@@ -4969,14 +5024,22 @@ function readPsvSync(filePath, opts_) {
  *   console.log(data) // Json data with casted values
  * })
  */
+
 function readTsv(filePath, opts_, cb) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  readData(filePath, { parser: parseTsv, parserOptions: parserOptions }, cb);
+
+  readData(filePath, {
+    parser: parseTsv,
+    parserOptions: parserOptions
+  }, cb);
 }
 
 /**
@@ -4984,7 +5047,9 @@ function readTsv(filePath, opts_, cb) {
  *
  * @function readTsvSync
  * @param {String} filePath Input file path
- * @param {Function} [map] Optional map function, called once for each row (header row skipped). Has signature `(row, i, columns)` and must return the transformed row. See example below or d3-dsv documentation for details.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @returns {Array} the contents of the file as JSON
  *
  * @example
@@ -4999,12 +5064,20 @@ function readTsv(filePath, opts_, cb) {
  * })
  * console.log(data) // Json data with casted values
  */
+
 function readTsvSync(filePath, opts_) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  return readDataSync(filePath, { parser: parseTsv, parserOptions: parserOptions });
+
+  return readDataSync(filePath, {
+    parser: parseTsv,
+    parserOptions: parserOptions
+  });
 }
 
 /**
@@ -5012,7 +5085,9 @@ function readTsvSync(filePath, opts_) {
  *
  * @function readTxt
  * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Takes the file read in as text and return the modified file. See example below.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @param {Function} callback Has signature `(err, data)`
  *
  * @example
@@ -5026,14 +5101,22 @@ function readTsvSync(filePath, opts_) {
  *   console.log(data) // string data with values replaced
  * })
  */
+
 function readTxt(filePath, opts_, cb) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof cb === 'undefined') {
     cb = opts_;
   } else {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  readData(filePath, { parser: parseTxt, parserOptions: parserOptions }, cb);
+
+  readData(filePath, {
+    parser: parseTxt,
+    parserOptions: parserOptions
+  }, cb);
 }
 
 /**
@@ -5041,7 +5124,9 @@ function readTxt(filePath, opts_, cb) {
  *
  * @function readTxtSync
  * @param {String} filePath Input file path
- * @param {Function|Object} [map] Optional map function or an object with `map` key that is a function. Takes the file read in as text and must return the modified file. See example below.
+ * @param {Function|Object} [parserOptions] Optional map function or an object specifying the optional options below.
+ * @param {Function} [parserOptions.map] Map function. Called once for each row if your file is an array (it tests if the first non-whitespace character is a `[`) with a callback signature `(row, i)` and delegates to `_.map`. Otherwise it's considered an object and the callback the signature is `(value, key)` and delegates to `_.mapObject`. See example below.
+ * @param {Boolean} [parserOptions.trim=true] Trim any whitespace from the file before parsing. Default is true.
  * @returns {String} the contents of the file as a string
  *
  * @example
@@ -5053,16 +5138,22 @@ function readTxt(filePath, opts_, cb) {
  * })
  * console.log(data) // string data with values replaced
  */
+
 function readTxtSync(filePath, opts_) {
-  var parserOptions = void 0;
+  var parserOptions;
+
   if (typeof opts_ !== 'undefined') {
-    parserOptions = typeof opts_ === 'function' ? { map: opts_ } : opts_;
+    parserOptions = typeof opts_ === 'function' ? {
+      map: opts_
+    } : opts_;
   }
-  return readDataSync(filePath, { parser: parseTxt, parserOptions: parserOptions });
+
+  return readDataSync(filePath, {
+    parser: parseTxt,
+    parserOptions: parserOptions
+  });
 }
 
-/* istanbul ignore next */
-/* istanbul ignore next */
 /**
  * Append to an existing data object, creating a new file if one does not exist. If appending to an object, data is extended with `Object.assign`. For tabular formats (csv, tsv, etc), existing data and new data must be an array of flat objects (cannot contain nested objects or arrays).
  *
@@ -5090,47 +5181,50 @@ function readTxtSync(filePath, opts_) {
  *   console.log(err)
  * })
  */
+
 function appendData(outPath, data, opts_, cb) {
-	if (typeof cb === 'undefined') {
-		cb = opts_;
-	}
-	if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
-		makeDirectories(outPath, proceed);
-	} else {
-		proceed();
-	}
-	function proceed(err) {
-		if (err) {
-			throw err;
-		}
-		opts_ = omit$1(opts_, ['makeDirectories', 'makeDirs']);
-		// Run append file to delegate creating a new file if none exists
-		fs.appendFile(outPath, '', function (err2) {
-			if (!err2) {
-				readData(outPath, function (err3, existingData) {
-					if (!err3) {
-						if (!_.isEmpty(existingData)) {
-							if (Array.isArray(existingData)) {
-								data = existingData.concat(data);
-							} else if ((typeof existingData === 'undefined' ? 'undefined' : _typeof(existingData)) === 'object') {
-								// eslint-disable-next-line prefer-object-spread
-								data = Object.assign({}, existingData, data);
-							}
-						}
-						writeData(outPath, data, opts_, cb);
-					} else {
-						cb(err);
-					}
-				});
-			} else {
-				cb(err2);
-			}
-		});
-	}
+  if (typeof cb === 'undefined') {
+    cb = opts_;
+  }
+
+  if (_typeof(opts_) === 'object' && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
+    makeDirectories(outPath, proceed);
+  } else {
+    proceed();
+  }
+
+  function proceed(err) {
+    if (err) {
+      throw err;
+    }
+
+    opts_ = omit(opts_, ['makeDirectories', 'makeDirs']); // Run append file to delegate creating a new file if none exists
+
+    fs__default['default'].appendFile(outPath, '', function (err2) {
+      if (!err2) {
+        readData(outPath, function (err3, existingData) {
+          if (!err3) {
+            if (!_.isEmpty(existingData)) {
+              if (Array.isArray(existingData)) {
+                data = existingData.concat(data);
+              } else if (_typeof(existingData) === 'object') {
+                // eslint-disable-next-line prefer-object-spread
+                data = Object.assign({}, existingData, data);
+              }
+            }
+
+            writeData(outPath, data, opts_, cb);
+          } else {
+            cb(err);
+          }
+        });
+      } else {
+        cb(err2);
+      }
+    });
+  }
 }
 
-/* istanbul ignore next */
-/* istanbul ignore next */
 /**
  * Syncronous version of {@link writers#writeData}
  *
@@ -5170,24 +5264,26 @@ function appendData(outPath, data, opts_, cb) {
  *   replacer: ['name', 'occupation'] // Only keep "name" and "occupation" values
  * })
  */
+
 function writeDataSync(outPath, data, opts_) {
   warnIfEmpty(data, outPath, opts_);
-  var writeOptions = void 0;
-  if ((typeof opts_ === 'undefined' ? 'undefined' : _typeof(opts_)) === 'object') {
+  var writeOptions;
+
+  if (_typeof(opts_) === 'object') {
     if (opts_.makeDirectories === true || opts_.makeDirs === true) {
       makeDirectoriesSync(outPath);
     }
+
     writeOptions = opts_;
   }
-  opts_ = omit$1(opts_, ['makeDirectories', 'makeDirs']);
+
+  opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
   var fileFormatter = discernFileFormatter(outPath);
   var formattedData = fileFormatter(data, writeOptions);
-  fs.writeFileSync(outPath, formattedData);
+  fs__default['default'].writeFileSync(outPath, formattedData);
   return formattedData;
 }
 
-/* istanbul ignore next */
-/* istanbul ignore next */
 /**
  * Synchronous version of {@link writers#appendData}. See that function for supported formats
  *
@@ -5202,64 +5298,65 @@ function writeDataSync(outPath, data, opts_) {
  *
  * io.appendDataSync('path/to/create/to/data.csv', flatJsonData, {makeDirectories: true})
  */
+
 function appendDataSync(outPath, data, opts_) {
-	// Run append file to delegate creating a new file if none exists
-	if (opts_ && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
-		makeDirectoriesSync(outPath);
-	}
-	opts_ = omit$1(opts_, ['makeDirectories', 'makeDirs']);
-	fs.appendFileSync(outPath, '');
-	var existingData = readDataSync(outPath);
-	if (!_.isEmpty(existingData)) {
-		if (Array.isArray(existingData)) {
-			data = existingData.concat(data);
-		} else if ((typeof existingData === 'undefined' ? 'undefined' : _typeof(existingData)) === 'object') {
-			// eslint-disable-next-line prefer-object-spread
-			data = Object.assign({}, existingData, data);
-		}
-	}
-	writeDataSync(outPath, data, opts_);
-	return data;
+  // Run append file to delegate creating a new file if none exists
+  if (opts_ && (opts_.makeDirectories === true || opts_.makeDirs === true)) {
+    makeDirectoriesSync(outPath);
+  }
+
+  opts_ = omit(opts_, ['makeDirectories', 'makeDirs']);
+  fs__default['default'].appendFileSync(outPath, '');
+  var existingData = readDataSync(outPath);
+
+  if (!_.isEmpty(existingData)) {
+    if (Array.isArray(existingData)) {
+      data = existingData.concat(data);
+    } else if (_typeof(existingData) === 'object') {
+      // eslint-disable-next-line prefer-object-spread
+      data = Object.assign({}, existingData, data);
+    }
+  }
+
+  writeDataSync(outPath, data, opts_);
+  return data;
 }
 
-// converters
-
+exports.appendData = appendData;
+exports.appendDataSync = appendDataSync;
 exports.convertData = convertData;
 exports.convertDbfToData = convertDbfToData;
-exports.writeDbfToData = convertDbfToData;
-exports.formatters = formatters;
-exports.formatCsv = csv$1;
-exports.formatDbf = dbf$1;
-exports.formatJson = json;
-exports.formatPsv = psv;
-exports.formatTsv = tsv$1;
-exports.formatTxt = txt;
 exports.discernFileFormatter = discernFileFormatter;
 exports.discernFormat = discernFormat;
 exports.discernParser = discernParser;
 exports.exists = exists;
 exports.existsSync = existsSync;
 exports.extMatchesStr = extMatchesStr;
+exports.formatCsv = csv;
+exports.formatDbf = dbf;
+exports.formatJson = json;
+exports.formatPsv = psv;
+exports.formatTsv = tsv;
+exports.formatTxt = txt;
+exports.formatters = formatters;
 exports.getParser = getParser;
 exports.makeDirectories = makeDirectories;
 exports.makeDirectoriesSync = makeDirectoriesSync;
 exports.matches = matches;
 exports.matchesRegExp = matchesRegExp;
-exports.parsers = parsers;
 exports.parseAml = parseAml;
 exports.parseCsv = parseCsv;
 exports.parseJson = parseJson;
 exports.parsePsv = parsePsv;
 exports.parseTsv = parseTsv;
 exports.parseTxt = parseTxt;
-exports.readData = readData;
-exports.readDataSync = readDataSync;
-exports.readdirFilter = readdirFilter;
-exports.readdirFilterSync = readdirFilterSync;
+exports.parsers = parsers;
 exports.readAml = readAml;
 exports.readAmlSync = readAmlSync;
 exports.readCsv = readCsv;
 exports.readCsvSync = readCsvSync;
+exports.readData = readData;
+exports.readDataSync = readDataSync;
 exports.readDbf = readDbf;
 exports.readJson = readJson;
 exports.readJsonSync = readJsonSync;
@@ -5269,8 +5366,9 @@ exports.readTsv = readTsv;
 exports.readTsvSync = readTsvSync;
 exports.readTxt = readTxt;
 exports.readTxtSync = readTxtSync;
-exports.appendData = appendData;
-exports.appendDataSync = appendDataSync;
+exports.readdirFilter = readdirFilter;
+exports.readdirFilterSync = readdirFilterSync;
 exports.writeData = writeData;
 exports.writeDataSync = writeDataSync;
+exports.writeDbfToData = convertDbfToData;
 //# sourceMappingURL=indian-ocean.cjs.js.map

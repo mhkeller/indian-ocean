@@ -1,13 +1,13 @@
 {
   "presets": [
     [
-      "es2015",
+      "@babel/preset-env",
       {
         "modules": false
       }
     ]
   ],
   "plugins": [
-    "external-helpers"
+    // "@babel/plugin-external-helpers"
   ]
 }

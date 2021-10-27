@@ -3,9 +3,23 @@ Changelog
 
 # 5.0.0
 
-> 2021-05-03
+> 2021-10-26
 
-A small breaking change that trims whitespace off of file by default, configurable via the `trim` option.
+Add typescript. A small breaking change that trims whitespace off of file by default, configurable via the `trim` option. Also do some internal clean up and break up tests.
+
+* Add .trim() and make it disable-able
+  * [21b7e65d2d27481f69c59bea7f6eeeab0d00a39f](https://github.com/mhkeller/indian-ocean/commit/21b7e65d2d27481f69c59bea7f6eeeab0d00a39f)
+  * [e3853b375529dfda7b5fc02654fd624c49f01e81](https://github.com/mhkeller/indian-ocean/commit/e3853b375529dfda7b5fc02654fd624c49f01e81)
+* Typescript
+  * [838df42ade44a0f8f8b6a2f5752d5735fc171641](https://github.com/mhkeller/indian-ocean/commit/838df42ade44a0f8f8b6a2f5752d5735fc171641)
+* Clean up
+  * [c0c3734a8b2fb7b91e0e6dd8024bded79f6c3323](https://github.com/mhkeller/indian-ocean/commit/c0c3734a8b2fb7b91e0e6dd8024bded79f6c3323)
+  * [cbe0ce41b88b488c3e95522e9f89f39fc2f573b5](https://github.com/mhkeller/indian-ocean/commit/cbe0ce41b88b488c3e95522e9f89f39fc2f573b5)
+  * [c05062585b91a049c02deacc0c5ff5ef463cdd2f](https://github.com/mhkeller/indian-ocean/commit/c05062585b91a049c02deacc0c5ff5ef463cdd2f)
+  * [25d3167d478dc8922da428998fac5c62bc522b64](https://github.com/mhkeller/indian-ocean/commit/25d3167d478dc8922da428998fac5c62bc522b64)
+  * [90f0edfb8a16b984d6c6eda90912a240fb210b05](https://github.com/mhkeller/indian-ocean/commit/90f0edfb8a16b984d6c6eda90912a240fb210b05)
+  * [346cf065488e9f829fdaed9afe5e0c3e672b85ff](https://github.com/mhkeller/indian-ocean/commit/346cf065488e9f829fdaed9afe5e0c3e672b85ff)
+  * [b279c83b3d2c7e44580d8507315fa77abf5873bc](https://github.com/mhkeller/indian-ocean/commit/b279c83b3d2c7e44580d8507315fa77abf5873bc)
 
 # 4.0.0
 
