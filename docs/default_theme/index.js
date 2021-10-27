@@ -71,7 +71,7 @@ module.exports = function (comments, config) {
         if (config.hljs && config.hljs.highlightAuto) {
           return hljs.highlightAuto(example).value;
         }
-        return hljs.highlight('js', example).value;
+        return hljs.highlight(example, { language: 'js' }).value;
       }
     }
   };

@@ -5,7 +5,7 @@ Changelog
 
 > 2021-10-26
 
-Add typescript. A small breaking change that trims whitespace off of file by default, configurable via the `trim` option. Also do some internal clean up and break up tests.
+Add typescript. A small breaking change that trims whitespace off of file by default, configurable via the `trim` option. Also do some internal clean up and break up tests. A bigger breaking change that it drops the browser version, which I don't think anyone was using.
 
 * Add .trim() and make it disable-able
   * [21b7e65d2d27481f69c59bea7f6eeeab0d00a39f](https://github.com/mhkeller/indian-ocean/commit/21b7e65d2d27481f69c59bea7f6eeeab0d00a39f)
