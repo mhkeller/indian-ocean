@@ -1,6 +1,24 @@
 Changelog
 =========
 
+# 4.0.3
+
+> 2022-07-12
+
+Security update. Update archieml to v0.5 – thanks [@britthar](https://github.com/brittharr) ([PR #108](https://github.com/mhkeller/indian-ocean/pull/108)). Fix dbf tests returning a slightly different error message on empty.dbf.
+
+* [35a19bbeb5d7951a06612a37f3b3ebd5288f174a](https://github.com/mhkeller/indian-ocean/commit/35a19bbeb5d7951a06612a37f3b3ebd5288f174a)
+* [7a0437bc403c9b297102ae2fe075f13dd7d4c104](https://github.com/mhkeller/indian-ocean/commit/7a0437bc403c9b297102ae2fe075f13dd7d4c104)
+* [4290fac565c5f269593dc222a745dcbc0a024173](https://github.com/mhkeller/indian-ocean/commit/4290fac565c5f269593dc222a745dcbc0a024173)
+* [d8fb901cd792e9fb635546fa7ae9df1e3a4b67bd](https://github.com/mhkeller/indian-ocean/commit/d8fb901cd792e9fb635546fa7ae9df1e3a4b67bd)
+* [ef4b92e2c30a39f16150e97fbb4c130394eaa0c9](https://github.com/mhkeller/indian-ocean/commit/ef4b92e2c30a39f16150e97fbb4c130394eaa0c9)
+* [bc50626b5be89c910b51dc40bda2355e8277b784](https://github.com/mhkeller/indian-ocean/commit/bc50626b5be89c910b51dc40bda2355e8277b784)
+* [3be6e1c82462609d2050188a09114a2b9da69341](https://github.com/mhkeller/indian-ocean/commit/3be6e1c82462609d2050188a09114a2b9da69341)
+* [ad6374414dbeb085fa41bd01b75976cad7a78746](https://github.com/mhkeller/indian-ocean/commit/ad6374414dbeb085fa41bd01b75976cad7a78746)
+* [01f3f7cc81f7e6e4e1874f21db7bee8a73bfb9f7](https://github.com/mhkeller/indian-ocean/commit/01f3f7cc81f7e6e4e1874f21db7bee8a73bfb9f7)
+* [352fc80fe75b740e4e45e0bbb8136fd805a2ae8f](https://github.com/mhkeller/indian-ocean/commit/352fc80fe75b740e4e45e0bbb8136fd805a2ae8f)
+* [75b2a9e8d66157654ab13bb233741cc8ca35376d](https://github.com/mhkeller/indian-ocean/commit/75b2a9e8d66157654ab13bb233741cc8ca35376d)
+
 # 4.0.2
 
 > 2021-03-17
