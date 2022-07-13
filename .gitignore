@@ -3,3 +3,4 @@ coverage
 .exrc
 .nyc_output
 .vscode
+test.js

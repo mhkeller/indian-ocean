@@ -1153,8 +1153,9 @@ describe('readers', function () {
     describe('dbf', function () {
       describe('empty', function () {
         it('should be empty array', function (done) {
+          this.timeout(5000);
           io.readData(testDataPath('dbf/empty.dbf'), function (err, json) {
-            assert.equal(err.split('\n')[0], 'TypeError: Cannot read property \'buffer\' of null')
+            assert.equal(err.split('\n')[0], 'TypeError: Cannot read properties of null (reading \'buffer\')')
             done()
           })
         })
@@ -2126,8 +2127,9 @@ describe('directReaders', function () {
 describe('readDbf()', function () {
   describe('empty', function () {
     it('should be empty array', function (done) {
+      this.timeout(5000);
       io.readDbf(testDataPath('dbf/empty.dbf'), function (err, json) {
-        assert.equal(err.split('\n')[0], 'TypeError: Cannot read property \'buffer\' of null')
+        assert.equal(err.split('\n')[0], 'TypeError: Cannot read properties of null (reading \'buffer\')')
         done()
       })
     })
